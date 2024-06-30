@@ -23,8 +23,8 @@ export const TimeSheet = () => {
             <div className='col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 mx-auto flex justify-center items-center'>
                 <time className='text-xs font-bold' dateTime="04:45 hrs">{t("04:45 hrs")}</time>
             </div>
-            <Button variant={'orange'} className={'flex w-full items-center whitespace-nowrap'}>Take Break <TakeBreakIcon /></Button>
-            <Button variant={'primary'} className={'flex w-full items-center whitespace-nowrap'}>Check Out <CheckOutIcon /></Button>
+            <Button variant={'orange'} className={'flex w-full items-center whitespace-nowrap'}>Take Break <TakeBreakIcon className={'shrink-0'}/></Button>
+            <Button variant={'primary'} className={'flex w-full items-center whitespace-nowrap'}>Check Out <CheckOutIcon className={'shrink-0'}/></Button>
             <div className='w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1'>
                 <span>{t("Break")}</span>
                 <time className='font-bold' dateTime="01.21 hrs">{t("01.21 hrs")}</time>

@@ -5,6 +5,7 @@ import ShiftModule from '@/modules/attendance/Shift';
 import ExemptionModule from '@/modules/attendance/Exemption';
 import AttendanceModule from '@/modules/attendance/Attendance';
 import PenaltyModule from '@/modules/attendance/Penalty';
+import AttendanceMachineModule from './machine';
 import { Tab } from '@headlessui/react'
 import GeneralSettingModule from '@/modules/attendance/GeneralSetting';
 export default function AttendanceSettingPage() {
@@ -22,7 +23,7 @@ export default function AttendanceSettingPage() {
             <Tabs
                 containerClasses={'zt-themeTabsV2 grow'}
                 tabNavClasses={'zt-themeTabNav'}
-                tabs={["Shift Plan", "Exemption Reason Type", "Attendance Reason Type", "Attendance Penalty Rule", "General Attendance Settings"]}
+                tabs={["Shift Plan", "Exemption Reason Type", "Attendance Reason Type", "Attendance Penalty Rule", "General Attendance Settings", "Attendance Machine"]}
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0 flex flex-col grow`}>
                     <Tab.Panel className={'zt-themeTabPanel grow'}>
@@ -39,6 +40,9 @@ export default function AttendanceSettingPage() {
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel grow'}>
                         <GeneralSettingModule />
+                    </Tab.Panel>
+                    <Tab.Panel className={'zt-themeTabPanel grow'}>
+                        <AttendanceMachineModule />
                     </Tab.Panel>
                 </Tab.Panels>
             </Tabs>

@@ -196,7 +196,7 @@
 
 
 /* Theme DropDown Styling Start here */
-.zt-themeDropDown { @apply inline-flex relative text-left dark:text-white z-20; }
+.zt-themeDropDown { @apply inline-flex relative text-left dark:text-white }
 .zt-btnDropDown { @apply inline-flex focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 }
 .zt-themeDropDownList {
   @apply absolute flex flex-col right-0 top-8 origin-top-right rounded-xl bg-white shadow-dropdown p-4 focus:outline-none z-20;
