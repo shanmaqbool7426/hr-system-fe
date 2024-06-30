@@ -1,12 +1,12 @@
 {
-  "name": "zaffre-erp",
+  "name": "zaffre-hrm-fe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "start:dev": "next start --port=3001",
+    "start:demo": "next start --port=3001",
+    "start:dev": "next start --port=3002",
     "lint": "next lint"
   },
   "dependencies": {
