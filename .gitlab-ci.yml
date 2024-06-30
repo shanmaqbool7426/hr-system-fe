@@ -6,8 +6,8 @@ deploy_dev-fe:
     - zaffretech
   script:
     - cp .env.dev .env
-    - sudo npm i -f
-    - sudo npm run build
+    - npm i -f
+    - npm run build
     - pm2 restart devfe
   only:
     - development
