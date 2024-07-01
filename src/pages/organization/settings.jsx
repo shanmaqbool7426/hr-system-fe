@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { Button, Tabs } from '@/components/elements';
-import { Tab } from '@headlessui/react' 
+import { Tabs } from '@/components/elements';
+import { Tab } from '@headlessui/react'
 import SystemConfiguration from '@/modules/leaves/settings/SystemConfiguration';
 import { CompanySettings } from '@/modules/leaves/settings/CompanySettings';
 import { BiometricSettings } from '@/modules/leaves/settings/BiometricSetting';
+import { EmailSettings } from '@/modules/leaves/settings/EmailSetting';
+import { CardTemplate } from '@/modules/leaves/settings/CardTemplates';
 export default function OrganizationSettingPage() {
     const { t } = useTranslation();
 
@@ -30,7 +32,7 @@ export default function OrganizationSettingPage() {
                         Custom Fields
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        Email Settings
+                        <EmailSettings />
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
                         <CompanySettings />
@@ -39,7 +41,7 @@ export default function OrganizationSettingPage() {
                         <BiometricSettings />
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        Card Template
+                        <CardTemplate/>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tabs>
