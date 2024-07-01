@@ -27,13 +27,13 @@ export default function Auth({ children, description, title }) {
                     <div className="flex flex-col text-white relative grow">
                         <figure>
                             <Image
-                                src={'/zaffre.png'}
+                                src={'/assets/images/logo-full.svg'}
                                 width={117*2}
                                 height={37*2}
                                 quality={100}
                                 priority={true}
                                 placeholder="blur"
-                                blurDataURL={'/zaffre.png'}
+                                blurDataURL={'/assets/images/logo-full.svg'}
                                 alt={'Zaffre'}
                             />
                         </figure>

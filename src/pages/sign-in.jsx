@@ -38,18 +38,18 @@ export default function SignInPage() {
             router.push('/dashboard')
         }
     }, [auth_user, router])
-
+    console.log("is_loading", is_loading);
     return (
         <form className="zt-authForm zt-signInForm" onSubmit={(event) => { event.preventDefault(); formik.handleSubmit() }}>
             <figure className="zt-logo">
                 <Image
-                    src={'/assets/images/zaffre-blue.png'}
-                    width={108.5}
-                    height={86.5}
+                    src={'/assets/images/logo-mini.svg'}
+                    width={150}
+                    height={150}
                     quality={100}
                     priority={true}
                     placeholder="blur"
-                    blurDataURL={'/assets/images/zaffre-blue.png'}
+                    blurDataURL={'/assets/images/logo-mini.svg'}
                     alt="icon"
                 />
             </figure>
@@ -87,7 +87,7 @@ export default function SignInPage() {
 
                     <Link className="text-primaryTheme" href={'/forgot-password'}>{t('Forgot Password?')}</Link>
                 </div>
-                <Button type="submit" value={t('Sign in')} variant={'primary'} disabled={is_loading} />
+                <Button type="submit" value={t('Sign in')} variant={'primary'} disabled={is_loading} is_loading={is_loading} />
             </fieldset>
         </form>
     );

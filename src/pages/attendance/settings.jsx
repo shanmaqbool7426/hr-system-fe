@@ -5,15 +5,13 @@ import ShiftModule from '@/modules/attendance/Shift';
 import ExemptionModule from '@/modules/attendance/Exemption';
 import AttendanceModule from '@/modules/attendance/Attendance';
 import PenaltyModule from '@/modules/attendance/Penalty';
-import AttendanceMachineModule from './machine';
+import BiometricMachine from './biometric-machine';
 import { Tab } from '@headlessui/react'
 import GeneralSettingModule from '@/modules/attendance/GeneralSetting';
 export default function AttendanceSettingPage() {
     const { t } = useTranslation();
-
     return (
         <section className="flex flex-col grow relative">
-            {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-12">
                 <div className="flex flex-col">
                     <h1 className="text-h4 mb-0">{t("Attendance Settings")}</h1>
@@ -23,7 +21,7 @@ export default function AttendanceSettingPage() {
             <Tabs
                 containerClasses={'zt-themeTabsV2 grow'}
                 tabNavClasses={'zt-themeTabNav'}
-                tabs={["Shift Plan", "Exemption Reason Type", "Attendance Reason Type", "Attendance Penalty Rule", "General Attendance Settings", "Attendance Machine"]}
+                tabs={["Shift Plan", "Exemption Reason Type", "Attendance Reason Type", "Attendance Penalty Rule", "General Attendance Settings", "Biometric Device Settings"]}
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0 flex flex-col grow`}>
                     <Tab.Panel className={'zt-themeTabPanel grow'}>
@@ -42,7 +40,7 @@ export default function AttendanceSettingPage() {
                         <GeneralSettingModule />
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel grow'}>
-                        <AttendanceMachineModule />
+                        <BiometricMachine />
                     </Tab.Panel>
                 </Tab.Panels>
             </Tabs>

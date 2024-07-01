@@ -43,13 +43,13 @@ export default function ForgotPasswordPage() {
             <form className="zt-authForm zt-forgotPasswordForm" onSubmit={(event) => { event.preventDefault(); formik.handleSubmit() }}>
                 <figure className="zt-logo">
                     <Image
-                        src={'/assets/images/zaffre-blue.png'}
-                        width={108.5}
-                        height={86.5}
+                        src={'/assets/images/logo-mini.svg'}
+                        width={150}
+                        height={150}
                         quality={100}
                         priority={true}
                         placeholder="blur"
-                        blurDataURL={'/assets/images/zaffre-blue.png'}
+                        blurDataURL={'/assets/images/logo-mini.svg'}
                         alt="icon"
                     />
                 </figure>

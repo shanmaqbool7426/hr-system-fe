@@ -4,7 +4,7 @@ import { setLoading, setAuthUser, setResetEmail, setResetOTP, clearAuth } from '
 import ls from "localstorage-slim"
 export const signIn = (payload) => async (dispatch) => {
     try {
-        setLoading(true)
+        dispatch(setLoading(true))
         const data = await axios.post(`/auth/sign-in`, payload)
         dispatch(setAuthUser(data.user))
         ls.set("access_token", data.access_token, { encrypt: true })
@@ -30,7 +30,7 @@ export const forgotPassword = (payload, router = null) => async (dispatch) => {
 };
 export const verifyOtp = (payload, router = null) => async (dispatch) => {
     try {
-        setLoading(true)
+        dispatch(setLoading(true))
         const data = await axios.post(`/auth/verify-otp`, payload)
         dispatch(setResetOTP(payload.otp))
         if (router) router.push('/reset-password')
@@ -53,7 +53,7 @@ export const resetPassword = (payload, setOpen) => async (dispatch) => {
 };
 export const auth = (payload) => async (dispatch) => {
     try {
-        setLoading(true)
+        dispatch(setLoading(true))
         const data = await axios.post(`/auth`, payload)
 
     } catch (err) { }
