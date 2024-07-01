@@ -3,13 +3,10 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 
-import LandingPage from "@/layouts/LandingPage";
-import DefaultLayout from "@/layouts/DefaultLayout";
 import { Button, Datepicker, SearchSelect, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 
 const user = ls?.get('auth_user', { decrypt: true })
-const Layout = user ? DefaultLayout : LandingPage
 
 export default function LineManagerPage () {
 	const { t } = useTranslation();

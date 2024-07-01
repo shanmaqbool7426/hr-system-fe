@@ -223,35 +223,7 @@
 .zt-uploadLabel{ @apply rounded-l-lg px-5 py-4 bg-themeGrayscale300 font-medium text-sm cursor-pointer }
 
 
-.zt-nav {
-  @apply transition-all duration-300 flex flex-col text-base uppercase absolute top-full w-full backdrop-blur-sm bg-white/80 xl:visible xl:static xl:backdrop-opacity-0 xl:bg-transparent xl:flex xl:opacity-100;
-  ul {
-    @apply flex gap-4 xl:gap-8 flex-col xl:flex-row p-6 xl:p-0;
-    li {
-      @apply flex justify-center items-start;
-      .zt-navLink { @apply block text-themeGrayscale hover:text-themeOrange font-semibold no-underline }
-    }
-  }
-}
 
-
-.zt-socialIcons {
-  li {
-    a { @apply w-10 h-10 rounded-lg bg-white text-themeGrayscale overflow-hidden flex justify-center items-center shadow-lg }
-  }
-}
-
-
-
-.zt-copyRight {
-  .zt-navAdditional {
-    li {
-      @apply px-6 border-r border-themeGrayscale;
-      &:last-child { @apply pr-0 border-0 }
-      &:first-child { @apply pl-0 }
-    }
-  }
-}
 .zt-addScheduleSpan{@apply text-xs font-medium p-2}
 .ql-toolbar{@apply bg-themeGrayscale300 rounded-t-lg}
 .ql-container {@apply rounded-b-lg min-h-24}
