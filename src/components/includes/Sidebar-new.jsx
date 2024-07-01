@@ -111,29 +111,29 @@ export default function Sidebar() {
             {
                 name: t("HR Reports"),
                 innerSubMenu: [
-                    { name: t("Employee Change History"), href: "/" },
-                    { name: t("Hiring Details"), href: "/" },
-                    { name: t("Separation Details"), href: "/" },
-                    { name: t("Employee Role Report"), href: "/" },
-                    { name: t("Employee List"), href: "/" },
-                    { name: t("Employee Profile"), href: "/" },
-                    { name: t("Employee Dependent"), href: "/" },
-                    { name: t("Department Head Count"), href: "/" },
-                    { name: t("Employee Clearance"), href: "/" },
-                    { name: t("Employee Documents"), href: "/" },
+                    { name: t("Employee Change History"), href: "/report/hr-reports/employee-change-history" },
+                    { name: t("Hiring Details"), href: "/report/hr-reports/hiring-details" },
+                    { name: t("Separation Details"), href: "/report/hr-reports/separation-details" },
+                    { name: t("Employee Role Report"), href: "/report/hr-reports/employee-role-report" },
+                    { name: t("Employee List"), href: "/report/hr-reports/employee-list" },
+                    { name: t("Employee Profile"), href: "/report/hr-reports/employee-profile" },
+                    { name: t("Employee Dependent"), href: "/report/hr-reports/employee-dependent" },
+                    { name: t("Department Head Count"), href: "/report/hr-reports/department-head-count" },
+                    { name: t("Employee Clearance"), href: "/report/hr-reports/employee-clearance" },
+                    { name: t("Employee Documents"), href: "/report/hr-reports/employee-documents" },
                 ]
             },
-            { name: t("Employee Cards"), href: "/" },
-            { name: t("Employee Reports"), href: "/" },
-            { name: t("Attendance Reports"), href: "/" },
-            { name: t("Leave Reports"), href: "/" },
-            { name: t("Payroll Reports"), href: "/" },
-            { name: t("Recruitment Reports"), href: "/" },
-            { name: t("Separation Reports"), href: "/" },
-            { name: t("Overtime Reports"), href: "/" },
-            { name: t("Reports Setting"), href: "/" },
-            { name: t("Employee Assets"), href: "/" },
-            { name: t("Attendance Restriction"), href: "/" },
+            { name: t("Employee Cards"), href: "/report/employee-cards" },
+            { name: t("Employee Reports"), href: "/report/employee-reports" },
+            { name: t("Attendance Reports"), href: "/report/attendance-reports" },
+            { name: t("Leave Reports"), href: "/report/leave-reports" },
+            { name: t("Payroll Reports"), href: "/report/payroll-reports" },
+            { name: t("Recruitment Reports"), href: "/report/recruitment-reports" },
+            { name: t("Separation Reports"), href: "/report/separation-reports" },
+            { name: t("Overtime Reports"), href: "/report/overtime-reports" },
+            { name: t("Reports Setting"), href: "/report/reports-setting" },
+            { name: t("Employee Assets"), href: "/report/employee-assets" },
+            { name: t("Attendance Restriction"), href: "/report/attendance-restriction" },
         ],
         organization: [
             { name: t("System logs"), href: "/organization/system-logs" },
@@ -222,7 +222,7 @@ export default function Sidebar() {
                 </span>
             </div>
 
-            {selected && MiniBar.findIndex(item => item.href === selected) !== -1 && <div className="p-4 w-60 h-full overflow-y-scroll">
+            {selected && MiniBar.findIndex(item => item.href === selected) !== -1 && <div className="p-4 w-64 h-full overflow-y-scroll">
                 <h4>{MiniBar.find(item => item.href === selected)?.name}</h4>
                 <ul className="flex flex-col gap-3">
                     {Navigation[selected].map((item, index) => (
