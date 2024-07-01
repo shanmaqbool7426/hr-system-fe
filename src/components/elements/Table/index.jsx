@@ -33,7 +33,7 @@ export default function Table({ headings,
                 <thead>
                     <tr className='rounded-lg bg-themeGrayscale100'>
                         {headings?.map((value, index) => (<th key={index} className='select-none px-2 py-5'>
-                            <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center whitespace-nowrap">
                                 {value.check ?
                                     <CheckBox
                                         size={'sm'}
