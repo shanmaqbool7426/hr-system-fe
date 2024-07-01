@@ -1,4 +1,4 @@
-import LandingPage from "@/layouts/LandingPage"
+
 import DefaultLayout from "@/layouts/DefaultLayout"
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
@@ -7,8 +7,7 @@ import { useState } from "react";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import AddJob from "@/components/forms/organization/jobs/AddJob";
 
-const user = ls?.get('auth_user', { decrypt: true })
-const Layout = user ? DefaultLayout : LandingPage
+
 
 export default function ExperienceLevelPage() {
 	const { t } = useTranslation()

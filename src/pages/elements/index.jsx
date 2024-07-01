@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import LandingPage from "@/layouts/LandingPage"
+
 import { useTranslation } from "next-i18next";
 import { Input, Button, Tabs, CheckBox, SearchSelect, MultiSelect, ToggleCheck, Datepicker } from "@/components/elements";
 import * as Yup from 'yup';
@@ -553,5 +553,3 @@ export default function Elements() {
         </div>
     );
 }
-
-Elements.layout = LandingPage;

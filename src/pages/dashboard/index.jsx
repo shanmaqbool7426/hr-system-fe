@@ -1,6 +1,3 @@
-import LandingPage from "@/layouts/LandingPage"
-import DefaultLayout from "@/layouts/DefaultLayout"
-import ls from 'localstorage-slim';
 import { auth } from "@/store/actions/auth.actions"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -16,10 +13,6 @@ import FilterArea from "@/components/includes/FilterArea";
 import { CloseCross, InputErrorInfo } from "@/components/svg";
 import { AttendanceSummaryStatistic } from "@/modules/dashboard/AttendanceSummaryStatistic";
 import { TimeSheet } from "@/modules/attendance/TimeSheet";
-
-
-const user = ls?.get('auth_user', { decrypt: true })
-const Layout = user ? DefaultLayout : LandingPage
 
 export default function Dashboard() {
     const dispatch = useDispatch()
@@ -116,5 +109,3 @@ export default function Dashboard() {
         </div>
     )
 }
-
-Dashboard.layout = Layout
