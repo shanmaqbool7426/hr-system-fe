@@ -2,7 +2,7 @@ import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 // import { Button } from "@/components/elements";
 
-export default function ReportPage() {
+export default function EmployeeReportsPage() {
 	const { t } = useTranslation()
 
   return (
@@ -10,7 +10,7 @@ export default function ReportPage() {
 			{/* {is_loading && <PageLoader/>} */}
 			<div className="flex justify-between pb-6">
 				<div className="flex flex-col">
-					<h1 className="text-h4 mb-0">{t("Report")}</h1>
+					<h1 className="text-h4 mb-0">{t("Employee Reports")}</h1>
 					{/* <p className="mb-0">{t("Manage Payroll here...")}</p> */}
 				</div>
 				{/* <div className="flex items-start gap-2">
