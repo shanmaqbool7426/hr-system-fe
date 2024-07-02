@@ -311,9 +311,7 @@ export default function Exemptions() {
                 object={edit}
             />}
 
-            {create && <AddExemptionForm
-                title={edit ? t('Exemption Request') : t('Exemption Request')}
-                type={'New Request'}
+            {create && <AddExemptionForm                
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

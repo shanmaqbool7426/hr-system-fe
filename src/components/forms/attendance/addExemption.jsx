@@ -6,39 +6,41 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddExemptionForm({ title, onClose, type, object, additionFields }) {
+export default function AddExemptionForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
-            icon: object?.icon || "",
-            prefix: object?.prefix || "",
+            employee: object?.employee?._id || "",
+            attendanceDate: object?.attendanceDate || "",
+            flagType: object?.flagType || "",
+            exemptionType: object?.exemptionType || "",
+            reason: object?.exemptionType || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
+            employee: Yup.string().required(t('Employee is required')),
+            attendanceDate: Yup.string().required(t('Atendance date is required')),
+            flagType: Yup.string().required(t('Flag type is required')),
+            exemptionType: Yup.string().required(t('Exemption type is required')),
+            reason: Yup.string().required(t('Reason is required')),
         }),
         onSubmit: async (values) => {
-
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Exemption request updated successfully`) : t(`Exemption request created successfully`))
         onClose()
     }
     const formElements = [
         {
             type: "select",
-            name: "Employee",
+            name: "employee",
             label: t('Employee'),
-            placeholder: "Select Employee",
-            list: ["Yes", "No"],
+            placeholder: t("Select Employee"),
+            list: [],
             required: true,
-            value: formik.values.name,
+            value: formik.values.employee,
         },
         {
             type: "date",
@@ -50,21 +52,21 @@ export default function AddExemptionForm({ title, onClose, type, object, additio
         },
         {
             type: "select",
-            name: "Employee",
+            name: "flagType",
             label: t('Flag Type'),
             placeholder: "Select One",
             list: ["Yes", "No"],
             required: true,
-            value: formik.values.name,
+            value: formik.values.flagType,
         },
         {
             type: "select",
-            name: "InTime",
+            name: "exemptionType",
             label: t('Exemption Type'),
             placeholder: "Forget mark my attendance",
             list: ["Yes", "No"],
             required: true,
-            value: formik.values.name,
+            value: formik.values.exemptionType,
         },
         {
             type: "textarea",
@@ -76,7 +78,7 @@ export default function AddExemptionForm({ title, onClose, type, object, additio
         },
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Edit Exemption`) : t(`Add Exemption`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 

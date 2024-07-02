@@ -132,8 +132,6 @@ export default function Dashboard() {
             />}
 
       {create && <AddExemptionForm
-        title={edit ? t('Exemption Request') : t('Exemption Request')}
-        type={'New Request'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}
       />}

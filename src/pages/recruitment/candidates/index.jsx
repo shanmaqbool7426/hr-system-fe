@@ -1,11 +1,11 @@
-import { Button, DisplayDate, DropDown, Table } from '@/components/elements'
-import IconCompnent from '@/components/forms/organization/inventory/IconCompnent'
+import { Button, DropDown, Table } from '@/components/elements'
 import CandidateFieldForm from '@/components/forms/recruitment/add-candidate/create'
 import FilterArea from '@/components/includes/FilterArea'
 import Statistic from '@/components/recruitment/statistic'
-import { CloseCross, Edit, HeadPhone, InputErrorInfo, ThreeDotsVertical, Trash, KeyboardIcon, MobileIcon, HandFreeIcon, LedIcon, Download, OpenJobs, Applicants, ShortListed, ScheduleInterviews } from '@/components/svg'
+import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash, Download, OpenJobs, Applicants, ShortListed, ScheduleInterviews } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
+import Link from 'next/link'
 import React, { lazy, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -68,13 +68,13 @@ export default function Recruitment() {
   ]
 
   const rows = [{
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-success'>Full Time</span>,
@@ -108,13 +108,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Gertrude Kuphal')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-danger'>Part Time</span>,
@@ -148,13 +148,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-warning'>Contract</span>,
@@ -188,13 +188,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-success'>Full Time</span>,
@@ -228,13 +228,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-danger'>Part Time</span>,
@@ -268,13 +268,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-warning'>Contract</span>,
@@ -308,13 +308,13 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <div className="flex items-center justify-start gap-4 grow">
+    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
       <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
       <div className={'flex flex-col gap-1 text-left'}>
         <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
         <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
       </div>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     jobType: <span className='zt-tag zt-tag-success'>Full Time</span>,
