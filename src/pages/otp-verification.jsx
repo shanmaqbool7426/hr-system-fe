@@ -22,6 +22,7 @@ export default function OptVerificationPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const {t:tv} = useTranslation("validation")
     const [countdown, setCountdown] = useState(60);
     const [isResending, setIsResending] = useState(false);
 
@@ -52,7 +53,7 @@ export default function OptVerificationPage() {
             otp: "",
         },
         validationSchema: Yup.object().shape({
-            otp: Yup.string().length(4, t('formik.otpRequired')).required(t('formik.otpRequired')),
+            otp: Yup.string().length(4, tv('OTP is required')).required(tv('OTP is required')),
         }),
 
         onSubmit: async (values) => {

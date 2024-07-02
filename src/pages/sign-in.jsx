@@ -18,6 +18,7 @@ export default function SignInPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const {t:tv} = useTranslation("validation")
 
     const formik = useFormik({
         initialValues: {
@@ -25,8 +26,8 @@ export default function SignInPage() {
             password: "",
         },
         validationSchema: Yup.object().shape({
-            email: Yup.string().email(t('formik.invalidEmail')).required(t('formik.emailRequired')),
-            password: Yup.string().required(t('formik.passwordRequired')),
+            email: Yup.string().email(tv('Enter valid email')).required(tv('Email is required')),
+            password: Yup.string().required(tv('Password is required')),
         }),
         onSubmit: async (values) => {
             dispatch(signIn(values))

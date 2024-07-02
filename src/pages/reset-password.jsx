@@ -20,6 +20,7 @@ export default function ForgotPasswordPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const {t:tv} = useTranslation()
     const [open, setOpen] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -27,8 +28,8 @@ export default function ForgotPasswordPage() {
             confirmPassword: ""
         },
         validationSchema: Yup.object().shape({
-            password: Yup.string().required(t('formik.passwordRequired')),
-            confirmPassword: Yup.string().required(t('formik.confirmPasswordRequired')).oneOf([Yup.ref('password'), ''], (t('formik.matchPassword'))),
+            password: Yup.string().required(tv('Password is required')),
+            confirmPassword: Yup.string().required(tv('Confirm password is required')).oneOf([Yup.ref('password'), ''], (tv('Confirm password must match password'))),
         }),
         onSubmit: async (values) => {
             dispatch(resetPassword({ ...values, ...reset }, setOpen))

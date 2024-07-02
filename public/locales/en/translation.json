@@ -1,12 +1,4 @@
 {
-    "formik": {
-        "invalidEmail": "Enter valid email",
-        "emailRequired": "Email is required",
-        "otpRequired": "OTP is required",
-        "passwordRequired": "Password is required",
-        "confirmPasswordRequired": "Confirm password is required",
-        "matchPassword": "Confirm password must match password"
-    },
     "errors": {
         "notfound": "Resource not found"
     },

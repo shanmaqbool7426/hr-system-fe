@@ -20,13 +20,15 @@ export default function ForgotPasswordPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const { t:tv } = useTranslation("validation")
+
 
     const formik = useFormik({
         initialValues: {
             email: "",
         },
         validationSchema: Yup.object().shape({
-            email: Yup.string().email(t('formik.invalidEmail')).required(t('formik.emailRequired')),
+            email: Yup.string().email(t('Enter valid email')).required(t('Email is required')),
         }),
         onSubmit: async (values) => {
             dispatch(forgotPassword(values, router))
