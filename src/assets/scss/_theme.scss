@@ -255,7 +255,13 @@
     time { @apply text-themeGrayscale }
   }
 }
-
+.zt-candidateExperiance {
+  @apply flex flex-col gap-4 items-start relative before:top-2 before:left-2 before:w-1 before:h-[calc(100%_-_12%)] before:absolute before:rounded-full before:bg-themeGrayscale300;
+  li {
+    @apply flex items-start gap-3 relative pl-8 before:top-[2px] before:left-[2px] before:w-4 before:h-4 before:absolute before:rounded-full before:bg-themeGrayscale300;
+    time { @apply text-themeGrayscale }
+  }
+}
 
 
 .zt-employeeProfile::before{content: ""; @apply bg-bordeaux w-20 h-5 absolute bottom-0 right-0 z-10}
@@ -268,5 +274,5 @@
 }
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
 ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.5); }
-
+.candidate_detail{@apply min-h-[50rem] zt-card grow relative }
 

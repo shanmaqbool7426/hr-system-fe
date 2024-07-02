@@ -36,7 +36,7 @@ export const Requests = () => {
                                 <span className="text-[10px] text-themeGrayscale600 leading-3">{t("Remaining - 3")}</span>
                             </div>
                         </div>
-                        <RadialChart circleSize={90} />
+                        <RadialChart circleSize={90} fillColor='#8C62FF' circularValue={'/10'}/>
                     </div>
                 ))}
             </div>

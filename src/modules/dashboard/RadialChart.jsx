@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
-export const RadialChart = ({circleSize}) => {
+export const RadialChart = ({circleSize,fillColor , circularValue}) => {
     const circulardata = [
         { name: 'L1', value: 4 }
     ]; 
@@ -28,7 +28,7 @@ export const RadialChart = ({circleSize}) => {
                     clockWise
                     dataKey="value"
                     cornerRadius={circleSize / 2}
-                    fill="#8C62FF"
+                    fill={fillColor}
                 />
                 <text
                     x={circleSize / 2}
@@ -38,7 +38,7 @@ export const RadialChart = ({circleSize}) => {
                     className="progress-label"
                     fontSize={15} // Adjust font size as needed
                 >
-                    {circulardata[0].value}/10
+                    {circulardata[0].value}{circularValue}
                 </text>
             </RadialBarChart>
         </>

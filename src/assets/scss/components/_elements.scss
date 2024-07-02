@@ -43,7 +43,19 @@
     }
   }
 }
-
+.zt-themeTabsV1 {
+  @apply flex flex-col gap-6;
+  .zt-themeTabNav {
+    ul {
+      @apply flex border-b;
+      li { @apply focus-within:outline-none}
+    }
+    button {
+      @apply inline-flex justify-center font-bold items-center border-b-2 border-white bg-white text-base py-2 px-6 text-themeGrayscale600 hover:border-themePurple hover:text-themePurple transition-all duration-150;
+      &.zt-activeTab { @apply border-themePurple text-themePurple ; }
+    }
+  }
+}
 .zt-themeTabPanels { @apply flex flex-col p-4 bg-white grow }
 .zt-themeTabPanel { @apply grow flex flex-col }
 

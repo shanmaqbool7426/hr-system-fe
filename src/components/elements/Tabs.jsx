@@ -1,5 +1,4 @@
-import { Tab } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Tab } from '@headlessui/react' 
 
 
 export default function Tabs({ children, tabs, panels, containerClasses, tabNavClasses, tabPanelClasses }) {
