@@ -5,11 +5,22 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
-import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox } from "@/components/elements"
+import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, Button } from "@/components/elements"
+import { useState } from 'react';
 
 export default function CandidateFieldForm({ title, onClose, type, object, additionFields }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
+    const [fileName, setFileName] = useState('No file chosen');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+        } else {
+            setFileName('No file chosen');
+        }
+    };
     const formik = useFormik({
         initialValues: {
             employeeCNIC: object?.employeeCNIC || "",
@@ -74,292 +85,292 @@ export default function CandidateFieldForm({ title, onClose, type, object, addit
     }
 
     return (
-        <BaseForm 
+        <BaseForm
             title={object ? `Edit ${title}` : `Add new ${title}`}
             formElements={[]}
             formik={formik}
             onClose={onClose}
             is_loading={false}
+            className='sm:grid-cols-3'
         >
-            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                <legend className='col-span-2 text-left text-h6 font-bold'>Personal Info</legend>
-                <Input
-                    type={'text'}
-                    name={'employeeCNIC'}
-                    label={t('Employee CNIC')}
-                    placeholder={t('Employee CNIC')}
-                    value={formik.values.employeeCNIC}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'fatherName'}
-                    label={t('Father Name')}
-                    placeholder={t('Father Name')}
-                    value={formik.values.fatherName}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'passportNumber'}
-                    label={t('Passport Number')}
-                    placeholder={t('Passport Number')}
-                    value={formik.values.passportNumber}
-                    formik={formik}
-                    required
-                />
-                <SearchSelect
-                    name={'gender'}
-                    label={t('Gender')}
-                    value={formik.values.gender}
-                    list={[
-                        { display: 'Male', value: 'male' },
-                        { display: 'Female', value: 'Female' },
-                        { display: 'Other', value: 'other' },
-                    ]}
-                    error={formik.touched.gender && formik.errors.gender}
-                    onBlur={() => {
-                        formik.setFieldTouched('gender', true)
-                    }}
-                    onInput={formik.handleBlur}
-                    onChange={(value) => {
-                        formik.setFieldValue('gender', value)
-                    }}
-                />
-                <SearchSelect
-                    name={'martialStatus'}
-                    label={t('Martial Status')}
-                    value={formik.values.martialStatus}
-                    list={[
-                        { display: 'Single', value: 'single' },
-                        { display: 'Married', value: 'married' },
-                        { display: 'Divorced', value: 'divorced' },
-                        { display: 'Widowed', value: 'widowed' },
-                        { display: 'Separated', value: 'separated' },
-                        { display: 'Engaged', value: 'engaged' },
-                    ]}
-                    error={formik.touched.martialStatus && formik.errors.martialStatus}
-                    onBlur={() => {
-                        formik.setFieldTouched('martialStatus', true)
-                    }}
-                    onInput={formik.handleBlur}
-                    onChange={(value) => {
-                        formik.setFieldValue('martialStatus', value)
-                    }}
-                />
-                <Input
-                    type={'text'}
-                    name={'nationality'}
-                    label={t('Nationality')}
-                    placeholder={t('Nationality')}
-                    value={formik.values.nationality}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'religion'}
-                    label={t('Religion')}
-                    placeholder={t('Religion')}
-                    value={formik.values.religion}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'language'}
-                    label={t('Language')}
-                    placeholder={t('Language')}
-                    value={formik.values.language}
-                    formik={formik}
-                    required
-                />
+            <div className='col-span-3'>
+                <label className='text-sm font-medium mb-4 block text-start'>Upload File</label>
+                <div className='rounded-lg flex relative items-center border border-themeGrayscale300'>
+                    <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
+                    <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
+                    <span className='ps-2 text-sm'>{fileName}</span>
+                    <Button className={'btn absolute right-1  btn-primary mx-3 !py-1 !px-3'}>{t("Fetch Resume")}</Button>
+                </div>
             </div>
+            <legend className='col-span-3 text-left text-h6 font-bold'>Personal Info</legend>
+            <Input
+                type={'text'}
+                name={'employeeCNIC'}
+                label={t('Employee CNIC')}
+                placeholder={t('Employee CNIC')}
+                value={formik.values.employeeCNIC}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'fatherName'}
+                label={t('Father Name')}
+                placeholder={t('Father Name')}
+                value={formik.values.fatherName}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'passportNumber'}
+                label={t('Passport Number')}
+                placeholder={t('Passport Number')}
+                value={formik.values.passportNumber}
+                formik={formik}
+                required
+            />
+            <SearchSelect
+                name={'gender'}
+                label={t('Gender')}
+                value={formik.values.gender}
+                list={[
+                    { display: 'Male', value: 'male' },
+                    { display: 'Female', value: 'Female' },
+                    { display: 'Other', value: 'other' },
+                ]}
+                error={formik.touched.gender && formik.errors.gender}
+                onBlur={() => {
+                    formik.setFieldTouched('gender', true)
+                }}
+                onInput={formik.handleBlur}
+                onChange={(value) => {
+                    formik.setFieldValue('gender', value)
+                }}
+            />
+            <SearchSelect
+                name={'martialStatus'}
+                label={t('Martial Status')}
+                value={formik.values.martialStatus}
+                list={[
+                    { display: 'Single', value: 'single' },
+                    { display: 'Married', value: 'married' },
+                    { display: 'Divorced', value: 'divorced' },
+                    { display: 'Widowed', value: 'widowed' },
+                    { display: 'Separated', value: 'separated' },
+                    { display: 'Engaged', value: 'engaged' },
+                ]}
+                error={formik.touched.martialStatus && formik.errors.martialStatus}
+                onBlur={() => {
+                    formik.setFieldTouched('martialStatus', true)
+                }}
+                onInput={formik.handleBlur}
+                onChange={(value) => {
+                    formik.setFieldValue('martialStatus', value)
+                }}
+            />
+            <Input
+                type={'text'}
+                name={'nationality'}
+                label={t('Nationality')}
+                placeholder={t('Nationality')}
+                value={formik.values.nationality}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'religion'}
+                label={t('Religion')}
+                placeholder={t('Religion')}
+                value={formik.values.religion}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'language'}
+                label={t('Language')}
+                placeholder={t('Language')}
+                value={formik.values.language}
+                formik={formik}
+                required
+            />
+            <hr className='my-6 col-span-3' />
+            <legend className='col-span-3 text-left text-h6 font-bold'>Education Information</legend>
+            <Input
+                type={'text'}
+                name={'institution'}
+                label={t('Institution')}
+                placeholder={t('Institution')}
+                value={formik.values.institution}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'subject'}
+                label={t('Subject')}
+                placeholder={t('Subject')}
+                value={formik.values.subject}
+                formik={formik}
+                required
+            />
+            <Datepicker
+                name={'startingDate'}
+                label={t('Starting Date')}
+                value={formik.values.startingDate}
+                error={formik.errors.startingDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('startingDate', value) }}
+                required
+            />
+            <Datepicker
+                name={'completionDate'}
+                label={t('Completion Date')}
+                value={formik.values.completionDate}
+                error={formik.errors.completionDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('completionDate', value) }}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'institution'}
+                label={t('Institution')}
+                placeholder={t('Institution')}
+                value={formik.values.institution}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'degree'}
+                label={t('Degree')}
+                placeholder={t('Degree')}
+                value={formik.values.degree}
+                formik={formik}
+                required
+            />
 
-            <hr className='my-6' />
+            <hr className='my-6 col-span-3' />
 
-            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                <legend className='col-span-2 text-left text-h6 font-bold'>Education Information</legend>
-                <Input
-                    type={'text'}
-                    name={'institution'}
-                    label={t('Institution')}
-                    placeholder={t('Institution')}
-                    value={formik.values.institution}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'subject'}
-                    label={t('Subject')}
-                    placeholder={t('Subject')}
-                    value={formik.values.subject}
-                    formik={formik}
-                    required
-                />
-                <Datepicker
-                    name={'startingDate'}
-                    label={t('Starting Date')}
-                    value={formik.values.startingDate}
-                    error={formik.errors.startingDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('startingDate', value)}}
-                    required
-                />
-                <Datepicker
-                    name={'completionDate'}
-                    label={t('Completion Date')}
-                    value={formik.values.completionDate}
-                    error={formik.errors.completionDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('completionDate', value)}}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'institution'}
-                    label={t('Institution')}
-                    placeholder={t('Institution')}
-                    value={formik.values.institution}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'degree'}
-                    label={t('Degree')}
-                    placeholder={t('Degree')}
-                    value={formik.values.degree}
-                    formik={formik}
-                    required
-                />
-            </div>
+            <legend className='col-span-3 text-left text-h6 font-bold'>Education Information</legend>
+            <Input
+                type={'text'}
+                name={'institution'}
+                label={t('Institution')}
+                placeholder={t('Institution')}
+                value={formik.values.institution}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'subject'}
+                label={t('Subject')}
+                placeholder={t('Subject')}
+                value={formik.values.subject}
+                formik={formik}
+                required
+            />
+            <Datepicker
+                name={'startingDate'}
+                label={t('Starting Date')}
+                value={formik.values.startingDate}
+                error={formik.errors.startingDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('startingDate', value) }}
+                required
+            />
+            <Datepicker
+                name={'completionDate'}
+                label={t('Completion Date')}
+                value={formik.values.completionDate}
+                error={formik.errors.completionDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('completionDate', value) }}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'institution'}
+                label={t('Institution')}
+                placeholder={t('Institution')}
+                value={formik.values.institution}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'degree'}
+                label={t('Degree')}
+                placeholder={t('Degree')}
+                value={formik.values.degree}
+                formik={formik}
+                required
+            />
 
-            <hr className='my-6' />
+            <hr className='my-6 col-span-3' />
 
-            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                <legend className='col-span-2 text-left text-h6 font-bold'>Education Information</legend>
-                <Input
-                    type={'text'}
-                    name={'institution'}
-                    label={t('Institution')}
-                    placeholder={t('Institution')}
-                    value={formik.values.institution}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'subject'}
-                    label={t('Subject')}
-                    placeholder={t('Subject')}
-                    value={formik.values.subject}
-                    formik={formik}
-                    required
-                />
-                <Datepicker
-                    name={'startingDate'}
-                    label={t('Starting Date')}
-                    value={formik.values.startingDate}
-                    error={formik.errors.startingDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('startingDate', value)}}
-                    required
-                />
-                <Datepicker
-                    name={'completionDate'}
-                    label={t('Completion Date')}
-                    value={formik.values.completionDate}
-                    error={formik.errors.completionDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('completionDate', value)}}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'institution'}
-                    label={t('Institution')}
-                    placeholder={t('Institution')}
-                    value={formik.values.institution}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'degree'}
-                    label={t('Degree')}
-                    placeholder={t('Degree')}
-                    value={formik.values.degree}
-                    formik={formik}
-                    required
-                />
-            </div>
-
-            <hr className='my-6' />
-
-            <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
-                <legend className='col-span-2 text-left text-h6 font-bold'>Experience Information</legend>
-                <Input
-                    type={'text'}
-                    name={'companyName'}
-                    label={t('Company Name')}
-                    placeholder={t('Company Name')}
-                    value={formik.values.companyName}
-                    formik={formik}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'designation'}
-                    label={t('Designation')}
-                    placeholder={t('Designation')}
-                    value={formik.values.designation}
-                    formik={formik}
-                    required
-                />
-                <Datepicker
-                    name={'jobStartDate'}
-                    label={t('Job Start Date')}
-                    value={formik.values.jobStartDate}
-                    error={formik.errors.jobStartDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('jobStartDate', value)}}
-                    required
-                />
-                <Datepicker
-                    name={'jobEndDate'}
-                    label={t('Job End Date')}
-                    value={formik.values.jobEndDate}
-                    error={formik.errors.jobEndDate}
-                    onBlur={formik.handleBlur}
-                    onInput={formik.handleBlur}
-                    minDate={new Date}
-                    onChange={(value) => {formik.setFieldValue('jobEndDate', value)}}
-                    required
-                />
-                <Input
-                    type={'text'}
-                    name={'location'}
-                    label={t('Location')}
-                    placeholder={t('Location')}
-                    value={formik.values.location}
-                    formik={formik}
-                    required
-                />
-            </div>
+            <legend className='col-span-3 text-left text-h6 font-bold'>Experience Information</legend>
+            <Input
+                type={'text'}
+                name={'companyName'}
+                label={t('Company Name')}
+                placeholder={t('Company Name')}
+                value={formik.values.companyName}
+                formik={formik}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'designation'}
+                label={t('Designation')}
+                placeholder={t('Designation')}
+                value={formik.values.designation}
+                formik={formik}
+                required
+            />
+            <Datepicker
+                name={'jobStartDate'}
+                label={t('Job Start Date')}
+                value={formik.values.jobStartDate}
+                error={formik.errors.jobStartDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('jobStartDate', value) }}
+                required
+            />
+            <Datepicker
+                name={'jobEndDate'}
+                label={t('Job End Date')}
+                value={formik.values.jobEndDate}
+                error={formik.errors.jobEndDate}
+                onBlur={formik.handleBlur}
+                onInput={formik.handleBlur}
+                minDate={new Date}
+                onChange={(value) => { formik.setFieldValue('jobEndDate', value) }}
+                required
+            />
+            <Input
+                type={'text'}
+                name={'location'}
+                label={t('Location')}
+                placeholder={t('Location')}
+                value={formik.values.location}
+                formik={formik}
+                required
+            />
         </BaseForm>
     )
 }
