@@ -1,7 +1,8 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateBiometricDevice from "@/components/forms/attendance/createBiometricDevice";
 import { CrossClose, Edit, SuccessTick, ThreeDotsVertical, Tick, Trash } from "@/components/svg";
-import { FetchDevices } from "@/store/actions/biometric.actions";
+import { FetchDevices, SyncDevice } from "@/store/actions/biometric.actions";
+import Toast from "@/util/toast";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,21 +23,21 @@ export default function BiometricSettings() {
     const headings = [
         { title: t("IP Address"), col: 'ipAddress' },
         { title: t("Port"), col: "port" },
-        { title: t("Station"), col: "staion" },
+        { title: t("Station"), col: "station" },
         { title: t("Action"), col: "action" },
     ]
 
     let filteredrows = device_list.filter((item) => {
         let include = true
-        if (filters.search && filters.search.length > 0) {
-            let fullname = item.firstName + " " + item.lastName
-            include = fullname.toLowerCase().includes(filters.search.toLowerCase()) || item.email.toLowerCase().includes(filters.search.toLowerCase())
-            if (!include) return false
-        }
-        if (filters.status) {
-            include = item?.status?._id === filters.status
-            if (!include) return false
-        }
+        // if (filters.search && filters.search.length > 0) {
+        //     let fullname = item.firstName + " " + item.lastName
+        //     include = fullname.toLowerCase().includes(filters.search.toLowerCase()) || item.email.toLowerCase().includes(filters.search.toLowerCase())
+        //     if (!include) return false
+        // }
+        // if (filters.status) {
+        //     include = item?.status?._id === filters.status
+        //     if (!include) return false
+        // }
         return include
     }).sort((a, b) => {
         if (sortDir === 'asc') return a[sortCol]?.localeCompare(b[sortCol])
@@ -54,9 +55,17 @@ export default function BiometricSettings() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setEdit(item); setAdd(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { dispatch(SyncDevice(item._id, ()=> {
+                            Toast.success("Attendance synced successfully")
+                        })) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            {/* <span><Edit /></span> */}
+                            <span>{t("Sync")}</span>
                         </a>
                     </li>
                 </ul>
