@@ -2,7 +2,7 @@ import Button from "../elements/Button"
 import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
 import { useTranslation } from "react-i18next"
 
-export default function BaseForm({ children, formElements, onClose, title, formik, is_loading }) {
+export default function BaseForm({ children, formElements, onClose, title, formik, is_loading , className}) {
     const { t } = useTranslation()
     const close = () => onClose()
     const submitHamdler = (event) => {
@@ -18,7 +18,7 @@ export default function BaseForm({ children, formElements, onClose, title, formi
 
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
                     <fieldset className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_185px)]">
-                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                        <div className={`grid sm:grid-cols-2 gap-x-6 gap-y-4 ${className}`}>
                             {formElements?.map((element, index) => {
                                 switch (element.type) {
                                     case 'date':

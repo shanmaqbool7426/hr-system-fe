@@ -10,7 +10,7 @@ export const Leaves = () => {
             {['Probation Leave', "Sick Leave", "Casual Leave", "Annual Leave", "Compensatory Leave"].map((ele, i) => (
                 <div key={i} className='rounded-lg bg-white p-6 flex flex-col items-center gap-4'>
                     <h2 className='text-sm font-semibold mb-0'>{ele}</h2>
-                    <RadialChart circleSize={90} />
+                    <RadialChart circleSize={90} fillColor={'#8C62FF'} circularValue={'/10'}/>
                     <div className='text-xs text-themeGrayscale600'>
                         <span className='border-r border-themeGrayscale300 p-1'>{t("Total 10")}</span>
                         <span className='border-r border-themeGrayscale300 p-1'>{t("Used - 4")}</span>
