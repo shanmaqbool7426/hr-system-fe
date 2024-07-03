@@ -6,7 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddRequestForm({ title, onClose, type, object, additionFields }) {
+export default function AddRequestForm({onClose, object }) {
     const { t } = useTranslation()
     const { t:tv } = useTranslation("validation")
 
@@ -22,9 +22,13 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
             reason: object?.reason || ""
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(tv('Name is required')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
+            name: Yup.string().required(tv('Name is required')),
+            attendanceDate: Yup.string().required(tv("Attendance date is required")),
+            inDate: Yup.string().required(tv("InDate is required")),
+            InTime: Yup.string().required(tv("InTime is required")),
+            outDate: Yup.string().required(tv("outDate is required")),
+            OutTime: Yup.string().required(tv("OutTime is required")),
+            reason: Yup.string().required(tv("reason is required")),   
         }),
         onSubmit: async (values) => {
 
@@ -32,7 +36,7 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`${type} Request completed successfully`) : t(`${type} created successfully`))
         onClose()
     }
     const formElements = [
@@ -98,10 +102,7 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
         },
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
-AddRequestForm.defaultProps = {
-    additionFields: []
-}

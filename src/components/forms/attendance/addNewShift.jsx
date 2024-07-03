@@ -6,36 +6,35 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddNewShiftForm({ title, onClose, type, object, additionFields }) {
+export default function AddNewShiftForm({ onClose, object }) {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
-    const formik = useFormik({
-        initialValues: {
-            name: object?.name || "",
-            type,
-            icon: object?.icon || "",
-            prefix: object?.prefix || "",
-        },
-        validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
-        onSubmit: async (values) => {
+    const { t:tv } = useTranslation("validation")
 
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
-        }
-    })
-    const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
-        onClose()
+const dispatch = useDispatch();
+const formik = useFormik({
+    initialValues: {
+        Shift: object?.Shift || "",
+        Employee: object?.Employee || "",
+    }, 
+    validationSchema: Yup.object().shape({
+        Shift: Yup.string().required(tv('Shift is required')),
+        Employee: Yup.string().required(tv('Employee is required'))
+
+    }),
+    onSubmit: async (values) => {
+        return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted));
     }
+});
+const onCompleted = () => {
+    Toast.success(object ? tv(`${type} New shift added successfully`) : tv(`${type} New shift created successfully`));
+    onClose();
+};
     const formElements = [
         {
             type: "select",
             name: "Shift",
             label: t('Shift'),
-            placeholder: "Select Shift",
+            placeholder: t("Select Shift"),
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
@@ -45,7 +44,7 @@ export default function AddNewShiftForm({ title, onClose, type, object, addition
             type: "select",
             name: "Employee",
             label: t('Employee'),
-            placeholder: "Select Employee",
+            placeholder: t("Select Employee"),
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
@@ -55,7 +54,7 @@ export default function AddNewShiftForm({ title, onClose, type, object, addition
             type: "select",
             name: "Employee",
             label: t('Apply On All Working Days In This Week'),
-            placeholder: "Select Once",
+            placeholder: t("Select Once"),
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
@@ -63,10 +62,7 @@ export default function AddNewShiftForm({ title, onClose, type, object, addition
         },
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
-AddNewShiftForm.defaultProps = {
-    additionFields: []
-}

@@ -9,5 +9,10 @@
     "Flag type is required": "Flag  required",
     "Atendance date is required": "Atendance date is required",
     "Name is required": "Name is required",
+    "Reason is required": "Reason is required",
+    "Attendance date is required": "Attendance date is required",
+    "Shift is required": "Shift is required",
+    "Start Date date is required": "Start Date date is required",
+    "End Date date is required": "End Date is required",
     "Reason is required": "Reason is required"
 }
