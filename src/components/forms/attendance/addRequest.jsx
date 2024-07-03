@@ -8,17 +8,22 @@ import { useDispatch } from 'react-redux';
 
 export default function AddRequestForm({ title, onClose, type, object, additionFields }) {
     const { t } = useTranslation()
+    const { t:tv } = useTranslation("validation")
+
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
-            icon: object?.icon || "",
-            prefix: object?.prefix || "",
+            employee: object?.employee?._id || "",
+            attendanceDate: object?.attendanceDate || "",
+            inDate: object?.inDate || "",
+            InTime: object?.InTime || "",
+            outDate: object?.outDate || "",
+            OutTime: object?.OutTime || "",
+            reason: object?.reason || ""
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
+            icon: additionFields.length > 0 ? Yup.string().required(tv('Name is required')) : Yup.string().optional(),
             prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),
         onSubmit: async (values) => {
@@ -33,12 +38,12 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
     const formElements = [
         {
             type: "select",
-            name: "Employee",
+            name: "employee",
             label: t('Employee'),
             placeholder: "Select Employee",
             list: ["Yes", "No"],
             required: true,
-            value: formik.values.name,
+            value: formik.values.employee,
         },
         {
             type: "date",
@@ -63,7 +68,7 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
             placeholder: "9:00 PM",
             list: ["Yes", "No"],
             required: true,
-            value: formik.values.name,
+            value: formik.values.InTime,
         },
         {
             type: "date",
@@ -71,7 +76,7 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
             label: t('Out Date'),
             maxDate: new Date,
             required: true,
-            value: formik.values.inDate,
+            value: formik.values.outDate,
         },
         {
             type: "select",
@@ -80,15 +85,16 @@ export default function AddRequestForm({ title, onClose, type, object, additionF
             placeholder: "9:00 PM",
             list: ["Yes", "No"],
             required: true,
-            value: formik.values.name,
+            value: formik.values.OutTime,
         },
         {
             type: "textarea",
             name: "reason",
             label: t('Reason'),
             containerClass: 'col-span-2',
-            value: formik.values.reason,
             required: true,
+            value: formik.values.reason,
+
         },
     ]
     return (
