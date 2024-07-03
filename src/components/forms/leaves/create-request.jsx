@@ -15,6 +15,16 @@ export default function CreateLeaveRequestForm({ onClose, request }) {
     const { is_loading, employees_list } = useSelector((state) => state.employee)
     const { leave_policies } = useSelector(state => state.leavepolicy)
     const { auth_user } = useSelector(state => state.auth)
+    const [fileName, setFileName] = useState('No File Selected');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+        } else {
+            setFileName('No File Selected');
+        }
+    };
     const formik = useFormik({
         initialValues: {
             employee: request?.employee?._id || "",
@@ -80,6 +90,24 @@ export default function CreateLeaveRequestForm({ onClose, request }) {
             required: true,
         },
         {
+            type: "text",
+            name: "Entitled",
+            label: t('Entitled'),
+            required: true,
+        },
+        {
+            type: "text",
+            name: "Taken",
+            label: t('Taken'),
+            required: true,
+        },
+        {
+            type: "text",
+            name: "Balance",
+            label: t('Balance'),
+            required: true,
+        },
+        {
             type: "select",
             name: "leaveDuration",
             label: t('Leave Duration'),
@@ -128,6 +156,15 @@ export default function CreateLeaveRequestForm({ onClose, request }) {
     const formTitle = request ? t("Update Leave Request") : t("Create Leave Request")
 
     return (
-        <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
+        <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
+            <div className='col-span-2'>
+                <label className='text-sm font-medium mb-4 block text-start'>Upload Attachment</label>
+                <div className='rounded-lg flex relative items-center border border-themeGrayscale300'>
+                    <label htmlFor="upload" className='zt-uploadLabel'>Upload Attachment</label>
+                    <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
+                    <span className='ps-2 text-sm'>{fileName}</span>
+                </div>
+            </div>
+        </BaseForm>
     )
 }

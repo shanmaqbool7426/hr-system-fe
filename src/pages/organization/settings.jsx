@@ -2,11 +2,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { Tabs } from '@/components/elements';
 import { Tab } from '@headlessui/react'
-import SystemConfiguration from '@/modules/leaves/settings/SystemConfiguration';
-import { CompanySettings } from '@/modules/leaves/settings/CompanySettings';
-import { BiometricSettings } from '@/modules/leaves/settings/BiometricSetting';
-import { EmailSettings } from '@/modules/leaves/settings/EmailSetting';
-import { CardTemplate } from '@/modules/leaves/settings/CardTemplates';
+import SystemConfiguration from '@/modules/organization/settings/SystemConfiguration';
+import { CompanySettings } from '@/modules/organization/settings/CompanySettings';
+import { BiometricSettings } from '@/modules/organization/settings/BiometricSetting';
+import { EmailSettings } from '@/modules/organization/settings/EmailSetting';
+import { CardTemplate } from '@/modules/organization/settings/CardTemplates';
 export default function OrganizationSettingPage() {
     const { t } = useTranslation();
 
