@@ -32,11 +32,10 @@ const teamData = [
         ],
     }
 ]
-export default function AddProjectsForm({ title, onClose, type, object, additionFields }) {
+export default function AddProjectsForm({ onClose, object, }) {
     const { t } = useTranslation()
     const [value, setValue] = useState('');
     const [fileName, setFileName] = useState('No file chosen');
-
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -65,12 +64,11 @@ export default function AddProjectsForm({ title, onClose, type, object, addition
             prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),
         onSubmit: async (values) => {
-
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Project updated successfully`) : t(`Project created successfully`))
         onClose()
     }
     const formElements = [
@@ -101,7 +99,7 @@ export default function AddProjectsForm({ title, onClose, type, object, addition
         {
             type: "date",
             name: "sprint",
-            label: t('Due Date of Sprint'), 
+            label: t('Due Date of Sprint'),
             required: true,
             value: formik.values.name,
         },
@@ -164,7 +162,7 @@ export default function AddProjectsForm({ title, onClose, type, object, addition
         },
     ]
     return (
-        <BaseForm title={title} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
+        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
             <div className='grid sm:grid-cols-2 gap-x-6 gap-y-4 py-4'>
                 {teamData.map((ele, i) => (
                     <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
@@ -193,12 +191,6 @@ export default function AddProjectsForm({ title, onClose, type, object, addition
                     </div>
                 </div>
             </div>
-
-
         </BaseForm>
     )
-}
-
-AddProjectsForm.defaultProps = {
-    additionFields: []
 }
