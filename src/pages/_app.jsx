@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }) {
         setReady(true)
     }, [])
     const Layout = Component.layout || DefaultLayout;
+
     return (
         <>
             {ready &&
@@ -21,6 +22,9 @@ export default function App({ Component, pageProps }) {
                     <Head>
                         <title>Zaffre Tech | Innovative AI HR Solution</title>
                         <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+                        <link rel="preconnect" href="https://fonts.googleapis.com" />
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
                     </Head>
                     <Provider store={store}>
                         <Layout>
