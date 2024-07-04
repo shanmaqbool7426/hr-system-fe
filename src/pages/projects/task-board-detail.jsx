@@ -1,7 +1,6 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import ProgressBar from '@/components/elements/ProgressBar'
-import UserListView from '@/components/elements/UserListView'
-import AddProjectsForm from '@/components/forms/projects/addProjects'
+import UserListView from '@/components/elements/UserListView' 
 import AddTaskForm from '@/components/forms/projects/addTask'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import FeedbackForm from '@/components/forms/projects/feedback'
@@ -16,6 +15,7 @@ import { useSelector } from 'react-redux'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import CreatProjectsForm from '@/components/forms/projects/creatProjects'
 const data = [
     { name: 'High', value: 300 },
     { name: 'Medium', value: 300 },
@@ -418,19 +418,13 @@ export default function TaskBoardDetailModule() {
                         className={'zt-employeeTable zt-projectsTable'}
                     />
                 }
-                {create && <AddProjectsForm
-                    title={t('Add Project')}
-                    type={'New Request'}
+                {create && <CreatProjectsForm 
                     onClose={() => { setCreate(false) }}
                 />}
-                {raiseIssue && <RaiseIssueForm
-                    title={t('Raise Issue')}
-                    type={'Raise Issue'}
+                {raiseIssue && <RaiseIssueForm 
                     onClose={() => { setRaiseIssue(false) }}
                 />}
-                {feedback && <FeedbackForm
-                    title={t('Feedback')}
-                    type={'Feedback'}
+                {feedback && <FeedbackForm 
                     onClose={() => { setFeedback(false) }}
                 />}
                 {task && <AddTaskForm

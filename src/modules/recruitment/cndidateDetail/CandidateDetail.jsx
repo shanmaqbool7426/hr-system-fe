@@ -79,13 +79,10 @@ const CandidateDetail = () => {
                 </div>
             </div>
             {schedule && <ScheduleInterview
-                title={'Schedule Interview'}
-                type={'ScheduleInterview'}
+                title={'Schedule Interview'} 
                 onClose={() => { setSchedule(false) }}
             />}
-            {job && <OfferJob
-                title={'Offer Job'}
-                type={'OfferJob'}
+            {job && <OfferJob 
                 onClose={() => { setJob(false) }}
             />}
         </div>

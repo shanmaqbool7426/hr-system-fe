@@ -1,9 +1,7 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import AddProjectsForm from '@/components/forms/projects/addProjects'
-import FilterArea from '@/components/includes/FilterArea'
-import { Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash } from '@/components/svg'
-import ProjectCard from '@/modules/employee/projects/projectCard'
+import CreatProjectsForm from '@/components/forms/projects/creatProjects' 
+import FilterArea from '@/components/includes/FilterArea' 
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -220,9 +218,7 @@ export default function ProjectsModule() {
             setPage={setPage}
             className={'zt-employeeTable zt-projectsTable'}
           /> 
-        {create && <AddProjectsForm
-          title={t('Add Project')}
-          type={'New Request'}
+        {create && <CreatProjectsForm 
           onClose={() => { setCreate(false) }}
         />}
       </div>

@@ -10,7 +10,7 @@ import { FetchLeavePolicies } from "@/store/actions/leave-policy.actions";
 import { Table, Textarea } from "@/components/elements";
 import Image from "next/image";
 
-export default function CreateLeaveDetailForm({ onClose, title, request }) {
+export default function CreateLeaveDetailForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [leaveDays, setLeaveDays] = useState(0)
@@ -66,14 +66,15 @@ export default function CreateLeaveDetailForm({ onClose, title, request }) {
         Remarks: "-",
     },
     ]
+    
     const formik = useFormik({
         initialValues: {
-            employee: request?.employee?._id || "",
-            leaveType: request?.leaveType?._id || "",
-            leaveDuration: request?.leaveDuration || "",
-            dateForm: request?.dateForm || "",
-            dateTo: request?.dateTo || "",
-            reason: request?.reason || "",
+            employee: object?.employee?._id || "",
+            leaveType: object?.leaveType?._id || "",
+            leaveDuration: object?.leaveDuration || "",
+            dateForm: object?.dateForm || "",
+            dateTo: object?.dateTo || "",
+            reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
             employee: Yup.string().required(t('formik.employeeRequired')),
@@ -83,11 +84,11 @@ export default function CreateLeaveDetailForm({ onClose, title, request }) {
             reason: Yup.string().required(t('formik.reasonRequired')),
         }),
         onSubmit: async (values) => {
-            return request ? dispatch(UpdateEmployee(request._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
+            return object ? dispatch(UpdateEmployee(object._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(request ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
+        Toast.success(object ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
         onClose()
     }
     useEffect(() => {
@@ -106,7 +107,7 @@ export default function CreateLeaveDetailForm({ onClose, title, request }) {
 
 
     return (
-        <BaseForm title={title} formik={formik} onClose={onClose} is_loading={is_loading} >
+        <BaseForm title={object?"Leave Request detail":"Leave Request detail"} formik={formik} onClose={onClose} is_loading={is_loading} >
             <Table
                 headings={headings}
                 rows={rows}
