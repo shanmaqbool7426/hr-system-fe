@@ -18,7 +18,7 @@ export default function SignInPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const {t:tv} = useTranslation("validation")
+    const { t: tv } = useTranslation("validation")
 
     const formik = useFormik({
         initialValues: {
@@ -39,7 +39,6 @@ export default function SignInPage() {
             router.push('/dashboard')
         }
     }, [auth_user, router])
-    console.log("is_loading", is_loading);
     return (
         <form className="zt-authForm zt-signInForm" onSubmit={(event) => { event.preventDefault(); formik.handleSubmit() }}>
             <figure className="zt-logo">
