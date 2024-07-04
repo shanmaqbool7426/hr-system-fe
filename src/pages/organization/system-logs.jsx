@@ -91,8 +91,7 @@ export default function SystemLogsPage() {
                             <span className="text-themeGrayscale500">{t("10202325")}</span>
                         </div>
                     </div>}
-                />
-               
+                />               
             </div>,
             DateTime:<div className="flex flex-col gap-1">
                 <span>{t("22 March 2024")}</span>
