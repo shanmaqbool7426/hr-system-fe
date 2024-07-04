@@ -99,7 +99,4 @@ export default function ScheduleInterview({ onClose, object }) {
         <BaseForm title={object?"Schedule Interview":"Schedule Interview"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
-
-ScheduleInterview.defaultProps = {
-    additionFields: []
-}
+ 

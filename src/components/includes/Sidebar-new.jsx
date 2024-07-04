@@ -81,7 +81,7 @@ export default function Sidebar() {
         connect:[
             { name: t("Chat"), href: "/connect/chat" },
             { name: t("Call"), href: "/connect/call" },
-            { name: t("Group Chat"), href: "/connect/group-chat" },
+            { name: t("Groups"), href: "/connect/groups" },
             { name: t("Calender"), href: "/connect/calender" }, 
         ],
         recruitment: [
