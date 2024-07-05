@@ -22,7 +22,7 @@ export default function OrganizationSettingPage() {
             <Tabs
                 containerClasses={'zt-themeTabsV2 grow'}
                 tabNavClasses={'zt-themeTabNav'}
-                tabs={["System Configuration", "Custom Fields", "Email Settings", "Company Settings", "Card Template"]}
+                tabs={["System Configuration", "Custom Fields", "Email Settings", "Company Settings","Biometric Device Settings", "Card Template"]}
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0`}>
                     <Tab.Panel className={'zt-themeTabPanel'}>

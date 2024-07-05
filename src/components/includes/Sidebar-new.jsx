@@ -17,7 +17,7 @@ export default function Sidebar() {
         { icon: Attendance, name: t("Attendance"), href: "attendance" },
         { icon: Leave, name: t("Leave"), href: "leave" },
         { icon: Projects, name: t("Projects"), href: "projects"  },
-        { icon: Connect, name: t("Connect"), href: "/connect", page: true },
+        { icon: Connect, name: t("Connect"), href: "connect", },
         { icon: RemoteWork, name: t("Remote Work"), href: "/remote-work", page: true },
         { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
         { icon: Payroll, name: t("Payroll"), href: "payroll" },
@@ -77,6 +77,12 @@ export default function Sidebar() {
             { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
             { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
             { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+        ],
+        connect:[
+            { name: t("Chat"), href: "/connect/chat" },
+            { name: t("Call"), href: "/connect/call" },
+            { name: t("Groups"), href: "/connect/groups" },
+            { name: t("Calender"), href: "/connect/calender" }, 
         ],
         recruitment: [
             { name: t("Dashboard"), href: "/recruitment/" },

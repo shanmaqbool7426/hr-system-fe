@@ -33,9 +33,7 @@ export default function AttendanceSettingPage() {
         </Tab.Panels>
 
       </Tabs>
-      {feedback && <FeedbackForm
-        title={t('Feedback')}
-        type={'Feedback'}
+      {feedback && <FeedbackForm 
         onClose={() => { setFeedback(false) }}
       />}
     </section>

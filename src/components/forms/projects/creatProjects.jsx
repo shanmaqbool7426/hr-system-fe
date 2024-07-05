@@ -32,7 +32,7 @@ const teamData = [
         ],
     }
 ]
-export default function AddProjectsForm({ onClose, object, }) {
+export default function CreatProjectsForm({ onClose, object, }) {
     const { t } = useTranslation()
     const [value, setValue] = useState('');
     const [fileName, setFileName] = useState('No file chosen');
@@ -53,16 +53,13 @@ export default function AddProjectsForm({ onClose, object, }) {
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
+            name: object?.name || "", 
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
+       }),
         onSubmit: async (values) => {
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
@@ -163,7 +160,7 @@ export default function AddProjectsForm({ onClose, object, }) {
     ]
     return (
         <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
-            <div className='grid sm:grid-cols-2 gap-x-6 gap-y-4 py-4'>
+            <div className='grid sm:grid-cols-2 gap-x-6 gap-y-4 py-4 col-span-2'>
                 {teamData.map((ele, i) => (
                     <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
                 ))}
@@ -177,7 +174,7 @@ export default function AddProjectsForm({ onClose, object, }) {
                     required={true}
                 />
             </div>
-            <div className='flex flex-col gap-6'>
+            <div className='flex flex-col gap-6 col-span-2'>
                 <div>
                     <label className='text-sm font-medium mb-3 block text-start'>Description</label>
                     <ReactQuill theme="snow" value={value} onChange={setValue} />

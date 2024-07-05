@@ -71,9 +71,7 @@ export default function AwaitingTasksPage() {
                     </div>
                 ))}
             </div> */}
-            {create && <RaiseIssueForm
-                title={t('Raise Issue')}
-                type={'Raise Issue'}
+            {create && <RaiseIssueForm 
                 onClose={() => { setCreate(false) }}
             />}
         </section>

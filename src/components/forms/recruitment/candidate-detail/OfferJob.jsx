@@ -4,31 +4,28 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
-import BaseForm from '../../BaseForm'; 
+import BaseForm from '../../BaseForm';
 
-export default function OfferJob({ title, onClose, type, object, additionFields }) {
+export default function OfferJob({onClose, object }) {
     const { t } = useTranslation()
 
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
+            name: object?.name || "", 
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
+       }),
         onSubmit: async (values) => {
 
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Job updated successfully`) : t(`Job created successfully`))
         onClose()
     }
     const formElements = [
@@ -39,7 +36,7 @@ export default function OfferJob({ title, onClose, type, object, additionFields 
             placeholder: t("Offer Salary"),
             required: true,
             value: formik.values.name,
-        }, 
+        },
         {
             type: "text",
             name: "designation",
@@ -55,26 +52,26 @@ export default function OfferJob({ title, onClose, type, object, additionFields 
             placeholder: t("Deprtement"),
             required: true,
             value: formik.values.name,
-        },  
+        },
         {
             type: "date",
             name: "dateofjoning",
-            label: t('Date of Joning'), 
+            label: t('Date of Joning'),
             required: true,
             value: formik.values.name,
-        },  
+        },
         {
             type: "textarea",
             name: "description",
             label: t('Description'),
-            placeholder: t("Type Here"), 
+            placeholder: t("Type Here"),
             containerClass: 'col-span-2',
             required: true,
             value: formik.values.name,
         },
     ]
     return (
-        <BaseForm title={title} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? "Offer Job" : "Offer Job"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
