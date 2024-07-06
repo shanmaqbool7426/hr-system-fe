@@ -968,7 +968,39 @@ function UpArrow({ className, width, height, ...props }) {
     <svg className={`${className}`} {...props} width={`${width ? width : '16'}`} height={`${height ? height : '16'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="text-white" color="#fff"><path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
   )
 }
+function WarningIcon({ className, width, height, ...props }) {
+  return (
+    <svg className={`${className}`} {...props} width={`${width ? width : '18'}`} height={`${height ? height : '18'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 14a1 1 0 0 1-1-1v-3a1 1 0 1 1 2 0v3a1 1 0 0 1-1 1zm-1.5 2.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0z" fill="#0D0D0D" /><path d="M10.23 3.216c.75-1.425 2.79-1.425 3.54 0l8.343 15.852C22.814 20.4 21.85 22 20.343 22H3.657c-1.505 0-2.47-1.6-1.77-2.931L10.23 3.216zM20.344 20L12 4.147 3.656 20h16.688z" fill="currentColor" /></svg>
+  )
+}
+function DiscussionIcon({ className, width, height, ...props }) {
+  return (
+    <svg className={`${className}`} {...props} width={`${width ? width : '18'}`} height={`${height ? height : '18'}`} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <g fill="currentColor">
+        <path d="M11.25 1a.75.75 0 010 1.5h-9a.75.75 0 00-.75.75v6.531l.706-.51a.75.75 0 01.88 1.214L1.19 11.858A.75.75 0 010 11.25v-8A2.25 2.25 0 012.25 1h9z" />
+        <path fill-rule="evenodd" d="M6.25 4A2.25 2.25 0 004 6.25v4.534a2.25 2.25 0 002.25 2.25h6.041l2.52 1.824A.75.75 0 0016 14.25v-8A2.25 2.25 0 0013.75 4h-7.5zM5.5 6.25a.75.75 0 01.75-.75h7.5a.75.75 0 01.75.75v6.531l-1.526-1.104a.75.75 0 00-.44-.143H6.25a.75.75 0 01-.75-.75V6.25z" clip-rule="evenodd" />
+      </g>
+    </svg>
+  )
+}
+function BlockIcon({ className, width, height, ...props }) {
+  return (
+    <svg className={`${className}`} {...props} width={`${width ? width : '18'}`} height={`${height ? height : '18'}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+      <path d="M5 19L19 5" stroke="currentColor" stroke-width="2" />
+    </svg>
+  )
+}
+function FeedbackIcon({ className, width, height, ...props }) {
+  return (
+    <svg className={`${className}`} {...props} width={`${width ? width : '18'}`} height={`${height ? height : '18'}`} viewBox="0 -18 1060 1060" fill="currentColor" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M963.2 408c-13.6 0-24 11.2-24 24v432c0 27.2-21.6 48.8-48.8 48.8H159.2c-27.2 0-48.8-21.6-48.8-48.8V159.2c0-27.2 21.6-48.8 48.8-48.8h470.4c13.6 0 24-11.2 24-24 0-13.6-11.2-24-24-24H154.4C103.2 62.4 61.6 104 61.6 155.2v715.2c0 51.2 41.6 92.8 92.8 92.8h740.8c51.2 0 92.8-41.6 92.8-92.8V432c0-12.8-11.2-24-24.8-24z" fill="" /><path d="M968 151.2l-44-44c-30.4-30.4-78.4-33.6-105.6-5.6L355.2 564.8 510.4 720l463.2-463.2c28-27.2 25.6-75.2-5.6-105.6z m-116.8 159.2l-344 344-86.4-85.6 345.6-345.6 84.8 87.2z m88-88l-51.2 51.2-85.6-86.4 50.4-50.4c10.4-10.4 28.8-9.6 40 2.4l44 44c12 10.4 12.8 28.8 2.4 39.2zM355.2 566.4l-48 174.4c-2.4 8 0 16 5.6 21.6 5.6 5.6 13.6 8 21.6 5.6l174.4-48-36-36L360 715.2l31.2-113.6-36-35.2z" fill="" /></svg>
+  )
+}
 export {
+  FeedbackIcon,
+  DiscussionIcon,
+  BlockIcon,
+  WarningIcon,
   UpArrow,
   WordIcon,
   ReadPdfIcon,
