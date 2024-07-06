@@ -86,17 +86,22 @@ export default function Dashboard() {
     .filter(item => {
 
       let attendanceDate = new Date(item.date)
-      let flag = attendanceDate.getMonth() === (new Date).getMonth()
+      let flag = true
       if (filters.fromDate) {
         flag = attendanceDate.getTime() >= (new Date(filters.fromDate)).getTime()
         if (!flag) return false
       }
       if (filters.toDate) {
-        flag = attendanceDate.seconds() <= (new Date(filters.toDate)).getTime()
+        flag = attendanceDate.getTime() <= (new Date(filters.toDate)).getTime()
         if (!flag) return false
       }
       if (filters.search) {
         flag = item?.user?.firstName?.toLowerCase().includes(filters.search.toLowerCase())
+        if (!flag) return false
+      }
+      if (!filters.fromDate && !filters.toDate) {
+        flag = attendanceDate.getMonth() === (new Date).getMonth()
+        if (!flag) return false
       }
       return flag
     })
