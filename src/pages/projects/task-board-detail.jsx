@@ -1,12 +1,12 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import ProgressBar from '@/components/elements/ProgressBar'
-import UserListView from '@/components/elements/UserListView' 
+import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import FeedbackForm from '@/components/forms/projects/feedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
-import { ChevronLeft, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash } from '@/components/svg'
+import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -16,6 +16,7 @@ import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import DiscussionForm from '@/components/forms/projects/discussion'
 const data = [
     { name: 'High', value: 300 },
     { name: 'Medium', value: 300 },
@@ -99,8 +100,8 @@ export default function TaskBoardDetailModule() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const [board, setBoard] = useState(false)
     const [feedback, setFeedback] = useState(false)
+    const [discussion, setDiscussion] = useState(false)
     const [task, setTask] = useState(false)
     const [raiseIssue, setRaiseIssue] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
@@ -168,13 +169,13 @@ export default function TaskBoardDetailModule() {
     ]
     const headings = [
         { title: t("Task Id"), col: "TaskId" },
-        { title: t("Project Name"), col: "ProjectName" },
         { title: t("Task Name"), col: "TaskName" },
+        { title: t("Task Time"), col: "TaskTime", sort: true },
+        { title: t("Project Name"), col: "ProjectName" },
+        { title: t("Due Date"), col: "DueDate", sort: true },
         { title: t("Leader"), col: "Leader" },
         { title: t("Assignee"), col: "Assignee" },
         { title: t("Priority"), col: "Priority", sort: true },
-        { title: t("Task Time"), col: "TaskTime", sort: true },
-        { title: t("Due Date"), col: "DueDate", sort: true },
         { title: t("Status"), col: "Status", sort: true },
         { title: t("Action"), col: "action" },
     ]
@@ -190,7 +191,7 @@ export default function TaskBoardDetailModule() {
             Assignee: <div>{tableData.map((ele, i) => (
                 <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
             ))}</div>,
-            Priority: <Button variant={"btn btn-danger"}>High</Button>,
+            Priority: <span className={"zt-tag zt-tag-danger"}>High</span>,
             TaskTime: "01:00",
             DueDate: "18 May 2024",
             Feedback: <div className='flex flex-col justify-start items-start'>
@@ -198,24 +199,24 @@ export default function TaskBoardDetailModule() {
                 <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
                 <span className='text-xs'>“Good Job”</span>
             </div>,
-            Status: <Button variant={"btn btn-success"}>Done</Button>,
+            Status: <span className={"zt-tag zt-tag-success"}>Done</span>,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
                     <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            {/* <span><Edit /></span> */}
+                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><WarningIcon /></span>
                             <span>{t("Raise Issue")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a onClick={()=>{setTask(true)}}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
+                        <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                            <span><DiscussionIcon /></span>
                             <span>{t("Discussion")}</span>
                         </a>
                     </li>
@@ -244,7 +245,7 @@ export default function TaskBoardDetailModule() {
             Assignee: <div>{tableData.map((ele, i) => (
                 <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
             ))}</div>,
-            Priority: <Button variant={"btn btn-orange"}>Normal</Button>,
+            Priority: <span className={"zt-tag zt-tag-warning"}>Normal</span>,
             TaskTime: "01:00",
             DueDate: "18 May 2024",
             Feedback: <div className='flex flex-col justify-start items-start'>
@@ -252,24 +253,24 @@ export default function TaskBoardDetailModule() {
                 <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
                 <span className='text-xs'>“Good Job”</span>
             </div>,
-            Status: <Button variant={"btn btn-blue"}>Working</Button>,
+            Status: <span className={"zt-tag zt-tag-primary"}>Working</span>,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
                     <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            {/* <span><Edit /></span> */}
+                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><WarningIcon /></span>
                             <span>{t("Raise Issue")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a onClick={()=>{setTask(true)}}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
+                        <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                            <span><DiscussionIcon /></span>
                             <span>{t("Discussion")}</span>
                         </a>
                     </li>
@@ -345,7 +346,7 @@ export default function TaskBoardDetailModule() {
                         <button onClick={() => setView('grid')} className={`${view === "grid" ? "bg-themePurple" : ""} rounded-full p-2`}><GridIcon className={`${view === "grid" ? "text-white" : "text-themeGrayscale500"}`} /></button>
                     </div>
                     <Button className={"btn btn-dark-outline"} onClick={() => setTask(true)}>{t("Add Task")}</Button>
-                    <Button className={"btn btn-primary"} onClick={() => setBoard(true)}>{t("Create Task Board")}</Button>
+
                 </div>
             </div>
             <div className="w-full bg-white p-6 rounded-lg grow">
@@ -418,24 +419,20 @@ export default function TaskBoardDetailModule() {
                         className={'zt-employeeTable zt-projectsTable'}
                     />
                 }
-                {create && <CreatProjectsForm 
+                {create && <CreatProjectsForm
                     onClose={() => { setCreate(false) }}
                 />}
-                {raiseIssue && <RaiseIssueForm 
+                {raiseIssue && <RaiseIssueForm
                     onClose={() => { setRaiseIssue(false) }}
                 />}
-                {feedback && <FeedbackForm 
+                {feedback && <FeedbackForm
                     onClose={() => { setFeedback(false) }}
                 />}
-                {task && <AddTaskForm
-                    title={t('Add New Task')}
-                    type={'Feedback'}
+                {task && <AddTaskForm 
                     onClose={() => { setTask(false) }}
                 />}
-                {board && <CreateBoardForm
-                    title={t('Create Task Board')}
-                    type={'Feedback'}
-                    onClose={() => { setBoard(false) }}
+                {discussion && <DiscussionForm
+                    onClose={() => { setDiscussion(false) }}
                 />}
             </div>
         </section>

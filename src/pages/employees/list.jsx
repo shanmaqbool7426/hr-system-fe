@@ -1,7 +1,7 @@
 import { Button, SearchInput, Table, SearchSelect, DropDown, Profile } from "@/components/elements";
 import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
-import { Edit, EyeOn, ThreeDotsHorizontal, ThreeDotsVertical, Trash } from "@/components/svg";
+import { BlockIcon, Edit, EyeOff, EyeOn, ThreeDotsHorizontal, ThreeDotsVertical, Trash } from "@/components/svg";
 import { FetchEmployees, DeleteEmployee } from "@/store/actions/employee.actions";
 import PageLoader from "@/components/elements/PageLoader";
 import Toast from "@/util/toast";
@@ -105,7 +105,7 @@ export default function EmployeesListPage() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <Link href={`/employees/details/${item._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <Link href={`/employees/details/${item._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary'}>
                             <span><EyeOn /></span>
                             <span>Details</span>
                         </Link>
@@ -114,6 +114,18 @@ export default function EmployeesListPage() {
                         <a onClick={() => editEmployee(item)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>Edit</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => editEmployee(item)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeOrange'}>
+                            <span><EyeOff /></span>
+                            <span>Inactive</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => editEmployee(item)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><BlockIcon /></span>
+                            <span>Block</span>
                         </a>
                     </li>
                 </ul>
