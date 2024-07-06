@@ -301,8 +301,7 @@ export default function EvaluationPage() {
 					className={'zt-employeeTable zt-recruitmentTable'}
 				/>
 			</div>
-			{create && <AddJob
-                title={t('Job')}
+			{create && <AddJob 
                 onClose={() => { setCreate(false) }}
             />}
 		</section>

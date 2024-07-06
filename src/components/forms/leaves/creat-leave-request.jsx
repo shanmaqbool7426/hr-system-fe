@@ -8,7 +8,7 @@ import Toast from "@/util/toast";
 import { useEffect, useState } from "react";
 import { FetchLeavePolicies } from "@/store/actions/leave-policy.actions";
 
-export default function AddLeaveRequestForm({ onClose, request }) {
+export default function CreatLeaveRequestForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [leaveDays, setLeaveDays] = useState(0)
@@ -17,12 +17,12 @@ export default function AddLeaveRequestForm({ onClose, request }) {
     const { auth_user } = useSelector(state => state.auth)
     const formik = useFormik({
         initialValues: {
-            employee: request?.employee?._id || "",
-            leaveType: request?.leaveType?._id || "",
-            leaveDuration: request?.leaveDuration || "",
-            dateForm: request?.dateForm || "",
-            dateTo: request?.dateTo || "",
-            reason: request?.reason || "",
+            employee: object?.employee?._id || "",
+            leaveType: object?.leaveType?._id || "",
+            leaveDuration: object?.leaveDuration || "",
+            dateForm: object?.dateForm || "",
+            dateTo: object?.dateTo || "",
+            reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
             employee: Yup.string().required(t('formik.employeeRequired')),
@@ -32,11 +32,11 @@ export default function AddLeaveRequestForm({ onClose, request }) {
             reason: Yup.string().required(t('formik.reasonRequired')),
         }),
         onSubmit: async (values) => {
-            return request ? dispatch(UpdateEmployee(request._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
+            return object ? dispatch(UpdateEmployee(object._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(request ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
+        Toast.success(object ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
         onClose()
     }
     useEffect(() => {
@@ -117,7 +117,7 @@ export default function AddLeaveRequestForm({ onClose, request }) {
 
     ]
 
-    const formTitle = request ? t("Update Leave Request") : t("Create Leave Request")
+    const formTitle = object ? t("Update Leave Request") : t("Create Leave Request")
 
     return (
         <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />

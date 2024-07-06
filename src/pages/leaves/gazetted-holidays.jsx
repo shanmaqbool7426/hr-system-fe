@@ -7,6 +7,7 @@ import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 export default function LeaveGazettedHolidaysPage() {
   const { t } = useTranslation()
   const [create, setCreate] = useState(false)
+  const [edit, setEdit] = useState(false)
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
@@ -135,8 +136,7 @@ export default function LeaveGazettedHolidaysPage() {
       </div>
       {
         create && <CreateGazetedLeaveForm
-          title={t('Add Gazetted Holidays')}
-          type={'Add Gazetted Holidays'}
+          object={edit} 
           onClose={() => { setCreate(false) }}
         />
       }

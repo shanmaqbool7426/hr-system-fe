@@ -8,13 +8,12 @@ import { useDispatch } from 'react-redux';
 import { StarIcon } from '@/components/svg';
 import { Textarea } from '@/components/elements';
 
-export default function FeedbackForm({ title, onClose, type, object, additionFields }) {
+export default function FeedbackForm({ onClose, object, additionFields }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
+            name: object?.name || "", 
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
@@ -29,7 +28,7 @@ export default function FeedbackForm({ title, onClose, type, object, additionFie
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Feedback updated successfully`) : t(`Feedback created successfully`))
         onClose()
     } 
     const formElements = [
@@ -44,7 +43,7 @@ export default function FeedbackForm({ title, onClose, type, object, additionFie
        
     ]
     return (
-        <BaseForm formElements={formElements} title={title} formik={formik} onClose={onClose} is_loading={false} >
+        <BaseForm formElements={formElements} title={object?"Feedback":"Feedback"} formik={formik} onClose={onClose} is_loading={false} >
             <span className='mb-2 text-sm block text-start mt-6'>{t("Select Rating")}</span>
             <div className='flex gap-1 mb-6'>
                 <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
@@ -57,7 +56,4 @@ export default function FeedbackForm({ title, onClose, type, object, additionFie
         </BaseForm>
     )
 }
-
-FeedbackForm.defaultProps = {
-    additionFields: []
-}
+ 

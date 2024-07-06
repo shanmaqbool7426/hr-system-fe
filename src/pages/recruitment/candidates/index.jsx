@@ -399,9 +399,7 @@ export default function Recruitment() {
         />
       </div>
 
-      {create && <CandidateFieldForm
-        title={edit ? t('Candidate') : t('Candidate')}
-        type={'candidate'}
+      {create && <CandidateFieldForm 
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}
       />}

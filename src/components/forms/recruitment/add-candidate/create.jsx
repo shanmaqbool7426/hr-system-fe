@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
-import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, Button } from "@/components/elements"
+import { Input, Datepicker, SearchSelect , Button } from "@/components/elements"
 import { useState } from 'react';
 
-export default function CandidateFieldForm({ title, onClose, type, object, additionFields }) {
+export default function CandidateFieldForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [fileName, setFileName] = useState('No file chosen');
@@ -80,13 +80,13 @@ export default function CandidateFieldForm({ title, onClose, type, object, addit
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Candidate updated successfully`) : t(`Candidate created successfully`))
         onClose()
     }
 
     return (
         <BaseForm
-            title={object ? `Edit ${title}` : `Add new ${title}`}
+            title={object ? `Edit Candidate` : `Add new Candidate`}
             formElements={[]}
             formik={formik}
             onClose={onClose}

@@ -410,7 +410,7 @@ export default function LeaveRequestsPage() {
         />
       </div>
       {create && <CreateLeaveRequestForm onClose={() => { setCreate(false) }} />}
-      {view && <CreateLeaveDetailForm title={'Leave Request detail'} onClose={() => { setView(false) }} />}
+      {view && <CreateLeaveDetailForm onClose={() => { setView(false) }} />}
     </section>
   )
 }

@@ -8,10 +8,10 @@ import { CreateLeavePolicy, UpdateLeavePolicy } from "@/store/actions/leave-poli
 import Toast from "@/util/toast";
 import { useState } from "react";
 
-export default function CreateCPLLeaveForm({ onClose, leave ,title}) {
+export default function CreateCPLLeaveForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { customfield_list } = useSelector(state => state.customfield) 
+    const { customfield_list } = useSelector(state => state.customfield)
     const [fileName, setFileName] = useState('No file chosen');
 
     const handleFileChange = (event) => {
@@ -24,29 +24,26 @@ export default function CreateCPLLeaveForm({ onClose, leave ,title}) {
     };
     const formik = useFormik({
         initialValues: {
-            name: leave?.name || "",
-            entitled: leave?.entitled || false,
-            encashable: leave?.encashable || false,
-            carryForward: leave?.carryForward || false,
-            entitledToStatus: leave?.entitledToStatus.reduce((acc, item) => {
-                acc.push(item._id)
-                return acc
-            }, []) || [],
+            employee: object?.employee?._id || "",
+            leaveType: object?.leaveType?._id || "",
+            leaveDuration: object?.leaveDuration || "",
+            dateForm: object?.dateForm || "",
+            dateTo: object?.dateTo || "",
+            reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            entitled: Yup.string().required(t('formik.entitledRequired')),
-            encashable: Yup.string().required(t('formik.encashableRequired')),
-            carryForward: Yup.string().required(t('formik.carryForwardRequired')),
-            entitledToStatus: Yup.array().required(t('formik.entitledToStatusRequired')).min(1, t('formik.entitledToStatusRequired')),
+            employee: Yup.string().required(t('formik.employeeRequired')),
+            leaveType: Yup.string().required(t('formik.leaveTypeRequired')),
+            dateForm: Yup.string().required(t('formik.dateFormRequired')),
+            dateTo: Yup.string().required(t('formik.dateToRequired')),
+            reason: Yup.string().required(t('formik.reasonRequired')),
         }),
         onSubmit: async (values) => {
-            onCompleted()
-            return leave ? dispatch(UpdateLeavePolicy(leave._id, values, onCompleted)) : dispatch(CreateLeavePolicy(values, onCompleted))
+            return object ? dispatch(UpdateEmployee(object._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(leave ? t("Leave policy updated successfully") : t("Leave policy created successfully"))
+        Toast.success(object ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
         onClose()
     }
     const formElements = [
@@ -55,24 +52,26 @@ export default function CreateCPLLeaveForm({ onClose, leave ,title}) {
             name: "Employee",
             label: t('Employee'),
             placeholder: t("Employee"),
-            required: true, value: formik.values.name,
+            value: formik.values.employee,
+            list: [{ value: "Sick Leave", label: "Sick Leave" }],
+            required: true,
         },
         {
             type: "select",
             name: "LeaveType",
             label: t('Leave Type'),
             placeholder: t("Select One"),
-            required: true, value: formik.values.entitled,
+            value: formik.values.employee,
+            list: [{ value: "Sick Leave", label: "Sick Leave" }],
+            required: true,
         },
         {
             type: "select",
             multiple: true,
             name: "Leave Duration",
             label: t('Leave Duration'),
-            value: formik.values.entitledToStatus,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            }),
+            value: formik.values.employee,
+            list: [{ value: "Sick Leave", label: "Sick Leave" }],
             required: true,
         },
         {
@@ -80,10 +79,8 @@ export default function CreateCPLLeaveForm({ onClose, leave ,title}) {
             multiple: true,
             name: "Leave Days",
             label: t('Leave Days'),
-            value: formik.values.entitledToStatus,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            }),
+            value: formik.values.employee,
+            list: [{ value: "Sick Leave", label: "Sick Leave" }],
             required: true,
         },
         {
@@ -106,9 +103,9 @@ export default function CreateCPLLeaveForm({ onClose, leave ,title}) {
             required: true,
         },
     ]
- 
+
     return (
-        <BaseForm title={title} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
+        <BaseForm title={object ? 'Compensatory Leave Request' : "Compensatory Leave Request"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
             <div className="col-span-2">
                 <label className='text-sm font-medium mb-4 block text-start'>Upload Attachment</label>
                 <div className='rounded-lg flex items-center border border-themeGrayscale300'>

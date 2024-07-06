@@ -175,14 +175,10 @@ export default function CompletedTaskModule() {
                 setPage={setPage}
                 className={'zt-employeeTable zt-projectsTable'}
             />
-            {feedback && <FeedbackForm
-                title={t('Feedback')}
-                type={'Feedback'}
+            {feedback && <FeedbackForm 
                 onClose={() => { setFeedback(false) }}
             />}
-            {raiseIssue && <RaiseIssueForm
-                title={t('Raise Issue')}
-                type={'Raise Issue'}
+            {raiseIssue && <RaiseIssueForm 
                 onClose={() => { setRaiseIssue(false) }}
             />}
         </div>
