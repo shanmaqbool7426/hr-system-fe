@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 
 export default function AddExemptionForm({ onClose, object }) {
     const { t } = useTranslation()
-    const { t: tv } = useTranslation("validation")
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -19,11 +18,11 @@ export default function AddExemptionForm({ onClose, object }) {
             reason: object?.exemptionType || "",
         },
         validationSchema: Yup.object().shape({
-            employee: Yup.string().required(tv('Employee is required')),
-            attendanceDate: Yup.string().required(tv('Atendance date is required')),
-            flagType: Yup.string().required(tv('Flag type is required')),
-            exemptionType: Yup.string().required(tv('Exemption type is required')),
-            reason: Yup.string().required(tv('Reason is required')),
+            employee: Yup.string().required(t('Employee is required')),
+            attendanceDate: Yup.string().required(t('Atendance date is required')),
+            flagType: Yup.string().required(t('Flag type is required')),
+            exemptionType: Yup.string().required(t('Exemption type is required')),
+            reason: Yup.string().required(t('Reason is required')),
         }),
         onSubmit: async (values) => {
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
