@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
 import AddExemptionForm from '@/components/forms/attendance/addExemption'
 import AddRequestForm from '@/components/forms/attendance/addRequest'
 import FilterArea from '@/components/includes/FilterArea'
@@ -6,14 +6,17 @@ import { ThreeDotsVertical } from '@/components/svg'
 import { Activity } from '@/modules/attendance/Activity'
 import { Staticts } from '@/modules/attendance/Staticts'
 import { TimeSheet } from '@/modules/attendance/TimeSheet'
+import { FetchAttendance } from '@/store/actions/attendance.actions'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
-import React, { useState } from 'react'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Dashboard() {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const [request, setRequest] = useState(false)
   const [create, setCreate] = useState(false)
   const [edit, setEdit] = useState(false)
@@ -22,114 +25,139 @@ export default function Dashboard() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const { customfield_list } = useSelector(state => state.customfield)
+  const { attendance_list } = useSelector(state => state.attendance)
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const [filters, setFilters] = useState({
-    search: "",
-    project: null,
-    department: null,
-    status: null,
+    employee: "",
+    fromDate: null,
+    toDate: null
   })
   const filterElements = [
     {
-      type: "select",
-      name: "Select Employee",
+      type: "search",
+      name: "search",
+      value: filters.search,
+      label: t("Search employees"),
+      placeholder: t("Search employees"),
       className: "xl:col-span-2",
-      placeholder: "Select Employee",
-      value: filters.status,
-      list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-        return { value: item._id, display: item.name }
-      }),
-      onChange: (status) => {
+      onChange: (event) => {
         let _filter = { ...filters }
-        _filter['status'] = status
+        _filter['search'] = event.target.value
         setFilters(_filter)
       }
     },
-    ]
-    const headings = [
-      { title: t("Sr#"), col: "Sr" },
-      { title: t("Date"), col: "Date", sort: true },
-      { title: t("Punch In"), col: "PunchIn", sort: true },
-      { title: t("Punch Out"), col: "PunchOut", sort: true },
-      { title: t("Break"), col: "Break", sort: true },
-      { title: t("Worked Hours"), col: "WorkedHours", sort: true },
-      { title: t("Over Time"), col: "OverTime", sort: true }, 
-      { title: t("Status"), col: "Status", sort: true }, 
-    ]
-  
-    const rows = [
-      {
-        Sr: "1",
-        Date: "19 Feb 2024",
-        PunchIn: '10:00 AM',
-        PunchOut:  "7:00 PM",
-        Break: "1:00 hrs",
-        WorkedHours: "8:00 hrs",
-        OverTime: "4:00 hrs",
-        Status: <span className='zt-tag zt-tag-success'>Present</span>,
-      },
-      {
-        Sr: "2",
-        Date: "19 Feb 2024",
-        PunchIn: '10:00 AM',
-        PunchOut:  "7:00 PM",
-        Break: "1:00 hrs",
-        WorkedHours: "8:00 hrs",
-        OverTime: "4:00 hrs",
-        Status: <span className='zt-tag zt-tag-danger'>Leave</span>,
-      },
-      {
-        Sr: "3",
-        Date: "19 Feb 2024",
-        PunchIn: '10:00 AM',
-        PunchOut:  "7:00 PM",
-        Break: "1:00 hrs",
-        WorkedHours: "8:00 hrs",
-        OverTime: "4:00 hrs",
-        Status: <span className='zt-tag zt-tag-secondary'>Late</span>,
-      },
-    ]
-    return (
-        <section className="flex flex-col gap-6 grow">
-            {/* {is_loading && <PageLoader/>} */}
-            <div className="flex justify-between items-center">
-                <h1 className="text-h4 mb-0">{t("Dashboard")}</h1>
-                <div className='flex gap-4'>
-                    <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Apply Overtime")}</Button>
-                    <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Shift change Request")}</Button>
-                    <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Exemption Request")}</Button>
-                    <Button className={"btn btn-primary"} onClick={() => setRequest(true)}>{t("Attendance Request")}</Button>
-                </div>
-            </div>
-            <div className="grid grid-cols-3  gap-6">
-              <TimeSheet />
-              <Staticts />
-              <Activity />
-            </div>
+    {
+      type: "date",
+      value: filters.fromDate,
+      label: t("From Date"),
+      onChange: (date) => {
+        let _filter = { ...filters }
+        _filter['fromDate'] = date
+        setFilters(_filter)
+      }
+    },
+    {
+      type: "date",
+      value: filters.toDate,
+      label: t("To Date"),
+      onChange: (date) => {
+        let _filter = { ...filters }
+        _filter['toDate'] = date
+        setFilters(_filter)
+      }
+    }
+  ]
+  const headings = [
+    { title: t("Date"), col: "date", sort: true },
+    { title: t("Employee"), col: "employee" },
+    { title: t("Punch In"), col: "checkIn", sort: true },
+    { title: t("Punch Out"), col: "checkOut", sort: true },
+    // { title: t("Break"), col: "Break", sort: true },
+    { title: t("Worked Hours"), col: "workedHours" },
+    // { title: t("Over Time"), col: "OverTime", sort: true },
+    // { title: t("Status"), col: "Status", sort: true },
+  ]
 
-            <div className="zt-card grow">
-                <FilterArea title={t("")} elements={filterElements} filters={filters} setFilters={setFilters}/>
+  useEffect(() => {
+    dispatch(FetchAttendance())
+  }, [dispatch])
 
-                <Table
-                    headings={headings}
-                    rows={rows}
-                    sortCol={sortCol}
-                    setSortCol={setSortCol}
-                    sortDir={sortDir}
-                    setSortDir={setSortDir}
-                    perPage={perPage}
-                    setPerPage={setPerPage}
-                    page={page}
-                    setPage={setPage}
-                    className={'zt-employeeTable zt-projectsTable'}
-                />
-            </div>
-            {request && <AddRequestForm
-                title={edit ? t('New Request') : t('New Request')}
-                type={'New Request'}
-                onClose={() => { setRequest(false) }}
-                object={edit}
-            />}
+  const filtered_attendandance_data = attendance_list
+    .filter(item => {
+
+      let attendanceDate = new Date(item.date)
+      let flag = attendanceDate.getMonth() === (new Date).getMonth()
+      if (filters.fromDate) {
+        flag = attendanceDate.getTime() >= (new Date(filters.fromDate)).getTime()
+        if (!flag) return false
+      }
+      if (filters.toDate) {
+        flag = attendanceDate.seconds() <= (new Date(filters.toDate)).getTime()
+        if (!flag) return false
+      }
+      if (filters.search) {
+        flag = item?.user?.firstName?.toLowerCase().includes(filters.search.toLowerCase())
+      }
+      return flag
+    })
+    .sort((a, b) => {
+      return (new Date(a.date)).getTime() - (new Date(b.date)).getTime()
+    })
+    .map(item => {
+      return {
+        date: <DisplayDate date={item.date} />,
+        employee: <div className='flex gap-3 items-center capitalize'>
+          <Profile image={item?.user?.avatar} name={item?.user?.firstName} />
+          <span>{item?.user?.firstName} {item?.user?.lastName}</span>
+        </div>,
+        workedHours: item.checkInAt && item.checkOutAt ? moment(item.checkOutAt).diff(moment(item.checkInAt), 'hours') + " h" : "------",
+        checkIn: item.checkInAt ? <DisplayDate date={item.checkInAt} timeOnly={true} /> : "------",
+        checkOut: item.checkOutAt ? <DisplayDate date={item.checkOutAt} timeOnly={true} /> : "------",
+      }
+    })
+
+
+  return (
+    <section className="flex flex-col gap-6 grow">
+      {/* {is_loading && <PageLoader/>} */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-h4 mb-0">{t("Dashboard")}</h1>
+        <div className='flex gap-4'>
+          <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Apply Overtime")}</Button>
+          <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Shift change Request")}</Button>
+          <Button className={"btn btn-dark-outline"} onClick={() => setCreate(true)}>{t("Exemption Request")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setRequest(true)}>{t("Attendance Request")}</Button>
+        </div>
+      </div>
+      <div className="grid grid-cols-3  gap-6">
+        <TimeSheet />
+        <Staticts />
+        <Activity />
+      </div>
+
+      <div className="zt-card grow">
+        <FilterArea title={t("")} elements={filterElements} filters={filters} setFilters={setFilters} />
+
+        <Table
+          headings={headings}
+          rows={filtered_attendandance_data}
+          sortCol={sortCol}
+          setSortCol={setSortCol}
+          sortDir={sortDir}
+          setSortDir={setSortDir}
+          perPage={perPage}
+          setPerPage={setPerPage}
+          page={page}
+          setPage={setPage}
+          className={'zt-employeeTable zt-projectsTable'}
+        />
+      </div>
+      {request && <AddRequestForm
+        title={edit ? t('New Request') : t('New Request')}
+        type={'New Request'}
+        onClose={() => { setRequest(false) }}
+        object={edit}
+      />}
 
       {create && <AddExemptionForm
         onClose={() => { setCreate(false); setEdit(null) }}

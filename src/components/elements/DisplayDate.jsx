@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-export default function DisplayDate({ date, time, ...props }) {
+export default function DisplayDate({ date, time, timeOnly, ...props }) {
     return <time dateTime={date} {...props}>
-        {moment(date).format(time ? 'DD MMM YYYY hh: mm A' : 'DD MMM YYYY')}
+        {timeOnly ? moment(date).format("HH:mm:ss") : moment(date).format(time ? 'DD MMM YYYY hh: mm A' : 'DD MMM YYYY')}
     </time>
 }
 
