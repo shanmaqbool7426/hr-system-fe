@@ -268,4 +268,11 @@
 ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
 ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.5); }
 .candidate_detail{@apply min-h-[50rem] zt-card grow relative }
-
+.zt-chat__history:hover .chat__action{@apply flex}
+.chat__content:hover .chat__emoji{@apply flex gap-3}
+.chat__content .react-input-emoji--input{@apply hidden}
+.chat__content .react-input-emoji--container{@apply hidden}
+.react-input-emoji--button{padding: 0 !important;}
+.zt-chatTabs ul{
+  gap: 8px !important;
+}
