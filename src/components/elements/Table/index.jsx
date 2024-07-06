@@ -55,7 +55,6 @@ export default function Table({ headings,
                                     {sortCol === value.col && sortDir === 'desc' && <SortDesc />}
                                 </span>)}
                             </div>
-
                         </th>))}
                     </tr>
                 </thead>

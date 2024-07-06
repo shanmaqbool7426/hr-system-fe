@@ -76,7 +76,8 @@ export default function Sidebar() {
             { name: t("Task Board"), href: "/projects/task-board" },
             { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
             { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
-            { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+            { name: t("Feedback"), href: "/projects/feedback" },
+            // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
         ],
         connect:[
             { name: t("Chat"), href: "/connect/chat" },

@@ -2,7 +2,7 @@ import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import UserListView from "@/components/elements/UserListView";
 import FeedbackForm from "@/components/forms/projects/feedback";
 import RaiseIssueForm from "@/components/forms/projects/raiseIssue";
-import { Edit, StarIcon, ThreeDotsVertical, Trash } from "@/components/svg";
+import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -42,9 +42,9 @@ export default function CompletedProjectsModule() {
     { title: t("Client"), col: "Client", sort: true },
     { title: t("Leader"), col: "Leader", sort: true },
     { title: t("Team"), col: "Team", sort: true },
-    { title: t("Task Time"), col: "TaskTime", sort: true },
-    { title: t("Deadline"), col: "Deadline", sort: true },
+    { title: t("Due Date"), col: "Deadline", sort: true },
     { title: t("Status"), col: "Status", sort: true },
+    { title: t("Feedback"), col: "Feedback", sort: true },
     { title: t("Action"), col: "action" },
   ]
 
@@ -61,17 +61,22 @@ export default function CompletedProjectsModule() {
       TaskTime: "548:00",
       Deadline: "22 March 2023",
       Status: <span className='zt-tag zt-tag-success'>Active</span>,
+      Feedback: <div className='flex flex-col items-center'>
+        <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
+        <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
+        <span className=''>“Good Job”</span>
+      </div>,
       action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
           <li className="!p-0">
-            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-              <span><Edit /></span>
+            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+              <span><WarningIcon /></span>
               <span>{t("Raise Issue")}</span>
             </a>
           </li>
           <li className="!p-0">
-            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-              <span><Edit /></span>
+            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+              <span><FeedbackIcon /></span>
               <span>{t("Feedback")}</span>
             </a>
           </li>
@@ -90,17 +95,22 @@ export default function CompletedProjectsModule() {
       TaskTime: "548:00",
       Deadline: "22 March 2023",
       Status: <span className='zt-tag zt-tag-success'>Active</span>,
+      Feedback: <div className='flex flex-col items-center'>
+        <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
+        <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
+        <span className=''>“Good Job”</span>
+      </div>,
       action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
           <li className="!p-0">
-            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-              <span><Edit /></span>
+            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+              <span><WarningIcon /></span>
               <span>{t("Raise Issue")}</span>
             </a>
           </li>
           <li className="!p-0">
-            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-              <span><Edit /></span>
+            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+              <span><FeedbackIcon /></span>
               <span>{t("Feedback")}</span>
             </a>
           </li>
@@ -125,10 +135,10 @@ export default function CompletedProjectsModule() {
         setPage={setPage}
         className={'zt-employeeTable zt-projectsTable'}
       />
-      {feedback && <FeedbackForm 
+      {feedback && <FeedbackForm
         onClose={() => { setFeedback(false) }}
       />}
-      {raiseIssue && <RaiseIssueForm 
+      {raiseIssue && <RaiseIssueForm
         onClose={() => { setRaiseIssue(false) }}
       />}
     </div>

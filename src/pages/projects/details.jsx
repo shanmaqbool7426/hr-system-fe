@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/elements'
 import { ChevronLeft, Download, Edit, PdfIcon, Plus, ShareIcon, Trash } from '@/components/svg' 
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from 'react' 
 import { useDispatch, useSelector } from 'react-redux'
 import { FetchEmployeeDetails } from '@/store/actions/employee.actions'
 import PageLoader from '@/components/elements/PageLoader' 
 import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
-
+import { useRouter } from 'next/router'
 export default function ProjectsDetailPage() {
     const { t } = useTranslation()
+
     const router = useRouter()
     const dispatch = useDispatch()
     const { is_loading, employee_details } = useSelector((state) => state.employee)
@@ -32,7 +32,7 @@ export default function ProjectsDetailPage() {
                     <span className='shrink-0'>{t("Office Management")}</span>
                 </h1>
                 <div className='flex gap-4 items-center'>
-                    <Button className={"btn btn-dark-outline"}>{t("Task Board")}</Button>
+                    <Button onClick={()=>{router.push('/projects/task-board')}} className={"btn btn-dark-outline"}>{t("Task Board")}</Button>
                     <Button className={"btn btn-primary"}>{t("Edit  Project")}</Button>
                 </div>
             </div>

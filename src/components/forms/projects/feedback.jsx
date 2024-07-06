@@ -8,19 +8,17 @@ import { useDispatch } from 'react-redux';
 import { StarIcon } from '@/components/svg';
 import { Textarea } from '@/components/elements';
 
-export default function FeedbackForm({ onClose, object, additionFields }) {
+export default function FeedbackForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "", 
+            name: object?.name || "",
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),
         onSubmit: async (values) => {
 
@@ -30,30 +28,37 @@ export default function FeedbackForm({ onClose, object, additionFields }) {
     const onCompleted = () => {
         Toast.success(object ? t(`Feedback updated successfully`) : t(`Feedback created successfully`))
         onClose()
-    } 
+    }
     const formElements = [
         {
-            type: "select",
-            name: "Employee",
-            label: t('Employee'),
-            containerClass: 'col-span-2',
+            type: "text",
+            name: "title",
+            label: t('Feedback Title'), 
             value: formik.values.employee,
             required: true,
         },
-       
+        {
+            type: "select",
+            name: "Employee",
+            label: t('Employee'), 
+            value: formik.values.employee,
+            required: true,
+        },
+
     ]
     return (
-        <BaseForm formElements={formElements} title={object?"Feedback":"Feedback"} formik={formik} onClose={onClose} is_loading={false} >
-            <span className='mb-2 text-sm block text-start mt-6'>{t("Select Rating")}</span>
-            <div className='flex gap-1 mb-6'>
-                <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
-                <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
-                <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
-                <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
-                <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
-            </div> 
-            <Textarea label={'Comments'} required></Textarea>
+        <BaseForm formElements={formElements} title={object ? "Feedback" : "Feedback"} formik={formik} onClose={onClose} is_loading={false} >
+            <div className='col-span-2'>
+                <span className='mb-2 text-sm block text-start mt-6'>{t("Select Rating")}</span>
+                <div className='flex gap-1 mb-6'>
+                    <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
+                    <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
+                    <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
+                    <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
+                    <button><StarIcon className={'h-10 w-10 text-gray-300'} /></button>
+                </div>
+                <Textarea label={'Comments'} required></Textarea>
+            </div>
         </BaseForm>
     )
 }
- 
