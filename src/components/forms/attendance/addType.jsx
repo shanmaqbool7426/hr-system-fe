@@ -8,7 +8,10 @@ import { useDispatch } from 'react-redux';
 
 export default function AddTypeForm({ title, onClose, type, object, additionFields }) {
     const { t } = useTranslation() 
+    const { t:tv } = useTranslation("validation") 
+
     const dispatch = useDispatch()
+    
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
@@ -17,7 +20,7 @@ export default function AddTypeForm({ title, onClose, type, object, additionFiel
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
+            name: Yup.string().required(tv('Name is required')),
             icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
             prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),

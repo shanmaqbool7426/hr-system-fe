@@ -6,20 +6,26 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddRemoteWorkForm({ title, onClose, type, object, additionFields }) {
+export default function AddRemoteWorkForm({onClose, object }) {
     const { t } = useTranslation()
+    const { t:tv } = useTranslation("validation")
+
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
-            icon: object?.icon || "",
-            prefix: object?.prefix || "",
+            Employee: object?.Employee || "",
+            attendanceDate: object?.attendanceDate || "",
+            startDate: object?.startDate || "",
+            endDate: object?.endDate || "",
+            reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
+            Employee: Yup.string().required(tv('Employee is required')),
+            attendanceDate: Yup.string().required(tv('Atendance date is required')),
+            startDate: Yup.string().required(tv('Start Date date is required')),
+            endDate: Yup.string().required(tv('End Date is required')),
+            reason: Yup.string().required(tv('Reason is required')),
+
         }),
         onSubmit: async (values) => {
 
@@ -27,7 +33,7 @@ export default function AddRemoteWorkForm({ title, onClose, type, object, additi
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`${type} Remote work request completed successfully`) : t(`${type} created successfully`))
         onClose()
     }
     const formElements = [
@@ -78,6 +84,3 @@ export default function AddRemoteWorkForm({ title, onClose, type, object, additi
     )
 }
 
-AddRemoteWorkForm.defaultProps = {
-    additionFields: []
-}
