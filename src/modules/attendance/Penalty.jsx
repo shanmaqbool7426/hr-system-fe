@@ -41,7 +41,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -84,7 +84,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -127,7 +127,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -170,7 +170,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -213,7 +213,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -256,7 +256,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -299,7 +299,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -342,7 +342,7 @@ export default function PenaltyModule() {
             EffectFrequency: "Every",
             Exemption: "-",
             EffectQuantity: "0.25",
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>

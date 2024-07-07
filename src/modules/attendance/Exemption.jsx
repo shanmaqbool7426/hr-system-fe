@@ -1,5 +1,5 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
-import AddTypeForm from "@/components/forms/attendance/addType";
+import CreateTypeForm from "@/components/forms/attendance/createType";
 import AddReasonTypeForm from "@/components/forms/attendance/reasonType";
 import { CrossClose, Edit, SuccessTick, ThreeDotsVertical } from "@/components/svg";
 import { useState } from "react";
@@ -12,28 +12,22 @@ export default function ExemptionModule() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [add, setAdd] = useState(false)
+    const [addExemption, setAddExemption] = useState(false)
 
     const headings = [
-        { title: t("Reason Name"), col: 'ReasonType', check: true },
+        { title: t("Request Type"), col: 'RequestType'},
+        { title: t("Reason Name"), col: 'ReasonType' },
         { title: t("Min Working Hrs"), col: "MinWorkingHrs" },
         { title: t("Status"), col: "Status" },
         { title: t("Modified On"), col: "ModifiedOn" },
         { title: t("Action"), col: "action" },
     ]
     const rows = [{
-        ReasonType: <div className="flex items-center">
-            <CheckBox
-                size={'sm'}
-                variant={'dark'}
-                labelClass={'text-base leading-none text-themeGrayscale/70'}
-                id="night-shift"
-                name={"night-shift"}
-                label='&nbsp; 1 &nbsp; Late Night Sitting'
-            />
-        </div>,
+        RequestType: 'Attendance Request',
+        ReasonType: 'Late Night Sitting',
         MinWorkingHrs: "4:00:00 Hours",
         Status: <span className="flex justify-center"><SuccessTick /></span>,
-        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,
         action:
@@ -61,18 +55,11 @@ export default function ExemptionModule() {
             </DropDown>,
     },
     {
-        ReasonType: <div className="flex items-center">
-            <CheckBox
-                size={'sm'}
-                variant={'dark'}
-                labelClass={'text-base leading-none text-themeGrayscale/70'}
-                id="ramadan-shift"
-                name={"ramadan-shift"}
-                label='&nbsp; 2 &nbsp; Worked on Weekend'
-            /></div>,
+        RequestType:  'Exemption Request',
+        ReasonType:  'Worked on Weekend',
         MinWorkingHrs: "4:00:00 Hours",
         Status: <span className="flex justify-center"><SuccessTick /></span>,
-        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,
         action: <DropDown icon={<ThreeDotsVertical />}>
@@ -99,18 +86,11 @@ export default function ExemptionModule() {
         </DropDown>,
     },
     {
-        ReasonType: <div className="flex items-center">
-            <CheckBox
-                size={'sm'}
-                variant={'dark'}
-                labelClass={'text-base leading-none text-themeGrayscale/70'}
-                id="ramadan-shift"
-                name={"ramadan-shift"}
-                label='&nbsp; 2 &nbsp; Special Request'
-            /></div>,
+        RequestType: 'Attendance Request',
+        ReasonType: 'Special Request',
         MinWorkingHrs: "4:00:00 Hours",
         Status: <span className="flex justify-center"><SuccessTick /></span>,
-        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+        ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,
         action: <DropDown icon={<ThreeDotsVertical />}>
@@ -140,8 +120,11 @@ export default function ExemptionModule() {
     return (
         <div className="zt-card grow">
             <div className="flex justify-between pb-6">
-                <h2 className="text-h4 mb-0">{t("Exemption Reason Type")}</h2>
-                <Button className={"btn btn-primary absolute top-4 right-4"} onClick={() => setAdd(true)}>{t("Add New Type")}</Button>
+                <h2 className="text-h4 mb-0">{t("Attendance/ Exemption Reason Type")}</h2>
+                <div className="flex gap-4 absolute top-4 right-4">
+            <Button className={"btn btn-primary"} onClick={() => setAdd(true)}>{t("Add Attendance Type")}</Button>
+            <Button className={"btn btn-primary "} onClick={() => setAddExemption(true)}>{t("Add Exemption Type")}</Button>
+                </div>
             </div>
             <Table
                 headings={headings}
@@ -156,7 +139,10 @@ export default function ExemptionModule() {
                 setPage={setPage}
                 className={'zt-employeeTable zt-exemptionTable'}
             />
-            {add && <AddTypeForm
+            {addExemption && <CreateTypeForm
+                onClose={() => { setAddExemption(false) }}
+            />}
+             {add && <AddReasonTypeForm
                 title={t('New Type')}
                 onClose={() => { setAdd(false) }}
             />}

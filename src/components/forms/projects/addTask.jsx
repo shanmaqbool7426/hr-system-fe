@@ -102,7 +102,4 @@ export default function AddTaskForm({ onClose, object }) {
         </BaseForm>
     )
 }
-
-AddTaskForm.defaultProps = {
-    additionFields: []
-}
+ 

@@ -21,7 +21,7 @@ export default function AttendanceSettingPage() {
             <Tabs
                 containerClasses={'zt-themeTabsV2 grow'}
                 tabNavClasses={'zt-themeTabNav'}
-                tabs={["Shift Plan", "Exemption Reason Type", "Attendance Reason Type", "Attendance Penalty Rule", "General Attendance Settings", "Biometric Device Settings"]}
+                tabs={["Shift Plan", "Request Reason Type", "Flags Setting", "Attendance Penalty Rule", "General Attendance Settings", "Biometric Device Settings"]}
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0 flex flex-col grow`}>
                     <Tab.Panel className={'zt-themeTabPanel grow'}>
