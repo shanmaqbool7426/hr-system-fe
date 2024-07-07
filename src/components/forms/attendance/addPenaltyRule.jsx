@@ -9,7 +9,7 @@ import { Button, MultiSelect, Table } from '@/components/elements';
 import { useState } from 'react';
 import { Plus, Trash } from '@/components/svg';
 
-export default function AddPenaltyForm({ title, onClose, type, object, additionFields }) {
+export default function AddPenaltyForm({onClose,object }) {
     const { t } = useTranslation()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
@@ -28,7 +28,7 @@ export default function AddPenaltyForm({ title, onClose, type, object, additionF
             list={leaves.map((leave) => ({ value: leave, display: leave }))}
             value={leaveType}
             onChange={(selected) => setLeaveType(selected)}
-            placeholder="Select One"
+            placeholder= "Select One"
         />,
         action: <Button variant={"light-danger"} className={'!py-2 !px-2'}><Trash /></Button>,
     },

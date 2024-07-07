@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import asset from "./slices/asset.slice";
+import attendance from "./slices/attendance.slice";
 import auth from "./slices/auth.slice";
 import biometric from "./slices/biometric.slice";
 import customfield from "./slices/customfield.slice";
@@ -11,6 +12,7 @@ import leaverequest from "./slices/leave-request.slice";
 export default configureStore({
     reducer: {
         asset,
+        attendance,
         auth,
         biometric,
         customfield,

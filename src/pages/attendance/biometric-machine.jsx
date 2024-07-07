@@ -62,7 +62,7 @@ export default function BiometricSettings() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => { dispatch(SyncDevice(item._id, ()=> {
-                            Toast.success("Attendance synced successfully")
+                            Toast.success("Attendance sync request submitted successfully")
                         })) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             {/* <span><Edit /></span> */}
                             <span>{t("Sync")}</span>
