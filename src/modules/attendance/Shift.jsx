@@ -351,8 +351,7 @@ export default function ShiftModule() {
                 className={'zt-employeeTable zt-attendanceShiftTable'}
             />
 
-            {add && <CreateAttendanceForm
-                title={t('Shift Plan')}
+            {add && <CreateAttendanceForm 
                 onClose={() => { setAdd(false) }}
             />}
         </div>

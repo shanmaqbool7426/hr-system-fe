@@ -288,6 +288,27 @@
     } 
   }
 }
+.zt-attendanceAddTable{
+  tr {
+    th { 
+      &:last-child {
+        > div { @apply justify-center }
+      }
+    } 
+    td{
+      &:last-child{@apply flex justify-center}
+    }
+  }
+}
+.zt-attendanceAddclockTable{
+  tr {
+    th { 
+      &:last-child {
+        > div { @apply justify-center }
+      }
+    }  
+  }
+}
 .table-group-divider {  }
 
 //
