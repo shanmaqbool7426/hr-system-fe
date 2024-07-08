@@ -71,7 +71,7 @@ export const EmployeePerformance = () => {
                     <span>{t("KPI")}</span>
                 </div>
             </div>
-            <div style={{ width: '100%', height: 300 }}>
+            <div className='w-full h-80'>
                 <ResponsiveContainer>
                     <LineChart
                         data={data}

@@ -260,6 +260,7 @@
 .zt-employeeProfile::before{content: ""; @apply bg-bordeaux w-20 h-5 absolute bottom-0 right-0 z-10}
 .zt-employeeProfile::after{content: ""; @apply bg-bordeaux w-20 h-5 absolute top-0 left-0 z-10}
 .custom__grid{ grid-template-columns: repeat(auto-fit, minmax(216px, 1fr) ) }
+.zt-remoteStats__grid{ grid-template-columns: repeat(auto-fit, minmax(330px, 1fr) ) }
 
 ::-webkit-scrollbar {
   width: 1px;  /* for vertical scrollbars */
@@ -273,6 +274,8 @@
 .chat__content .react-input-emoji--input{@apply hidden}
 .chat__content .react-input-emoji--container{@apply hidden}
 .react-input-emoji--button{padding: 0 !important;}
+.apps__state:hover .action_btn{@apply flex}
+.apps__state:hover .time{@apply hidden}
 .zt-chatTabs ul{
   gap: 8px !important;
 }
