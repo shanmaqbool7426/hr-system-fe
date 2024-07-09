@@ -16,7 +16,7 @@ export default function Sidebar() {
         { icon: Employees, name: t("Employees"), href: "employees" },
         { icon: Attendance, name: t("Attendance"), href: "attendance" },
         { icon: Leave, name: t("Leave"), href: "leave" },
-        { icon: Projects, name: t("Projects"), href: "projects"  },
+        { icon: Projects, name: t("Projects"), href: "projects" },
         { icon: Connect, name: t("Connect"), href: "/connect", page: true },
         { icon: RemoteWork, name: t("Remote Work"), href: "/remote-work", page: true },
         { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
@@ -37,7 +37,7 @@ export default function Sidebar() {
                 innerSubMenu: [
                     { name: t("Change Designation"), href: "/employees/change-request/designation" },
                     { name: t("Change Department"), href: "/employees/change-request/department" },
-                    { name: t("Change Employee Code"), href: "/employees/change-request/code" },
+                    { name: t("Change Employee ID"), href: "/employees/change-request/code" },
                     { name: t("Change Salary"), href: "/employees/change-request/salary" },
                     { name: t("Change Grade"), href: "/employees/change-request/grade" },
                     { name: t("Change Line Manager"), href: "/employees/change-request/line-manager" },
@@ -70,7 +70,7 @@ export default function Sidebar() {
             { name: t("Gazetted Holidays"), href: "/leaves/gazetted-holidays" },
             { name: t("Leave Setting"), href: "/leaves/settings" },
         ],
-        projects:[
+        projects: [
             { name: t("Dashboard"), href: "/projects/dashboard" },
             { name: t("Projects"), href: "/projects" },
             { name: t("Task Board"), href: "/projects/task-board" },
