@@ -78,6 +78,12 @@ export default function Sidebar() {
             { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
             { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
         ],
+        connect: [
+            { name: t("Chat"), href: "/connect/chat" },
+            { name: t("Call"), href: "/connect/call" },
+            { name: t("Groups"), href: "/connect/groups" },
+            { name: t("Calender"), href: "/connect/calender" },
+        ],
         recruitment: [
             { name: t("Dashboard"), href: "/recruitment/" },
             { name: t("Manage Jobs"), href: "/recruitment/manage-jobs" },

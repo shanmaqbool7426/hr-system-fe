@@ -963,7 +963,13 @@ function WordIcon({ className, width, height, ...props }) {
     </svg>
   )
 }
+function UpArrow({ className, width, height, ...props }) {
+  return (
+    <svg className={`${className}`} {...props} width={`${width ? width : '16'}`} height={`${height ? height : '16'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="text-white" color="#fff"><path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  )
+}
 export {
+  UpArrow,
   WordIcon,
   ReadPdfIcon,
   ClockIcon,

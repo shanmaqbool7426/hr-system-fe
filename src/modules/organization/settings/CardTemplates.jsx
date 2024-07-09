@@ -1,5 +1,5 @@
 import { Button } from '@/components/elements';
-import AddTemplateForm from '@/components/forms/organization/setting/AddTemplate';
+import AddTemplateForm from '@/components/forms/organization/setting/CreatTemplate';
 import { Edit, Trash } from '@/components/svg';
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
@@ -25,8 +25,7 @@ export const CardTemplate = () => {
                 ))}
             </div>
             {add && <AddTemplateForm
-                title={t('Add New Template')}
-                type={'Add New Template'}
+                object={add} 
                 onClose={() => { setAdd(false) }}
             />}
         </div>

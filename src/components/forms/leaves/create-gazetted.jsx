@@ -3,50 +3,36 @@ import BaseForm from "../BaseForm"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { CreateLeavePolicy, UpdateLeavePolicy } from "@/store/actions/leave-policy.actions"
-import Toast from "@/util/toast";
-import { useState } from "react";
+import { useDispatch } from "react-redux"; 
+import Toast from "@/util/toast"; 
 
-export default function CreateGazetedLeaveForm({ onClose, leave ,title}) {
+export default function CreateGazetedLeaveForm({ onClose,object}) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { customfield_list } = useSelector(state => state.customfield) 
-    const [fileName, setFileName] = useState('No file chosen');
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFileName(file.name);
-        } else {
-            setFileName('No file chosen');
-        }
-    };
+ 
+    
     const formik = useFormik({
         initialValues: {
-            name: leave?.name || "",
-            entitled: leave?.entitled || false,
-            encashable: leave?.encashable || false,
-            carryForward: leave?.carryForward || false,
-            entitledToStatus: leave?.entitledToStatus.reduce((acc, item) => {
-                acc.push(item._id)
-                return acc
-            }, []) || [],
+            employee: object?.employee?._id || "",
+            leaveType: object?.leaveType?._id || "",
+            leaveDuration: object?.leaveDuration || "",
+            dateForm: object?.dateForm || "",
+            dateTo: object?.dateTo || "",
+            reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
-            entitled: Yup.string().required(t('formik.entitledRequired')),
-            encashable: Yup.string().required(t('formik.encashableRequired')),
-            carryForward: Yup.string().required(t('formik.carryForwardRequired')),
-            entitledToStatus: Yup.array().required(t('formik.entitledToStatusRequired')).min(1, t('formik.entitledToStatusRequired')),
+            employee: Yup.string().required(t('formik.employeeRequired')),
+            leaveType: Yup.string().required(t('formik.leaveTypeRequired')),
+            dateForm: Yup.string().required(t('formik.dateFormRequired')),
+            dateTo: Yup.string().required(t('formik.dateToRequired')),
+            reason: Yup.string().required(t('formik.reasonRequired')),
         }),
         onSubmit: async (values) => {
-            onCompleted()
-            return leave ? dispatch(UpdateLeavePolicy(leave._id, values, onCompleted)) : dispatch(CreateLeavePolicy(values, onCompleted))
+            return object ? dispatch(UpdateEmployee(object._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(leave ? t("Leave policy updated successfully") : t("Leave policy created successfully"))
+        Toast.success(object ? t("Leave Request updated successfully") : t("Leave Request created successfully"))
         onClose()
     }
     const formElements = [
@@ -122,6 +108,6 @@ export default function CreateGazetedLeaveForm({ onClose, leave ,title}) {
     ]
 
     return (
-        <BaseForm title={title} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object?"Edit Gazetted Holidays":"Add Gazetted Holidays"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }

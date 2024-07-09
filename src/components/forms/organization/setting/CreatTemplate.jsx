@@ -8,7 +8,7 @@ import BaseForm from '../../BaseForm';
 import { useEffect } from 'react';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 
-export default function AddTemplateForm({ onClose, asset ,title}) {
+export default function AddTemplateForm({ onClose, asset ,object}) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector((state) => state.asset)
@@ -51,7 +51,7 @@ export default function AddTemplateForm({ onClose, asset ,title}) {
  
     return (
         <BaseForm
-            title={title}
+            title={object?"Add New Template":"Add New Template"}
             formElements={formElements}
             formik={formik}
             onClose={onClose}

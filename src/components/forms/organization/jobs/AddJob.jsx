@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import BaseForm from '../../BaseForm';
 import { list } from 'postcss';
 
-export default function AddJob({ title, onClose, type, object, additionFields }) {
+export default function AddJob({  onClose, type, object, additionFields }) {
     const { t } = useTranslation()
 
     const dispatch = useDispatch()
@@ -144,7 +144,7 @@ export default function AddJob({ title, onClose, type, object, additionFields })
         },
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add New ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? `Edit Job` : `Add New Job`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
