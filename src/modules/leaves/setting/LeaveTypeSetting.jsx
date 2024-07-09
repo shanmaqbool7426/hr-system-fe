@@ -32,7 +32,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -68,7 +68,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -104,7 +104,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -140,7 +140,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -176,7 +176,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -212,7 +212,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -248,7 +248,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -284,7 +284,7 @@ const LeaveTypeSetting = () => {
             </div>,
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
-            ProrateBased: <span className='flex justify-center'><SuccessTick /></span>,
+            ProrateBased: <span className='flex justify-center'><SuccessTick className={'text-tickCussess'}/></span>,
             CarryForward: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
