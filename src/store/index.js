@@ -8,17 +8,19 @@ import department from "./slices/department.slice";
 import employee from "./slices/employee.slice";
 import leavepolicy from "./slices/leave-policy.slice";
 import leaverequest from "./slices/leave-request.slice";
+import shiftflag from "./slices/shift-flag.slice";
 
 export default configureStore({
-    reducer: {
-        asset,
-        attendance,
-        auth,
-        biometric,
-        customfield,
-        department,
-        employee,
-        leavepolicy,
-        leaverequest,
-    },
+  reducer: {
+    asset,
+    attendance,
+    auth,
+    biometric,
+    customfield,
+    department,
+    employee,
+    leavepolicy,
+    leaverequest,
+    shiftflag,
+  },
 });
