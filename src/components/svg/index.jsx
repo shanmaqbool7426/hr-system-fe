@@ -579,8 +579,8 @@ function Download({ className, width, height, ...props }) {
 }
 function SuccessTick({ className, width, height, ...props }) {
   return (
-    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <path d="M15.3297 0.5L5.40969 11.4067L2.52969 9.22H0.929688L5.40969 16.5L16.9297 0.5H15.3297Z" fill="#4BD37B" />
+    <svg className={`${className}`} width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M15.3297 0.5L5.40969 11.4067L2.52969 9.22H0.929688L5.40969 16.5L16.9297 0.5H15.3297Z" fill="currentColor" />
     </svg>
   )
 }

@@ -217,6 +217,7 @@ module.exports = {
 
       themeSuccessLight: '#55c790',
       themeSuccess: '#0cAf60',
+      tickCussess:"#4BD37B",
       themeSuccessLighter:"#E9F6F1",
       themeSuccessDark: '#0ba259',
 
