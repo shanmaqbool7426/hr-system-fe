@@ -1,3 +1,5 @@
+import EmailSubscription from "@/modules/remoteWork/setting/profile/EmailSubscription";
+import ProfileDetail from "@/modules/remoteWork/setting/profile/ProfileDetail";
 import { useTranslation } from "next-i18next";
 
 export default function Profile() {
@@ -11,8 +13,9 @@ export default function Profile() {
                     <h1 className="text-h4 mb-0">{t("Profile")}</h1>
                 </div>
             </div>
-            <div className="zt-card grow">
-
+            <div className="flex  gap-6 grow">
+                <ProfileDetail />
+                <EmailSubscription />
             </div>
         </section>
     )

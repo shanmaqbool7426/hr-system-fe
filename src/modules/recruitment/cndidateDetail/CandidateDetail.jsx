@@ -33,7 +33,7 @@ const CandidateDetail = () => {
         <div className='candidate_detail'>
             <Tabs
                 containerClasses={'zt-themeTabsV1'}
-                tabNavClasses={'zt-themeTabNav'}
+                tabNavClasses={'zt-themeTabNav1'}
                 tabs={["General", "Experience", "Education", "Certifications", "Skills", "Evaluations", "Feedback"]}
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0 !pr-96`}>
