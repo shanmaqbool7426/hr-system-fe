@@ -1,5 +1,5 @@
 import { Button } from '@/components/elements'
-import ChangePlanForm from '@/components/forms/remoteWork/ChangePlan'
+import ChangePlanForm from '@/components/forms/remoteWork/changePlan'
 import CreateMemberForm from '@/components/forms/remoteWork/createMember'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'

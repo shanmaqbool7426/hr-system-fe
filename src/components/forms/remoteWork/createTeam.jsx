@@ -6,7 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddRemoteEmployeeForm({ onClose, object }) {
+export default function CreateRemoteTeamForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -39,39 +39,14 @@ export default function AddRemoteEmployeeForm({ onClose, object }) {
         {
             type: "text",
             name: "name",
-            label: t('Name'),
+            label: t('Team name'),
             required: true,
             placeholder: "Enter name",
             value: formik.values.name,
         },
-        {
-            type: "text",
-            name: "email",
-            label: t('Email'),
-            placeholder: "Enter email",
-            required: true,
-            value: formik.values.email,
-        },
-        {
-            type: "select",
-            name: "team",
-            label: t('Team'), 
-            list:[{display:"Without Team",value:"Without Team"},{display:"Accounting",value:"Accounting"},{display:"Management",value:"Management"},],
-            required: true,
-            value: formik.values.team,
-        },
-        {
-            type: "select",
-            name: "role",
-            label: t('Role'), 
-            list:[{display:"Employee",value:"Employee"},{display:"User Manager",value:"User Manager"},{display:"Management",value:"Management"},],
-            required: true,
-            value: formik.values.role,
-        },
-        
     ]
     return (
-        <BaseForm title={object ? t(`Edit Employee`) : t(`Add Employee`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Edit Team`) : t(`Add Team`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
