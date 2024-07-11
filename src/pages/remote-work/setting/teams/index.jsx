@@ -1,5 +1,5 @@
 import { Button, DropDown, Table } from "@/components/elements";
-import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/CreateRemoteEmployee";
+import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/createRemoteEmployee";
 import CreateRemoteTeamForm from "@/components/forms/remoteWork/createTeam";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from "next-i18next";

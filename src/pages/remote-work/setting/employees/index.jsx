@@ -1,5 +1,5 @@
 import { Button, DropDown, Table } from "@/components/elements";
-import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/CreateRemoteEmployee";
+import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/createRemoteEmployee";
 import FilterArea from "@/components/includes/FilterArea";
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from "next-i18next";
