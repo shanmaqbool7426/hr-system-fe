@@ -1,6 +1,9 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateFlagForm from "@/components/forms/attendance/createFlagSetting";
 import AddReasonTypeForm from "@/components/forms/attendance/reasonType";
+import DisplayDate from "@/components/elements/DisplayDate";
+import FilterArea from "@/components/includes/FilterArea";
+
 import {
   CrossClose,
   Edit,
@@ -11,11 +14,10 @@ import {
 } from "@/components/svg";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchShiftFlags,
-  deleteShiftFlag,
+  FetchShiftFlags,
+  DeleteShiftFlag,
 } from "@/store/actions/shift-flag.actions";
 
 export default function AttendanceModule() {
@@ -27,11 +29,14 @@ export default function AttendanceModule() {
   const [perPage, setPerPage] = useState(10);
   const [add, setAdd] = useState(false);
   const [editFlag, setEditFlag] = useState(null);
+  const [filters, setFilters] = useState({
+    search: "",
+    deduction: null,
+  });
 
   const { flags_list, is_loading } = useSelector((state) => state.shiftflag);
-
   useEffect(() => {
-    dispatch(fetchShiftFlags());
+    dispatch(FetchShiftFlags());
   }, [dispatch]);
 
   const headings = [
@@ -41,22 +46,52 @@ export default function AttendanceModule() {
     { title: t("Action"), col: "action" },
   ];
 
-  const rows = flags_list.map((flag) => ({
-    name: flag.name,
-    deduction: flag.deduction,
+  const filterElements = [
+    {
+      type: "search",
+      name: "search",
+      value: filters.search,
+      placeholder: t("Search by reason type"),
+      className: "xl:col-span-2",
+      onChange: (event) => {
+        let _filter = { ...filters };
+        _filter["search"] = event.target.value;
+        setFilters(_filter);
+      },
+    },
+  ];
+
+  let filteredrows = flags_list
+    .filter((item) => {
+      return (
+        filters.search.length === 0 ||
+        item.name.toLowerCase().includes(filters.search.toLowerCase())
+      );
+    })
+    .sort((a, b) => {
+      if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+      else return b[sortCol]?.localeCompare(a[sortCol]);
+    });
+
+  const indexOfLastItem = page * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
+  const rows = paginatedData?.map((item) => ({
+    name: item?.name,
+    deduction: item?.deduction,
     modifiedOn: (
       <div className="flex justify-center">
         <div className="flex flex-col items-start">
           <span>
-            {moment(flag.modifiedOn).format("DD MMMM YYYY")}
-            <span className="text-themeGrayscale500">
+            <DisplayDate date={item?.modifiedOn} time={true} />
+            {/* <span className="text-themeGrayscale500">
               {" "}
-              {moment(flag.modifiedOn).format("h:mm A")}
-            </span>
+              <DisplayDate timeOnly={item?.updatedAt} />
+            </span> */}
           </span>
           <span className="text-themeGrayscale500">
-            By{" "}
-            <span className="text-[#7239EA]">{`${flag.modifiedBy.firstName} ${flag.modifiedBy.lastName}`}</span>
+            {t("By")}{" "}
+            <span className="text-[#7239EA]">{`${item?.modifiedBy?.firstName} ${item?.modifiedBy?.lastName}`}</span>
           </span>
         </div>
       </div>
@@ -67,7 +102,7 @@ export default function AttendanceModule() {
           <li className="!p-0">
             <a
               onClick={() => {
-                setEditFlag(flag);
+                setEditFlag(item);
                 setAdd(true);
               }}
               className={
@@ -83,7 +118,7 @@ export default function AttendanceModule() {
           <li className="!p-0">
             <a
               onClick={() => {
-                dispatch(deleteShiftFlag(flag._id));
+                dispatch(DeleteShiftFlag(item?._id));
               }}
               className={
                 "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"
@@ -100,29 +135,45 @@ export default function AttendanceModule() {
     ),
   }));
 
+  const pagination = {
+    totalRecords: filteredrows.length,
+    showPerPage: true,
+    prevAction: () => page > 1 && setPage(page - 1),
+    clickAction: (value) => setPage(value),
+    nextAction: () => setPage(page + 1),
+  };
   return (
     <div className="zt-card grow">
-      <h2 className="font-bold text-xl">{t("Flags Setting")}</h2>
+      {/* <h2 className="font-bold text-xl">{t("Flags Setting")}</h2> */}
       <Button
         className={"btn btn-primary absolute top-4 right-4"}
         onClick={() => setAdd(true)}
       >
         {t("Add New Flag")}
       </Button>
-      <Table
-        headings={headings}
-        rows={rows}
-        sortCol={sortCol}
-        setSortCol={setSortCol}
-        sortDir={sortDir}
-        setSortDir={setSortDir}
-        perPage={perPage}
-        setPerPage={setPerPage}
-        page={page}
-        setPage={setPage}
-        className={"zt-employeeTable zt-attendanceTable"}
-        isLoading={is_loading}
-      />
+      <div className="w-full bg-white p-1 rounded-lg grow">
+        <FilterArea
+          title={t("Flags Setting")}
+          elements={filterElements}
+          filters={filters}
+          setFilters={setFilters}
+        />
+        <Table
+          headings={headings}
+          rows={rows}
+          sortCol={sortCol}
+          setSortCol={setSortCol}
+          sortDir={sortDir}
+          setSortDir={setSortDir}
+          perPage={perPage}
+          setPerPage={setPerPage}
+          page={page}
+          setPage={setPage}
+          pagination={pagination}
+          className={"zt-employeeTable zt-attendanceTable"}
+          isLoading={is_loading}
+        />
+      </div>
       {add && (
         <CreateFlagForm
           onClose={() => {

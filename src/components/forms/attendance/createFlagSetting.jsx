@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import Toast from "@/util/toast";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createShiftFlag,
-  updateShiftFlag,
+  CreateShiftFlag,
+  UpdateShiftFlag,
 } from "@/store/actions/shift-flag.actions";
 
 export default function CreateFlagForm({ onClose, object }) {
@@ -35,8 +35,8 @@ export default function CreateFlagForm({ onClose, object }) {
     }),
     onSubmit: async (values) => {
       return object
-        ? dispatch(updateShiftFlag(object._id, values, onCompleted))
-        : dispatch(createShiftFlag(values, onCompleted));
+        ? dispatch(UpdateShiftFlag(object._id, values, onCompleted))
+        : dispatch(CreateShiftFlag(values, onCompleted));
     },
   });
 
