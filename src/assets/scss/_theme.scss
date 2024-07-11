@@ -275,7 +275,8 @@
 .chat__content .react-input-emoji--container{@apply hidden}
 .react-input-emoji--button{padding: 0 !important;}
 .apps__state:hover .action_btn{@apply flex}
-.apps__state:hover .time{@apply hidden}
+.apps__state:hover .action_btn{@apply flex}
+.remote__image:hover .remote_image_label{@apply flex justify-center items-center}
 .zt-chatTabs ul{
   gap: 8px !important;
 }

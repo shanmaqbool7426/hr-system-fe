@@ -1,3 +1,5 @@
+import AccountDetail from "@/modules/remoteWork/setting/accounts/AccountDetail";
+import AccountSetting from "@/modules/remoteWork/setting/accounts/AccountSetting"; 
 import { useTranslation } from "next-i18next";
 
 export default function Accounts() {
@@ -11,8 +13,9 @@ export default function Accounts() {
                     <h1 className="text-h4 mb-0">{t("Accounts")}</h1>
                 </div>
             </div>
-            <div className="zt-card grow">
-
+            <div className="flex  gap-6 grow">
+                <AccountDetail />
+                <AccountSetting />
             </div>
         </section>
     )

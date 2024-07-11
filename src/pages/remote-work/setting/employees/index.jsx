@@ -1,5 +1,5 @@
 import { Button, DropDown, Table } from "@/components/elements";
-import AddRemoteEmployeeForm from "@/components/forms/remoteWork/AddRemoteEmployee";
+import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/CreateRemoteEmployee";
 import FilterArea from "@/components/includes/FilterArea";
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from "next-i18next";
@@ -13,8 +13,7 @@ export default function Employees() {
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(10)
-    const [view, setView] = useState(false)
+    const [perPage, setPerPage] = useState(10) 
     const [hide, setHide] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
@@ -181,7 +180,7 @@ export default function Employees() {
                 />
             </div>
             {create &&
-                <AddRemoteEmployeeForm onClose={() => setCreate(false)} />}
+                <CreateRemoteEmployeeForm onClose={() => setCreate(false)} />}
         </section>
     )
 }
