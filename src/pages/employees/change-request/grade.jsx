@@ -25,10 +25,7 @@ export default function GradePage() {
 			dispatch(FetchEmployees());
 	}, [dispatch]);
 
-	useEffect(() => {
-		if (employees_list.length === 0)
-			dispatch(FetchEmployees())
-	}, [dispatch])
+
 
 	const formik = useFormik({
 		initialValues: {

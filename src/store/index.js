@@ -7,6 +7,7 @@ import department from "./slices/department.slice";
 import employee from "./slices/employee.slice";
 import leavepolicy from "./slices/leave-policy.slice";
 import leaverequest from "./slices/leave-request.slice";
+import project from "./slices/project.slice"
 
 export default configureStore({
     reducer: {
@@ -18,5 +19,6 @@ export default configureStore({
         employee,
         leavepolicy,
         leaverequest,
+        project,
     },
 });
