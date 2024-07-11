@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useTranslation } from "next-i18next";
 
 import Toast from "@/util/toast";
-import { CreateGazetteHoliday } from "@/store/slices/gazetteholiday.slice";
+import { CreateGazetteHoliday } from "@/store/actions/gazetteholiday.actions";
 import BaseForm from "../BaseForm";
 
 export default function CreateGazetedLeaveForm({ onClose, object }) {
