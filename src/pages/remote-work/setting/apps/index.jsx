@@ -1,7 +1,6 @@
 import { Datepicker, Tabs } from "@/components/elements";
 import { ChevronLeft, ChevronRight } from "@/components/svg";
-import DayTab from "@/modules/remoteWork/myRemoteWork/DayTab";
-import AppsTab from "@/modules/remoteWork/setting/apps/Apps";
+import AppsTab from "@/modules/remoteWork/setting/apps/AppsTab";
 import { Tab } from "@headlessui/react";
 import { useTranslation } from "next-i18next";
 
