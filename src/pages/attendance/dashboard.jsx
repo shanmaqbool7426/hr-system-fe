@@ -82,7 +82,7 @@ export default function Dashboard() {
     dispatch(FetchAttendance())
   }, [dispatch])
 
-  const filtered_attendandance_data = attendance_list
+  const filtered_attendandance_data =( attendance_list || [])
     .filter(item => {
 
       let attendanceDate = new Date(item.date)
