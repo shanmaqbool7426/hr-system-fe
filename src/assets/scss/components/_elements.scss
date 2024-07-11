@@ -45,7 +45,7 @@
 }
 .zt-themeTabsV1 {
   @apply flex flex-col gap-6;
-  .zt-themeTabNav {
+  .zt-themeTabNav1 {
     ul {
       @apply flex border-b;
       li { @apply focus-within:outline-none}
