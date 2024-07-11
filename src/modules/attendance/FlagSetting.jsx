@@ -2,12 +2,8 @@ import { Button, DropDown, Table } from "@/components/elements";
 import CreateFlagForm from "@/components/forms/attendance/createFlagSetting";
 import DisplayDate from "@/components/elements/DisplayDate";
 import FilterArea from "@/components/includes/FilterArea";
-
-import {
-  CrossClose,
-  Edit,
-  ThreeDotsVertical,
-} from "@/components/svg";
+import Toast from "@/util/toast";
+import { CrossClose, Edit, ThreeDotsVertical } from "@/components/svg";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,11 +40,13 @@ export default function FlagSetting() {
 
   const deleteHandler = (item) => {
     Toast.confirmDelete(() => {
-      dispatch(DeleteShiftFlag(item._id, () => {
-        Toast.success(t("Flag deleted successfully"))
-      }))
-    }, t)
-  }
+      dispatch(
+        DeleteShiftFlag(item._id, () => {
+          Toast.success(t("Flag deleted successfully"));
+        })
+      );
+    }, t);
+  };
 
   const filterElements = [
     {
@@ -118,7 +116,7 @@ export default function FlagSetting() {
           <li className="!p-0">
             <a
               onClick={() => {
-                deleteHandler(item)
+                deleteHandler(item);
               }}
               className={
                 "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"

@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "next-i18next";
-
+import { FetchEmployees } from "@/store/actions/employee.actions";
 import Toast from "@/util/toast";
-import { CreateGazetteHoliday } from "@/store/slices/gazetteholiday.slice";
+import {
+  CreateGazetteHoliday,
+  UpdateGazetteHoliday,
+} from "@/store/actions/gazetteholiday.actions";
 import BaseForm from "../BaseForm";
 
 export default function CreateGazetedLeaveForm({ onClose, object }) {
@@ -13,8 +16,10 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
   const dispatch = useDispatch();
   const { customfield_list } = useSelector((state) => state.customfield);
   const { employees_list } = useSelector((state) => state.employee);
-  console.log("employees_list", employees_list);
 
+  useEffect(() => {
+    dispatch(FetchEmployees());
+  }, [dispatch]);
   const formik = useFormik({
     initialValues: {
       title: object?.title || "",
@@ -25,35 +30,41 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
       area: object?.area || "",
       station: object?.station || "",
       grade: object?.grade || "",
-      exemptedEmployee: object?.exemptedEmployee || [],
+      exemptedEmployees:
+        object?.exemptedEmployees?.reduce((acc, item) => {
+          acc.push(item._id);
+          return acc;
+        }, []) || [],
       description: object?.description || "",
       sendEmail: object?.sendEmail || false,
       recursive: object?.recursive || false,
     },
     validationSchema: Yup.object().shape({
-      title: Yup.string().required(t("formik.titleRequired")),
-      date: Yup.date().required(t("formik.dateRequired")),
-      country: Yup.string().required(t("formik.countryRequired")),
-      province: Yup.string().required(t("formik.provinceRequired")),
-      city: Yup.string().required(t("formik.cityRequired")),
-      area: Yup.string().required(t("formik.areaRequired")),
-      station: Yup.string().required(t("formik.stationRequired")),
-      grade: Yup.string().required(t("formik.gradeRequired")),
-      exemptedEmployee: Yup.array().required(
-        t("formik.exemptedEmployeeRequired")
+      title: Yup.string().required(t("Title is required")),
+      date: Yup.date().required(t("Date is required")),
+      country: Yup.string().required(t("Country is required")),
+      province: Yup.string().required(t("Province is required")),
+      city: Yup.string().required(t("City is required")),
+      area: Yup.string().required(t("Area is required")),
+      station: Yup.string().required(t("Station is required")),
+      grade: Yup.string().required(t("Grade is required")),
+      exemptedEmployees: Yup.array().required(
+        t("Exempted Employee is required")
       ),
-      description: Yup.string().required(t("formik.descriptionRequired")),
+      description: Yup.string().required(t("Description is required")),
     }),
     onSubmit: async (values) => {
-      dispatch(CreateGazetteHoliday(values, onCompleted));
+      return object
+        ? dispatch(UpdateGazetteHoliday(object._id, values, onCompleted))
+        : dispatch(CreateGazetteHoliday(values, onCompleted));
     },
   });
 
   const onCompleted = () => {
     Toast.success(
       object
-        ? t("Leave Request updated successfully")
-        : t("Leave Request created successfully")
+        ? t("Gazette Holiday updated successfully")
+        : t("Gazette Holiday created successfully")
     );
     onClose();
   };
@@ -149,13 +160,13 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "exemptedEmployee",
+      name: "exemptedEmployees",
       label: t("Exempted Employees"),
       required: true,
-      value: formik.values.exemptedEmployee,
-      list: employees_list.map((item) => ({
+      value: formik.values.exemptedEmployees,
+      list: employees_list?.map((item) => ({
         value: item?._id,
-        display: item?.name,
+        display: item.firstName + " " + item.lastName,
       })),
       multiple: true,
     },
@@ -170,18 +181,16 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     {
       type: "switch",
       name: "sendEmail",
+      id: "sendEmail",
       label: t("Send Email"),
       checked: formik.values.sendEmail,
-      onChange: () =>
-        formik.setFieldValue("sendEmail", !formik.values.sendEmail),
     },
     {
       type: "switch",
       name: "recursive",
+      id: "recursive",
       label: t("Recursive"),
       checked: formik.values.recursive,
-      onChange: () =>
-        formik.setFieldValue("recursive", !formik.values.recursive),
     },
   ];
 
