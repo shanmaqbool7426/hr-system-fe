@@ -1,7 +1,7 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateTypeForm from "@/components/forms/attendance/createType";
 import AddReasonTypeForm from "@/components/forms/attendance/reasonType";
-import { CrossClose, Edit, SuccessTick, ThreeDotsVertical } from "@/components/svg";
+import { CrossClose, Edit, SuccessTick,ThreeDotsVertical } from "@/components/svg";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +26,7 @@ export default function ExemptionModule() {
         RequestType: 'Attendance Request',
         ReasonType: 'Late Night Sitting',
         MinWorkingHrs: "4:00:00 Hours",
-        Status: <span className="flex justify-center"><SuccessTick /></span>,
+        Status: <span className="flex justify-center"><SuccessTick className={'text-tickCussess'}/></span>,
         ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,
@@ -58,7 +58,7 @@ export default function ExemptionModule() {
         RequestType:  'Exemption Request',
         ReasonType:  'Worked on Weekend',
         MinWorkingHrs: "4:00:00 Hours",
-        Status: <span className="flex justify-center"><SuccessTick /></span>,
+        Status: <span className="flex justify-center"><SuccessTick className={'text-tickCussess'}/></span>,
         ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,
@@ -89,7 +89,7 @@ export default function ExemptionModule() {
         RequestType: 'Attendance Request',
         ReasonType: 'Special Request',
         MinWorkingHrs: "4:00:00 Hours",
-        Status: <span className="flex justify-center"><SuccessTick /></span>,
+        Status: <span className="flex justify-center"><SuccessTick className={'text-tickCussess'}/></span>,
         ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
             <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
         </div></div>,

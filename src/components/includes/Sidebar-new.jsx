@@ -16,9 +16,9 @@ export default function Sidebar() {
         { icon: Employees, name: t("Employees"), href: "employees" },
         { icon: Attendance, name: t("Attendance"), href: "attendance" },
         { icon: Leave, name: t("Leave"), href: "leave" },
-        { icon: Projects, name: t("Projects"), href: "projects"  },
+        { icon: Projects, name: t("Projects"), href: "projects" },
         { icon: Connect, name: t("Connect"), href: "connect", },
-        { icon: RemoteWork, name: t("Remote Work"), href: "/remote-work", page: true },
+        { icon: RemoteWork, name: t("Remote Work"), href: "remoteWork" },
         { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
         { icon: Payroll, name: t("Payroll"), href: "payroll" },
         { icon: Report, name: t("Report"), href: "report" },
@@ -70,7 +70,7 @@ export default function Sidebar() {
             { name: t("Gazetted Holidays"), href: "/leaves/gazetted-holidays" },
             { name: t("Leave Setting"), href: "/leaves/settings" },
         ],
-        projects:[
+        projects: [
             { name: t("Dashboard"), href: "/projects/dashboard" },
             { name: t("Projects"), href: "/projects" },
             { name: t("Task Board"), href: "/projects/task-board" },
@@ -79,11 +79,29 @@ export default function Sidebar() {
             { name: t("Feedback"), href: "/projects/feedback" },
             // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
         ],
-        connect:[
+        connect: [
             { name: t("Chat"), href: "/connect/chat" },
             { name: t("Call"), href: "/connect/call" },
             { name: t("Groups"), href: "/connect/groups" },
-            { name: t("Calender"), href: "/connect/calender" }, 
+            { name: t("Calender"), href: "/connect/calender" },
+        ],
+        remoteWork: [
+            { name: t("Remote Work Dashboard"), href: "/remote-work" },
+            { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
+            { name: t("Screenshot"), href: "/remote-work/screenshot" },
+            { name: t("Reports"), href: "/remote-work/reports" },
+            {
+                name: t("Setting"), href: "/remote-work/setting",
+                innerSubMenu: [
+                    { name: t('Billing'), href: "/remote-work/setting/billing" },
+                    { name: t('Profile'), href: "/remote-work/setting/profile" },
+                    { name: t('Employees'), href: "/remote-work/setting/employees" },
+                    { name: t('Teams'), href: "/remote-work/setting/teams" },
+                    { name: t('Account'), href: "/remote-work/setting/account" },
+                    { name: t('Apps'), href: "/remote-work/setting/apps" },
+                    { name: t('Category'), href: "/remote-work/setting/category" },
+                ]
+            },
         ],
         recruitment: [
             { name: t("Dashboard"), href: "/recruitment/" },
