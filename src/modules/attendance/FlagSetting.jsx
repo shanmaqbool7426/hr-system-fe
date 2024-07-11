@@ -1,16 +1,12 @@
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button, DropDown, Table } from "@/components/elements";
 import CreateFlagForm from "@/components/forms/attendance/createFlagSetting";
-import AddReasonTypeForm from "@/components/forms/attendance/reasonType";
 import DisplayDate from "@/components/elements/DisplayDate";
 import FilterArea from "@/components/includes/FilterArea";
 
 import {
   CrossClose,
   Edit,
-  SuccessTick,
   ThreeDotsVertical,
-  Tick,
-  Trash,
 } from "@/components/svg";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +16,7 @@ import {
   DeleteShiftFlag,
 } from "@/store/actions/shift-flag.actions";
 
-export default function AttendanceModule() {
+export default function FlagSetting() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [sortCol, setSortCol] = useState(null);
@@ -45,6 +41,14 @@ export default function AttendanceModule() {
     { title: t("Modified On"), col: "modifiedOn" },
     { title: t("Action"), col: "action" },
   ];
+
+  const deleteHandler = (item) => {
+    Toast.confirmDelete(() => {
+      dispatch(DeleteShiftFlag(item._id, () => {
+        Toast.success(t("Flag deleted successfully"))
+      }))
+    }, t)
+  }
 
   const filterElements = [
     {
@@ -84,10 +88,6 @@ export default function AttendanceModule() {
         <div className="flex flex-col items-start">
           <span>
             <DisplayDate date={item?.modifiedOn} time={true} />
-            {/* <span className="text-themeGrayscale500">
-              {" "}
-              <DisplayDate timeOnly={item?.updatedAt} />
-            </span> */}
           </span>
           <span className="text-themeGrayscale500">
             {t("By")}{" "}
@@ -118,7 +118,7 @@ export default function AttendanceModule() {
           <li className="!p-0">
             <a
               onClick={() => {
-                dispatch(DeleteShiftFlag(item?._id));
+                deleteHandler(item)
               }}
               className={
                 "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"
@@ -144,7 +144,7 @@ export default function AttendanceModule() {
   };
   return (
     <div className="zt-card grow">
-      {/* <h2 className="font-bold text-xl">{t("Flags Setting")}</h2> */}
+      <h2 className="font-bold text-xl">{t("Flags Setting")}</h2>
       <Button
         className={"btn btn-primary absolute top-4 right-4"}
         onClick={() => setAdd(true)}
