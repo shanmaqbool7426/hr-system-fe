@@ -10,6 +10,7 @@ import leavepolicy from "./slices/leave-policy.slice";
 import leaverequest from "./slices/leave-request.slice";
 import shiftflag from "./slices/shift-flag.slice";
 import gazetteholiday from "./slices/gazetteholiday.slice";
+import project from "./slices/project.slice"
 
 export default configureStore({
   reducer: {
@@ -20,9 +21,10 @@ export default configureStore({
     customfield,
     department,
     employee,
+    gazetteholiday,
     leavepolicy,
     leaverequest,
+    project,
     shiftflag,
-    gazetteholiday,
   },
 });

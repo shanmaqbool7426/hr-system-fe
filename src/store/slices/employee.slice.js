@@ -38,7 +38,7 @@ export const employeeSlice = createSlice({
                 state.employee_details.academicsHistory = []
             }
             state.employee_details.academicsHistory.push(action.payload)
-        },
+        }, 
         removeAcademic(state, action) {
             state.employee_details.academicsHistory = state.employee_details.academicsHistory.filter(item => item._id !== action.payload)
         },
@@ -74,3 +74,7 @@ export const {
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
+
+
+
+

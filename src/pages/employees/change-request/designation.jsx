@@ -17,6 +17,8 @@ export default function DesignationPage() {
 	const { } = useSelector(state => state.employee)
 	const { customfield_list } = useSelector(state => state.customfield)
 	const { employees_list } = useSelector((state) => state.employee)
+
+
 	const currentDesignationRef = useRef(null)
 	const dispatch = useDispatch()
 	useEffect(() => {
@@ -67,6 +69,7 @@ export default function DesignationPage() {
 							name={'employee'}
 							label={t('Employee')}
 							value={formik.values.employee}
+
 							error={formik.touched.employee && formik.errors.employee}
 							onBlur={() => { formik.setFieldTouched('employee', true) }}
 							onInput={formik.handleBlur}
