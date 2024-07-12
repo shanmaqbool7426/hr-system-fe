@@ -1,4 +1,4 @@
-import ChangeAppStatusForm from '@/components/forms/remoteWork/changeAppStatus'
+import ChangeAppStatusForm from '@/components/forms/remoteWork/change-app-status'
 import { ThreeDotsVertical } from '@/components/svg' 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
