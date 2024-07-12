@@ -1,5 +1,5 @@
 import { Button, DropDown, Table } from "@/components/elements";
-import CreateGazetedLeaveForm from "@/components/forms/leaves/create-gazetted";
+import CreateGazetedLeaveForm from "@/components/forms/leaves/create-gazetted-leave";
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useEffect, useState } from "react";
 import Toast from "@/util/toast";
@@ -11,6 +11,8 @@ import {
 } from "@/store/actions/gazetteholiday.actions";
 import DisplayDate from "@/components/elements/DisplayDate";
 import FilterArea from "@/components/includes/FilterArea";
+import { FetchEmployees } from "@/store/actions/employee.actions";
+import moment from "moment";
 
 export default function LeaveGazettedHolidaysPage() {
   const { t } = useTranslation();
@@ -31,12 +33,13 @@ export default function LeaveGazettedHolidaysPage() {
 
   useEffect(() => {
     dispatch(FetchGazettedHoliday());
+    dispatch(FetchEmployees());
   }, [dispatch]);
 
   const headings = [
-    { title: t("Holiday Name"), col: "name" },
-    { title: t("Date"), col: "date" },
-    { title: t("Day"), col: "day" },
+    { title: t("Holiday Name"), col: "name", sort: true },
+    { title: t("From Date"), col: "fromDate" },
+    { title: t("To Date"), col: "toDate" },
     { title: t("Action"), col: "action" },
   ];
 
@@ -82,8 +85,8 @@ export default function LeaveGazettedHolidaysPage() {
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
   const rows = paginatedData?.map((item) => ({
     name: item?.title,
-    date: <DisplayDate date={item?.date} time={false} />,
-    day: <DisplayDate date={item?.date} dayOnly={true} />,
+    fromDate: <div><DisplayDate date={item.fromDate} /> ({moment(item.fromDate).format('dddd')})</div>,
+    toDate: <div><DisplayDate date={item.toDate} /> ({moment(item.toDate).format('dddd')})</div>,
     action: (
       <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-1">

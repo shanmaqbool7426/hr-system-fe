@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "next-i18next";
-import { FetchEmployees } from "@/store/actions/employee.actions";
 import Toast from "@/util/toast";
 import {
   CreateGazetteHoliday,
@@ -16,20 +15,19 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
   const dispatch = useDispatch();
   const { customfield_list } = useSelector((state) => state.customfield);
   const { employees_list } = useSelector((state) => state.employee);
+  const { is_loading } = useSelector((state) => state.gazetteholiday);
 
-  useEffect(() => {
-    dispatch(FetchEmployees());
-  }, [dispatch]);
   const formik = useFormik({
     initialValues: {
       title: object?.title || "",
-      date: object?.date || "",
-      country: object?.country || "",
-      province: object?.province || "",
-      city: object?.city || "",
-      area: object?.area || "",
-      station: object?.station || "",
-      grade: object?.grade || "",
+      fromDate: object?.fromDate || new Date,
+      toDate: object?.toDate || new Date,
+      countries: object?.countries || [],
+      provinces: object?.provinces || [],
+      cities: object?.cities || [],
+      areas: object?.areas || [],
+      stations: object?.stations || [],
+      grades: object?.grades || [],
       exemptedEmployees:
         object?.exemptedEmployees?.reduce((acc, item) => {
           acc.push(item._id);
@@ -41,16 +39,14 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     validationSchema: Yup.object().shape({
       title: Yup.string().required(t("Title is required")),
-      date: Yup.date().required(t("Date is required")),
-      country: Yup.string().required(t("Country is required")),
-      province: Yup.string().required(t("Province is required")),
-      city: Yup.string().required(t("City is required")),
-      area: Yup.string().required(t("Area is required")),
-      station: Yup.string().required(t("Station is required")),
-      grade: Yup.string().required(t("Grade is required")),
-      exemptedEmployees: Yup.array().required(
-        t("Exempted Employee is required")
-      ),
+      fromDate: Yup.date().required(t("From date is required")),
+      toDate: Yup.date().required(t("To date is required")),
+      countries: Yup.array().required(t("Country is required")).min(1, t("Country is required")),
+      provinces: Yup.array().required(t("Province is required")).min(1, t("Province is required")),
+      cities: Yup.array().required(t("City is required")).min(1, t("City is required")),
+      areas: Yup.array().required(t("Area is required")).min(1, t("Area is required")),
+      stations: Yup.array().required(t("Station is required")).min(1, t("Station is required")),
+      grades: Yup.array().required(t("Grade is required")).min(1, t("Grade is required")),
       description: Yup.string().required(t("Description is required")),
     }),
     onSubmit: async (values) => {
@@ -63,8 +59,8 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
   const onCompleted = () => {
     Toast.success(
       object
-        ? t("Gazette Holiday updated successfully")
-        : t("Gazette Holiday created successfully")
+        ? t("Gazetted Holiday updated successfully")
+        : t("Gazetted Holiday created successfully")
     );
     onClose();
   };
@@ -79,19 +75,39 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
       value: formik.values.title,
     },
     {
+      type: "select",
+      name: "exemptedEmployees",
+      label: t("Exempted Employees"),
+      value: formik.values.exemptedEmployees,
+      list: employees_list?.map((item) => ({
+        value: item?._id,
+        display: item.firstName + " " + item.lastName,
+      })),
+      multiple: true,
+    },
+    {
       type: "date",
-      name: "date",
-      label: t("Date"),
+      name: "fromDate",
+      label: t("From Date"),
       required: true,
-      value: formik.values.date,
+      value: formik.values.fromDate,
+    },
+    {
+      type: "date",
+      name: "toDate",
+      label: t("To Date"),
+      required: true,
+      value: formik.values.toDate,
+      minDate: formik.values.fromDate
     },
     {
       type: "select",
-      name: "country",
+      name: "countries",
       label: t("Country"),
       placeholder: t("Select One"),
       required: true,
-      value: formik.values.country,
+      multiple: true,
+      value: formik.values.countries,
       list: customfield_list
         .filter((item) => item.type === "country")
         .map((item) => {
@@ -100,10 +116,11 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "province",
+      name: "provinces",
       label: t("Province"),
       required: true,
-      value: formik.values.province,
+      multiple: true,
+      value: formik.values.provinces,
       list: customfield_list
         .filter((item) => item.type === "province")
         .map((item) => {
@@ -112,10 +129,11 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "city",
+      name: "cities",
       label: t("City"),
       required: true,
-      value: formik.values.city,
+      multiple: true,
+      value: formik.values.cities,
       list: customfield_list
         .filter((item) => item.type === "city")
         .map((item) => {
@@ -124,10 +142,11 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "area",
+      name: "areas",
       label: t("Area"),
       required: true,
-      value: formik.values.area,
+      multiple: true,
+      value: formik.values.areas,
       list: customfield_list
         .filter((item) => item.type === "area")
         .map((item) => {
@@ -136,10 +155,11 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "station",
+      name: "stations",
       label: t("Station"),
       required: true,
-      value: formik.values.station,
+      multiple: true,
+      value: formik.values.stations,
       list: customfield_list
         .filter((item) => item.type === "station")
         .map((item) => {
@@ -148,27 +168,16 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
     },
     {
       type: "select",
-      name: "grade",
+      name: "grades",
       label: t("Employee Grade"),
       required: true,
-      value: formik.values.grade,
+      multiple: true,
+      value: formik.values.grades,
       list: customfield_list
-        .filter((item) => item.type === "employee_status")
+        .filter((item) => item.type === "grade")
         .map((item) => {
           return { value: item._id, display: item.name };
         }),
-    },
-    {
-      type: "select",
-      name: "exemptedEmployees",
-      label: t("Exempted Employees"),
-      required: true,
-      value: formik.values.exemptedEmployees,
-      list: employees_list?.map((item) => ({
-        value: item?._id,
-        display: item.firstName + " " + item.lastName,
-      })),
-      multiple: true,
     },
     {
       type: "textarea",
@@ -200,7 +209,7 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
       formElements={formElements}
       formik={formik}
       onClose={onClose}
-      is_loading={false}
+      is_loading={is_loading}
     />
   );
 }
