@@ -45,7 +45,7 @@
 }
 .zt-themeTabsV1 {
   @apply flex flex-col gap-6;
-  .zt-themeTabNav {
+  .zt-themeTabNav1 {
     ul {
       @apply flex border-b;
       li { @apply focus-within:outline-none}
@@ -279,7 +279,36 @@
     }
   }
 }
-
+.zt-projectsAwaitingTasksTable{
+  tr {
+    th { 
+      &:last-child {
+        > div { @apply justify-center }
+      }
+    } 
+  }
+}
+.zt-attendanceAddTable{
+  tr {
+    th { 
+      &:last-child {
+        > div { @apply justify-center }
+      }
+    } 
+    td{
+      &:last-child{@apply flex justify-center}
+    }
+  }
+}
+.zt-attendanceAddclockTable{
+  tr {
+    th { 
+      &:last-child {
+        > div { @apply justify-center }
+      }
+    }  
+  }
+}
 .table-group-divider {  }
 
 //
@@ -345,7 +374,7 @@
 
 // Theme Tags
 .zt-tag {
-  @apply inline-flex overflow-hidden gap-2 min-w-24 rounded-full text-themeGrayscale bg-themeGrayscale300 text-xs justify-center py-2 px-5 font-medium transition-all duration-300 cursor-pointer;
+  @apply inline-flex overflow-hidden gap-2 min-w-24 rounded-full text-themeGrayscale bg-themeGrayscale300 justify-center py-2 px-5 font-medium transition-all duration-300 cursor-pointer;
 
   &.zt-tag-primary { @apply bg-themePrimary/15 text-themePrimary }
   &.zt-tag-dark { @apply bg-themeGrayscale/15 text-themeGrayscale }

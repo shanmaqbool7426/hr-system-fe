@@ -29,6 +29,14 @@ export default function RaiseIssueForm({ onClose, object }) {
     }
     const formElements = [
         {
+            type: "text",
+            name: "title",
+            label: t('Issue Title'),
+            containerClass: 'col-span-2',
+            value: formik.values.reason,
+            required: true,
+        },
+        {
             type: "textarea",
             name: "reason",
             label: t('Describe Issue'),

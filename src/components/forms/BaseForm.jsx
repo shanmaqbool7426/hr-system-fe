@@ -1,8 +1,9 @@
 import Button from "../elements/Button"
 import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
 import { useTranslation } from "react-i18next"
+import Radio from "../elements/Radio"
 
-export default function BaseForm({ children, formElements, onClose, title, formik, is_loading , className}) {
+export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className }) {
     const { t } = useTranslation()
     const close = () => onClose()
     const submitHamdler = (event) => {
@@ -73,6 +74,18 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                                 formik.setFieldValue(element.name, event.target.checked)
                                             }}
                                             {...element} />
+                                    case "radio":
+                                        return <Radio
+                                            key={index}
+                                            variant={'dark'}
+                                            id={element.id}
+                                            checked={formik.values.radioStatus === element.name}
+                                            label={element.label}
+                                            onChange={(event) => {
+                                                formik.setFieldValue('radioStatus', element.name);
+                                            }}
+                                            {...element}
+                                        />;
                                     case 'checkbox':
                                         return (
                                             <div key={index} className="zt-formGroup col-span-2">

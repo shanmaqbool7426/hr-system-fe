@@ -5,7 +5,7 @@ export default function Select({
 
     return (
         <div htmlFor="" className="relative">
-            {props?.label && <span className="text-lg"> {props?.label || ""} {props?.required && <sup className="text-red-600">*</sup>}</span>}
+            {props?.label && <span className="text-sm"> {props?.label || ""} {props?.required && <sup className="text-red-600">*</sup>}</span>}
 
             <select value={value} onChange={onChnage} className={`border border-gray-400 text-gray-900 w-full py-3 px-4 rounded-md ${className}`} {...props}>
                 {

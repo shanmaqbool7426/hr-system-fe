@@ -1,7 +1,9 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects' 
-import FilterArea from '@/components/includes/FilterArea' 
+import AddTaskForm from '@/components/forms/projects/addTask'
+import CreateBoardForm from '@/components/forms/projects/createBoard'
+import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import FilterArea from '@/components/includes/FilterArea'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -11,7 +13,7 @@ import { useSelector } from 'react-redux'
 const Projects = [
   {
     "name": "Office Management",
-    href:"/projects/details",
+    href: "/projects/details",
     "openTasks": 1,
     "completedTasks": 9,
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
@@ -36,7 +38,7 @@ const Projects = [
   },
   {
     "name": "Office Management",
-    href:"/projects/details",
+    href: "/projects/details",
     "openTasks": 1,
     "completedTasks": 9,
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
@@ -60,7 +62,7 @@ const Projects = [
     "progress": "40%"
   },
   {
-    href:"/projects/details",
+    href: "/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -107,7 +109,7 @@ const tableData = [
 ]
 export default function ProjectsModule() {
   const { t } = useTranslation() 
-  const [view, setView] = useState("grid")
+  const [board, setBoard] = useState(false)
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
@@ -167,7 +169,7 @@ export default function ProjectsModule() {
     { title: t("Sprint"), col: "Sprint" },
     { title: t("Due Date"), col: "DueDate" },
     { title: t("Project Leader"), col: "ProjectLeader" },
-    { title: t("Team"), col: "Team" }, 
+    { title: t("Team"), col: "Team" },
   ]
 
   const rows = [
@@ -179,47 +181,56 @@ export default function ProjectsModule() {
         <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
       Team: <div className='flex justify-center'>{tableData.map((ele, i) => (
         <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>, 
-      DueDate: "22 March 2023",  
+      ))}</div>,
+      DueDate: "22 March 2023",
     },
     {
-        TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
-        ProjectName: "Spalsh",
-        Sprint: '01',
-        ProjectLeader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
-          <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-        Team: <div className='flex justify-center'>{tableData.map((ele, i) => (
-          <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-        ))}</div>, 
-        DueDate: "22 March 2023",  
-      },
+      TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
+      ProjectName: "Spalsh",
+      Sprint: '01',
+      ProjectLeader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
+        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
+      Team: <div className='flex justify-center'>{tableData.map((ele, i) => (
+        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
+      ))}</div>,
+      DueDate: "22 March 2023",
+    },
   ]
   return (
     <section className="flex flex-col grow">
       <div className="flex justify-between pb-6">
-        <h1 className="text-h4 mb-0">{t("Task Board")}</h1>       
+        <h1 className="text-h4 mb-0">{t("Task Board")}</h1>
+        <div className='flex gap-4'>
+          <Button className={"btn btn-primary"} onClick={() => setBoard(true)}>{t("Create Task Board")}</Button>
+        </div>
       </div>
       <div className="w-full bg-white p-6 rounded-lg grow">
         <FilterArea title={t("")}
           elements={filterElements}
           filters={filters}
           setFilters={setFilters}
-        /> 
-          <Table
-            headings={headings}
-            rows={rows}
-            sortCol={sortCol}
-            setSortCol={setSortCol}
-            sortDir={sortDir}
-            setSortDir={setSortDir}
-            perPage={perPage}
-            setPerPage={setPerPage}
-            page={page}
-            setPage={setPage}
-            className={'zt-employeeTable zt-projectsTable'}
-          /> 
-        {create && <CreatProjectsForm 
+        />
+        <Table
+          headings={headings}
+          rows={rows}
+          sortCol={sortCol}
+          setSortCol={setSortCol}
+          sortDir={sortDir}
+          setSortDir={setSortDir}
+          perPage={perPage}
+          setPerPage={setPerPage}
+          page={page}
+          setPage={setPage}
+          className={'zt-employeeTable zt-projectsTable'}
+        />
+        {create && <CreatProjectsForm
           onClose={() => { setCreate(false) }}
+        />}
+     
+        {board && <CreateBoardForm
+          title={t('Create Task Board')}
+          type={'Feedback'}
+          onClose={() => { setBoard(false) }}
         />}
       </div>
     </section>
