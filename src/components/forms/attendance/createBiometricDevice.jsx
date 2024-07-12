@@ -53,7 +53,7 @@ export default function CreateBiometricDeviceForm({ onClose, object }) {
             value: formik.values.station,
             required: true,
             list: customfield_list.filter(item => item.type === 'station')
-            .map(item => { return { display: item.name, value: item._id } })
+                .map(item => { return { display: item.name, value: item._id } })
         },
     ]
     const formTitle = object ? t("Update device") : t("Create device")
