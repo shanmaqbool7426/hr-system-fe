@@ -11,7 +11,6 @@ export const FetchGazettedHoliday = (payload) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const query = new URLSearchParams(payload).toString();
-    console.log("query", query);
     const data = await axios.get(`/gazette-holidays/list?${query}`);
     dispatch(setHolidaysList(data));
     return true;
