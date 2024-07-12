@@ -3,54 +3,13 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import UserListView from '@/components/elements/UserListView';
-import { SearchSelect } from '@/components/elements';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { useDispatch, useSelector } from 'react-redux';
 
-const teamData = [
-    {
-        "leaders": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-        ],
-        "team": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-        ],
-    }
-]
+
 export default function CreatProjectsForm({ onClose, object, }) {
     const { t } = useTranslation()
-    const [value, setValue] = useState('');
-    const [fileName, setFileName] = useState('No file chosen');
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFileName(file.name);
-        } else {
-            setFileName('No file chosen');
-        }
-    };
-    const [filters, setFilters] = useState({
-        search: "",
-        project: null,
-        department: null,
-        status: null,
-    })
     const dispatch = useDispatch()
+    const { is_loading } = useSelector(state => state.project)
     const formik = useFormik({
         initialValues: {
             projectName: object?.projectName || "",
@@ -141,7 +100,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
             type: "search",
             name: "projectLeader",
             label: t('Add Project Leader'),
-            value: filters.search,
+            value: [],
             required: true,
             placeholder: t("Search Leader"),
             onChange: (event) => {
@@ -154,7 +113,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
             type: "search",
             name: "team",
             label: t('Add Team'),
-            value: filters.search,
+            value: [],
             required: true,
             placeholder: t("Search Team Member"),
             onChange: (event) => {
@@ -163,7 +122,6 @@ export default function CreatProjectsForm({ onClose, object, }) {
                 setFilters(_filter)
             }
         },
-
         {
             type: "select",
             name: "priority",
@@ -172,32 +130,19 @@ export default function CreatProjectsForm({ onClose, object, }) {
             required: true,
             list: [
                 { value: "low", display: "Low" },
+                { value: "normal", display: "Normal" },
                 { value: "high", display: "High" },
-
             ]
+        },
+        {
+            type: "editor",
+            name: "description",
+            label: t("Description"),
+            value: formik.values.description,
+            containerClass: "col-span-2"
         }
-
     ]
     return (
-        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
-
-            <div className='flex flex-col gap-6 col-span-2'>
-                <div>
-                    <label className='text-sm font-medium mb-3 block text-start'>Description</label>
-                    <ReactQuill theme="snow" value={value} onChange={setValue} />
-                    {formik.touched.description && formik.errors.description ? (
-                        <div className="text-red-600">{formik.errors.description}</div>
-                    ) : null}
-                </div>
-                <div>
-                    <label className='text-sm font-medium mb-4 block text-start'>Upload File</label>
-                    <div className='rounded-lg flex items-center border border-themeGrayscale300'>
-                        <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
-                        <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
-                        <span className='ps-2 text-sm'>{fileName}</span>
-                    </div>
-                </div>
-            </div>
-        </BaseForm>
+        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
     )
 }
