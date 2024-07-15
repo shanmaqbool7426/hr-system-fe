@@ -390,8 +390,7 @@ export default function PenaltyModule() {
                 className={'zt-employeeTable zt-attendancePaneltyTable'}
             />
 
-            {add && <AddPenaltyForm
-                title={t('New Rule')}
+            {add && <AddPenaltyForm 
                 onClose={() => { setAdd(false) }}
             />}
         </div>

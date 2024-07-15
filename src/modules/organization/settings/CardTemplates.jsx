@@ -16,7 +16,7 @@ export const CardTemplate = () => {
             <div className='flex flex-col gap-2'>
                 {['Employee Card', 'Management Card', 'Admiration Card'].map((ele, i) => (
                     <div key={i} className='flex w-full items-center justify-between p-4 border rounded-lg'>
-                        <span className='text-xs font-medium'>{ele}</span>
+                        <span className='font-medium'>{ele}</span>
                         <div className='flex gap-2'>
                             <Button variant={"light-primary"} className={'!p-2'}><Edit className={'h-4 w-4'} /></Button>
                             <Button variant={"light-danger"} className={'!p-2'}><Trash className={'h-4 w-4'} /></Button>
@@ -25,7 +25,7 @@ export const CardTemplate = () => {
                 ))}
             </div>
             {add && <AddTemplateForm
-                object={add} 
+                object={add}
                 onClose={() => { setAdd(false) }}
             />}
         </div>

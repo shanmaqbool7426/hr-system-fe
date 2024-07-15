@@ -26,7 +26,7 @@ const formik = useFormik({
     }
 });
 const onCompleted = () => {
-    Toast.success(object ? tv(`${type} New shift added successfully`) : tv(`${type} New shift created successfully`));
+    Toast.success(object ? tv(`New shift added successfully`) : tv(`New shift created successfully`));
     onClose();
 };
     const formElements = [
@@ -62,7 +62,7 @@ const onCompleted = () => {
         },
     ]
     return (
-        <BaseForm formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Edit New Shift`) : t(`Add New Shift`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 

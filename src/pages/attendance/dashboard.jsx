@@ -157,9 +157,7 @@ export default function Dashboard() {
           className={'zt-employeeTable zt-projectsTable'}
         />
       </div>
-      {request && <AddRequestForm
-        title={edit ? t('New Request') : t('New Request')}
-        type={'New Request'}
+      {request && <AddRequestForm 
         onClose={() => { setRequest(false) }}
         object={edit}
       />}

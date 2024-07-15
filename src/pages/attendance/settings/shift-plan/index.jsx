@@ -4,11 +4,11 @@ import { Button, Tabs } from "@/components/elements";
 import ShiftModule from "@/modules/attendance/Shift";
 import ExemptionModule from "@/modules/attendance/Exemption";
 import FlagSetting from "@/modules/attendance/FlagSetting";
-import PenaltyModule from "@/modules/attendance/Penalty";
-import BiometricMachine from "./biometric-machine";
+import PenaltyModule from "@/modules/attendance/Penalty"; 
 import { Tab } from "@headlessui/react";
-import GeneralSettingModule from "@/modules/attendance/GeneralSetting";
-export default function AttendanceSettingPage() {
+import GeneralSettingModule from "@/modules/attendance/GeneralSetting"; 
+import AttendanceBiometricSettings from "@/modules/attendance/BiometricSetting";
+export default function AttendanceSettingShiftPlanPage() {
   const { t } = useTranslation();
   return (
     <section className="flex flex-col grow relative">
@@ -49,7 +49,7 @@ export default function AttendanceSettingPage() {
             <GeneralSettingModule />
           </Tab.Panel>
           <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <BiometricMachine />
+            <AttendanceBiometricSettings />
           </Tab.Panel>
         </Tab.Panels>
       </Tabs>

@@ -304,9 +304,7 @@ export default function Exemptions() {
                     className={'zt-employeeTable zt-exemptionTable'}
                 />
             </div>
-            {view && <ViewExemptionForm
-                title={'Exemption Request Details'}
-                type={'New Request'}
+            {view && <ViewExemptionForm 
                 onClose={() => { setView(false); setEdit(null) }}
                 object={edit}
             />}

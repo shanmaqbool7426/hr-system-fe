@@ -1,5 +1,4 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
-import CreateBiometricDevice from "@/components/forms/attendance/createBiometricDevice";
 import { CrossClose, Edit, SuccessTick, ThreeDotsVertical, Tick, Trash } from "@/components/svg";
 import { FetchDevices, SyncDevice } from "@/store/actions/biometric.actions";
 import Toast from "@/util/toast";
@@ -7,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function BiometricSettings() {
+export default function AttendanceBiometricSettings() {
     const { t } = useTranslation()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
@@ -82,7 +81,6 @@ export default function BiometricSettings() {
     return (
         <div className="zt-card grow">
             <h2 className="font-bold text-xl">{t("Biometric Devices")}</h2>
-            <Button className={"btn btn-primary absolute top-4 right-4"} onClick={() => setAdd(true)}>{t("Add New Device")}</Button>
             <Table
                 headings={headings}
                 rows={rows}
@@ -96,11 +94,7 @@ export default function BiometricSettings() {
                 setPage={setPage}
                 pagination={pagination}
                 className={'zt-employeeTable zt-attendanceTable'}
-            />
-            {add && <CreateBiometricDevice
-                object={edit}
-                onClose={() => { setAdd(false) }}
-            />}
+            /> 
         </div>
     )
 }
