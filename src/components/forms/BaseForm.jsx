@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
 import { useTranslation } from "react-i18next"
 import Radio from "../elements/Radio"
 
@@ -67,6 +67,17 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             }}
                                             onInput={formik.handleBlur}
                                             onChange={formik?.handleChange}
+                                        />
+                                    case 'editor':
+                                        return <TextEditor key={index} {...element} id={element.name}
+                                            error={formik.touched[element.name] && formik.errors[element.name]}
+                                            onBlur={() => {
+                                                formik.setFieldTouched(element.name, true)
+                                            }}
+                                            onChange={(value) => {
+                                                console.log(value);
+                                                formik.setFieldValue(element.name, value)
+                                            }}
                                         />
                                     case 'switch':
                                         return <ToggleCheck key={index}

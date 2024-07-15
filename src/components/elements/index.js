@@ -13,3 +13,5 @@ export { default as Profile } from "./Profile"
 export { default as Table } from "./Table"
 export { default as Tabs } from "./Tabs"
 export { default as Textarea } from "./Textarea"
+export { default as TextEditor } from "./TextEditor"
+

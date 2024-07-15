@@ -2,14 +2,23 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FetchEmployees } from '@/store/actions/employee.actions';
+import Toast from '@/util/toast';
+import { ChangeGrade } from '@/store/actions/employee-change-request.actions';
 
 import { Button, Datepicker, SearchSelect, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 
 const user = ls?.get('auth_user', { decrypt: true })
 
-export default function SalaryPage () {
+export default function SalaryPage() {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
+	const { employees_list } = useSelector(state => state.employee);
+	const { customfield_list } = useSelector(state => state.customfield);
+	const changeSaleryRef = useRef(null);
 	const formik = useFormik({
 		employee: "",
 		initialValues: {
@@ -29,8 +38,22 @@ export default function SalaryPage () {
 			detail: Yup.string(),
 			fileSalary: Yup.string(),
 		}),
-		onSubmit: (values) => {
-			console.log("Form Values:", values); // Logging form values on submit
+		onSubmit: async (values) => {
+			if (values.attachment) {
+				await uploader(values.attachment, (url) => {
+					values.attachment = url;
+					dispatch(ChangeDepartment(values, () => {
+						formik.resetForm();
+						Toast.success(t("Salery change request saved successfully"));
+					}));
+				});
+			} else {
+				dispatch(ChangeDesignation(values, () => {
+					formik.resetForm();
+					Toast.success(t("Request not proceed"));
+				}));
+			}
+
 		}
 	});
 
@@ -42,16 +65,18 @@ export default function SalaryPage () {
 			<form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
 				<fieldset className='flex flex-col  gap-12'>
 					<div className="grid sm:grid-cols-3 gap-12">
-					<SearchSelect
+						<SearchSelect
 							type={'select'}
 							name={'employee'}
 							label={t('Employee')}
 							value={formik.values.employee}
 							error={formik.touched.employee && formik.errors.employee}
-							onBlur={() => {formik.setFieldTouched('employee', true)}}
+							onBlur={() => { formik.setFieldTouched('employee', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('employee', value)}}
-							list={[{display: 'Jhon', value: '1'}, {display: 'Doe', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('employee', value) }}
+							list={employees_list.map((item) => {
+								return { display: item.firstName + " " + item.lastName, value: item._id };
+							})}
 							required
 						/>
 						<SearchSelect
@@ -60,22 +85,23 @@ export default function SalaryPage () {
 							label={t('Current Salary')}
 							value={formik.values.currentSalary}
 							error={formik.touched.currentSalary && formik.errors.currentSalary}
-							onBlur={() => {formik.setFieldTouched('currentSalary', true)}}
+							onBlur={() => { formik.setFieldTouched('currentSalary', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('currentSalary', value)}}
-							list={[{display: 'Jhon', value: '1'}, {display: 'Doe', value: '2'}]}
-							required
+							onChange={(value) => { formik.setFieldValue('currentSalary', value) }}
+							list={[{ display: 'Jhon', value: '1' }, { display: 'Doe', value: '2' }]}
+							readOnly
 						/>
+
 						<SearchSelect
 							type={'select'}
 							name={'newSalary'}
 							label={t('New Salary')}
 							value={formik.values.newSalary}
 							error={formik.touched.newSalary && formik.errors.newSalary}
-							onBlur={() => {formik.setFieldTouched('newSalary', true)}}
+							onBlur={() => { formik.setFieldTouched('newSalary', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('newSalary', value)}}
-							list={[{display: 'Pakistan', value: '1'}, {display: 'India', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('newSalary', value) }}
+							list={[{ display: '20000', value: '1' }, { display: '350000', value: '2' }]}
 							required
 						/>
 						<Datepicker
@@ -85,7 +111,7 @@ export default function SalaryPage () {
 							error={formik.touched.effectiveDate && formik.errors.effectiveDate}
 							onBlur={formik.handleBlur}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('effectiveDate', value)}}
+							onChange={(value) => { formik.setFieldValue('effectiveDate', value) }}
 							required
 						/>
 						<SearchSelect
@@ -94,12 +120,12 @@ export default function SalaryPage () {
 							label={t('Reason Of Change Salary')}
 							value={formik.values.reasonOfChangeSalary}
 							error={formik.touched.reasonOfChangeSalary && formik.errors.reasonOfChangeSalary}
-							onBlur={() => {formik.setFieldTouched('reasonOfChangeSalary', true)}}
+							onBlur={() => { formik.setFieldTouched('reasonOfChangeSalary', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('reasonOfChangeSalary', value)}}
+							onChange={(value) => { formik.setFieldValue('reasonOfChangeSalary', value) }}
 							// corection
 							// other
-							list={[{display: 'Punjab', value: '1'}, {display: 'KPK', value: '2'}]}
+							list={[{ display: 'Performance-Based Increase', value: '1' }, { display: 'Market Adjustment', value: '2' }]}
 							required
 						/>
 					</div>

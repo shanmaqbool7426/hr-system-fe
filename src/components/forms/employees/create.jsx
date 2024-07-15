@@ -1,17 +1,18 @@
-import BaseForm from "../BaseForm"
+import BaseForm from "../BaseForm";
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { CreateEmployee, UpdateEmployee } from "@/store/actions/employee.actions"
+import { CreateEmployee, UpdateEmployee } from "@/store/actions/employee.actions";
 import Toast from "@/util/toast";
 
 export default function CreateEmployeeForm({ onClose, employee }) {
-    const { t } = useTranslation()
-    const dispatch = useDispatch()
-    const { is_loading, employees_list } = useSelector((state) => state.employee)
-    const { customfield_list } = useSelector(state => state.customfield)
-    const { auth_user } = useSelector(state => state.auth)
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const { is_loading, employees_list } = useSelector((state) => state.employee);
+    const { customfield_list } = useSelector(state => state.customfield);
+    const { auth_user } = useSelector(state => state.auth);
+
     const formik = useFormik({
         initialValues: {
             firstName: employee?.firstName || "",
@@ -22,13 +23,14 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             cnic: employee?.cnic || "",
             dateOfBirth: employee?.dateOfBirth || "",
             email: employee?.email || "",
-            joiningDate: employee?.joiningDate || new Date,
+            joiningDate: employee?.joiningDate || new Date(),
             password: "",
             canLogin: true,
             designation: employee?.designation || "",
             status: employee?.status || "",
             mobileAttendance: employee?.mobileAttendance || false,
             webAttendance: employee?.webAttendance || false,
+            lineManager: employee?.lineManager || "",
         },
         validationSchema: Yup.object().shape({
             firstName: Yup.string().required(t('formik.firstNameRequired')),
@@ -42,15 +44,18 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             joiningDate: Yup.date().required(t('formik.joiningDateRequired')),
             email: Yup.string().email('formik.invalidEmail').required(t('formik.emailRequired')),
             status: Yup.string().required(t('formik.employeeStatusRequired')),
+            lineManager: Yup.string().required(t('formik.lineManagerRequired')),
         }),
         onSubmit: async (values) => {
-            return employee ? dispatch(UpdateEmployee(employee._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted))
+            return employee ? dispatch(UpdateEmployee(employee._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted));
         }
-    })
+    });
+
     const onCompleted = () => {
-        Toast.success(employee ? t("Employee updated successfully") : t("Employee created successfully"))
-        onClose()
-    }
+        Toast.success(employee ? t("Employee updated successfully") : t("Employee created successfully"));
+        onClose();
+    };
+
     const formElements = [
         {
             type: "text",
@@ -69,8 +74,8 @@ export default function CreateEmployeeForm({ onClose, employee }) {
         {
             type: "text",
             name: "employeeCode",
-            label: t('Employee Code'),
-            placeholder: t("Enter employee code"),
+            label: t('Employee ID'),
+            placeholder: t("Enter employee id"),
             readOnly: true,
             required: true, value: formik.values.employeeCode,
         },
@@ -125,9 +130,10 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             label: t('Employee Status'),
             value: formik.values.status,
             required: true,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            })
+            list: customfield_list.filter(item => item.type === 'employee_status').map(item => ({
+                value: item._id,
+                display: item.name
+            }))
         },
         {
             type: "tel",
@@ -149,20 +155,22 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             label: t('Designation'),
             value: formik.values.designation,
             required: true,
-            list: customfield_list.filter(item => item.type === 'designation').map(item => {
-                return { value: item._id, display: item.name }
-            })
+            list: customfield_list.filter(item => item.type === 'designation').map(item => ({
+                value: item._id,
+                display: item.name
+            }))
         },
         {
             type: "select",
             name: "lineManager",
             label: t('Line Manager'),
             value: formik.values.lineManager,
-            list: employees_list.filter(item => item._id !== employee?._id).map(item => {
-                return {
-                    value: item._id, display: item.firstName + " " + item.lastName
-                }
-            })
+            required: true,
+            list: employees_list.filter(item => item._id !== employee?._id).map(item => ({
+                value: item._id,
+                display: item.firstName + " " + item.lastName,
+                type: 'linemanager' // Set the type here
+            }))
         },
         {
             type: "switch",
@@ -192,11 +200,11 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             value: formik.values.password,
             autocomplete: "new-password"
         },
-    ]
+    ];
 
-    const formTitle = employee ? t("Update employee") : t("Create employee")
+    const formTitle = employee ? t("Update employee") : t("Create employee");
 
     return (
         <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
-    )
+    );
 }
