@@ -6,7 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux'; 
 
-export default function AddTypeForm({ title, onClose, type, object, additionFields }) {
+export default function AddTypeForm({ onClose, object }) {
     const { t } = useTranslation() 
     const { t:tv } = useTranslation("validation") 
 
@@ -14,16 +14,13 @@ export default function AddTypeForm({ title, onClose, type, object, additionFiel
     
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
+            name: object?.name || "", 
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(tv('Name is required')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
+      }),
         onSubmit: async (values) => {
 
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
@@ -59,10 +56,7 @@ export default function AddTypeForm({ title, onClose, type, object, additionFiel
     }, 
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? `Edit Type` : `Add Type`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
-
-AddTypeForm.defaultProps = {
-    additionFields: []
-}
+ 

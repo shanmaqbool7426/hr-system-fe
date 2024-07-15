@@ -117,9 +117,7 @@ export default function CalenderPage() {
                      </div>
                     ))}
                 </div>
-                {newShift && <AddNewShiftForm
-                    title={t('Add New Shift')}
-                    type={'New Request'}
+                {newShift && <AddNewShiftForm 
                     onClose={() => { setNewShift(false) }} 
                 />
                 }

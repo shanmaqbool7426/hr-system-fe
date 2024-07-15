@@ -303,16 +303,12 @@ export default function RemoteWork() {
                     className={'zt-employeeTable zt-remoteWorkRequestTable'}
                 />
             </div>
-            {view && <ViewRemoteWorkForm
-                title={'Attendance Approval Routing'}
-                type={'New Request'}
+            {view && <ViewRemoteWorkForm 
                 onClose={() => { setView(false); setEdit(null) }}
                 object={edit}
             />}
 
-            {create && <AddRemoteWorkForm
-                title={edit ? t('Remote Work Request') : t('Remote Work Request')}
-                type={'New Request'}
+            {create && <AddRemoteWorkForm 
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

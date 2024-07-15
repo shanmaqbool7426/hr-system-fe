@@ -408,67 +408,110 @@ export default function CreateAttendanceForm({ onClose, object }) {
   ];
   const flagHeadings = [
     { title: t("Attendance Flag"), col: "AttendanceFlag" },
-    { title: t("From Time"), col: "FromTime" },
-    { title: t("To Time"), col: "ToTime" },
+    { title: t("Flag Affect"), col: "FlagAffect" },
+    { title: t("Minimum Time"), col: "MinimumTime" },
+    { title: t("Maximum Time"), col: "MaximumTime" },
     { title: t("Action"), col: "action" },
   ];
   const flagRows = [
     {
-      AttendanceFlag: "Half Day",
-      FromTime: "9:00:00 AM",
-      ToTime: "6:00:00 PM",
-      BtwShiftTime: "Yes",
-      action: (
-        <Button variant={"light-danger"} className={"!py-2 !px-2"}>
-          <Trash />
-        </Button>
+      AttendanceFlag: <div className="w-36">
+        <Select
+          placeholder={"Select One"}
+          options={["Late", "Early Day", 'Short Day', 'Half Day', 'Absent for short time']}
+        />
+      </div>,
+      FlagAffect: <div className="flex justify-center">
+        <div className="w-36">
+          <Select
+            placeholder={"Select One"}
+            options={["Before End Time", "After Start Time", 'Minimum Working Hours']}
+          />
+        </div>
+      </div>,
+      MinimumTime: "-",
+      MaximumTime: "-",
+      action: (<Button variant={"light-danger"} className={"!py-2 !px-2"}>  <Trash />  </Button>
       ),
     },
     {
-      AttendanceFlag: "Sing Out",
-      FromTime: "9:00:00 AM",
-      ToTime: "6:00:00 PM",
-      BtwShiftTime: "No",
-      action: (
-        <Button variant={"light-danger"} className={"!py-2 !px-2"}>
-          <Trash />
-        </Button>
+      AttendanceFlag: <div className="w-36">
+        <Select
+          placeholder={"Select One"}
+          options={["Late", "Early Day", 'Short Day', 'Half Day', 'Absent for short time']}
+        />
+      </div>,
+      FlagAffect: <div className="flex justify-center">
+        <div className="w-36">
+          <Select
+            placeholder={"Select One"}
+            options={["Before End Time", "After Start Time", 'Minimum Working Hours']}
+          />
+        </div>
+      </div>,
+      MinimumTime: "-",
+      MaximumTime: "-",
+      action: (<Button variant={"light-danger"} className={"!py-2 !px-2"}>  <Trash />  </Button>
       ),
     },
     {
-      AttendanceFlag: (
-        <div className="w-[144px]">
+      AttendanceFlag: <div className="w-36">
+        <Select
+          placeholder={"Select One"}
+          options={["Late", "Early Day", 'Short Day', 'Half Day', 'Absent for short time']}
+        />
+      </div>,
+      FlagAffect: <div className="flex justify-center">
+        <div className="w-36">
           <Select
             placeholder={"Select One"}
-            options={["Sing Out", "Half Day"]}
-          />{" "}
+            options={["Before End Time", "After Start Time", 'Minimum Working Hours']}
+          />
         </div>
+      </div>,
+      MinimumTime: "-",
+      MaximumTime: "-",
+      action: (<Button variant={"light-danger"} className={"!py-2 !px-2"}>  <Trash />  </Button>
       ),
-      FromTime: (
-        <div className="w-[144px]">
+    },
+    {
+      AttendanceFlag: <div className="w-36">
+        <Select
+          placeholder={"Select One"}
+          options={["Late", "Early Day", 'Short Day', 'Half Day', 'Absent for short time']}
+        />
+      </div>,
+      FlagAffect: <div className="flex justify-center">
+        <div className="w-36">
           <Select
             placeholder={"Select One"}
-            options={["9:00:00 AM", "9:00:00 AM"]}
-          />{" "}
+            options={["Before End Time", "After Start Time", 'Minimum Working Hours']}
+          />
         </div>
+      </div>,
+      MinimumTime: "7:00",
+      MaximumTime: "6:00",
+      action: (<Button variant={"light-danger"} className={"!py-2 !px-2"}>  <Trash />  </Button>
       ),
-      ToTime: (
-        <div className="w-[144px]">
+    },
+    {
+      AttendanceFlag: <div className="w-36">
+        <Select
+          placeholder={"Select One"}
+          options={["Late", "Early Day", 'Short Day', 'Half Day', 'Absent for short time']}
+        />
+      </div>,
+      FlagAffect: <div className="flex justify-center">
+        <div className="w-36">
           <Select
             placeholder={"Select One"}
-            options={["9:00:00 AM", "9:00:00 AM"]}
-          />{" "}
+            options={["Before End Time", "After Start Time", 'Minimum Working Hours']}
+          />
         </div>
-      ),
-      BtwShiftTime: (
-        <div className="w-[85px]">
-          <Select placeholder={"Select One"} options={["No", "Yes"]} />{" "}
-        </div>
-      ),
-      action: (
-        <Button variant={"light-danger"} className={"!py-2 !px-2"}>
-          <Trash />
-        </Button>
+      </div>,
+      MinimumTime: "-",
+      MaximumTime: "-",
+      action: (<Button variant={"light-danger"} className={"!py-2 !px-2"}>  <Trash />  </Button>
       ),
     },
   ];
@@ -649,6 +692,24 @@ export default function CreateAttendanceForm({ onClose, object }) {
             setPage={setPage}
             className={"zt-employeeTable zt-attendanceAddTable"}
           />
+          <div className="py-6 flex flex-col items-start">
+            <Table
+              headings={flagHeadings}
+              rows={flagRows}
+              sortCol={sortCol}
+              setSortCol={setSortCol}
+              sortDir={sortDir}
+              setSortDir={setSortDir}
+              perPage={perPage}
+              setPerPage={setPerPage}
+              page={page}
+              setPage={setPage}
+              className={"zt-employeeTable zt-addAttendanceTable"}
+            />
+            <Button variant={"dark-outline"}>
+              <Plus /> Add New Line
+            </Button>
+          </div>
         </div>
       )}
     </BaseForm>

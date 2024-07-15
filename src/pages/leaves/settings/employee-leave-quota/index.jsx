@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const LeaveQuotta = () => {
+export default function LeaveQuotaSettingsPage() {
     const { t } = useTranslation()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
@@ -93,7 +93,7 @@ const LeaveQuotta = () => {
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Sandwich/Club")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
-                    </div> 
+                    </div>
                 </div>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -188,7 +188,7 @@ const LeaveQuotta = () => {
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Sandwich/Club")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
-                    </div> 
+                    </div>
                 </div>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -283,7 +283,7 @@ const LeaveQuotta = () => {
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Sandwich/Club")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
-                    </div> 
+                    </div>
                 </div>,
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -308,25 +308,30 @@ const LeaveQuotta = () => {
         },
     ]
     return (
-        <div className='zt-card grow'>
-            <div className='flex justify-between items-center mb-4'>
-                <h2 className='text-lg font-bold'>{t("Employee Leave Quota")}</h2>
-                {/* <Button className={'btn btn-dark'}>{t("Add Leave Type")}</Button> */}
+        <section className="flex flex-col grow">
+            <div className="flex justify-between items-center pb-6">
+                <div className="">
+                    <h1 className="text-h4 mb-0">{t("Leave Settings")}</h1>
+                </div>
             </div>
-            <Table
-                headings={headings}
-                rows={rows}
-                sortCol={sortCol}
-                setSortCol={setSortCol}
-                sortDir={sortDir}
-                setSortDir={setSortDir}
-                perPage={perPage}
-                setPerPage={setPerPage}
-                page={page}
-                setPage={setPage}
-                className={'zt-employeeTable zt-leaveTable'} />
-        </div>
+            <div className='zt-card grow'>
+                <div className='flex justify-between items-center mb-4'>
+                    <h2 className='text-lg font-bold'>{t("Employee Leave Quota")}</h2>
+                    {/* <Button className={'btn btn-dark'}>{t("Add Leave Type")}</Button> */}
+                </div>
+                <Table
+                    headings={headings}
+                    rows={rows}
+                    sortCol={sortCol}
+                    setSortCol={setSortCol}
+                    sortDir={sortDir}
+                    setSortDir={setSortDir}
+                    perPage={perPage}
+                    setPerPage={setPerPage}
+                    page={page}
+                    setPage={setPage}
+                    className={'zt-employeeTable zt-leaveTable'} />
+            </div>
+        </section>
     )
 }
-
-export default LeaveQuotta

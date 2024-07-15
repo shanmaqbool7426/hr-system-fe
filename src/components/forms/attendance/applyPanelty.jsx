@@ -10,32 +10,29 @@ import { Tabs } from '@/components/elements';
 import { LeavePaneltyModule } from '@/modules/attendance/LeavePanelty';
 import LeavePaneltyHistoryModule from '@/modules/attendance/LeavePaneltyHistory';
 
-export default function ApplyPaneltyForm({ title, onClose, type, object, additionFields }) {
+export default function ApplyPaneltyForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
-            type,
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
+       }),
         onSubmit: async (values) => {
 
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(` updated successfully`) : t(` created successfully`))
         onClose()
     }
     return (
-        <BaseForm title={title} formik={formik} onClose={onClose} is_loading={false} >
+        <BaseForm title={'Apply Plenty'} formik={formik} onClose={onClose} is_loading={false} >
             <Tabs
                 containerClasses={'zt-themeTabsV2 grow'}
                 tabNavClasses={'zt-themeTabNav mt-4'}
@@ -52,8 +49,4 @@ export default function ApplyPaneltyForm({ title, onClose, type, object, additio
             </Tabs>
         </BaseForm>
     )
-}
-
-ApplyPaneltyForm.defaultProps = {
-    additionFields: []
-}
+} 

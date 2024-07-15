@@ -202,15 +202,11 @@ export default function AmmendAttendance() {
                     className={'zt-employeeTable zt-amendAttendanceTable'}
                 />
             </div>
-            {amend && <AttendanceRepostForm
-                title={t('Attendance Repost')}
-                type={'New Request'}
+            {amend && <AttendanceRepostForm 
                 onClose={() => { setAmend(false); setEdit(null) }}
                 object={edit}
             />}
-             {panelty && <ApplyPaneltyForm
-                title={t('Apply Plenty')}
-                type={'New Request'}
+             {panelty && <ApplyPaneltyForm 
                 onClose={() => { setPanelty(false); setEdit(null) }}
                 object={edit}
             />}

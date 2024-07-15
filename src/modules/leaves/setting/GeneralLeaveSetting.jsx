@@ -1,5 +1,4 @@
-// GeneralSettingModule.js
-import React, { useState } from 'react';
+import React from 'react';
 import DisclosureComponent from "@/components/elements/Disclosure";
 import { useTranslation } from "react-i18next";
 import { Button, Input, SearchSelect } from '@/components/elements';

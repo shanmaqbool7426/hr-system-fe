@@ -42,9 +42,7 @@ export const Requests = () => {
             </div>
       {leave && <CreateLeaveRequestForm onClose={() => { setLeave(false) }} />}
 
-            {create && <AddRequestForm
-                title={'New Request'}
-                type={'New Request'}
+            {create && <AddRequestForm 
                 onClose={() => { setCreate(false) }} 
             />}
         </div>

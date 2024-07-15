@@ -304,16 +304,12 @@ export default function Approvels() {
                     className={'zt-employeeTable zt-attendanceRequestsTable'}
                 />
             </div>
-            {view && <ViewAttendanceForm
-                title={'Attendance Approval Routing'}
-                type={'New Request'}
+            {view && <ViewAttendanceForm 
                 onClose={() => { setView(false); setEdit(null) }}
                 object={edit}
             />}
 
-            {create && <AddRequestForm
-                title={edit ? t('New Request') : t('New Request')}
-                type={'New Request'}
+            {create && <AddRequestForm 
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}
