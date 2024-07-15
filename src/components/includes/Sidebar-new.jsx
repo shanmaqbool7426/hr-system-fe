@@ -257,16 +257,27 @@ export default function Sidebar() {
             {MiniBar.map((item, index) => (
               <li key={index} className={`px-5 py-3`}>
                 {item?.page ?
-                  <Link data-title={item.name} href={item.href}
-                    onClick={() => setSelected(null)}>
-                    <span className={`zt-menuIcon text-themePrimary/45 hover:text-themePrimary ${router.asPath === item.href && "!text-themePurple"}`}><item.icon /></span>
-                  </Link> :
-                  <a data-title={item.name} href="" onClick={(event) => {
-                    event.preventDefault()
-                    setSelected(item.href)
-                  }}>
-                    <span className={`zt-menuIcon text-themePrimary/45 hover:text-themePrimary ${router.asPath.includes(item.href) && "!text-themePurple"}`}><item.icon /></span>
-                  </a>
+                  <div className="relative group">
+                    <Link data-title={item.name} href={item.href}
+                      onClick={() => setSelected(null)}>
+                      <span className={`zt-menuIcon text-themePrimary/45 hover:text-themePrimary ${router.asPath === item.href && "!text-themePurple"}`}><item.icon /></span>
+                    </Link>
+                    <div className="absolute bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      {item.name}
+                    </div>
+                  </div>
+                  :
+                  <div className="relative group">
+                    <a data-title={item.name} href="" onClick={(event) => {
+                      event.preventDefault()
+                      setSelected(item.href)
+                    }}>
+                      <span className={`zt-menuIcon text-themePrimary/45 hover:text-themePrimary ${router.asPath.includes(item.href) && "!text-themePurple"}`}><item.icon /></span>
+                    </a>
+                    <div className="absolute bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      {item.name}
+                    </div>
+                  </div>
                 }
               </li>
             ))}
