@@ -75,7 +75,7 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                                 formik.setFieldTouched(element.name, true)
                                             }}
                                             onChange={(value) => {
-                                                console.log(value);
+                                                
                                                 formik.setFieldValue(element.name, value)
                                             }}
                                         />

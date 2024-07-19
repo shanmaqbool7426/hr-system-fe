@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import DiscussionForm from '@/components/forms/projects/discussion'
 const data = [
     { name: 'High', value: 300 },

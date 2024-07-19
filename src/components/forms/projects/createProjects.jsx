@@ -4,61 +4,76 @@ import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
+import { FetchEmployees } from '@/store/actions/employee.actions';
+import {
+    CreateProject,
+    UpdateProject,
+} from "@/store/actions/project.actions";
+import { useEffect } from 'react';
 
 
 export default function CreatProjectsForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
+    const { employees_list } = useSelector((state) => state.employee);
+    useEffect(() => {
+        dispatch(FetchEmployees());
+    }, [dispatch]);
+
+
     const formik = useFormik({
         initialValues: {
-            projectName: object?.projectName || "",
-            clientName: object?.clientName || "",
-            sprint: object?.sprint || "",
-            sprintDueDate: object?.sprintDueDate || "",
+            name: object?.name || "",
+            client: object?.client || "",
             startDate: object?.startDate || "",
             endDate: object?.endDate || "",
             payment: object?.payment || "",
             paymentCycle: object?.paymentCycle || "",
-            projectLeader: object?.projectLeader || "",
-            team: object?.team || "",
-            description: object?.description || "", // Added description
+            priority: object?.priority || "",
+            leads: object?.leads?.reduce((acc, item) => {
+                acc.push(item._id);
+                return acc;
+              }, []) || [],
+            members: object?.members?.reduce((acc, item) => {
+                acc.push(item._id);
+                return acc;
+              }, []) || [],
+            description: object?.description || "", 
         },
         validationSchema: Yup.object().shape({
-            projectName: Yup.string().required(t('Project name is required')),
-            clientName: Yup.string().required(t('Client name is required')),
-            sprint: Yup.string().required(t('Sprint is required')),
-            sprintDueDate: Yup.string().required(t('Sprint due date is required')),
+            name: Yup.string().required(t('Project name is required')),
+            client: Yup.string().required(t('Client name is required')),
             startDate: Yup.string().required(t('Project start date is required')),
             endDate: Yup.string().required(t('Project end date is required')),
-            projectLeader: Yup.string().required(t('Project leader is required')),
-            team: Yup.string().required(t('Team is required')),
-            description: Yup.string().required(t('Description is required')), // Added validation for description
+            leads: Yup.array().required(t('Project leader is required')),
+            members: Yup.array().required(t('Team is required')),
+            description: Yup.string().required(t('Description is required')), 
         }),
         onSubmit: async (values) => {
             return object ? dispatch(UpdateProject(object._id, values, onCompleted)) : dispatch(CreateProject(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`Project updated successfully`) : t(`Project created successfully`))
+        Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
     const formElements = [
         {
             type: "text",
-            name: "projectName",
+            name: "name",
             label: t('Project Name'),
-            placeholder: t("Office Management"),
+            placeholder: t("Project Name"),
             required: true,
-            value: formik.values.projectName,
+            value: formik.values.name,
         },
         {
             type: "text",
-            name: "clientName",
+            name: "client",
             label: t('Client'),
-            placeholder: t("Jhon Carter"),
+            placeholder: t("Client Name"),
             required: true,
-            value: formik.values.clientName,
+            value: formik.values.client,
         },
 
         {
@@ -87,7 +102,6 @@ export default function CreatProjectsForm({ onClose, object, }) {
             type: "select",
             name: "paymentCycle",
             label: t('Payment Cycle'),
-            placeholder: t("Fixed"),
             required: false,
             value: formik.values.paymentCycle,
             list: [
@@ -97,30 +111,30 @@ export default function CreatProjectsForm({ onClose, object, }) {
             ]
         },
         {
-            type: "search",
-            name: "projectLeader",
+            type: "select",
+            name: "leads",
             label: t('Add Project Leader'),
-            value: [],
+            value: formik.values.leads,
             required: true,
-            placeholder: t("Search Leader"),
-            onChange: (event) => {
-                let _filter = { ...filters }
-                _filter['search'] = event.target.value
-                setFilters(_filter)
-            }
+            list: employees_list?.map((item) => ({
+                value: item?._id,
+                display: item.firstName + " " + item.lastName,
+            })),
+            multiple: true,
+
         },
         {
-            type: "search",
-            name: "team",
+            type: "select",
+            name: "members",
             label: t('Add Team'),
-            value: [],
+            value: formik.values.members,
             required: true,
-            placeholder: t("Search Team Member"),
-            onChange: (event) => {
-                let _filter = { ...filters }
-                _filter['search'] = event.target.value
-                setFilters(_filter)
-            }
+            list: employees_list?.map((item) => ({
+                value: item?._id,
+                display: item.firstName + " " + item.lastName,
+            })),
+            multiple: true,
+
         },
         {
             type: "select",

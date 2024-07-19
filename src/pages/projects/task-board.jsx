@@ -2,7 +2,7 @@ import { Button, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import FilterArea from '@/components/includes/FilterArea'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -200,9 +200,9 @@ export default function ProjectsModule() {
     <section className="flex flex-col grow">
       <div className="flex justify-between pb-6">
         <h1 className="text-h4 mb-0">{t("Task Board")}</h1>
-        <div className='flex gap-4'>
+        {/* <div className='flex gap-4'>
           <Button className={"btn btn-primary"} onClick={() => setBoard(true)}>{t("Create Task Board")}</Button>
-        </div>
+        </div> */}
       </div>
       <div className="w-full bg-white p-6 rounded-lg grow">
         <FilterArea title={t("")}

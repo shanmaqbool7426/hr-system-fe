@@ -7,7 +7,7 @@ import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeD
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import Toast from '@/util/toast'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import AddTaskForm from '@/components/forms/projects/addTask'
