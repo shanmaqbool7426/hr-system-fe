@@ -4,8 +4,8 @@ import CreateProjectsForm from '@/components/forms/projects/createProjects'
 import FilterArea from '@/components/includes/FilterArea'
 import {  EyeOn, GridIcon, ListIcon } from '@/components/svg'
 import ProjectCard from '@/modules/employee/projects/projectCard'
-import Image from 'next/image'
 import Link from 'next/link'
+import  Pagination  from '@/components/elements/Table/pagination'
 import Toast from "@/util/toast";
 import React, { useEffect, useState } from 'react'
 import { Edit,  ThreeDotsVertical, Trash } from "@/components/svg";
@@ -121,8 +121,7 @@ export default function ProjectsModule() {
       Project: <Link href={`/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
       ProjectID: item?.projectId,
       Client: item?.client,
-      Leader: <figure className={'overflow-hidden rounded-full  border-2 border-white m-0'}>
-        <Image src={item?.avatar} width={48} height={48} alt={item?.firstName} /></figure>,
+      Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
       Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
       Priority: <span className='zt-tag zt-tag-danger'> {item?.priority} </span>,
       Status: <span className='zt-tag zt-tag-success'>{item?.status} </span>,
@@ -213,13 +212,18 @@ export default function ProjectsModule() {
             perPage={perPage}
             setPerPage={setPerPage}
             page={page}
-            // pagination={pagination}
             setPage={setPage}
             className={'zt-employeeTable zt-projectsTable'}
             isLoading={is_loading}
           />
-       
        }
+         {paginatedData?.length > 0 && pagination && <Pagination
+          pagination={pagination}
+          currentLength={rows?.length}
+          perPage={perPage}
+          setPerPage={setPerPage}
+          page={page}
+          setPage={setPage} />}
         {create && <CreateProjectsForm
         onClose={() => {
             setCreate(false);

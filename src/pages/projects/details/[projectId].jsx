@@ -1,19 +1,17 @@
 import { useTranslation } from 'react-i18next'
-import * as Yup from 'yup';
+import CreateProjectsForm from '@/components/forms/projects/createProjects' 
 import CreateBoardForm from '@/components/forms/projects/createBoard'
-import { Button, Input, Profile } from '@/components/elements'
-import { useFormik } from 'formik';
+import { Button } from '@/components/elements'
 import { ChevronLeft, Download, Edit, PdfIcon, Plus, ShareIcon, Tick, Trash } from '@/components/svg' 
 import Link from 'next/link'
 import { useEffect, useState } from 'react' 
 import { useDispatch, useSelector } from 'react-redux'
-import { FetchProjectDetails , UpdateProject } from '@/store/actions/project.actions' 
+import { FetchProjectDetails  } from '@/store/actions/project.actions' 
 import DisplayDate from "@/components/elements/DisplayDate";
 import PageLoader from '@/components/elements/PageLoader' 
 import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
-import Toast from '@/util/toast';
 
 
 export default function ProjectsDetailPage() {
@@ -21,52 +19,16 @@ export default function ProjectsDetailPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const [board, setBoard] = useState(false)
-    const [edit, setEdit] = useState(false)
+    const [create, setCreate] = useState(false)
+    const [editProject, setEditProject] = useState(null);
     const { project_detail , is_loading} = useSelector((state) => state.project)
 
-    const formik = useFormik({
-        initialValues: {
-            name: project_detail?.name || "",
-            client: project_detail?.client || "",
-            startDate: project_detail?.startDate || "",
-            endDate: project_detail?.endDate || "",
-            payment: project_detail?.payment || "",
-            paymentCycle: project_detail?.paymentCycle || "",
-            priority: project_detail?.priority || "",
-            leads: project_detail?.leads?.reduce((acc, item) => {
-                acc.push(item._id);
-                return acc;
-              }, []) || [],
-            members: project_detail?.members?.reduce((acc, item) => {
-                acc.push(item._id);
-                return acc;
-              }, []) || [],
-            description: project_detail?.description || "", 
-        },
-        validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('Project name is required')),
-            client: Yup.string().required(t('Client name is required')),
-            startDate: Yup.string().required(t('Project start date is required')),
-            endDate: Yup.string().required(t('Project end date is required')),
-            leads: Yup.array().required(t('Project leader is required')),
-            members: Yup.array().required(t('Team is required')),
-            description: Yup.string().required(t('Description is required')), 
-        }),
-        onSubmit: (values) => {
-             dispatch(UpdateProject(project_detail._id, values, ()=>{
-                setEdit(false)
-                Toast.success(t('Project Name updated successfully'))
-             } )) 
-        },
-        enableReinitialize: true
-    })
 
     useEffect(() => {
         const projectId = router.query.projectId;
         if (projectId)
             dispatch(FetchProjectDetails(projectId));
     }, [router, dispatch]);
-
     const removeTags = (str) => {
         if (!str) return ''
         return str.replace(/<\/?[^>]+(>|$)/g, "")
@@ -90,27 +52,8 @@ export default function ProjectsDetailPage() {
                 <div className='flex flex-col gap-6'>
                     <div className='bg-white p-6 rounded-lg'>
                         <div className='flex justify-between items-center mb-2'>
-                            { edit ? 
-                            (<>
-                            <form  className="flex items-center gap-4" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }} >
-                           
-                            <Input type={"text"}
-                            name={"name"} 
-                            containerClass={'zt-formGroupV2'}
-                            className={" text-lg font-bold border focus:outline-none"}
-                            value={formik.values.name}
-                            formik={formik}
-                            />
-                            <Button type="submit" className='d-inline cursor-pointer justify-end' is_loading={is_loading} disabled={is_loading || !formik.isValid} ><Tick /></Button>
-                            </form>
-                            </> 
-                            ) 
-                            : 
-                            (<>
                             <h2 className='text-lg font-bold mb-0'>{t(project_detail?.name)}</h2>
-                            <span onClick={() => { setEdit(!edit) }} className='cursor-pointer'><Edit /></span> 
-                            </>) 
-                            }
+                            {/* <span onClick={() => { setEdit(!edit) }} className='cursor-pointer'><Edit /></span> */}
                         </div>
                         <span className='text-themeGrayscale600 text-sm block mb-4'>{t("1 open tasks, 9 tasks completed")}</span>
                         <p className='text-themeGrayscale600 text-sm'> {removeTags(project_detail?.description)} </p>
@@ -148,7 +91,10 @@ export default function ProjectsDetailPage() {
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
                         <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Project Details")}</h2>
-                            <span className='cursor-pointer'><Edit /></span>
+                            <span className='cursor-pointer'  onClick={() => {
+                                setCreate(true);
+                                setEditProject(project_detail);
+                                }} ><Edit /></span>
                         </div>
                         <hr className='bg-themeGrayscale200' />
                         <div className='flex justify-between text-sm'>
@@ -169,7 +115,7 @@ export default function ProjectsDetailPage() {
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Priority")}</span>
-                            <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{project_detail?.priority}</span>
+                            <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority)}</span>
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Status")}</span>
@@ -194,7 +140,7 @@ export default function ProjectsDetailPage() {
                                 </figure>
                                 <div className='text-xs'>
                                     <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(lead?.firstName)} {t(lead?.lastName)} </h3>
-                                    <span className='text-themeGrayscale600'>Manager</span>
+                                    <span className='text-themeGrayscale600'>{t(lead?.designation)}</span>
                                 </div>
                             </div>))}
                     </div>
@@ -211,7 +157,7 @@ export default function ProjectsDetailPage() {
                             </figure>
                             <div className='text-xs'>
                                 <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(member?.firstName)} {t(member?.lastName)} </h3>
-                                <span className='text-themeGrayscale600'>{t("Manager")}</span>
+                                <span className='text-themeGrayscale600'>{t(member?.designation)}</span>
                             </div>
                         </div>))}
                     </div>
@@ -219,10 +165,17 @@ export default function ProjectsDetailPage() {
             </div>
         </section>
         }
+        {create && <CreateProjectsForm
+        onClose={() => {
+            setCreate(false);
+            setEditProject(null);
+          }}
+          object={editProject} />}
 
         {board && <CreateBoardForm
             title={t('Create Task Board')}
             type={'Feedback'}
+            additionFields={project_detail}
             onClose={() => { setBoard(false) }}
           />}
     </>)
