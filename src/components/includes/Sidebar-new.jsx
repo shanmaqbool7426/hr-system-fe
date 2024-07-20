@@ -119,13 +119,46 @@ export default function Sidebar() {
       },
     ],
     projects: [
-      { name: t("Dashboard"), href: "/projects/dashboard" },
-      { name: t("Projects"), href: "/projects" },
-      { name: t("Task Board"), href: "/projects/task-board" },
-      { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
-      { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
-      { name: t("Feedback"), href: "/projects/feedback" },
-      // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+      {
+        name: t("Projects Management"), href: "/projects",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/projects/dashboard" },
+          { name: t("Projects"), href: "/projects" },
+          { name: t("Task Board"), href: "/projects/task-board" },
+          { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
+          { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
+          { name: t("Feedback"), href: "/projects/feedback" },
+          // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+        ]
+      }, 
+      {
+        name: t("Helpdesk"), href: "/helpdesk",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/helpdesk/dashboard" },
+          { name: t("Tickets"), href: "/helpdesk/tickets" }, 
+        ]
+      }, 
+      {
+        name: t("Vendor Management"), href: "/vendor-management",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/vendor-management/dashboard" },
+          { name: t("Vendor Management"), href: "/vendor-management" }, 
+        ]
+      }, 
+      {
+        name: t("Procurement"), href: "/procurement",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/procurement/dashboard" },
+          { name: t("Procurement"), href: "/procurement" }, 
+        ]
+      }, 
+      {
+        name: t("Meal"), href: "/meal",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/meal/dashboard" },
+          { name: t("Lunch Menu"), href: "/meal/lunch-menu" }, 
+        ]
+      }, 
     ],
     connect: [
       { name: t("Chat"), href: "/connect/chat" },
