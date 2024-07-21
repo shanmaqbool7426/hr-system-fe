@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import PenaltyModule from "@/modules/attendance/Penalty";
+import { useTranslation } from "react-i18next"; 
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import AddPenaltyForm from "@/components/forms/attendance/addPenaltyRule";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";

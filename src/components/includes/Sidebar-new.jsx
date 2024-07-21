@@ -75,8 +75,16 @@ export default function Sidebar() {
       },
       { name: t("Employee Transition"), href: "/employees/transition" },
       { name: t("Employee Transfer"), href: "/employees/transfer" },
-      { name: t("Employee Settings"), href: "/employees/settings" },
-      { name: t("Employee Field Approval Settings"), href: "/employees/field-approval-settings" },
+      { name: t("Employee Onboarding"), href: "/employees/onboarding" },
+      { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
+      { name: t("Final Settlement"), href: "/employees/final-settlement" },
+      {
+        name: t("Employee Settings"),href: "/employees/settings",
+        innerSubMenu: [
+          { name: t("Approval Level"), href: "/employees/settings/approval-level",},     
+          { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+        ],
+      },
     ],
     attendance: [
       { name: t("Attendance Dashboard"), href: "/attendance/dashboard" },
@@ -88,7 +96,6 @@ export default function Sidebar() {
       },
       { name: t("Change Shift"), href: "/attendance/change-shift" },
       { name: t("Amend Attendance"), href: "/attendance/amend-attendance" },
-      { name: t("Schedule"), href: "/attendance/schedule" },
       { name: t("Close Attendance"), href: "/attendance/close-attendance" },
       { name: t("Attendance Restrictions"), href: "/attendance/restrictions" },
       {

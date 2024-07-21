@@ -16,8 +16,8 @@ export default function LunchMenu() {
                 <Button onClick={() => setCreate(true)} className={'btn btn-primary'}>{t("Add New Menu")}</Button>
             </div>
             <div className="grow flex flex-col lg:flex-row gap-6">
-                <MealListing/>
-                <MealPreview/>
+                <MealListing />
+                <MealPreview />
             </div>
             {create && <CreateMealMenuForm onClose={() => { setCreate(false) }} />}
         </section>

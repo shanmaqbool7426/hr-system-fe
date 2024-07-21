@@ -523,23 +523,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
       placeholder: t("Shift Name"),
       required: true,
       value: formik.values.name,
-    },
-    {
-      type: "text",
-      name: "ShiftName",
-      label: t("Shift Code"),
-      placeholder: t("Shift Code"),
-      required: true,
-      value: formik.values.name,
-    },
-    {
-      type: "text",
-      name: "Effectivefrom",
-      label: t("Effective from"),
-      placeholder: t("Effective from"),
-      required: true,
-      value: formik.values.name,
-    },
+    }, 
     {
       type: "text",
       name: "reqiuredHours",
@@ -608,6 +592,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
       id: "shiftEnd",
       label: t("Shift end on the next day"),
       checked: formik.values.shiftEnd,
+      className:"col-span-2"
     },
     {
       type: "switch",
@@ -615,6 +600,13 @@ export default function CreateAttendanceForm({ onClose, object }) {
       id: "break",
       label: t("Break"),
       checked: formik.values.break,
+    },
+    {
+      type: "switch",
+      name: "breakCountable",
+      id: "breakCountable",
+      label: t("Is Break Countable?"),
+      checked: formik.values.breakCountable,
     },
     {
       type: formik.values.break ? "text" : "hidden",
@@ -642,6 +634,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
       onClose={onClose}
       is_loading={false}
     >
+
       {formik.values.radioStatus === "clockBased" ? (
         <div className="py-6 col-span-2">
           <Table

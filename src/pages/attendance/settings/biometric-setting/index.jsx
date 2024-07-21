@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CreateBiometricDevice from "@/components/forms/attendance/createBiometricDevice";
-import { Button, Table, Tabs } from "@/components/elements"; 
+import { Button, DropDown, Table, Tabs } from "@/components/elements"; 
 import { useDispatch, useSelector } from "react-redux";
 import { FetchDevices, SyncDevice } from "@/store/actions/biometric.actions";
+import { Edit, ThreeDotsVertical } from "@/components/svg";
 
 export default function AttendanceBiometricSettingPage() {
     const { t } = useTranslation();
