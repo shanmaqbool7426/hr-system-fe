@@ -1,58 +1,350 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Tabs } from "@/components/elements";
-import ShiftModule from "@/modules/attendance/Shift";
-import ExemptionModule from "@/modules/attendance/Exemption";
-import FlagSetting from "@/modules/attendance/FlagSetting";
-import PenaltyModule from "@/modules/attendance/Penalty"; 
-import { Tab } from "@headlessui/react";
-import GeneralSettingModule from "@/modules/attendance/GeneralSetting"; 
-import AttendanceBiometricSettings from "@/modules/attendance/BiometricSetting";
+import { Button,CheckBox, DropDown, Table} from "@/components/elements"; 
+import CreateAttendanceForm from "@/components/forms/attendance/create";
+import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+
 export default function AttendanceSettingShiftPlanPage() {
   const { t } = useTranslation();
+  const [sortCol, setSortCol] = useState(null)
+  const [sortDir, setSortDir] = useState(null)
+  const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(10)
+  const [add, setAdd] = useState(false)
+  const headings = [
+    { title: t("Shift Title"), col: 'shiftTitle', check: true },
+    { title: t("Shift Code"), col: 'shiftCode' },
+    { title: t("Start Time"), col: "startTime" },
+    { title: t("End Time"), col: "endTime" },
+    { title: t("Shift End On Next Day"), col: "shiftEnd" },
+    { title: t("Action"), col: "action" },
+]
+const rows = [{
+    shiftTitle: <div className="flex items-center">
+        <CheckBox
+            size={'sm'}
+            variant={'dark'}
+            labelClass={'text-base leading-none text-themeGrayscale/70'}
+            id="night-shift"
+            name={"night-shift"}
+            label='&nbsp; 1 &nbsp; Night Shift'
+        />
+    </div>,
+    shiftCode: "001",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "Yes",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="ramadan-shift"
+        name={"ramadan-shift"}
+        label='&nbsp; 2 &nbsp; Ramadan Flexible'
+    /></div>,
+    shiftCode: "002",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="day-shift"
+        name={"day-shift"}
+        label='&nbsp; 3 &nbsp; Day Shift'
+    /></div>,
+    shiftCode: "003",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="ramadan-shift-9-4"
+        name={"ramadan-shift-9-4"}
+        label='&nbsp; 4 &nbsp; Ramadan Flexible 9-4'
+    /></div>,
+    shiftCode: "004",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="ramadan-shift-5-5"
+        name={"ramadan-shift-5-5"}
+        label='&nbsp; 5 &nbsp; Ramadan Flexible 5-5'
+    /></div>,
+    shiftCode: "005",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="day-shift-11-7"
+        name={"day-shift-11-7"}
+        label='&nbsp; 6 &nbsp; Day Shift 11-7'
+    /></div>,
+    shiftCode: "006",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="day-shift-9-6"
+        name={"day-shift-9-6"}
+        label='&nbsp; 7 &nbsp; Day Shift 9-6'
+    /></div>,
+    shiftCode: "007",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+{
+    shiftTitle: <div className="flex items-center">
+    <CheckBox
+        size={'sm'}
+        variant={'dark'}
+        labelClass={'text-base leading-none text-themeGrayscale/70'}
+        id="night-shift-7-3"
+        name={"night-shift-7-3"}
+        label='&nbsp; 8 &nbsp; Night Shift 7-3'
+    /></div>,
+    shiftCode: "008",
+    startTime: "9:00:00 AM",
+    endTime: "6:00:00 PM",
+    shiftEnd: "No",
+    action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4">
+            <li className="!p-0">
+                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Edit")}</span>
+                </a>
+            </li>
+            <li className="!p-0">
+                <a onClick={() => {
+                    Toast.confirmDelete(() => {
+                        dispatch(DeleteCustomfield(item._id, () => {
+                            Toast.success(t("Allowance Title deleted successfully"))
+                        }))
+                    }, t)
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                    <span><Trash /></span>
+                    <span>{t("Delete")}</span>
+                </a>
+            </li>
+        </ul>
+    </DropDown>,
+},
+]
   return (
     <section className="flex flex-col grow relative">
-      <div className="flex justify-between pb-12">
-        <div className="flex flex-col">
+      <div className="flex justify-between pb-6">
           <h1 className="text-h4 mb-0">{t("Attendance Settings")}</h1>
-        </div>
+                <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add New Shift")}</Button>
       </div>
+      <div className="zt-card grow"> 
+            <div className="flex justify-between pb-6">
+                <h2 className="text-h4 mb-0">{t("Shift Plan")}</h2>
+            </div>
+            <Table
+                headings={headings}
+                rows={rows}
+                sortCol={sortCol}
+                setSortCol={setSortCol}
+                sortDir={sortDir}
+                setSortDir={setSortDir}
+                perPage={perPage}
+                setPerPage={setPerPage}
+                page={page}
+                setPage={setPage}
+                className={'zt-employeeTable zt-attendanceShiftTable'}
+            />
 
-      <Tabs
-        containerClasses={"zt-themeTabsV2 grow"}
-        tabNavClasses={"zt-themeTabNav"}
-        tabs={[
-          "Shift Plan",
-          "Request Reason Type",
-          "Flags Setting",
-          "Attendance Penalty Rule",
-          "General Attendance Settings",
-          "Biometric Device Settings",
-        ]}
-      >
-        <Tab.Panels
-          className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0 flex flex-col grow`}
-        >
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <ShiftModule />
-          </Tab.Panel>
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <ExemptionModule />
-          </Tab.Panel>
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <FlagSetting />
-          </Tab.Panel>
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <PenaltyModule />
-          </Tab.Panel>
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <GeneralSettingModule />
-          </Tab.Panel>
-          <Tab.Panel className={"zt-themeTabPanel grow"}>
-            <AttendanceBiometricSettings />
-          </Tab.Panel>
-        </Tab.Panels>
-      </Tabs>
+            {add && <CreateAttendanceForm 
+                onClose={() => { setAdd(false) }}
+            />}
+        </div>
     </section>
   );
 }
