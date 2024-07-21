@@ -10,6 +10,8 @@ import BankInfoCard from './BankInfoCard';
 import GovernmentRegistrationCard from './GovernmentRegistrationCard';
 import EducationInformationCard from './EducationInformationCard';
 import ExperienceInformationCard from './ExperienceInformationCard';
+import AppointmentCard from '../documents/AppointmentCard';
+import SeperationCard from './SeperationInformation';
 
 export default function EmployeeInfoModule() {
   const companyInfo = {
@@ -41,6 +43,8 @@ export default function EmployeeInfoModule() {
     <div className='grid grid-cols-2 gap-6'>
       <PersonalInfoCard />
       <CompanyInfoCard />
+      <AppointmentCard />
+      <SeperationCard/>
       <EmergencyContactCard />
       <NextOfKinCard />
       <Reference1Card />

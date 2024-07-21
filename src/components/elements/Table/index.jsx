@@ -15,7 +15,9 @@ export default function Table({
     page,
     setPage,
     pagination,
-    className
+    className,
+    allChecked,
+    handleCheckAll
 }) {
     const [expandedRows, setExpandedRows] = useState([]);
 
@@ -53,6 +55,14 @@ export default function Table({
                                             id="checkboxStatus-sm"
                                             name={"checkboxStatus"}
                                             label={value.title}
+                                            // size={'sm'}
+                                            // variant={'dark'}
+                                            // labelClass={'text-base leading-none text-themeGrayscale600 font-bold'}
+                                            // id="checkboxStatus-sm"
+                                            // name={"checkboxStatus"}
+                                            // label={value.title}
+                                            // checked={allChecked}
+                                            // onChange={(e) => handleCheckAll(e.target.checked)}
                                         /> :
                                         <span>{value.title}</span>
                                     }

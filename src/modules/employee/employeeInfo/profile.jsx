@@ -5,7 +5,7 @@ import { UpdateEmployee } from '@/store/actions/employee.actions';
 import { Edit } from '../../../components/svg';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Datepicker, DisplayDate, Input, Profile } from '@/components/elements';
+import { Button, Datepicker, DisplayDate, Input, Profile, SearchSelect } from '@/components/elements';
 import Toast from '@/util/toast';
 
 export default function EmployeeProfile() {
@@ -13,7 +13,7 @@ export default function EmployeeProfile() {
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
   const { is_loading, employee_details } = useSelector((state) => state.employee)
-
+  console.log(employee_details);
   const formik = useFormik({
     initialValues: {
       firstName: employee_details?.firstName || "",
@@ -50,22 +50,23 @@ export default function EmployeeProfile() {
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
               type={'text'}
-              name={'firstName'}
-              label={t('First Name')}
-              placeholder={t('First Name')}
-              value={formik.values.firstName}
+              name={'Blood'}
+              label={t('Blood Group')}
+              placeholder={t('Blood Group')}
+              value={formik.values.Blood}
               formik={formik}
               required
             />
-            <Input
+            <SearchSelect
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
-              type={'text'}
-              name={'lastName'}
-              label={t('Last Name')}
-              placeholder={t('Last Name')}
-              value={formik.values.lastName}
-              formik={formik}
+              name={'department'}
+              label={t('department')}
+              value={formik.values.department}
+              list={[{display:"Manager",value:"Manager"}]} 
+              onBlur={() => {
+                formik.setFieldTouched('department', true)
+              }} 
               required
             />
             <Datepicker
@@ -82,9 +83,32 @@ export default function EmployeeProfile() {
                 formik.setFieldValue('joiningDate', value)
               }}
               required
+            /> 
+              <SearchSelect
+              containerClass={'zt-formGroupV2'}
+              className={' gap-4'}
+              name={'LineManager'}
+              label={t('Line Manager')}
+              value={formik.values.LineManager}
+              list={[{display:"John",value:"John"}]} 
+              onBlur={() => {
+                formik.setFieldTouched('LineManager', true)
+              }} 
+              required
             />
           </div>
           <div className='px-4 border-l border-dashed border-themeGrayscale600 flex flex-col gap-4'>
+            <Input
+              containerClass={'zt-formGroupV2'}
+              className={' gap-4'}
+              type={'text'}
+              name={'email'}
+              label={t('Email')}
+              placeholder={t('Email')}
+              value={formik.values.email}
+              formik={formik}
+              required
+            />
             <Input
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
@@ -145,18 +169,26 @@ export default function EmployeeProfile() {
               <span>{t(employee_details?.department?.name)}</span>
               <strong className='text-themePurple'>{employee_details?.designation?.title}</strong>
             </p>
-            <p className='mb-0 gap-4'>
-              <span>{t('Employee ID')}</span>
-              <strong>{t(employee_details?.employeeCode)}</strong>
-            </p>
-            {employee_details?.department && <p className='mb-0 gap-4'>
-              <span>{t('Department')}</span>
-              <strong>{t(employee_details?.department?.name)}</strong>
-            </p>}
-            <p className='gap-4'>
-              <span>{t('Joining Date')}</span>
-              <DisplayDate date={employee_details?.joiningDate} />
-            </p>
+            <ul>
+              <li>
+                <span>{t('Employee ID')}</span>
+                <strong>{t(employee_details?.employeeCode)}</strong>
+              </li>
+              {employee_details?.department && <li >
+                <span>{t('Department')}</span>
+                <strong>{t(employee_details?.department?.name)}</strong>
+              </li>}
+              <li>
+                <p className='gap-4 mb-0'>
+                  <span>{t('Joining Date')}</span>
+                  <DisplayDate date={employee_details?.joiningDate} />
+                </p>
+              </li>
+              <li>
+                <span>{t('Line Manager')}</span>
+                <strong className='text-themePurple'>{employee_details?.lineManager ? `${employee_details?.lineManager?.firstName} ${employee_details?.lineManager?.lastName}` : '-------'}</strong>
+              </li>
+            </ul>
             {employee_details?.status && <p className='mb-0'><span className='zt-tag zt-tag-purple capitalize'>{employee_details?.status?.name}</span></p>}
           </div>
         </div>
@@ -175,12 +207,12 @@ export default function EmployeeProfile() {
               <DisplayDate date={employee_details?.dateOfBirth} className='text-themePurple' />
             </li>
             <li>
-              <span>{t('Line Manager')}</span>
-              <strong className='text-themePurple'>{employee_details?.lineManager ? `${employee_details?.lineManager?.firstName} ${employee_details?.lineManager?.lastName}` : '-------'}</strong>
-            </li>
-            <li>
               <span>{t('Address')}</span>
               <address>{employee_details?.address || '-------'}</address>
+            </li>
+            <li>
+              <span>{t('Blood Group')}</span>
+              <strong>{employee_details?.bloodGroup || '-------'}</strong>
             </li>
           </ul>
         </div>
