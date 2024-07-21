@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Button,CheckBox, DropDown, Table} from "@/components/elements"; 
 import CreateAttendanceForm from "@/components/forms/attendance/create";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+import Toast from "@/util/toast";
+import { useDispatch } from "react-redux";
 
 export default function AttendanceSettingShiftPlanPage() {
   const { t } = useTranslation();
@@ -11,12 +13,15 @@ export default function AttendanceSettingShiftPlanPage() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [add, setAdd] = useState(false)
+  const [edit, setEdit] = useState(false)
+  const dispatch=useDispatch()
   const headings = [
     { title: t("Shift Title"), col: 'shiftTitle', check: true },
-    { title: t("Shift Code"), col: 'shiftCode' },
     { title: t("Start Time"), col: "startTime" },
     { title: t("End Time"), col: "endTime" },
     { title: t("Shift End On Next Day"), col: "shiftEnd" },
+    { title: t("Break"), col: 'Break' },
+    { title: t("Break Countable"), col: 'BreakCountable' },
     { title: t("Action"), col: "action" },
 ]
 const rows = [{
@@ -30,14 +35,15 @@ const rows = [{
             label='&nbsp; 1 &nbsp; Night Shift'
         />
     </div>,
-    shiftCode: "001",
+    Break: "No",
+    BreakCountable: "No",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "Yes",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -45,9 +51,9 @@ const rows = [{
             <li className="!p-0">
                 <a onClick={() => {
                     Toast.confirmDelete(() => {
-                        dispatch(DeleteCustomfield(item._id, () => {
+                        // dispatch(DeleteCustomfield(item._id, () => {
                             Toast.success(t("Allowance Title deleted successfully"))
-                        }))
+                        // }))
                     }, t)
                 }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                     <span><Trash /></span>
@@ -67,14 +73,15 @@ const rows = [{
         name={"ramadan-shift"}
         label='&nbsp; 2 &nbsp; Ramadan Flexible'
     /></div>,
-    shiftCode: "002",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -104,14 +111,15 @@ const rows = [{
         name={"day-shift"}
         label='&nbsp; 3 &nbsp; Day Shift'
     /></div>,
-    shiftCode: "003",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -141,14 +149,15 @@ const rows = [{
         name={"ramadan-shift-9-4"}
         label='&nbsp; 4 &nbsp; Ramadan Flexible 9-4'
     /></div>,
-    shiftCode: "004",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -178,14 +187,15 @@ const rows = [{
         name={"ramadan-shift-5-5"}
         label='&nbsp; 5 &nbsp; Ramadan Flexible 5-5'
     /></div>,
-    shiftCode: "005",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -215,14 +225,15 @@ const rows = [{
         name={"day-shift-11-7"}
         label='&nbsp; 6 &nbsp; Day Shift 11-7'
     /></div>,
-    shiftCode: "006",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -252,14 +263,15 @@ const rows = [{
         name={"day-shift-9-6"}
         label='&nbsp; 7 &nbsp; Day Shift 9-6'
     /></div>,
-    shiftCode: "007",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => { setEdit(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -289,14 +301,15 @@ const rows = [{
         name={"night-shift-7-3"}
         label='&nbsp; 8 &nbsp; Night Shift 7-3'
     /></div>,
-    shiftCode: "008",
+    Break: "yes",
+    BreakCountable: "yes",
     startTime: "9:00:00 AM",
     endTime: "6:00:00 PM",
     shiftEnd: "No",
     action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
-                <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <a onClick={() => setEdit(true)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                     <span><Edit /></span>
                     <span>{t("Edit")}</span>
                 </a>
@@ -343,6 +356,10 @@ const rows = [{
 
             {add && <CreateAttendanceForm 
                 onClose={() => { setAdd(false) }}
+            />}
+            
+            {edit && <CreateAttendanceForm 
+                onClose={() => { setEdit(false) }} object={true}
             />}
         </div>
     </section>

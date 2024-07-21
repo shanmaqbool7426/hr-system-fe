@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements' 
+import { Button, CheckBox, DropDown, Table } from '@/components/elements' 
 import FilterArea from '@/components/includes/FilterArea'
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
@@ -103,6 +103,7 @@ export default function ChangeShift() {
     ]
 
     const headings = [
+        { title: t("sr#"), col: "sr", }, 
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Date"), col: "date", },
@@ -114,6 +115,15 @@ export default function ChangeShift() {
     ]
     const rows = [
         {
+            sr: <div className="flex items-center">
+            <CheckBox
+                size={'sm'}
+                variant={'dark'}
+                id="night-shift"
+                name={"night-shift"}
+                label='&nbsp; 1 &nbsp;'
+            />
+        </div>,
             Employee: <div className="flex items-center justify-start gap-4 grow">
                 <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
                 <div className={'flex flex-col gap-1 text-left'}>
@@ -164,6 +174,15 @@ export default function ChangeShift() {
             </DropDown>
         },
         {
+            sr: <div className="flex items-center">
+            <CheckBox
+                size={'sm'}
+                variant={'dark'}
+                id="two"
+                name={"two"}
+                label='&nbsp; 2 &nbsp;'
+            />
+        </div>,
             Employee: <div className="flex items-center justify-start gap-4 grow">
                 <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
                 <div className={'flex flex-col gap-1 text-left'}>
