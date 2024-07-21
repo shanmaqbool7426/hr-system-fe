@@ -8,18 +8,62 @@ import { ChangeDepartment } from '@/store/actions/employee-change-request.action
 import Toast from '@/util/toast';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
-import { Button, Datepicker, SearchSelect, Textarea } from '@/components/elements';
+import { Button, Datepicker, SearchSelect, Textarea , Table} from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
+import ChangeDepartementForm from '@/components/forms/employees/changeRequest/ChangeDepartement'; 
 
 const user = ls?.get('auth_user', { decrypt: true })
 
 export default function DepartmentPage() {
-	const { t } = useTranslation();
-	const { } = useSelector(state => state.employee)
-	const { customfield_list } = useSelector(state => state.customfield)
-	const { employees_list } = useSelector((state) => state.employee)
-	const currentDepartmentRef = useRef(null)
-	const dispatch = useDispatch()
+	const { t } = useTranslation(); 
+	const dispatch = useDispatch() 
+	const { employees_list } = useSelector((state) => state.employee) 
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const pagination = {
+		totalRecords: 5,
+		showPerPage: true,
+		prevAction: () => page > 1 && setPage(page - 1),
+		clickAction: (value) => setPage(value),
+		nextAction: () => setPage(page + 1),
+	}
+	const headings = [
+		{ title: t("Employee"), col: "Employee" },
+		{ title: t("Current Department"), col: "CurrentDepartment" },
+		{ title: t("New Department"), col: "NewDepartment", },
+		{ title: t("Effective Date"), col: "EffectiveDate" },
+		{ title: t("Reason Of Department Change"), col: "ReasonOfDepartmentChange", },
+		{ title: t("Details"), col: "Details", },
+	]
+	const rows = [
+		{
+			Employee: 'Admin',
+			CurrentDepartment: 'Admin',
+			NewDepartment: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDepartmentChange: 'Promotion',
+			Details: '-',
+		},
+		{
+			Employee: 'Admin',
+			CurrentDepartment: 'Admin',
+			NewDepartment: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDepartmentChange: 'Promotion',
+			Details: '-',
+		},
+		{
+			Employee: 'Admin',
+			CurrentDepartment: 'Admin',
+			NewDepartment: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDepartmentChange: 'Promotion',
+			Details: '-',
+		},
+	]
 	useEffect(() => {
 		if (employees_list.length === 0)
 			dispatch(FetchEmployees())
@@ -53,7 +97,7 @@ export default function DepartmentPage() {
 					}))
 				})
 			} else {
-				dispatch(ChangeDesignation(values, () => {
+				dispatch(ChangeDepartment(values, () => {
 					formik.resetForm()
 					Toast.success(t("Request not proceed"))
 				}))
@@ -64,9 +108,27 @@ export default function DepartmentPage() {
 	return (
 		<section className="flex flex-col grow">
 			{/* {is_loading && <PageLoader/>} */}
-			<h1 className="text-h4 mb-6 flex items-center justify-start gap-3">{t("Change Department Request")}</h1>
-
-			<form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
+			<div className="flex justify-between pb-6">
+				<h1 className="text-h4 mb-0">{t("Change Department Request")}</h1>
+				<Button onClick={() => setChange(true)} className={"btn btn-primary"}>{t("Change Department Request")}</Button>
+			</div>
+			<div className='zt-card grow'>
+				<Table 
+					headings={headings}
+					rows={rows}
+					sortCol={sortCol}
+					setSortCol={setSortCol}
+					sortDir={sortDir}
+					pagination={pagination}
+					setSortDir={setSortDir}
+					perPage={perPage}
+					setPerPage={setPerPage}
+					page={page}
+					setPage={setPage}
+					className={'zt-employeeTable zt-changeShiftTable'}
+				/>
+			</div>
+			{/* <form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
 				<fieldset className='flex flex-col  gap-12'>
 					<div className="grid sm:grid-cols-3 gap-12">
 						<SearchSelect
@@ -164,7 +226,10 @@ export default function DepartmentPage() {
 					<Button type="button" value={t("Cancel")} className={"btn btn-dark-outline min-w-32"} />
 					<Button type="submit" value={t("Submit")} className={"btn btn-dark min-w-32"} />
 				</div>
-			</form>
+			</form> */}
+			{change &&
+				<ChangeDepartementForm onClose={()=>setChange(false)}/>
+			}
 		</section>
 	)
 }
