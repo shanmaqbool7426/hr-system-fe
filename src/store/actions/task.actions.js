@@ -1,13 +1,13 @@
 import axios from "@/util/axios";
-import { setLoading,setTaskBoard,setTaskBoardList,setTaskBoardDetails,removeTaskBoard,pushTaskBoard } from "../slices/taskboard.slice";
+import { setLoading, setTaskList, setTaskDetails, setTask, removeTask, pushTask} from "../slices/task.slice";
 
 
-export const FetchTaskBoard = (payload) => async (dispatch) => {
+export const FetchTask = (payload) => async (dispatch) => {
     try {
       dispatch(setLoading(true));
       const query = new URLSearchParams(payload).toString();
-      const data = await axios.get(`/task-boards/list?${query}`);
-      dispatch(setTaskBoardList(data));
+      const data = await axios.get(`/tasks/list?${query}`);
+      dispatch(setTaskList(data));
       return true;
     } catch (err) {
       console.log("Error", err);
@@ -16,11 +16,11 @@ export const FetchTaskBoard = (payload) => async (dispatch) => {
     }
   };
   
-  export const FetchTaskBoardDetails = (id) => async (dispatch) => {
+  export const FetchTaskDetails = (id) => async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      const data = await axios.get(`/task-boards/details/${id}`);
-      dispatch(setTaskBoardDetails(data.taskboard));
+      const data = await axios.get(`/tasks/details/${id}`);
+      dispatch(setTaskDetails(data.taskboard));
       return true;
     } catch (err) {
       console.log("Error", err);
@@ -29,13 +29,13 @@ export const FetchTaskBoard = (payload) => async (dispatch) => {
     }
   };
   
-  export const CreateTaskBoard = (payload, onSuccess = null) => async (
+  export const CreateTask = (payload, onSuccess = null) => async (
     dispatch
   ) => {
     try {
       dispatch(setLoading(true));
-      const data = await axios.post(`/task-boards/create`, payload);
-      dispatch(pushTaskBoard(data.taskboard));
+      const data = await axios.post(`/tasks/create`, payload);
+      dispatch(pushTask(data.taskboard));
       onSuccess && onSuccess();
       return true;
     } catch (err) {
@@ -45,13 +45,13 @@ export const FetchTaskBoard = (payload) => async (dispatch) => {
     }
   };
   
-  export const UpdateTaskBoard = (id, payload, onSuccess = null) => async (
+  export const UpdateTask = (id, payload, onSuccess = null) => async (
     dispatch
   ) => {
     try {
       dispatch(setLoading(true));
-      const data = await axios.patch(`/task-boards/update/${id}`, payload);
-      dispatch(setTaskBoard(data.taskboard));
+      const data = await axios.patch(`/tasks/update/${id}`, payload);
+      dispatch(setTask(data.taskboard));
       onSuccess && onSuccess();
       return true;
     } catch (err) {
@@ -61,11 +61,11 @@ export const FetchTaskBoard = (payload) => async (dispatch) => {
     }
   };
   
-  export const DeleteTaskBoard = (id, onSuccess = null) => async (dispatch) => {
+  export const DeleteTask = (id, onSuccess = null) => async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      await axios.delete(`/task-boards/delete/${id}`);
-      dispatch(removeTaskBoard(id));
+      await axios.delete(`/tasks/delete/${id}`);
+      dispatch(removeTask(id));
       onSuccess && onSuccess();
       return true;
     } catch (err) {

@@ -23,7 +23,6 @@ export default function ProjectsDetailPage() {
     const [editProject, setEditProject] = useState(null);
     const { project_detail , is_loading} = useSelector((state) => state.project)
 
-
     useEffect(() => {
         const projectId = router.query.projectId;
         if (projectId)

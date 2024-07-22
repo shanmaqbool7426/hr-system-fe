@@ -12,6 +12,7 @@ import shiftflag from "./slices/shift-flag.slice";
 import gazetteholiday from "./slices/gazetteholiday.slice";
 import project from "./slices/project.slice"
 import taskboard from "./slices/taskboard.slice";
+import task from "./slices/task.slice"
 
 export default configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export default configureStore({
     leaverequest,
     project,
     shiftflag,
+    task,
     taskboard,
   },
 });

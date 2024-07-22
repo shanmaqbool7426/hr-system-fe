@@ -34,7 +34,7 @@ export default function ProjectCard ({ key, projectData }) {
 }
   return (
   <>
-     <div key={key} className='zt-projectCard'>
+     <div className='zt-projectCard'>
       <div className='zt--projectCardHead'>
         <div>
           <Link href={`/projects/details/${projectData?._id}`} className='mb-0 text-h5 no-underline'>{t(projectData.name)}</Link>

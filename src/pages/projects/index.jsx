@@ -197,8 +197,8 @@ export default function ProjectsModule() {
         {view === "grid" ?
           <div className='zt-projectsList !shadow-none'>
             <h2 className="text-h5 mb-0 col-span-3">{t("Projects")}</h2>
-            {paginatedData?.map((project, index) => (
-              <ProjectCard key={index} projectData={project} />
+            {paginatedData?.map((project) => (
+              <ProjectCard key={project?._id} projectData={project} />
             ))}
 
           </div> :

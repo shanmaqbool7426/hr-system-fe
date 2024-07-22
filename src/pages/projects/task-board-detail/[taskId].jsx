@@ -9,14 +9,16 @@ import FilterArea from '@/components/includes/FilterArea'
 import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import DiscussionForm from '@/components/forms/projects/discussion'
+import { useRouter } from 'next/router'
 const data = [
     { name: 'High', value: 300 },
     { name: 'Medium', value: 300 },
@@ -100,11 +102,21 @@ export default function TaskBoardDetailModule() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
+    const router = useRouter()
+    const dispatch = useDispatch()
     const [feedback, setFeedback] = useState(false)
     const [discussion, setDiscussion] = useState(false)
     const [task, setTask] = useState(false)
     const [raiseIssue, setRaiseIssue] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
+    const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
+
+    useEffect(() => {
+        const taskBoardId = router.query.taskId;
+        if (taskBoardId)
+            dispatch(FetchTaskBoardDetails(taskBoardId));
+    }, [ router,dispatch]);
+
     const [filters, setFilters] = useState({
         search: "",
         project: null,
@@ -333,11 +345,12 @@ export default function TaskBoardDetailModule() {
         },
     ]
     return (
+       taskboard_details &&
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
                     <Link href={`/projects/task-board`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
-                    <span className='shrink-0'>{t("Task Board")}</span>
+                    <span className='shrink-0'>{t(taskboard_details?.name)}</span>
                 </h1>
                 {/* <h1 className="text-h4 mb-0">{t("Task Board")}</h1> */}
                 <div className='flex gap-6 items-center'>
@@ -429,6 +442,7 @@ export default function TaskBoardDetailModule() {
                     onClose={() => { setFeedback(false) }}
                 />}
                 {task && <AddTaskForm 
+                   additionFields={taskboard_details} 
                     onClose={() => { setTask(false) }}
                 />}
                 {discussion && <DiscussionForm

@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
-import { useFormik } from 'formik';
+import { useFormik } from 'formik'; 
 import BaseForm from '../BaseForm';
+import Storage from '@/util/storage';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +10,7 @@ import {
     CreateProject,
     UpdateProject,
 } from "@/store/actions/project.actions";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 export default function CreatProjectsForm({ onClose, object, }) {
@@ -17,6 +18,29 @@ export default function CreatProjectsForm({ onClose, object, }) {
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
     const { employees_list } = useSelector((state) => state.employee);
+    const { auth_user } = useSelector(state => state.auth);
+   
+    const [fileName, setFileName] = useState(null);
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+            try {
+                let fileURL = await Storage.upload(file, auth_user?.company?._id, (url) => {
+                    formik.setFieldValue('fileURL', url);
+                });
+                console.log('fileUrl', fileURL)
+            } catch (error) {
+                console.error("File upload failed", error);
+            }
+        } else {
+            setFileName('No file chosen');
+        }
+    };
+
+   
+
     useEffect(() => {
         dispatch(FetchEmployees());
     }, [dispatch]);
@@ -40,6 +64,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
                 return acc;
               }, []) || [],
             description: object?.description || "", 
+          
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('Project name is required')),
@@ -49,6 +74,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
             leads: Yup.array().required(t('Project leader is required')),
             members: Yup.array().required(t('Team is required')),
             description: Yup.string().required(t('Description is required')), 
+        
         }),
         onSubmit: async (values) => {
             return object ? dispatch(UpdateProject(object._id, values, onCompleted)) : dispatch(CreateProject(values, onCompleted))
@@ -58,6 +84,14 @@ export default function CreatProjectsForm({ onClose, object, }) {
         Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
+
+    const getFilteredEmployees = (list, excludeIds) => {
+        return list.filter(employee => !excludeIds.includes(employee._id));
+    };
+
+    const filteredLeadsList = getFilteredEmployees(employees_list, formik.values.members);
+    const filteredMembersList = getFilteredEmployees(employees_list, formik.values.leads);
+
     const formElements = [
         {
             type: "text",
@@ -116,7 +150,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
             label: t('Add Project Leader'),
             value: formik.values.leads,
             required: true,
-            list: employees_list?.map((item) => ({
+            list: filteredLeadsList.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
@@ -129,7 +163,7 @@ export default function CreatProjectsForm({ onClose, object, }) {
             label: t('Add Team'),
             value: formik.values.members,
             required: true,
-            list: employees_list?.map((item) => ({
+            list: filteredMembersList.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
@@ -154,9 +188,21 @@ export default function CreatProjectsForm({ onClose, object, }) {
             label: t("Description"),
             value: formik.values.description,
             containerClass: "col-span-2"
-        }
+        },
     ]
     return (
-        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
+        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+        <div className='flex flex-col gap-6 col-span-2'>
+                <div>
+                    <label className='text-sm font-medium mb-1 mt-5 pt-5 block text-start'>Upload File</label>
+                    <div className='rounded-lg flex items-center border border-themeGrayscale300'>
+                        <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
+                        <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
+                        <span className='ps-2 text-sm'>{fileName}</span>
+                    </div>
+                </div>
+            </div>
+
+        </BaseForm>
     )
 }
