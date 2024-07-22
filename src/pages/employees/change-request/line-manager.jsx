@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from '@/util/toast';
 import { ChangeLineManager } from '@/store/actions/employee-change-request.actions';
-import { Button, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import ChangeLineManagerForm from '@/components/forms/employees/changeRequest/ChangeLineManger';
 
@@ -73,6 +73,8 @@ export default function LineManagerPage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Current Line Manager"), col: "CurrentLineManager" },
 		{ title: t("New Line Manager"), col: "NewLineManager", },
@@ -82,6 +84,17 @@ export default function LineManagerPage() {
 	]
 	const rows = [
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`1`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '1',
 			Employee: 'Admin',
 			CurrentLineManager: 'John',
 			NewLineManager: 'Josef',
@@ -90,6 +103,17 @@ export default function LineManagerPage() {
 			Details: '-',
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`2`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '2',
 			Employee: 'Admin',
 			CurrentLineManager: 'John',
 			NewLineManager: 'Josef',
@@ -98,6 +122,17 @@ export default function LineManagerPage() {
 			Details: '-',
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`3`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '3',
 			Employee: 'Admin',
 			CurrentLineManager: 'John',
 			NewLineManager: 'Josef',
@@ -228,7 +263,7 @@ export default function LineManagerPage() {
 					<Button type="submit" value={t("Submit")} className={"btn btn-dark min-w-32"} />
 				</div>
 			</form> */}
-			{change && <ChangeLineManagerForm onClose={()=>{setChange(false)}}/>}
+			{change && <ChangeLineManagerForm onClose={() => { setChange(false) }} />}
 		</section>
 	)
 }

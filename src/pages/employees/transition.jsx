@@ -3,7 +3,9 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 
-import { Button, Datepicker, Input, SearchSelect, Textarea } from '@/components/elements';
+import { Button, CheckBox, Datepicker, Input, SearchSelect, Table, Textarea } from '@/components/elements';
+import { useState } from 'react';
+import CreateTransitionForm from '@/components/forms/employees/createTransition';
 
 const user = ls?.get('auth_user', { decrypt: true });
 
@@ -36,12 +38,122 @@ export default function TransitionPage() {
 			console.log("Form Values:", values); // Logging form values on submit
 		}
 	});
-
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [create, setCreate] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const pagination = {
+		totalRecords: 5,
+		showPerPage: true,
+		prevAction: () => page > 1 && setPage(page - 1),
+		clickAction: (value) => setPage(value),
+		nextAction: () => setPage(page + 1),
+	}
+	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
+		{ title: t("Transition Title"), col: "TransitionTitle" },
+		{ title: t("Employee"), col: "Employee" },
+		{ title: t("Transition Date"), col: "TransitionDate" },
+		{ title: t("Promote / Demote"), col: "PromoteDemote" },
+		{ title: t("Transition Type"), col: "TransitionType", },
+		{ title: t("Designation"), col: "Designation" },
+		{ title: t("Employee Status"), col: "EmployeeStatus" },
+		{ title: t("Employee Report to"), col: "EmployeeReport" },
+		{ title: t("Reason"), col: "Reason", },
+	]
+	const rows = [
+		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`1`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			TransitionTitle:"-",
+			SerailNo: '1',
+			Employee: 'Admin',
+			Designation: 'HR',
+			EmployeeStatus:"Permanent",
+			EmployeeReport:"-",
+			TransitionType: 'One',
+			TransitionDate: '12 Jun 2025',
+			PromoteDemote:"Promote",
+			Reason: '-',
+		},
+		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`2`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			TransitionTitle:"-",
+			Serayee: 'Admin',
+			DesignilNo: '2',
+			Emploation: 'HR',
+			EmployeeStatus:"Permanent",
+			EmployeeReport:"-",
+			TransitionType: 'One',
+			TransitionDate: '12 Jun 2025',
+			PromoteDemote:"Demote",
+			Reason: '-',
+		},
+		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`3`}
+					// name={`checkbox-${index}`}
+					// checked={checkedItems[index] || false}
+					// onChange={(e) => handleCheckItem(index, e.target.checked)}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			TransitionTitle:"-",
+			SerailNo: '3',
+			Employee: 'Admin',
+			Designation: 'HR',
+			EmployeeStatus:"Permanent",
+			EmployeeReport:"-",
+			TransitionType: 'One',
+			TransitionDate: '12 Jun 2025',
+			PromoteDemote:"Promote",
+			Reason: '-',
+		},
+	]
 	return (
 		<section className="flex flex-col grow">
-			<h1 className="text-h4 mb-6 flex items-center justify-start gap-3">{t("Employee Transition")}</h1>
-
-			<form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
+			<div className="flex justify-between pb-6">
+				<h1 className="text-h4 mb-0">{t("Employee Transition")}</h1>
+				<Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Employee Transition")}</Button>
+			</div>
+			<div className='zt-card grow'>
+				<Table
+					headings={headings}
+					rows={rows}
+					sortCol={sortCol}
+					setSortCol={setSortCol}
+					sortDir={sortDir}
+					pagination={pagination}
+					setSortDir={setSortDir}
+					perPage={perPage}
+					setPerPage={setPerPage}
+					page={page}
+					setPage={setPage}
+					className={'zt-employeeTable zt-changeShiftTable'}
+				/>
+			</div>
+			{/* <form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
 				<fieldset>
 					<div className="grid sm:grid-cols-3 gap-12">
 						<Input
@@ -60,20 +172,20 @@ export default function TransitionPage() {
 							label={t('Employee')}
 							value={formik.values.employee}
 							error={formik.touched.employee && formik.errors.employee}
-							onBlur={() => {formik.setFieldTouched('employee', true)}}
+							onBlur={() => { formik.setFieldTouched('employee', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('employee', value)}}
-							list={[{display: 'Jhon', value: '1'}, {display: 'Doe', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('employee', value) }}
+							list={[{ display: 'Jhon', value: '1' }, { display: 'Doe', value: '2' }]}
 							required
 						/>
 						<Datepicker
 							name={'transitionDate'}
-							label={t('Transition  Date')}
+							label={t('Transition Date')}
 							value={formik.values.transitionDate}
 							error={formik.touched.transitionDate && formik.errors.transitionDate}
 							onBlur={formik.handleBlur}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('transitionDate', value)}}
+							onChange={(value) => { formik.setFieldValue('transitionDate', value) }}
 							required
 						/>
 						<SearchSelect
@@ -82,10 +194,10 @@ export default function TransitionPage() {
 							label={t('Promote / Demote')}
 							value={formik.values.promoteDemote}
 							error={formik.touched.promoteDemote && formik.errors.promoteDemote}
-							onBlur={() => {formik.setFieldTouched('promoteDemote', true)}}
+							onBlur={() => { formik.setFieldTouched('promoteDemote', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('promoteDemote', value)}}
-							list={[{display: 'Promote', value: '1'}, {display: 'Demotion', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('promoteDemote', value) }}
+							list={[{ display: 'Promote', value: '1' }, { display: 'Demotion', value: '2' }]}
 							required
 						/>
 						<SearchSelect
@@ -94,10 +206,10 @@ export default function TransitionPage() {
 							label={t('Transition Type')}
 							value={formik.values.transitionType}
 							error={formik.touched.transitionType && formik.errors.transitionType}
-							onBlur={() => {formik.setFieldTouched('transitionType', true)}}
+							onBlur={() => { formik.setFieldTouched('transitionType', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('transitionType', value)}}
-							list={[{display: 'Type One', value: '1'}, {display: 'Type Two', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('transitionType', value) }}
+							list={[{ display: 'Type One', value: '1' }, { display: 'Type Two', value: '2' }]}
 							required
 						/>
 						<SearchSelect
@@ -106,10 +218,10 @@ export default function TransitionPage() {
 							label={t('Designation')}
 							value={formik.values.designation}
 							error={formik.touched.designation && formik.errors.designation}
-							onBlur={() => {formik.setFieldTouched('designation', true)}}
+							onBlur={() => { formik.setFieldTouched('designation', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('designation', value)}}
-							list={[{display: 'HR', value: '1'}, {display: 'Project Manager', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('designation', value) }}
+							list={[{ display: 'HR', value: '1' }, { display: 'Project Manager', value: '2' }]}
 							required
 						/>
 						<SearchSelect
@@ -118,10 +230,10 @@ export default function TransitionPage() {
 							label={t('Employee Status')}
 							value={formik.values.employeeStatus}
 							error={formik.touched.employeeStatus && formik.errors.employeeStatus}
-							onBlur={() => {formik.setFieldTouched('employeeStatus', true)}}
+							onBlur={() => { formik.setFieldTouched('employeeStatus', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('employeeStatus', value)}}
-							list={[{display: 'Volunteering', value: '1'}, {display: 'Temporary', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('employeeStatus', value) }}
+							list={[{ display: 'Volunteering', value: '1' }, { display: 'Temporary', value: '2' }]}
 							required
 						/>
 						<SearchSelect
@@ -130,10 +242,10 @@ export default function TransitionPage() {
 							label={t('Employee Report to')}
 							value={formik.values.employeeReportTo}
 							error={formik.touched.employeeReportTo && formik.errors.employeeReportTo}
-							onBlur={() => {formik.setFieldTouched('employeeReportTo', true)}}
+							onBlur={() => { formik.setFieldTouched('employeeReportTo', true) }}
 							onInput={formik.handleBlur}
-							onChange={(value) => {formik.setFieldValue('employeeReportTo', value)}}
-							list={[{display: 'Volunteering', value: '1'}, {display: 'Temporary', value: '2'}]}
+							onChange={(value) => { formik.setFieldValue('employeeReportTo', value) }}
+							list={[{ display: 'Volunteering', value: '1' }, { display: 'Temporary', value: '2' }]}
 							required
 						/>
 						<Textarea
@@ -152,7 +264,9 @@ export default function TransitionPage() {
 					<Button type="button" value={t("Cancel")} className={"btn btn-dark-outline min-w-32"} />
 					<Button type="submit" value={t("Submit")} className={"btn btn-dark min-w-32"} />
 				</div>
-			</form>
+			</form> */}
+			{create && <CreateTransitionForm onClose={() => setCreate(false)} />}
+
 		</section>
 	)
 }

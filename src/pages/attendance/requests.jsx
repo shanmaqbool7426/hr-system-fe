@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import AddRequestForm from '@/components/forms/attendance/addRequest'
 import ViewAttendanceForm from '@/components/forms/attendance/view'
 import FilterArea from '@/components/includes/FilterArea'
@@ -106,6 +106,8 @@ export default function Requests() {
     ]
 
     const headings = [
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Employee"), col: "Employee", /* sort: true */ },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Attendance Date"), col: "AttendanceDate", /* sort: true */ },
@@ -117,21 +119,28 @@ export default function Requests() {
 
     const rows = [
         {
-            Employee: <div className="flex items-center justify-start gap-4 grow">
-                <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4 justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             AttendanceDate: '23 May 2024',
             ChangeType: "Change in Signing",
             status: <span className='zt-tag zt-tag-danger'>Rejected</span>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -167,21 +176,28 @@ export default function Requests() {
             </DropDown>
         },
         {
-            Employee: <div className="flex items-center justify-start gap-4 grow">
-                <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '2',
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             AttendanceDate: '23 May 2024',
             ChangeType: "Change in Signing",
             status: <span className='zt-tag zt-tag-success'>Approved</span>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -217,21 +233,28 @@ export default function Requests() {
             </DropDown>
         },
         {
-            Employee: <div className="flex items-center justify-start gap-4 grow">
-                <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`3`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '3',
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             AttendanceDate: '23 May 2024',
             ChangeType: "Change in Signing",
             status: <span className='zt-tag zt-tag-purple'>Pending</span>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             action: <DropDown icon={<ThreeDotsVertical />}>
@@ -304,12 +327,12 @@ export default function Requests() {
                     className={'zt-employeeTable zt-attendanceRequestsTable'}
                 />
             </div>
-            {view && <ViewAttendanceForm 
+            {view && <ViewAttendanceForm
                 onClose={() => { setView(false); setEdit(null) }}
                 object={edit}
             />}
 
-            {create && <AddRequestForm 
+            {create && <AddRequestForm
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

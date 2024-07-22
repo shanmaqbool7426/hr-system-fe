@@ -19,6 +19,8 @@ export default function LeavesPage() {
   const dispatch = useDispatch()
   const { leave_policies } = useSelector(state => state.leavepolicy)
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Title"), col: "name", sort: true },
     { title: t("Entitled Days"), col: "entitled", sort: false },
     { title: t("Encashable"), col: "encashable", sort: false },
@@ -26,8 +28,16 @@ export default function LeavesPage() {
     { title: t("Entitled To"), col: "entitledToStatus", sort: false },
     { title: t("Action"), col: "action" },
   ]
-  const rows = leave_policies.map((item) => {
+  const rows = leave_policies.map((item, i) => {
     return {
+      sr: <div className="flex items-center">
+        <CheckBox
+          id={i}
+          size={'sm'}
+          variant={'dark'}
+        />
+      </div>,
+      SerailNo: i + 1,
       name: item.name,
       entitled: item.entitled,
       encashable: item.encashable ? "Yes" : "No",

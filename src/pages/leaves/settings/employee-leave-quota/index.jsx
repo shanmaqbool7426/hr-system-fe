@@ -11,7 +11,9 @@ export default function LeaveQuotaSettingsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
-        { title: t("S# Employee"), col: "SEmployee", check: true },
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
+        { title: t("S# Employee"), col: "SEmployee" },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Quota Dates"), col: "QuotaDates" },
         { title: t("Quota Details"), col: "QuotaDetails" },
@@ -22,26 +24,21 @@ export default function LeaveQuotaSettingsPage() {
     ]
     const rows = [
         {
-            SEmployee: <div className="flex items-center">
+            sr: <div className="flex items-center">
                 <CheckBox
+                    id={`1`}
                     size={'sm'}
                     variant={'dark'}
-                    iconClass={'!top-2'}
-                    id="night-shift"
-                    name={"night-shift"}
-                    label={<div className="flex items-center gap-3">
-                        <figure>
-                            <Image height={24} width={24} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-medium">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
                 />
+            </div>,
+            SerailNo: '1',
+            SEmployee: <div className="flex flex-col justify-center items-center">
+                <span className="font-medium">{t("Jhon Carter")}</span>
+                <span className="text-themeGrayscale500">{t("10202325")}</span>
             </div>,
             EmployeeDetails:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2 gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -50,7 +47,7 @@ export default function LeaveQuotaSettingsPage() {
                 </div>,
             QuotaDates:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2  gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Start Date")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("01 January")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("End Date")}</span>
@@ -58,7 +55,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             QuotaDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Allowed")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("10")}</span>
@@ -77,7 +74,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             AdditionalDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Penalty")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
@@ -95,7 +92,7 @@ export default function LeaveQuotaSettingsPage() {
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
                     </div>
                 </div>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             Remaining: "10",
@@ -117,26 +114,21 @@ export default function LeaveQuotaSettingsPage() {
             </DropDown>,
         },
         {
-            SEmployee: <div className="flex items-center">
+            sr: <div className="flex items-center">
                 <CheckBox
+                    id={`2`}
                     size={'sm'}
                     variant={'dark'}
-                    iconClass={'!top-2'}
-                    id="night-shift"
-                    name={"night-shift"}
-                    label={<div className="flex items-center gap-3">
-                        <figure>
-                            <Image height={24} width={24} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-medium">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
                 />
+            </div>,
+            SerailNo: '2',
+            SEmployee: <div className="flex flex-col justify-center items-center">
+                <span className="font-medium">{t("Jhon Carter")}</span>
+                <span className="text-themeGrayscale500">{t("10202325")}</span>
             </div>,
             EmployeeDetails:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2  gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -145,7 +137,7 @@ export default function LeaveQuotaSettingsPage() {
                 </div>,
             QuotaDates:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2  gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Start Date")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("01 January")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("End Date")}</span>
@@ -153,7 +145,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             QuotaDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Allowed")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("10")}</span>
@@ -172,7 +164,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             AdditionalDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Penalty")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
@@ -190,7 +182,7 @@ export default function LeaveQuotaSettingsPage() {
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
                     </div>
                 </div>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             Remaining: "10",
@@ -212,26 +204,21 @@ export default function LeaveQuotaSettingsPage() {
             </DropDown>,
         },
         {
-            SEmployee: <div className="flex items-center">
-                <CheckBox
-                    size={'sm'}
-                    variant={'dark'}
-                    iconClass={'!top-2'}
-                    id="night-shift"
-                    name={"night-shift"}
-                    label={<div className="flex items-center gap-3">
-                        <figure>
-                            <Image height={24} width={24} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-medium">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
-                />
-            </div>,
+            sr: <div className="flex items-center">
+            <CheckBox
+                id={`3`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '3',
+        SEmployee: <div className="flex flex-col justify-center items-center">
+            <span className="font-medium">{t("Jhon Carter")}</span>
+            <span className="text-themeGrayscale500">{t("10202325")}</span>
+        </div>,
             EmployeeDetails:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2  gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -240,7 +227,7 @@ export default function LeaveQuotaSettingsPage() {
                 </div>,
             QuotaDates:
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+                    <div className="grid grid-cols-2  gap-y-1 gap-x-4">
                         <span className="text-themeGrayscale600 text-start">{t("Start Date")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("01 January")}</span>
                         <span className="text-themeGrayscale600 text-start">{t("End Date")}</span>
@@ -248,7 +235,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             QuotaDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Allowed")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("10")}</span>
@@ -267,7 +254,7 @@ export default function LeaveQuotaSettingsPage() {
                     </div>
                 </div>,
             AdditionalDetails:
-                <div className="flex flex-col gap-1 justify-center items-center text-xs">
+                <div className="flex flex-col gap-1 justify-center items-center ">
                     <div className='flex justify-between gap-4 w-full'>
                         <span className="text-themeGrayscale600 text-start">{t("Penalty")}</span>
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
@@ -285,7 +272,7 @@ export default function LeaveQuotaSettingsPage() {
                         <span className="text-themeGrayscale900 text-start font-semibold">{t("0")}</span>
                     </div>
                 </div>,
-            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
+            ModifiedOn: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
             Remaining: "10",

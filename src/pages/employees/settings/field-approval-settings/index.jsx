@@ -9,7 +9,8 @@ export default function EmployeeFieldApprovalSettingPage() {
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
     const headings = [
-        { title: t("S#"), col: "sr", },
+        { title: t(""), col: "sr", check: true },
+        { title: t("S#"), col: "srerialNo", },
         { title: t("Field Name"), col: "Name" },
         { title: t("Enable"), col: "Enable" },
         { title: t("On Approval"), col: "Approval" },
@@ -17,7 +18,14 @@ export default function EmployeeFieldApprovalSettingPage() {
     ];
     const rows = [
         {
-            sr: "1",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            srerialNo: "1",
             Name: "First Name",
             Enable: <div className='flex justify-center'><ToggleCheck
                 id="fistName"
@@ -34,7 +42,14 @@ export default function EmployeeFieldApprovalSettingPage() {
             </div></div>,
         },
         {
-            sr: "2",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            srerialNo: "2",
             Name: "Last Name",
             Enable: <div className='flex justify-center'><ToggleCheck
                 id="LastName"
@@ -51,7 +66,14 @@ export default function EmployeeFieldApprovalSettingPage() {
             </div></div>,
         },
         {
-            sr: "3",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`3`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            srerialNo: "3",
             Name: "CNIC",
             Enable: <div className='flex justify-center'><ToggleCheck
                 id="CNIC"
@@ -68,7 +90,14 @@ export default function EmployeeFieldApprovalSettingPage() {
             </div></div>,
         },
         {
-            sr: "4",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`4`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            srerialNo: "4",
             Name: "Mobile Number",
             Enable: <div className='flex justify-center'><ToggleCheck
                 id="Mobile"
@@ -85,7 +114,14 @@ export default function EmployeeFieldApprovalSettingPage() {
             </div></div>,
         },
         {
-            sr: "5", 
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            srerialNo: "5",
             Name: "Blood Group",
             Enable: <div className='flex justify-center'><ToggleCheck
                 id="BloodGroup"
@@ -100,7 +136,7 @@ export default function EmployeeFieldApprovalSettingPage() {
             ModifiedOn: <div className="flex justify-end"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
-        }, 
+        },
     ]
     return (
         <section className="flex flex-col grow">

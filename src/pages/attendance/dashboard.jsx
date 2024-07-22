@@ -1,4 +1,4 @@
-import { Button, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
+import { Button, CheckBox, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
 import AddExemptionForm from '@/components/forms/attendance/addExemption'
 import AddRequestForm from '@/components/forms/attendance/addRequest'
 import FilterArea from '@/components/includes/FilterArea'
@@ -24,7 +24,6 @@ export default function Dashboard() {
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const { customfield_list } = useSelector(state => state.customfield)
   const { attendance_list } = useSelector(state => state.attendance)
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const [filters, setFilters] = useState({
@@ -68,6 +67,8 @@ export default function Dashboard() {
     }
   ]
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Date"), col: "date", sort: true },
     { title: t("Employee"), col: "employee" },
     { title: t("Punch In"), col: "checkIn", sort: true },
@@ -82,7 +83,7 @@ export default function Dashboard() {
     dispatch(FetchAttendance())
   }, [dispatch])
 
-  const filtered_attendandance_data =( attendance_list || [])
+  const filtered_attendandance_data = (attendance_list || [])
     .filter(item => {
 
       let attendanceDate = new Date(item.date)
@@ -108,8 +109,16 @@ export default function Dashboard() {
     .sort((a, b) => {
       return (new Date(a.date)).getTime() - (new Date(b.date)).getTime()
     })
-    .map(item => {
+    .map((item,i) => {
       return {
+        sr: <div className="flex items-center">
+          <CheckBox
+            id={i}
+            size={'sm'}
+            variant={'dark'}
+          />
+        </div>,
+        SerailNo: i+1,
         date: <DisplayDate date={item.date} />,
         employee: <div className='flex gap-3 items-center capitalize'>
           <Profile image={item?.user?.avatar} name={item?.user?.firstName} />
@@ -157,7 +166,7 @@ export default function Dashboard() {
           className={'zt-employeeTable zt-projectsTable'}
         />
       </div>
-      {request && <AddRequestForm 
+      {request && <AddRequestForm
         onClose={() => { setRequest(false) }}
         object={edit}
       />}

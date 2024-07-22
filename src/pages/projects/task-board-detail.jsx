@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
@@ -168,6 +168,8 @@ export default function TaskBoardDetailModule() {
         },
     ]
     const headings = [
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Task Id"), col: "TaskId" },
         { title: t("Task Name"), col: "TaskName" },
         { title: t("Task Time"), col: "TaskTime", sort: true },
@@ -182,6 +184,14 @@ export default function TaskBoardDetailModule() {
 
     const rows = [
         {
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
             TaskId: "PJT-001",
             ProjectName: "Office Mangement",
             TaskName: "Splash",
@@ -209,7 +219,7 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={()=>{setTask(true)}}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                        <a onClick={() => { setTask(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -236,6 +246,14 @@ export default function TaskBoardDetailModule() {
             </DropDown>,
         },
         {
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '2',
             TaskId: "PJT-001",
             ProjectName: "Office Mangement",
             TaskName: "Login",
@@ -263,7 +281,7 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={()=>{setTask(true)}}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a onClick={() => { setTask(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -428,7 +446,7 @@ export default function TaskBoardDetailModule() {
                 {feedback && <FeedbackForm
                     onClose={() => { setFeedback(false) }}
                 />}
-                {task && <AddTaskForm 
+                {task && <AddTaskForm
                     onClose={() => { setTask(false) }}
                 />}
                 {discussion && <DiscussionForm

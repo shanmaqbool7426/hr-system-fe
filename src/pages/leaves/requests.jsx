@@ -102,7 +102,9 @@ export default function LeaveRequestsPage() {
     },
   ]
   const headings = [
-    { title: t("S# Employee"), col: "SEmployee", check: true },
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
+    { title: t("S# Employee"), col: "SEmployee" },
     { title: t("Employee Details"), col: "Employee_Details", },
     { title: t("Leave Details"), col: "Leave_Details" },
     { title: t("Status"), col: "Status" },
@@ -111,26 +113,21 @@ export default function LeaveRequestsPage() {
   ]
   const rows = [
     {
-      SEmployee: <div className="flex items-center">
+      sr: <div className="flex items-center">
         <CheckBox
+          id={`1`}
           size={'sm'}
           variant={'dark'}
-          iconClass={'!top-2'}
-          id="night-shift"
-          name={"night-shift"}
-          label={<div className="flex items-center gap-3">
-            <figure>
-              <Image height={24} width={24} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-            <div className="flex flex-col text-xs ">
-              <span className="font-medium">{t("Jhon Carter")}</span>
-              <span className="text-themeGrayscale500">{t("10202325")}</span>
-            </div>
-          </div>}
         />
+      </div>,
+      SerailNo: '1',
+      SEmployee: <div className="flex flex-col items-center justify-center">
+        <span className="font-medium">{t("Jhon Carter")}</span>
+        <span className="text-themeGrayscale500">{t("10202325")}</span>
       </div>,
       Employee_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -139,7 +136,7 @@ export default function LeaveRequestsPage() {
         </div>,
       Leave_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Leave From")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("05 March 2024 (Friday)")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Leave To")}</span>
@@ -151,7 +148,7 @@ export default function LeaveRequestsPage() {
           </div>
         </div>,
       Status: <span className="zt-tag zt-tag-success uppercase !rounded-md">{t("APPROVED")}</span>,
-      Modified_On: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
+      Modified_On: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
         <span className="text-themeGrayscale500">{t("By")} <span className="text-[#7239EA]">{t("Jhon Carter")}</span></span>
       </div></div>,
       action: <DropDown icon={<ThreeDotsVertical />}>
@@ -196,26 +193,21 @@ export default function LeaveRequestsPage() {
       </DropDown>,
     },
     {
-      SEmployee: <div className="flex items-center">
+      sr: <div className="flex items-center">
         <CheckBox
+          id={`2`}
           size={'sm'}
           variant={'dark'}
-          iconClass={'!top-2'}
-          id="emp_02"
-          name={"emp_02"}
-          label={<div className="flex items-center gap-3">
-            <figure>
-              <Image height={24} width={24} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
-            <div className="flex flex-col text-xs ">
-              <span className="font-medium">{t("Jhon Carter")}</span>
-              <span className="text-themeGrayscale500">{t("10202325")}</span>
-            </div>
-          </div>}
         />
+      </div>,
+      SerailNo: '2',
+      SEmployee: <div className="flex flex-col items-center justify-center">
+        <span className="font-medium">{t("Jhon Carter")}</span>
+        <span className="text-themeGrayscale500">{t("10202325")}</span>
       </div>,
       Employee_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -224,7 +216,7 @@ export default function LeaveRequestsPage() {
         </div>,
       Leave_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Leave From")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("05 March 2024 (Friday)")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Leave To")}</span>
@@ -236,7 +228,7 @@ export default function LeaveRequestsPage() {
           </div>
         </div>,
       Status: <span className="zt-tag zt-tag-warning uppercase !rounded-md">{t("PENDING")}</span>,
-      Modified_On: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
+      Modified_On: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
         <span className="text-themeGrayscale500">{t("By")} <span className="text-[#7239EA]">{t("Jhon Carter")}</span></span>
       </div></div>,
       action: <DropDown icon={<ThreeDotsVertical />}>
@@ -281,26 +273,21 @@ export default function LeaveRequestsPage() {
       </DropDown>,
     },
     {
-      SEmployee: <div className="flex items-center">
+      sr: <div className="flex items-center">
         <CheckBox
+          id={`3`}
           size={'sm'}
           variant={'dark'}
-          iconClass={'!top-2'}
-          id="emp_03"
-          name={"emp_03"}
-          label={<div className="flex items-center gap-3">
-            <figure>
-              <Image height={24} width={24} src={'/assets/images/users/user-03.jpg'} className="rounded-full" /></figure>
-            <div className="flex flex-col text-xs ">
-              <span className="font-medium">{t("Jhon Carter")}</span>
-              <span className="text-themeGrayscale500">{t("10202325")}</span>
-            </div>
-          </div>}
         />
+      </div>,
+      SerailNo: '3',
+      SEmployee: <div className="flex flex-col items-center justify-center">
+        <span className="font-medium">{t("Jhon Carter")}</span>
+        <span className="text-themeGrayscale500">{t("10202325")}</span>
       </div>,
       Employee_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Station")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("Head Office ")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Department")}</span>
@@ -309,7 +296,7 @@ export default function LeaveRequestsPage() {
         </div>,
       Leave_Details:
         <div className="flex justify-center">
-          <div className="grid grid-cols-2 text-xs gap-y-1 gap-x-4">
+          <div className="grid grid-cols-2  gap-y-1 gap-x-4">
             <span className="text-themeGrayscale600 text-start">{t("Leave From")}</span>
             <span className="text-themeGrayscale900 text-start font-semibold">{t("05 March 2024 (Friday)")}</span>
             <span className="text-themeGrayscale600 text-start">{t("Leave To")}</span>
@@ -321,7 +308,7 @@ export default function LeaveRequestsPage() {
           </div>
         </div>,
       Status: <span className="zt-tag zt-tag-danger uppercase !rounded-md">{t("CANCELLED")}</span>,
-      Modified_On: <div className="flex justify-center"><div className="flex flex-col text-xs items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
+      Modified_On: <div className="flex justify-center"><div className="flex flex-col  items-start"><span>{t("22 March 2024")}<span className="text-themeGrayscale500">{t("7:00PM")}</span></span>
         <span className="text-themeGrayscale500">{t("By")} <span className="text-[#7239EA]">{t("Jhon Carter")}</span></span>
       </div></div>,
       action: <DropDown icon={<ThreeDotsVertical />}>

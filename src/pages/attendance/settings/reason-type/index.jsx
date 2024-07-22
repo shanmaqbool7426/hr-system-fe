@@ -15,6 +15,8 @@ export default function AttendanceSettingReasonTypePage() {
   const [addExemption, setAddExemption] = useState(false)
 
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Request Type"), col: 'RequestType' },
     { title: t("Reason Name"), col: 'ReasonType' },
     { title: t("Min Working Hrs"), col: "MinWorkingHrs" },
@@ -23,6 +25,14 @@ export default function AttendanceSettingReasonTypePage() {
     { title: t("Action"), col: "action" },
   ]
   const rows = [{
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`1`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '1',
     RequestType: 'Attendance Request',
     ReasonType: 'Late Night Sitting',
     MinWorkingHrs: "4:00:00 Hours",
@@ -55,6 +65,15 @@ export default function AttendanceSettingReasonTypePage() {
       </DropDown>,
   },
   {
+    
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`2`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '2',
     RequestType: 'Exemption Request',
     ReasonType: 'Worked on Weekend',
     MinWorkingHrs: "4:00:00 Hours",
@@ -86,6 +105,15 @@ export default function AttendanceSettingReasonTypePage() {
     </DropDown>,
   },
   {
+    
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`3`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '3',
     RequestType: 'Attendance Request',
     ReasonType: 'Special Request',
     MinWorkingHrs: "4:00:00 Hours",

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Edit, FilledClockIcon, MealMenuIcon } from '@/components/svg'
 import CreateMealMenuForm from "@/components/forms/meal/create-meal-menu";
-import { Button, SearchSelect, Table, ToggleCheck } from '@/components/elements'
+import { Button, CheckBox, SearchSelect, Table, ToggleCheck } from '@/components/elements'
 
 const MealListing = () => {
   const { t } = useTranslation()
@@ -64,68 +64,126 @@ const MealListing = () => {
     { display: 'December 2024', value: "December 2024" },
   ]
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Date"), col: 'Date' },
     { title: t("Day"), col: 'Day' },
     { title: t("Lunch Menu"), col: "LunchMenu" },
     { title: t("Dinner Menu"), col: "DinnerMenu" },
-    { title: t("Avail"), col: "Avail" }, 
+    { title: t("Avail"), col: "Avail" },
     { title: t("Action"), col: "Action" },
   ]
   const rows = [{
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`1`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '1',
     Date: "01 April 2024",
     Day: "Monday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Mon'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Mon'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`2`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '2',
     Date: "02 April 2024",
     Day: "Tuesday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'tue'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'tue'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`3`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '3',
     Date: "03 April 2024",
     Day: "Wednesday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Wedneday'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Wedneday'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`4`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '4',
     Date: "04 April 2024",
     Day: "Thrusday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Thrusday'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Thrusday'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`5`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '5',
     Date: "05 April 2024",
     Day: "Friday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Friday'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Friday'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`6`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '6',
     Date: "06 April 2024",
     Day: "Satuarday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Satuarday'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Satuarday'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   {
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`7`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '7',
     Date: "07 April 2024",
     Day: "Sunday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
-    Avail: <div className='flex justify-center'><ToggleCheck id={'Sunday'}/></div>, 
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit/></button></div>, 
+    Avail: <div className='flex justify-center'><ToggleCheck id={'Sunday'} /></div>,
+    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
   },
   ]
   return (
@@ -165,8 +223,8 @@ const MealListing = () => {
             <SearchSelect placeholder={'Select Month'} list={months} />
           </div>
           <div className='flex gap-4'>
-            <Button onClick={()=>setEdit(true)} className={'btn btn-dark-outline'}>{t("Edit Full Menu")}</Button>
-            <Button onClick={()=>setCreate(true)}  className={'btn btn-dark'}>{t("Add New Menu")}</Button>
+            <Button onClick={() => setEdit(true)} className={'btn btn-dark-outline'}>{t("Edit Full Menu")}</Button>
+            <Button onClick={() => setCreate(true)} className={'btn btn-dark'}>{t("Add New Menu")}</Button>
           </div>
         </div>
         <Table

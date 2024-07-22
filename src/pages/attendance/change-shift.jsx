@@ -146,23 +146,23 @@ export default function ChangeShift() {
                 />
             </div>,
             SerailNo: '1',
-            Employee: <div className="flex items-center justify-start gap-4 grow">
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
-                    <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             date: '23 May 2024',
             scheduleDay: "Friday",
-            scheduleDate: <div className='flex gap-4 text-xs justify-center'>
+            scheduleDate: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span> <span>{t('2024')}</span> <span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start justify-between gap-1'><span>{t('23 May ')}</span><span>{t('23 May 2024')}</span></div>
             </div>,
-            scheduleTime: <div className='flex gap-4 text-xs justify-center'>
+            scheduleTime: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span><span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start gap-1'><span>{t('09:00 AM')}</span><span>{t('09:00 AM')}</span></div>
             </div>,
@@ -206,23 +206,23 @@ export default function ChangeShift() {
                 />
             </div>,
             SerailNo: '2',
-            Employee: <div className="flex items-center justify-start gap-4 grow">
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
-                    <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             date: '23 May 2024',
             scheduleDay: "Friday",
-            scheduleDate: <div className='flex gap-4 text-xs justify-center'>
+            scheduleDate: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span> <span>{t('2024')}</span> <span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start justify-between gap-1'><span>{t('23 May ')}</span><span>{t('23 May 2024')}</span></div>
             </div>,
-            scheduleTime: <div className='flex gap-4 text-xs justify-center'>
+            scheduleTime: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span><span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start gap-1'><span>{t('09:00 AM')}</span><span>{t('09:00 AM')}</span></div>
             </div>,
@@ -266,23 +266,23 @@ export default function ChangeShift() {
                 />
             </div>,
             SerailNo: '3',
-            Employee: <div className="flex items-center justify-start gap-4 grow">
+            Employee: <div className="flex items-centuster justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
-                    <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             date: '23 May 2024',
             scheduleDay: "Friday",
-            scheduleDate: <div className='flex gap-4 text-xs justify-center'>
+            scheduleDate: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span> <span>{t('2024')}</span> <span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start justify-between gap-1'><span>{t('23 May ')}</span><span>{t('23 May 2024')}</span></div>
             </div>,
-            scheduleTime: <div className='flex gap-4 text-xs justify-center'>
+            scheduleTime: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span><span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start gap-1'><span>{t('09:00 AM')}</span><span>{t('09:00 AM')}</span></div>
             </div>,
@@ -326,23 +326,23 @@ export default function ChangeShift() {
                 />
             </div>,
             SerailNo: '4',
-            Employee: <div className="flex items-center justify-start gap-4 grow">
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
-                    <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             date: '23 May 2024',
             scheduleDay: "Friday",
-            scheduleDate: <div className='flex gap-4 text-xs justify-center'>
+            scheduleDate: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span> <span>{t('2024')}</span> <span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start justify-between gap-1'><span>{t('23 May ')}</span><span>{t('23 May 2024')}</span></div>
             </div>,
-            scheduleTime: <div className='flex gap-4 text-xs justify-center'>
+            scheduleTime: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1'><span className='text-themeGrayscale500'>{t('In')}</span><span className='text-themeGrayscale500'>{t('Out')}</span></div>
                 <div className='flex flex-col items-start gap-1'><span>{t('09:00 AM')}</span><span>{t('09:00 AM')}</span></div>
             </div>,

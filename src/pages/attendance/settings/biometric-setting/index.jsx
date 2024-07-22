@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CreateBiometricDevice from "@/components/forms/attendance/createBiometricDevice";
-import { Button, DropDown, Table, Tabs } from "@/components/elements"; 
+import { Button, CheckBox, DropDown, Table, Tabs } from "@/components/elements";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchDevices, SyncDevice } from "@/store/actions/biometric.actions";
 import { Edit, ThreeDotsVertical } from "@/components/svg";
@@ -12,13 +12,15 @@ export default function AttendanceBiometricSettingPage() {
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(10) 
+    const [perPage, setPerPage] = useState(10)
     const dispatch = useDispatch()
     const { device_list } = useSelector(state => state.biometric)
     useEffect(() => {
         dispatch(FetchDevices())
     }, [dispatch])
     const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
         { title: t("IP Address"), col: 'ipAddress' },
         { title: t("Port"), col: "port" },
         { title: t("Station"), col: "station" },
@@ -45,8 +47,16 @@ export default function AttendanceBiometricSettingPage() {
     const indexOfFirstItem = indexOfLastItem - perPage;
     const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
-    const rows = paginatedData.map(item => {
+    const rows = paginatedData.map((item, i) => {
         return {
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={i}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: i + 1,
             ipAddress: item.ipAddress,
             port: item.port,
             station: item?.station?.name,
@@ -59,9 +69,11 @@ export default function AttendanceBiometricSettingPage() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={() => { dispatch(SyncDevice(item._id, ()=> {
-                            Toast.success("Attendance sync request submitted successfully")
-                        })) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => {
+                            dispatch(SyncDevice(item._id, () => {
+                                Toast.success("Attendance sync request submitted successfully")
+                            }))
+                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             {/* <span><Edit /></span> */}
                             <span>{t("Sync")}</span>
                         </a>
