@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import FilterArea from "@/components/includes/FilterArea";
 import { useEffect, useState } from "react";
 import CreateLeaveForm from "@/components/forms/leaves/create";
