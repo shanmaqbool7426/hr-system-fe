@@ -1,4 +1,4 @@
-import { Button, Table } from '@/components/elements' 
+import { Button, CheckBox, Table } from '@/components/elements'
 import ApplyPaneltyForm from '@/components/forms/attendance/applyPanelty'
 import AttendanceRepostForm from '@/components/forms/attendance/repostAttendance'
 import FilterArea from '@/components/includes/FilterArea'
@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 export default function AmmendAttendance() {
-    const { t } = useTranslation() 
+    const { t } = useTranslation()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
@@ -103,6 +103,8 @@ export default function AmmendAttendance() {
     ]
 
     const headings = [
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Schedule Details"), col: "ScheduleDetails", },
@@ -115,18 +117,25 @@ export default function AmmendAttendance() {
     ]
     const rows = [
         {
-            Employee: <div className="flex items-center justify-start gap-4 grow">
-                <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
+            Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
-            ScheduleDetails: <div className='flex gap-4 text-xs justify-center'>
+            ScheduleDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Day')}</span> <span>{t('Shift')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Monday')}</span> <span>{t('Morning')}</span></div>
             </div>,
@@ -138,18 +147,25 @@ export default function AmmendAttendance() {
             Status: <span className='zt-tag zt-tag-danger'> Absent</span>,
         },
         {
-            Employee: <div className="flex items-center justify-start gap-4 grow">
-                <figure className={'w-6 h-6 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-                <div className={'flex flex-col gap-1 text-left'}>
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '2',
+            Employee: <div className="flex items-center justify-center gap-4 grow">
+               <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
+                    <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
             </div>,
-            EmployeeDetails: <div className='flex gap-4 text-xs justify-center'>
+            EmployeeDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
-            ScheduleDetails: <div className='flex gap-4 text-xs justify-center'>
+            ScheduleDetails: <div className='flex gap-4  justify-center'>
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Day')}</span> <span>{t('Shift')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Monday')}</span> <span>{t('Morning')}</span></div>
             </div>,
@@ -169,7 +185,7 @@ export default function AmmendAttendance() {
                 <h1 className="text-h4 mb-0">{t("Amend Attendance")}</h1>
                 <div className="flex items-start gap-2">
                     <Button className={"btn btn-dark-outline"}>{t("Upload Excel")}</Button>
-                    <Button className={"btn btn-dark-outline"} onClick={()=>setPanelty(true)}>{t("Apply Plenty")}</Button>
+                    <Button className={"btn btn-dark-outline"} onClick={() => setPanelty(true)}>{t("Apply Plenty")}</Button>
                     <Button className={"btn btn-primary"} onClick={() => setAmend(true)}>{t("Attendance Repost")}</Button>
                 </div>
             </div>
@@ -202,11 +218,11 @@ export default function AmmendAttendance() {
                     className={'zt-employeeTable zt-amendAttendanceTable'}
                 />
             </div>
-            {amend && <AttendanceRepostForm 
+            {amend && <AttendanceRepostForm
                 onClose={() => { setAmend(false); setEdit(null) }}
                 object={edit}
             />}
-             {panelty && <ApplyPaneltyForm 
+            {panelty && <ApplyPaneltyForm
                 onClose={() => { setPanelty(false); setEdit(null) }}
                 object={edit}
             />}

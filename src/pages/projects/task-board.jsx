@@ -1,6 +1,5 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import AddTaskForm from '@/components/forms/projects/addTask'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import CreatProjectsForm from '@/components/forms/projects/creatProjects'
 import FilterArea from '@/components/includes/FilterArea'
@@ -10,83 +9,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
-const Projects = [
-  {
-    "name": "Office Management",
-    href: "/projects/details",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "70%"
-  },
-  {
-    "name": "Office Management",
-    href: "/projects/details",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-07.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "40%"
-  },
-  {
-    href: "/projects/details",
-    "name": "Office Management",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-07.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "20%"
-  },
-]
 const tableData = [
   {
     "leaders": [
@@ -108,7 +30,7 @@ const tableData = [
   }
 ]
 export default function ProjectsModule() {
-  const { t } = useTranslation() 
+  const { t } = useTranslation()
   const [board, setBoard] = useState(false)
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
@@ -164,6 +86,8 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Task Board Name"), col: "TaskBoardName" },
     { title: t("Project Name"), col: "ProjectName" },
     { title: t("Sprint"), col: "Sprint" },
@@ -174,6 +98,14 @@ export default function ProjectsModule() {
 
   const rows = [
     {
+      sr: <div className="flex items-center">
+        <CheckBox
+          id={`1`}
+          size={'sm'}
+          variant={'dark'}
+        />
+      </div>,
+      SerailNo: '1',
       TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
       ProjectName: "Spalsh",
       Sprint: '01',
@@ -185,6 +117,14 @@ export default function ProjectsModule() {
       DueDate: "22 March 2023",
     },
     {
+      sr: <div className="flex items-center">
+        <CheckBox
+          id={`2`}
+          size={'sm'}
+          variant={'dark'}
+        />
+      </div>,
+      SerailNo: '2',
       TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
       ProjectName: "Spalsh",
       Sprint: '01',
@@ -226,7 +166,7 @@ export default function ProjectsModule() {
         {create && <CreatProjectsForm
           onClose={() => { setCreate(false) }}
         />}
-     
+
         {board && <CreateBoardForm
           title={t('Create Task Board')}
           type={'Feedback'}

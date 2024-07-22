@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Table } from '@/components/elements'
+import { Button, CheckBox, Table } from '@/components/elements'
 import { useState } from 'react'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 
@@ -11,7 +11,8 @@ export default function AwaitingTasksPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
-        { title: t("Sr#"), col: "sr" },
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Task Id"), col: "TaskId" },
         { title: t("Task Name"), col: "TaskName" },
         { title: t("Project Name"), col: "ProjectName" },
@@ -23,7 +24,14 @@ export default function AwaitingTasksPage() {
 
     const rows = [
         {
-            sr: "1",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
             TaskId: "PJG-001",
             TaskName: "Splash",
             ProjectName: "Video calling",
@@ -37,7 +45,14 @@ export default function AwaitingTasksPage() {
             </div>
         },
         {
-            sr: "2",
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '2',
             TaskId: "PJG-001",
             TaskName: "Login",
             TaskTime: "01:00",

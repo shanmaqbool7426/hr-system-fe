@@ -53,6 +53,8 @@ export default function Screenshot() {
     ]
 
     const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
         { title: t("Name"), col: "name", /* sort: true */ },
         { title: t("Screenshots taken"), col: "Screenshots" },
         { title: t("Flagged as suspicious"), col: "Flagged", /* sort: true */ },
@@ -61,7 +63,15 @@ export default function Screenshot() {
 
     const rows = [
         {
-            name: <div className="flex items-center justify-start gap-4 grow">
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
+            name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className={'shrink-0'}><Image height={30} width={30} alt='profile' src={'/assets/images/users/user-01.jpg'} /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
@@ -89,8 +99,15 @@ export default function Screenshot() {
                 ))}
             </div>
         },
-        {
-            name: <div className="flex items-center justify-start gap-4 grow">
+        {  sr: <div className="flex items-center">
+            <CheckBox
+                id={`2`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '2',
+            name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className={'shrink-0'}><Image height={30} width={30} alt='profile' src={'/assets/images/users/user-01.jpg'} /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>

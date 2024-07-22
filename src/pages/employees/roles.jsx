@@ -1,4 +1,4 @@
-import { Button, SearchInput, Table, SearchSelect, Tabs, MultiSelect, DropDown } from "@/components/elements";
+import { Button, SearchInput, Table, SearchSelect, Tabs, MultiSelect, DropDown, CheckBox } from "@/components/elements";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import { FetchEmployees, DeleteEmployee } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
@@ -67,6 +67,8 @@ export default function EmployeeRolesPage() {
 	}
 
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Roles"), col: "name", sort: true },
 		{ title: t("Description"), col: "description", sort: false },
 		{ title: t("Status"), col: "status", sort: false },
@@ -74,6 +76,14 @@ export default function EmployeeRolesPage() {
 	]
 
 	const rows = [{
+		sr: <div className="flex items-center">
+			<CheckBox
+				id={`1`}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '1',
 		name: "Manager",
 		description: "Lorem ipsum",
 		status: "active",

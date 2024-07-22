@@ -1,4 +1,4 @@
-import { Button, Table } from "@/components/elements";
+import { Button, CheckBox, Table } from "@/components/elements";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useState } from "react";
@@ -11,6 +11,8 @@ export default function ScheduleInterviewPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Name"), col: "name", },
 		{ title: t("Job Title"), col: "jobTitle", },
 		{ title: t("Candidate Available Time"), col: "CandidateAvailableTime", },
@@ -19,6 +21,14 @@ export default function ScheduleInterviewPage() {
 
 	const rows = [
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`1`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '1',
 			name: <div className="flex items-center justify-start gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -36,6 +46,14 @@ export default function ScheduleInterviewPage() {
 			Scheduletiming: <Button className='btn btn-purple'>Schedule time</Button>,
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`2`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '2',
 			name: <div className="flex items-center justify-start gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -53,6 +71,14 @@ export default function ScheduleInterviewPage() {
 			Scheduletiming: <Button className='btn btn-purple'>Schedule time</Button>,
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`3`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '3',
 			name: <div className="flex items-center justify-start gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -70,6 +96,14 @@ export default function ScheduleInterviewPage() {
 			Scheduletiming: <Button className='btn btn-purple'>Schedule time</Button>,
 		},
 		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`4`}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '4',
 			name: <div className="flex items-center justify-start gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />

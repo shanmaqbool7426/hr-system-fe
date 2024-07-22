@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/createRemoteEmployee";
 import CreateRemoteTeamForm from "@/components/forms/remoteWork/createTeam";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -22,6 +22,8 @@ export default function Teams() {
     }
 
     const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
         { title: t("Name"), col: "Name", },
         { title: t("Team members"), col: "Teammembers" },
         { title: t("Created"), col: "Created" },
@@ -29,7 +31,14 @@ export default function Teams() {
     ]
 
     const rows = [
-        {
+        {   sr: <div className="flex items-center">
+            <CheckBox
+                id={`1`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '1',
             Name: 'Accounting',
             Teammembers: '2',
             Created: '23 May 2024',
@@ -50,7 +59,14 @@ export default function Teams() {
                 </ul>
             </DropDown>
         },
-        {
+        { sr: <div className="flex items-center">
+            <CheckBox
+                id={`2`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '2',
             Name: 'Management',
             Teammembers: '2',
             Created: '23 May 2024',

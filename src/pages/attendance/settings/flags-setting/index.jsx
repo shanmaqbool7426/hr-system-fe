@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateFlagForm from "@/components/forms/attendance/createFlagSetting";
 import DisplayDate from "@/components/elements/DisplayDate";
 import FilterArea from "@/components/includes/FilterArea";
@@ -32,6 +32,8 @@ export default function AttendanceFlagsSettingPage() {
   }, [dispatch]);
 
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Reason Type"), col: "name" },
     { title: t("Deduction"), col: "deduction" },
     { title: t("Modified On"), col: "modifiedOn" },
@@ -78,7 +80,15 @@ export default function AttendanceFlagsSettingPage() {
   const indexOfLastItem = page * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
-  const rows = paginatedData?.map((item) => ({
+  const rows = paginatedData?.map((item,i) => ({
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={i}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: i+1,
     name: item?.name,
     deduction: item?.deduction,
     modifiedOn: (

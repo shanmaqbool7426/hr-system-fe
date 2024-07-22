@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 
-import { Button, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +29,8 @@ export default function DesignationPage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Current Designation"), col: "CurrentDesignation" },
 		{ title: t("New Designation"), col: "NewDesignation", },
@@ -38,6 +40,17 @@ export default function DesignationPage() {
 	]
 	const rows = [
 		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`1`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '1',
 			Employee: 'Admin',
 			CurrentDesignation: 'Admin',
 			NewDesignation: 'HR',
@@ -46,6 +59,17 @@ export default function DesignationPage() {
 			Details: '-',
 		},
 		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`2`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '2',
 			Employee: 'Admin',
 			CurrentDesignation: 'Admin',
 			NewDesignation: 'HR',
@@ -54,6 +78,17 @@ export default function DesignationPage() {
 			Details: '-',
 		},
 		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`3`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '3',
 			Employee: 'Admin',
 			CurrentDesignation: 'Admin',
 			NewDesignation: 'HR',

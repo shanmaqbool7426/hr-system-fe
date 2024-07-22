@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateGazetedLeaveForm from "@/components/forms/leaves/create-gazetted-leave";
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useEffect, useState } from "react";
@@ -37,6 +37,8 @@ export default function LeaveGazettedHolidaysPage() {
   }, [dispatch]);
 
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Holiday Name"), col: "name", sort: true },
     { title: t("From Date"), col: "fromDate" },
     { title: t("To Date"), col: "toDate" },
@@ -83,7 +85,15 @@ export default function LeaveGazettedHolidaysPage() {
   const indexOfLastItem = page * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
-  const rows = paginatedData?.map((item) => ({
+  const rows = paginatedData?.map((item, i) => ({
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={i}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: i+1,
     name: item?.title,
     fromDate: <div><DisplayDate date={item.fromDate} /> ({moment(item.fromDate).format('dddd')})</div>,
     toDate: <div><DisplayDate date={item.toDate} /> ({moment(item.toDate).format('dddd')})</div>,

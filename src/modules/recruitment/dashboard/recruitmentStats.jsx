@@ -13,7 +13,7 @@ export const RecruitmentStats = () => {
         {count:"12", img:"/assets/images/asset/interview_schedule_07.png",text:"Supervisor Allocation Pending"},
     ]
   return (
-    <div className='grid custom__grid gap-x-8 gap-y-14 mb-6'>
+    <div className='grid custom__grid lg:grid-cols-4 gap-x-8 gap-y-14 mb-6'>
         {data.map((ele,i)=>(
             <div key={i} className='zt-card relative flex flex-col'>
                 <span className='absolute -top-5 -left-5 h-14 w-14 border border-themeGrayscale300 bg-white rounded-2xl font-bold text-3xl flex justify-center items-center'>{ele.count}</span>

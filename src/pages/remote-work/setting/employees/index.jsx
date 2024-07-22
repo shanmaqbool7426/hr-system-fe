@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/createRemoteEmployee";
 import FilterArea from "@/components/includes/FilterArea";
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -13,7 +13,7 @@ export default function Employees() {
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(10) 
+    const [perPage, setPerPage] = useState(10)
     const [hide, setHide] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
@@ -73,6 +73,8 @@ export default function Employees() {
     ]
 
     const headings = [
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Name"), col: "Name", },
         { title: t("Email"), col: "Email" },
         { title: t("Created"), col: "Created", sort: true },
@@ -83,6 +85,14 @@ export default function Employees() {
 
     const rows = [
         {
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`1`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '1',
             Name: <div className="flex items-center justify-start gap-4 grow">
                 <figure className="shrink-0">
                     <Image height={40} width={40} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
@@ -113,6 +123,14 @@ export default function Employees() {
             </DropDown>
         },
         {
+            sr: <div className="flex items-center">
+                <CheckBox
+                    id={`2`}
+                    size={'sm'}
+                    variant={'dark'}
+                />
+            </div>,
+            SerailNo: '2',
             Name: <div className="flex items-center justify-start gap-4 grow">
                 <figure className="shrink-0">
                     <Image height={40} width={40} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>

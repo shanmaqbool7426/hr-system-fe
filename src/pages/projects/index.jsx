@@ -1,6 +1,6 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects' 
+import CreatProjectsForm from '@/components/forms/projects/creatProjects'
 import FilterArea from '@/components/includes/FilterArea'
 import { Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash } from '@/components/svg'
 import ProjectCard from '@/modules/employee/projects/projectCard'
@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
 const Projects = [
   {
     "name": "Office Management",
-    href:"/projects/details",
+    href: "/projects/details",
     "openTasks": 1,
     "completedTasks": 9,
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
@@ -38,7 +38,7 @@ const Projects = [
   },
   {
     "name": "Office Management",
-    href:"/projects/details",
+    href: "/projects/details",
     "openTasks": 1,
     "completedTasks": 9,
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
@@ -62,7 +62,7 @@ const Projects = [
     "progress": "40%"
   },
   {
-    href:"/projects/details",
+    href: "/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -108,7 +108,7 @@ const tableData = [
   }
 ]
 export default function ProjectsModule() {
-  const { t } = useTranslation() 
+  const { t } = useTranslation()
   const [view, setView] = useState("grid")
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
@@ -164,6 +164,8 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
     { title: t("Project"), col: "Project", sort: true },
     { title: t("Project ID"), col: "ProjectID", sort: true },
     { title: t("Client"), col: "Client", sort: true },
@@ -179,6 +181,14 @@ export default function ProjectsModule() {
 
   const rows = [
     {
+      sr: <div className="flex items-center">
+        <CheckBox
+          id={`1`}
+          size={'sm'}
+          variant={'dark'}
+        />
+      </div>,
+      SerailNo: '1',
       Project: <Link href={'/projects/details'}><span className=''>Office Management</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',
@@ -198,6 +208,14 @@ export default function ProjectsModule() {
       </div>,
     },
     {
+      sr: <div className="flex items-center">
+      <CheckBox
+        id={`2`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '2',
       Project: <Link href={'/projects/details'}><span className=''>Video Calling</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',
@@ -256,7 +274,7 @@ export default function ProjectsModule() {
             className={'zt-employeeTable zt-projectsTable'}
           />
         }
-        {create && <CreatProjectsForm  
+        {create && <CreatProjectsForm
           onClose={() => { setCreate(false) }}
         />}
       </div>
