@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from '@/components/elements';
 import Toast from '@/util/toast';
 
-export default function AppointmentCard () {
+export default function SeperationCard() {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [edit, setEdit] = useState(false)
@@ -38,33 +38,33 @@ export default function AppointmentCard () {
     return (
         <div className='zt-employeeCard'>
             <div className='zt--employeeCardHead'>
-                <h3>{t('Appointment Information')}</h3>
+                <h3>{t('Seperation Information')}</h3>
                 <span onClick={() => { setEdit(!edit) }} className={'text-themePurple cursor-pointer'}><Edit width={'1.5rem'} height={'auto'} /></span>
             </div>
             {
                 !edit && <ul className='zt--employeeCardBody flex flex-col !gap-y-4 !gap-x-16'>
                     <li>
-                        <span>{t("Joining Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.joiningDate || '------'}</strong>
+                        <span>{t("Resign Date")}</span>
+                        <strong>{employee_details?.appointmentDetail?.resignDate || '------'}</strong>
                     </li>
                     <li>
-                        <span>{t("Confirmation Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.confirmationDate || '------'}</strong>
-                    </li> 
+                        <span>{t("Last Working Date")}</span>
+                        <strong>{employee_details?.appointmentDetail?.lastWorkingDate || '------'}</strong>
+                    </li>
                 </ul>
             }
-
             {
                 edit && <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
                     <fieldset className='flex flex-col gap-y-4 gap-x-16'>
+
                         <Input
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
                             type={'text'}
-                            name={'joiningDate'}
-                            label={t('Joining Date')}
-                            placeholder={t('Joining Date')}
-                            value={formik.values.joiningDate}
+                            name={'resignDate'}
+                            label={t('Resign Date')}
+                            placeholder={t('Resign Date')}
+                            value={formik.values.resignDate}
                             formik={formik}
                             required
                         />
@@ -72,13 +72,13 @@ export default function AppointmentCard () {
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
                             type={'text'}
-                            name={'confirmationDate'}
-                            label={t('Confirmation Date')}
-                            placeholder={t('Confirmation Date')}
-                            value={formik.values.confirmationDate}
+                            name={'lastWorkingDate'}
+                            label={t('Last Working Date')}
+                            placeholder={t('Last Working Date')}
+                            value={formik.values.lastWorkingDate}
                             formik={formik}
                             required
-                        />  
+                        />
                         <div className="zt-btns !p-0 !pt-4 justify-end col-span-2">
                             <Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
                                 onClick={() => { formik.resetForm(); setEdit(!edit) }} />

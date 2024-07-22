@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 
-import { Button, Datepicker, SearchSelect, Textarea } from '@/components/elements';
+import { Button, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,16 +11,60 @@ import { ChangeDesignation } from '@/store/actions/employee-change-request.actio
 import Toast from '@/util/toast';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
+import ChangeDesignationForm from '@/components/forms/employees/changeRequest/ChangeDesignation';
 
 export default function DesignationPage() {
-	const { t } = useTranslation();
-	const { } = useSelector(state => state.employee)
+	const { t } = useTranslation()
+	const dispatch = useDispatch()
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const pagination = {
+		totalRecords: 5,
+		showPerPage: true,
+		prevAction: () => page > 1 && setPage(page - 1),
+		clickAction: (value) => setPage(value),
+		nextAction: () => setPage(page + 1),
+	}
+	const headings = [
+		{ title: t("Employee"), col: "Employee" },
+		{ title: t("Current Designation"), col: "CurrentDesignation" },
+		{ title: t("New Designation"), col: "NewDesignation", },
+		{ title: t("Effective Date"), col: "EffectiveDate" },
+		{ title: t("Reason Of Designation Change"), col: "ReasonOfDesignationChange", },
+		{ title: t("Details"), col: "Details", },
+	]
+	const rows = [
+		{
+			Employee: 'Admin',
+			CurrentDesignation: 'Admin',
+			NewDesignation: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDesignationChange: 'Promotion',
+			Details: '-',
+		},
+		{
+			Employee: 'Admin',
+			CurrentDesignation: 'Admin',
+			NewDesignation: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDesignationChange: 'Promotion',
+			Details: '-',
+		},
+		{
+			Employee: 'Admin',
+			CurrentDesignation: 'Admin',
+			NewDesignation: 'HR',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfDesignationChange: 'Promotion',
+			Details: '-',
+		},
+	]
 	const { customfield_list } = useSelector(state => state.customfield)
 	const { employees_list } = useSelector((state) => state.employee)
-
-
 	const currentDesignationRef = useRef(null)
-	const dispatch = useDispatch()
 	useEffect(() => {
 		if (employees_list.length === 0)
 			dispatch(FetchEmployees())
@@ -60,8 +104,29 @@ export default function DesignationPage() {
 
 	return (
 		<section className="flex flex-col grow">
-			<h1 className="text-h4 mb-6 flex items-center justify-start gap-3">{t("Change Designation Request")}</h1>
-			<form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
+			<div className="flex justify-between pb-6">
+				<h1 className="text-h4 mb-0">{t("Change Designation Request")}</h1>
+				<Button onClick={() => setChange(true)} className={"btn btn-primary"}>{t("Change Designation Request")}</Button>
+			</div>
+			<div className='zt-card grow'>
+				<Table
+					//   allChecked={allChecked}
+					//   handleCheckAll={handleCheckAll}
+					headings={headings}
+					rows={rows}
+					sortCol={sortCol}
+					setSortCol={setSortCol}
+					sortDir={sortDir}
+					pagination={pagination}
+					setSortDir={setSortDir}
+					perPage={perPage}
+					setPerPage={setPerPage}
+					page={page}
+					setPage={setPage}
+					className={'zt-employeeTable zt-changeShiftTable'}
+				/>
+			</div>
+			{/* <form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
 				<fieldset className='flex flex-col gap-12'>
 					<div className="grid sm:grid-cols-3 gap-12">
 						<SearchSelect
@@ -69,7 +134,6 @@ export default function DesignationPage() {
 							name={'employee'}
 							label={t('Employee')}
 							value={formik.values.employee}
-
 							error={formik.touched.employee && formik.errors.employee}
 							onBlur={() => { formik.setFieldTouched('employee', true) }}
 							onInput={formik.handleBlur}
@@ -160,7 +224,10 @@ export default function DesignationPage() {
 					<Button type="button" value={t("Cancel")} className={"btn btn-dark-outline min-w-32"} />
 					<Button type="submit" value={t("Submit")} className={"btn btn-dark min-w-32"} />
 				</div>
-			</form>
+			</form> */}
+			{change &&
+				<ChangeDesignationForm onClose={()=>setChange(false)}/>
+			}
 		</section>
 	)
 }

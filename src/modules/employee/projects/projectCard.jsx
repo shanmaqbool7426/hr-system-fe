@@ -15,23 +15,7 @@ export default function ProjectCard ({ key, projectData }) {
         <div>
           <Link href={`${projectData.href? `/${projectData.href}`:"#"}`} className='mb-0 text-h5 no-underline'>{t(projectData.name)}</Link>
           <p className='mb-0'><span>{t(projectData.openTasks)} open tasks</span>,<span>{t(projectData.completedTasks)} tasks completed</span></p>
-        </div>
-        <DropDown icon={<ThreeDotsVertical className={'text-themePurple'} width={'1.5rem'} />}>
-          <ul className="zt-themeDropDownList zt-sm gap-4">
-            <li className="!p-0">
-              <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                <span><EyeOn /></span>
-                <span>Details</span>
-              </a>
-            </li>
-            <li className="!p-0">
-              <a onClick={() => editEmployee(item)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                <span><Edit /></span>
-                <span>Edit</span>
-              </a>
-            </li>
-          </ul>
-        </DropDown>
+        </div> 
       </div>
       <div className='zt--projectCardBody'>
         <p>{t(projectData.description)}</p>
