@@ -67,8 +67,7 @@ export default function EmployeeRolesPage() {
 	}
 
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Roles"), col: "name", sort: true },
 		{ title: t("Description"), col: "description", sort: false },
 		{ title: t("Status"), col: "status", sort: false },
@@ -76,14 +75,7 @@ export default function EmployeeRolesPage() {
 	]
 
 	const rows = [{
-		sr: <div className="flex items-center">
-			<CheckBox
-				id={`1`}
-				size={'sm'}
-				variant={'dark'}
-			/>
-		</div>,
-		SerailNo: '1',
+	
 		name: "Manager",
 		description: "Lorem ipsum",
 		status: "active",

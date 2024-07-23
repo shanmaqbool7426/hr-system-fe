@@ -47,6 +47,18 @@ const Toast = {
                 successCallback()
             }
         });
+    },
+    confirmRevoke(successCallback, t) {
+        Swal.fire({
+            title: t("Are you want to revoke remote access for this employee?"),
+            showDenyButton: true,
+            confirmButtonText: t("Yes"),
+            denyButtonText: t("No"),
+        }).then((result) => {
+            if (result.isConfirmed) {
+                successCallback()
+            }
+        });
     }
 }
 

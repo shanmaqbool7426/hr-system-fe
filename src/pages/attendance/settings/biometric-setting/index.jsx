@@ -19,8 +19,7 @@ export default function AttendanceBiometricSettingPage() {
         dispatch(FetchDevices())
     }, [dispatch])
     const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
         { title: t("IP Address"), col: 'ipAddress' },
         { title: t("Port"), col: "port" },
         { title: t("Station"), col: "station" },
@@ -49,14 +48,6 @@ export default function AttendanceBiometricSettingPage() {
 
     const rows = paginatedData.map((item, i) => {
         return {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={i}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: i + 1,
             ipAddress: item.ipAddress,
             port: item.port,
             station: item?.station?.name,

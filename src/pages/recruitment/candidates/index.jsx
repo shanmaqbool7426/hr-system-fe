@@ -57,8 +57,7 @@ export default function Recruitment() {
   ]
 
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
+   
     { title: t("Name"), col: "name", /* sort: true */ },
     { title: t("Job Title"), col: "jobTitle", className: "flex justify-center" },
     { title: t("Departments"), col: "departments", /* sort: true */ },
@@ -70,14 +69,7 @@ export default function Recruitment() {
   ]
 
   const rows = [{
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`1`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '1',
+ 
     name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-centerw">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
@@ -115,14 +107,7 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`2`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '2',
+   
     name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Gertrude Kuphal')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
@@ -160,14 +145,7 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`3`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '3',
+   
     name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>

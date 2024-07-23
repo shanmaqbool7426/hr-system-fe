@@ -86,8 +86,7 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
+   
     { title: t("Task Board Name"), col: "TaskBoardName" },
     { title: t("Project Name"), col: "ProjectName" },
     { title: t("Sprint"), col: "Sprint" },
@@ -98,14 +97,7 @@ export default function ProjectsModule() {
 
   const rows = [
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`1`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '1',
+     
       TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
       ProjectName: "Spalsh",
       Sprint: '01',
@@ -117,14 +109,6 @@ export default function ProjectsModule() {
       DueDate: "22 March 2023",
     },
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`2`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '2',
       TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
       ProjectName: "Spalsh",
       Sprint: '01',

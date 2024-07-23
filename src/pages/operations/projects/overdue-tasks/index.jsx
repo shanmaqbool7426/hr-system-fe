@@ -113,8 +113,7 @@ export default function TaskBoardDetailModule() {
 		}, t)
 	}
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Task Id"), col: "TaskId" },
 		{ title: t("Task Name"), col: "TaskName" },
 		{ title: t("Task Time"), col: "TaskTime", sort: true },
@@ -125,14 +124,7 @@ export default function TaskBoardDetailModule() {
 
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+			
 			TaskId: "PJT-001",
 			ProjectName: "Office Mangement",
 			TaskName: "Splash",
@@ -173,14 +165,7 @@ export default function TaskBoardDetailModule() {
 			</DropDown>,
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
+			
 			TaskId: "PJT-001",
 			ProjectName: "Office Mangement",
 			TaskName: "Login",

@@ -46,8 +46,7 @@ export default function ResignationRequestPage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Transition Date"), col: "TransitionDate" },
 		{ title: t("Reason Type"), col: "ReasonType", },
@@ -56,17 +55,7 @@ export default function ResignationRequestPage() {
 	]
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+		
 			Employee: 'Admin',
 			LastpreferredWorkingDate: '23 May 2025',
 			ReasonType: 'One',
@@ -75,17 +64,7 @@ export default function ResignationRequestPage() {
 			Reason: '-',
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
+		
 			Employee: 'Admin',
 			LastpreferredWorkingDate: '23 May 2025',
 			ReasonType: 'One',
@@ -94,17 +73,7 @@ export default function ResignationRequestPage() {
 			Reason: '-',
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`3`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '3',
+		
 			Employee: 'Admin',
 			LastpreferredWorkingDate: '23 May 2025',
 			ReasonType: 'One',

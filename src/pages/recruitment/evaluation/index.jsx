@@ -17,8 +17,7 @@ export default function EvaluationPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Question"), col: "Question" },
 		{ title: t("Option A"), col: "OptionA", /* sort: true */ },
 		{ title: t("Option B"), col: "OptionB" },
@@ -30,14 +29,7 @@ export default function EvaluationPage() {
 
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+			
 			Question: <span className="text-start block">{t('Can you walk me through your design process from start to finish?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -68,21 +60,6 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
 			Question: <span className="text-start block">{t('What tools and software do you prefer to use in your design work, and why?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -113,14 +90,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '3',
+			
 			Question: <span className="text-start block">{t('How do you ensure that your designs are user-centered and meet the needs of the target audience?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -151,14 +121,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '4',
+			
 			Question: <span className="text-start block">{t('Can you discuss a time when you had to incorporate user feedback into your designs?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -189,14 +152,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '5',
+			
 			Question: <span className="text-start block">{t('What techniques do you use to stay updated with the latest UI/UX trends and best practices?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -227,14 +183,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '6',
+			
 			Question: <span className="text-start block">{t('Have you ever worked in a cross-functional team environment?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -265,14 +214,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '7',
+			
 			Question: <span className="text-start block">{t('How do you approach accessibility in your designs?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
@@ -303,14 +245,7 @@ export default function EvaluationPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '8',
+			
 			Question: <span className="text-start block">{t('What steps do you take to ensure that your designs are inclusive and accessible to all users?')}</span>,
 			OptionA: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,
 			OptionB: <span className="whitespace-nowrap">{t('Design Facilities')}</span>,

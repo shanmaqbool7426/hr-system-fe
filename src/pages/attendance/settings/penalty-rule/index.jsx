@@ -12,8 +12,7 @@ export default function AttendancePenaltyRuleSettingPage() {
     const [add, setAdd] = useState(false)
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Reason Name"), col: 'ReasonName', },
         { title: t("Flag"), col: 'Flag' },
         { title: t("Flag Count"), col: "FlagCount" },
@@ -26,14 +25,7 @@ export default function AttendancePenaltyRuleSettingPage() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             ReasonName: 'Late Penalty',
             Flag: "Late",
             FlagCount: "2",
@@ -68,14 +60,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             ReasonName: 'Half Day Penalty',
             Flag: "Half Day",
             FlagCount: "2",
@@ -110,14 +95,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`3`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '3',
+           
             ReasonName: 'Early',
             Flag: "Early",
             FlagCount: "2",
@@ -152,14 +130,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`4`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '4',
+          
             ReasonName: ' Short Day Simple',
             FlagCount: "2",
             ExemptedCount: "2",
@@ -193,14 +164,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`5`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '5',
+         
             ReasonName: 'Absent for Short TIme',
             Flag: "Absent for Short TIme",
             FlagCount: "2",
@@ -235,14 +199,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`6`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '6',
+          
             ReasonName: 'Absent',
             Flag: "Absent",
             FlagCount: "2",
@@ -277,14 +234,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`7`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '7',
+          
             ReasonName: 'Missing Attendance',
             Flag: "Missing Entry",
             FlagCount: "2",
@@ -319,14 +269,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`8`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '8',
+           
             ReasonName: 'Short Day Flexible',
             Flag: "Short Day",
             FlagCount: "2",

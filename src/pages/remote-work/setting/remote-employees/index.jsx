@@ -1,9 +1,11 @@
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateRemoteEmployeeForm from "@/components/forms/remoteWork/createRemoteEmployee";
 import FilterArea from "@/components/includes/FilterArea";
-import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from "@/components/svg";
+import { EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import Toast from "@/util/toast";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -44,8 +46,8 @@ export default function Employees() {
         },
         {
             type: "select",
-            name: "Role",
-            placeholder: "Role",
+            name: "LineManager",
+            placeholder: "LineManager",
             value: filters.status,
             list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
                 return { value: item._id, display: item.name }
@@ -73,88 +75,87 @@ export default function Employees() {
     ]
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Name"), col: "Name", },
-        { title: t("Email"), col: "Email" },
-        { title: t("Created"), col: "Created", sort: true },
-        { title: t("Role"), col: "Role", },
-        { title: t("Client"), col: "Client" },
+        { title: t("Department"), col: "Department" },
+        { title: t("Line Manager"), col: "LineManager", }, 
+        { title: t("From"), col: "From", sort: true },
+        { title: t("To"), col: "To", sort: true },
         { title: t("Action"), col: "action" }
     ]
 
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
-            Name: <div className="flex items-center justify-start gap-4 grow">
+          
+            Name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className="shrink-0">
                     <Image height={40} width={40} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500'}>{t('Management')}</span>
+                    <span className={'text-themeGrayscale500'}>{t('23056')}</span>
                 </div>
             </div>,
-            Email: 'test@gmail.com',
-            Created: '23 May 2024',
-            Role: "Company Admin",
+            Department: 'Frontend',
+            From: '23 May 2024',            
+            To: '23 May 2024',
+            LineManager: "Company Admin",
             Client: '-',
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
-                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit")}</span>
-                        </a>
+                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("Detail")}</span>
+                        </Link>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                        <a onClick={() => {
+                            Toast.confirmRevoke(() => {
+                                // dispatch(DeleteCustomfield(item._id, () => {
+                                    Toast.success(t("Remote Access Revoked Successfully"))
+                                // }))
+                            }, t)
+                        }}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
                             <span><Trash /></span>
-                            <span>{t("Delete")}</span>
+                            <span>{t("Revoke")}</span>
                         </a>
                     </li>
                 </ul>
             </DropDown>
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
-            Name: <div className="flex items-center justify-start gap-4 grow">
+        
+            Name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className="shrink-0">
                     <Image height={40} width={40} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500'}>{t('Management')}</span>
+                    <span className={'text-themeGrayscale500'}>{t('503')}</span>
                 </div>
             </div>,
-            Email: 'test@gmail.com',
-            Created: '23 May 2024',
-            Role: "Company Admin",
+            Department: 'HR',
+            From: '23 May 2024',            
+            To: '23 May 2024',
+            LineManager: "Company Admin",
             Client: '-',
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
-                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit")}</span>
-                        </a>
+                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("Detail")}</span>
+                        </Link>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                        <a onClick={() => {
+                            Toast.confirmRevoke(() => {
+                                // dispatch(DeleteCustomfield(item._id, () => {
+                                    Toast.success(t("Remote Access Revoked Successfully"))
+                                // }))
+                            }, t)
+                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
                             <span><Trash /></span>
-                            <span>{t("Delete")}</span>
+                            <span>{t("Revoke")}</span>
                         </a>
                     </li>
                 </ul>
@@ -165,23 +166,16 @@ export default function Employees() {
         <section className="flex flex-col grow">
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
-                <h1 className="text-h4 mb-0">{t("Employees")}</h1>
-                <Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Employee")}</Button>
+                <h1 className="text-h4 mb-0">{t("Remote Employees")}</h1>
+                <Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Remote Employee")}</Button>
             </div>
 
             <div className="zt-card grow">
-                <FilterArea title={t("Employees")}
+                <FilterArea title={t("Remote Employees")}
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
                 />
-                {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-                    <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-                    <CloseCross className={'cursor-pointer'}
-                        onClick={(() => setHide(true))}
-                    />
-                </div>}
-
                 <Table
                     headings={headings}
                     rows={rows}

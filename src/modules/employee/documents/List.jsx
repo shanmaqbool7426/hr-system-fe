@@ -15,8 +15,7 @@ export default function DocumentList() {
     const [perPage, setPerPage] = useState(10)
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Document Type"), col: "documentType", sort: true },
         { title: t("Choose File"), col: "chooseFile", sort: false },
         { title: t("Document Path"), col: "documentPath", sort: false },
@@ -25,17 +24,7 @@ export default function DocumentList() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+           
             documentType: "Doc",
             chooseFile: "-",
             documentPath: "-",

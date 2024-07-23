@@ -35,8 +35,7 @@ export default function CompletedTaskModule() {
     const [raiseIssue, setRaiseIssue] = useState(false)
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Task Id"), col: "Taskid" },
         { title: t("Task Name"), col: "TaskName" },
         { title: t("Project Name"), col: "ProjectName" },
@@ -51,14 +50,7 @@ export default function CompletedTaskModule() {
 
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             Taskid: "PJT-001",
             ProjectName: "Office Management",
             TaskName: "Splash",
@@ -94,14 +86,7 @@ export default function CompletedTaskModule() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             Taskid: "PJT-001",
             ProjectName: "Office Management",
             TaskName: "Login",
@@ -137,14 +122,7 @@ export default function CompletedTaskModule() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`3`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '3',
+           
             Taskid: "PJT-001",
             ProjectName: "Office Management",
             TaskName: "Login",

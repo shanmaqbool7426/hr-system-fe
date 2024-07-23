@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FetchEmployeeDetails } from '@/store/actions/employee.actions'
 import PageLoader from '@/components/elements/PageLoader'
 import EmployeeProfile from '@/modules/employee/employeeInfo/profile'
+import RemoteWorkModule from '@/modules/employee/remoteWork'
+import WarningsModule from '@/modules/employee/warnings'
 
 export default function EmployeeDetailPage() {
     const { t } = useTranslation()
@@ -43,9 +45,9 @@ export default function EmployeeDetailPage() {
                         containerClasses={'zt-themeTabsV2 grow'}
                         tabNavClasses={'zt-themeTabNav'}
                         tabPanelClasses={'zt-employeeTabsPanel !bg-transparent !p-0'}
-                        tabs={["Employee Info", "Projects", "Salary", "Documents", "Assets"]}
+                        tabs={["Employee Info", "Projects", "Salary", "Documents", "Assets",'Remote Work', 'Warnings']}
                         panels={
-                            [InfoModule, ProjectsModule, SalaryModule, DocumentsModule, AssetsModule]
+                            [InfoModule, ProjectsModule, SalaryModule, DocumentsModule, AssetsModule,RemoteWorkModule,WarningsModule]
                         }
                     />
                 </>}
