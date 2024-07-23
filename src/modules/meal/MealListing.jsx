@@ -64,62 +64,40 @@ const MealListing = () => {
     { display: 'December 2024', value: "December 2024" },
   ]
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
+   
     { title: t("Date"), col: 'Date' },
     { title: t("Day"), col: 'Day' },
     { title: t("Lunch Menu"), col: "LunchMenu" },
     { title: t("Dinner Menu"), col: "DinnerMenu" },
     { title: t("Avail"), col: "Avail" },
-    { title: t("Action"), col: "Action" },
+    { title: t("Lock"), col: "Lock" },
   ]
   const rows = [{
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`1`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '1',
+ 
     Date: "01 April 2024",
     Day: "Monday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Mon'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockMon'} /></div>,
   },
   {
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`2`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '2',
+   
     Date: "02 April 2024",
     Day: "Tuesday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'tue'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockTue'} /></div>,
   },
   {
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={`3`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '3',
+   
     Date: "03 April 2024",
     Day: "Wednesday",
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Wedneday'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockWed'} /></div>,
   },
   {
     sr: <div className="flex items-center">
@@ -135,7 +113,7 @@ const MealListing = () => {
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Thrusday'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockThr'} /></div>,
   },
   {
     sr: <div className="flex items-center">
@@ -151,7 +129,7 @@ const MealListing = () => {
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Friday'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockFri'} /></div>,
   },
   {
     sr: <div className="flex items-center">
@@ -167,7 +145,7 @@ const MealListing = () => {
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Satuarday'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockSat'} /></div>,
   },
   {
     sr: <div className="flex items-center">
@@ -183,12 +161,12 @@ const MealListing = () => {
     LunchMenu: "Chicken Biryani",
     DinnerMenu: "Chicken Biryani",
     Avail: <div className='flex justify-center'><ToggleCheck id={'Sunday'} /></div>,
-    Action: <div className='flex justify-end'><button className='btn !px-2 btn-light-primary'><Edit /></button></div>,
+    Lock: <div className='flex justify-end'><ToggleCheck id={'LockSun'} /></div>,
   },
   ]
   return (
     <div className='lg:w-3/4 flex flex-col gap-6'>
-      <div className='rounded-2xl text-white p-8 flex flex-col gap-8 md:flex-row bg-primary bg-cover' style={{ backgroundImage: `url(/assets/images/asset/employee-bg.png)` }}>
+      <div className='rounded-2xl text-white p-8 flex flex-col gap-8 md:flex-row bg-primary bg-cover' style={{ backgroundImage: `url(/assets/images/asset/meal-bg.png)` }}>
         <div className='lg:w-2/5 flex flex-col gap-8'>
           {meal.map((ele, i) => (
             <div key={i} className='flex gap-4'>
@@ -224,7 +202,7 @@ const MealListing = () => {
           </div>
           <div className='flex gap-4'>
             <Button onClick={() => setEdit(true)} className={'btn btn-dark-outline'}>{t("Edit Full Menu")}</Button>
-            <Button onClick={() => setCreate(true)} className={'btn btn-dark'}>{t("Add New Menu")}</Button>
+            <Button onClick={() => setCreate(true)} className={'btn btn-primary'}>{t("Add New Menu")}</Button>
           </div>
         </div>
         <Table

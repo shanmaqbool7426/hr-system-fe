@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Pagination from './pagination';
 import { SortEmpty, SortAsc, SortDesc } from "@/components/svg";
 import CheckBox from '../CheckBox';
+import { useTranslation } from 'react-i18next';
 
 export default function Table({
     headings,
@@ -16,10 +17,11 @@ export default function Table({
     setPage,
     pagination,
     className,
-    allChecked,
-    handleCheckAll
 }) {
     const [expandedRows, setExpandedRows] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [selectAll, setSelectAll] = useState(false);
+    const { t } = useTranslation();
 
     const sortHandler = (heading) => {
         if (!sortDir || sortCol !== heading.col) {
@@ -39,11 +41,39 @@ export default function Table({
         );
     };
 
+    const handleSelectAll = () => {
+        if (selectAll) {
+            setSelectedRows([]);
+        } else {
+            setSelectedRows(rows.map((_, index) => index));
+        }
+        setSelectAll(!selectAll);
+    };
+
+    const handleRowSelect = (index) => {
+        if (selectedRows.includes(index)) {
+            setSelectedRows(selectedRows.filter(i => i !== index));
+        } else {
+            setSelectedRows([...selectedRows, index]);
+        }
+    };
+
     return (
         <>
             <table className={`zt-themeTable ${className}`}>
                 <thead>
                     <tr className='rounded-lg bg-themeGrayscale100'>
+                        <th>
+                            <CheckBox
+                                size={'sm'}
+                                variant={'dark'}
+                                id="checkboxSelectAll"
+                                name={"checkboxSelectAll"}
+                                checked={selectAll}
+                                onChange={handleSelectAll}
+                            />
+                        </th>
+                        <th><span>{t("Sr#")}</span></th>
                         {headings?.map((value, index) => (
                             <th key={index} className='select-none px-2 py-5'>
                                 <div className="flex items-center justify-center whitespace-nowrap">
@@ -55,14 +85,6 @@ export default function Table({
                                             id="checkboxStatus-sm"
                                             name={"checkboxStatus"}
                                             label={value.title}
-                                            // size={'sm'}
-                                            // variant={'dark'}
-                                            // labelClass={'text-base leading-none text-themeGrayscale600 font-bold'}
-                                            // id="checkboxStatus-sm"
-                                            // name={"checkboxStatus"}
-                                            // label={value.title}
-                                            // checked={allChecked}
-                                            // onChange={(e) => handleCheckAll(e.target.checked)}
                                         /> :
                                         <span>{value.title}</span>
                                     }
@@ -83,6 +105,17 @@ export default function Table({
                         {rows?.map((item, index1) => (
                             <React.Fragment key={index1}>
                                 <tr>
+                                    <td>
+                                        <CheckBox
+                                            size={'sm'}
+                                            variant={'dark'}
+                                            id={`checkboxRow${index1}`}
+                                            name={`checkboxRow${index1}`}
+                                            checked={selectedRows.includes(index1)}
+                                            onChange={() => handleRowSelect(index1)}
+                                        />
+                                    </td>
+                                    <td>{index1 + 1}</td>
                                     {headings.map((value, index2) => (
                                         <td className={value?.className} key={index2}>
                                             {value.col === 'view' ? (
@@ -97,7 +130,7 @@ export default function Table({
                                 </tr>
                                 {expandedRows.includes(index1) && (
                                     <tr className="disclosure-row">
-                                        <td colSpan={headings.length}>
+                                        <td colSpan={headings.length + 2}>
                                             {/* Add your disclosure content here */}
                                             <div className="">
                                                 {item.discloureContent}

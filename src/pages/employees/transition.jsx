@@ -51,8 +51,7 @@ export default function TransitionPage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Transition Title"), col: "TransitionTitle" },
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Transition Date"), col: "TransitionDate" },
@@ -64,19 +63,8 @@ export default function TransitionPage() {
 		{ title: t("Reason"), col: "Reason", },
 	]
 	const rows = [
-		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			TransitionTitle:"-",
-			SerailNo: '1',
+		{ 
+			TransitionTitle:"-", 
 			Employee: 'Admin',
 			Designation: 'HR',
 			EmployeeStatus:"Permanent",
@@ -86,17 +74,7 @@ export default function TransitionPage() {
 			PromoteDemote:"Promote",
 			Reason: '-',
 		},
-		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
+		{ 
 			TransitionTitle:"-",
 			Serayee: 'Admin',
 			DesignilNo: '2',
@@ -108,19 +86,8 @@ export default function TransitionPage() {
 			PromoteDemote:"Demote",
 			Reason: '-',
 		},
-		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`3`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			TransitionTitle:"-",
-			SerailNo: '3',
+		{ 
+			TransitionTitle:"-", 
 			Employee: 'Admin',
 			Designation: 'HR',
 			EmployeeStatus:"Permanent",

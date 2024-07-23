@@ -106,8 +106,7 @@ export default function Exemptions() {
     ]
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Employee"), col: "Employee", /* sort: true */ },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Attendance Date"), col: "AttendanceDate", /* sort: true */ },
@@ -119,14 +118,7 @@ export default function Exemptions() {
 
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
@@ -177,14 +169,7 @@ export default function Exemptions() {
         },
         {
 
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
@@ -234,14 +219,7 @@ export default function Exemptions() {
             </DropDown>
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`3`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '3',
+           
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>

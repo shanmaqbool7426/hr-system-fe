@@ -106,8 +106,7 @@ export default function RemoteWork() {
     ]
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Start Date"), col: "startDate", },
@@ -118,14 +117,7 @@ export default function RemoteWork() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
@@ -175,14 +167,7 @@ export default function RemoteWork() {
             </DropDown>
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
@@ -232,14 +217,7 @@ export default function RemoteWork() {
             </DropDown>
         },
         {
-            sr: <div className="flex items-center">
-            <CheckBox
-                id={`3`}
-                size={'sm'}
-                variant={'dark'}
-            />
-        </div>,
-        SerailNo: '3',
+            
             Employee: <div className="flex items-center justify-center gap-4 grow">
                  <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>

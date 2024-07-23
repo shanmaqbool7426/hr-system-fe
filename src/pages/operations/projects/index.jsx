@@ -164,8 +164,7 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
     { title: t("Project"), col: "Project", sort: true },
     { title: t("Project ID"), col: "ProjectID", sort: true },
     { title: t("Client"), col: "Client", sort: true },
@@ -181,14 +180,7 @@ export default function ProjectsModule() {
 
   const rows = [
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`1`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '1',
+     
       Project: <Link href={'/projects/details'}><span className=''>Office Management</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',
@@ -208,14 +200,7 @@ export default function ProjectsModule() {
       </div>,
     },
     {
-      sr: <div className="flex items-center">
-      <CheckBox
-        id={`2`}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: '2',
+     
       Project: <Link href={'/projects/details'}><span className=''>Video Calling</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',

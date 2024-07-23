@@ -66,7 +66,7 @@ export default function SystemLogsPage() {
     ]
 
     const headings = [
-        { title: t("Employee"), col: "Employee", check: true },
+        { title: t("Employee"), col: "Employee" },
         { title: t("Date & Time"), col: "DateTime" },
         { title: t("IP Address"), col: "IPAddress" },
         { title: t("Action"), col: "Action", },
@@ -76,119 +76,80 @@ export default function SystemLogsPage() {
     ]
     const rows = [
         {
-            Employee: <div className="flex items-center">
-                <CheckBox
-                    size={'sm'}
-                    variant={'dark'}
-                    iconClass={'!top-2'} 
-                    id="night-shift"
-                    name={"night-shift"}
-                    label={ <div className="flex gap-3">
-                        <figure>
-                            <Image height={32} width={32} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-semibold">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
-                />               
+            Employee: <div className="flex justify-center gap-3">
+                <figure>
+                    <Image height={32} width={32} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
+                <div className="flex flex-col text-xs ">
+                    <span className="font-semibold">{t("Jhon Carter")}</span>
+                    <span className="text-themeGrayscale500">{t("10202325")}</span>
+                </div>
             </div>,
-            DateTime:<div className="flex flex-col gap-1">
+            DateTime: <div className="flex flex-col gap-1">
                 <span>{t("22 March 2024")}</span>
                 <span>{t("9:00:00 AM")}</span>
             </div>,
-            IPAddress:"IP:59.103.53.105",
-            Action:"Mark Today --Sign Out",
-            LogType:"Insert",
-            Module:"Attendance",
-            ActionMob:"Mob App android",
+            IPAddress: "IP:59.103.53.105",
+            Action: "Mark Today --Sign Out",
+            LogType: "Insert",
+            Module: "Attendance",
+            ActionMob: "Mob App android",
         },
         {
-            Employee: <div className="flex items-center">
-                <CheckBox
-                    size={'sm'}
-                    variant={'dark'}
-                    iconClass={'!top-2'} 
-                    id="employee2"
-                    name={"night-shift"}
-                    label={ <div className="flex gap-3">
-                        <figure>
-                            <Image height={32} width={32} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-semibold">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
-                />
-               
+            Employee: <div className="flex justify-center gap-3">
+                <figure>
+                    <Image height={32} width={32} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
+                <div className="flex flex-col text-xs ">
+                    <span className="font-semibold">{t("Jhon Carter")}</span>
+                    <span className="text-themeGrayscale500">{t("10202325")}</span>
+                </div>
             </div>,
-            DateTime:<div className="flex flex-col gap-1">
+            DateTime: <div className="flex flex-col gap-1">
                 <span>{t("22 March 2024")}</span>
                 <span>{t("9:00:00 AM")}</span>
             </div>,
-            IPAddress:"IP:59.103.53.105",
-            Action:"Mark Today --Sign Out",
-            LogType:"Insert",
-            Module:"Attendance",
-            ActionMob:"Mob App android",
+            IPAddress: "IP:59.103.53.105",
+            Action: "Mark Today --Sign Out",
+            LogType: "Insert",
+            Module: "Attendance",
+            ActionMob: "Mob App android",
         },
         {
-            Employee: <div className="flex items-center">
-                <CheckBox
-                    size={'sm'}
-                    variant={'dark'}
-                    iconClass={'!top-2'} 
-                    id="employee3"
-                    name={"night-shift"}
-                    label={ <div className="flex gap-3">
-                        <figure>
-                            <Image height={32} width={32} src={'/assets/images/users/user-03.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-semibold">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
-                />
-               
+            Employee: <div className="flex justify-center gap-3">
+                <figure>
+                    <Image height={32} width={32} src={'/assets/images/users/user-03.jpg'} className="rounded-full" /></figure>
+                <div className="flex flex-col text-xs ">
+                    <span className="font-semibold">{t("Jhon Carter")}</span>
+                    <span className="text-themeGrayscale500">{t("10202325")}</span>
+                </div>
             </div>,
-            DateTime:<div className="flex flex-col gap-1">
+            DateTime: <div className="flex flex-col gap-1">
                 <span>{t("22 March 2024")}</span>
                 <span>{t("9:00:00 AM")}</span>
             </div>,
-            IPAddress:"IP:59.103.53.105",
-            Action:"Mark Today --Sign Out",
-            LogType:"Insert",
-            Module:"Attendance",
-            ActionMob:"Mob App android",
+            IPAddress: "IP:59.103.53.105",
+            Action: "Mark Today --Sign Out",
+            LogType: "Insert",
+            Module: "Attendance",
+            ActionMob: "Mob App android",
         },
         {
-            Employee: <div className="flex items-center">
-                <CheckBox
-                    size={'sm'}
-                    variant={'dark'}
-                    iconClass={'!top-2'} 
-                    id="employee4"
-                    name={"night-shift"}
-                    label={ <div className="flex gap-3">
-                        <figure>
-                            <Image height={32} width={32} src={'/assets/images/users/user-04.jpg'} className="rounded-full" /></figure>
-                        <div className="flex flex-col text-xs ">
-                            <span className="font-semibold">{t("Jhon Carter")}</span>
-                            <span className="text-themeGrayscale500">{t("10202325")}</span>
-                        </div>
-                    </div>}
-                />
-               
+            Employee: <div className="flex justify-center gap-3">
+                <figure>
+                    <Image height={32} width={32} src={'/assets/images/users/user-04.jpg'} className="rounded-full" /></figure>
+                <div className="flex flex-col text-xs ">
+                    <span className="font-semibold">{t("Jhon Carter")}</span>
+                    <span className="text-themeGrayscale500">{t("10202325")}</span>
+                </div>
             </div>,
-            DateTime:<div className="flex flex-col gap-1">
+            DateTime: <div className="flex flex-col gap-1">
                 <span>{t("22 March 2024")}</span>
                 <span>{t("9:00:00 AM")}</span>
             </div>,
-            IPAddress:"IP:59.103.53.105",
-            Action:"Mark Today --Sign Out",
-            LogType:"Insert",
-            Module:"Attendance",
-            ActionMob:"Mob App android",
+            IPAddress: "IP:59.103.53.105",
+            Action: "Mark Today --Sign Out",
+            LogType: "Insert",
+            Module: "Attendance",
+            ActionMob: "Mob App android",
         }
     ]
     let filteredrows = departments_list.filter((item) => {
@@ -210,7 +171,7 @@ export default function SystemLogsPage() {
     const indexOfFirstItem = indexOfLastItem - perPage;
     const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
- 
+
 
     const pagination = {
         totalRecords: departments_list.length,

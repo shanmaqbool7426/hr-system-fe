@@ -11,8 +11,7 @@ export default function OffersPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Name"), col: "name", /* sort: true */ },
 		{ title: t("Job Title"), col: "jobTitle", className: "" },
 		{ title: t("Departments"), col: "Departments", /* sort: true */ },
@@ -21,14 +20,7 @@ export default function OffersPage() {
 
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+			
 			name: <div className="flex items-center justify-center gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -44,14 +36,7 @@ export default function OffersPage() {
 
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
+			
 			name: <div className="flex items-center justify-center gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -66,14 +51,7 @@ export default function OffersPage() {
 			Status: <span className='zt-tag zt-tag-success'>Offered</span>,
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`3`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '3',
+			
 			name: <div className="flex items-center justify-center gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
@@ -89,14 +67,7 @@ export default function OffersPage() {
 
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`4`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '4',
+			
 			name: <div className="flex items-center justify-center gap-3 grow">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />

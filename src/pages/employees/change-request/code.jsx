@@ -66,8 +66,7 @@ export default function EmployeeCodePage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Current Id"), col: "CurrentId" },
 		{ title: t("New Employee Code"), col: "NewEmployeeCode", },
@@ -77,17 +76,7 @@ export default function EmployeeCodePage() {
 	]
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+		
 			Employee: 'Admin',
 			CurrentId: '4656',
 			NewEmployeeCode: '8888',
@@ -96,17 +85,7 @@ export default function EmployeeCodePage() {
 			Details: '-',
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
+		
 			Employee: 'Admin',
 			CurrentId: '4656',
 			NewEmployeeCode: '8888',
@@ -115,17 +94,7 @@ export default function EmployeeCodePage() {
 			Details: '-',
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`3`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '3',
+		
 			Employee: 'Admin',
 			CurrentId: '4656',
 			NewEmployeeCode: '8888',

@@ -55,8 +55,7 @@ export default function TransferPage() {
 		nextAction: () => setPage(page + 1),
 	}
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Transfer Date"), col: "TransferDate" },
 		{ title: t("Country"), col: "Country" },
@@ -71,17 +70,7 @@ export default function TransferPage() {
 	]
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+		
 			TransitionTitle: "-",
 			Employee: 'Admin',
 			City: 'Lahore',
@@ -95,20 +84,9 @@ export default function TransferPage() {
 			Country: "Pakistan",
 			Description: '-',
 		},
-		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`2`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
+		{ 
 			TransitionTitle: "-",
-			Employee: 'Admin',
-			SerailNo: '2',
+			Employee: 'Admin', 
 			City: 'Lahore',
 			station: "-",
 			Department: "Admin",
@@ -121,18 +99,7 @@ export default function TransferPage() {
 			Description: '-',
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`3`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			TransitionTitle: "-",
-			SerailNo: '3',
+			TransitionTitle: "-", 
 			Employee: 'Admin',
 			City: 'Lahore',
 			station: "-",
