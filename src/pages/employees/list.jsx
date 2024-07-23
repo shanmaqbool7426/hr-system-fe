@@ -5,6 +5,7 @@ import {
   SearchSelect,
   DropDown,
   Profile,
+  CheckBox,
 } from "@/components/elements";
 import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
@@ -28,6 +29,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import ReHireForm from "@/components/forms/employees/reHire";
 
 export default function EmployeesListPage() {
   const { t } = useTranslation();
@@ -40,6 +42,7 @@ export default function EmployeesListPage() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [create, setCreate] = useState("");
+  const [reHire, setReHire] = useState(false);
   const [selected, setSelected] = useState(null);
   const [filters, setFilters] = useState({
     search: "",
@@ -79,6 +82,8 @@ export default function EmployeesListPage() {
   ];
 
   const headings = [
+    { title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
     { title: t("Employee Name"), col: "firstName", sort: true },
     { title: t("Designation"), col: "designation", sort: false },
     { title: t("Project"), col: "project", sort: false },
@@ -113,8 +118,16 @@ export default function EmployeesListPage() {
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
-  const rows = paginatedData?.map((item) => {
+  const rows = paginatedData?.map((item,i) => {
     return {
+      sr: <div className="flex items-center">
+				<CheckBox
+					id={i} 
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: i+1,
       firstName: (
         <Link
           href={`/employees/details/${item._id}`}
@@ -219,7 +232,7 @@ export default function EmployeesListPage() {
         </div>
         <div className="flex items-start gap-2">
           {/* <Button className={"btn btn-dark-outline"}>{t("Export")}</Button> */}
-          {/* <Button className={"btn btn-dark-outline"}>{t("Import")}</Button> */}
+          <Button onClick={() => setReHire(true)} className={"btn btn-dark-outline"}>{t("Re-Hire employee")}</Button>
           <Button
             className={"btn btn-primary"}
             onClick={() => setCreate("employee")}
@@ -261,6 +274,11 @@ export default function EmployeesListPage() {
           }}
         />
       )}
+      {reHire &&
+        <ReHireForm
+          onClose={() => setReHire(false)}
+        />
+      }
     </section>
   );
 }

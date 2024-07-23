@@ -1,8 +1,8 @@
-import React from 'react'
-import AssetsList from './assets/List'
+import AssetsList from './assets/AssetsList';
 
-export default function AssetsModule () {
+export default function AssetsModule() {
+  
     return (
-        <AssetsList />
+        <AssetsList/>
     )
 }

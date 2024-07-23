@@ -1,5 +1,4 @@
-import { useState } from "react";
-import Image from "next/legacy/image";
+import { useState } from "react"; 
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -43,7 +42,6 @@ export default function Sidebar() {
       { name: t("Employee Dashboard"), href: "/employees/dashboard" },
       { name: t("Employee List"), href: "/employees/list" },
       { name: t("Employee Role"), href: "/employees/roles" },
-      { name: t("Re-Hire Employee"), href: "/employees/re-hire" },
       {
         name: t("Change Request"),
         href: "/employees/change-request",
@@ -77,7 +75,16 @@ export default function Sidebar() {
       },
       { name: t("Employee Transition"), href: "/employees/transition" },
       { name: t("Employee Transfer"), href: "/employees/transfer" },
-      { name: t("Employee Settings"), href: "/employees/settings" },
+      { name: t("Employee Onboarding"), href: "/employees/onboarding" },
+      { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
+      { name: t("Final Settlement"), href: "/employees/final-settlement" },
+      {
+        name: t("Employee Settings"),href: "/employees/settings",
+        innerSubMenu: [
+          { name: t("Approval Level"), href: "/employees/settings/approval-level",},     
+          { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+        ],
+      },
     ],
     attendance: [
       { name: t("Attendance Dashboard"), href: "/attendance/dashboard" },
@@ -89,10 +96,19 @@ export default function Sidebar() {
       },
       { name: t("Change Shift"), href: "/attendance/change-shift" },
       { name: t("Amend Attendance"), href: "/attendance/amend-attendance" },
-      { name: t("Schedule"), href: "/attendance/schedule" },
       { name: t("Close Attendance"), href: "/attendance/close-attendance" },
       { name: t("Attendance Restrictions"), href: "/attendance/restrictions" },
-      { name: t("Attendance Settings"), href: "/attendance/settings" },
+      {
+        name: t("Attendance Settings"), href: "/attendance/settings",
+        innerSubMenu: [
+          { name: t('Shift Plan'), href: "/attendance/settings/shift-plan" },
+          { name: t('Request Reason Type'), href: "/attendance/settings/reason-type" },
+          { name: t('Flags Setting'), href: "/attendance/settings/flags-setting" },
+          { name: t('Attendance Penalty Rule'), href: "/attendance/settings/penalty-rule" },
+          { name: t('General Settings'), href: "/attendance/settings/general-setting" },
+          { name: t('Biometric Devices '), href: "/attendance/settings/biometric-setting" },
+        ]
+      },
     ],
     leave: [
       { name: t("Leave Dashboard"), href: "/leaves/dashboard" },
@@ -100,16 +116,56 @@ export default function Sidebar() {
       { name: t("Leave Request"), href: "/leaves/requests" },
       { name: t("CPL Request"), href: "/leaves/cpl-requests" },
       { name: t("Gazetted Holidays"), href: "/leaves/gazetted-holidays" },
-      { name: t("Leave Setting"), href: "/leaves/settings" },
+      {
+        name: t("Leave Setting"), href: "/leaves/settings",
+        innerSubMenu: [
+          { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
+          { name: t('Employee Leave Quota'), href: "/leaves/settings/employee-leave-quota" },
+          { name: t('General Leave Settings'), href: "/leaves/settings/general-setting" },
+        ]
+      },
     ],
     projects: [
-      { name: t("Dashboard"), href: "/projects/dashboard" },
-      { name: t("Projects"), href: "/projects" },
-      { name: t("Task Board"), href: "/projects/task-board" },
-      { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
-      { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
-      { name: t("Feedback"), href: "/projects/feedback" },
-      // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+      {
+        name: t("Projects Management"), href: "/projects",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/projects/dashboard" },
+          { name: t("Projects"), href: "/projects" },
+          { name: t("Task Board"), href: "/projects/task-board" },
+          { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
+          { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
+          { name: t("Feedback"), href: "/projects/feedback" },
+          // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+        ]
+      }, 
+      {
+        name: t("Helpdesk"), href: "/helpdesk",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/helpdesk/dashboard" },
+          { name: t("Tickets"), href: "/helpdesk/tickets" }, 
+        ]
+      }, 
+      {
+        name: t("Vendor Management"), href: "/vendor-management",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/vendor-management/dashboard" },
+          { name: t("Vendor Management"), href: "/vendor-management" }, 
+        ]
+      }, 
+      {
+        name: t("Procurement"), href: "/procurement",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/procurement/dashboard" },
+          { name: t("Procurement"), href: "/procurement" }, 
+        ]
+      }, 
+      {
+        name: t("Meal"), href: "/meal",
+        innerSubMenu: [
+          { name: t('Dashboard'), href: "/meal/dashboard" },
+          { name: t("Lunch Menu"), href: "/meal/lunch-menu" }, 
+        ]
+      }, 
     ],
     connect: [
       { name: t("Chat"), href: "/connect/chat" },
@@ -244,7 +300,17 @@ export default function Sidebar() {
           { name: t("Minimum Wage"), href: "/organization/custom-fields/minimum-wage" }
         ].sort((a, b) => a.name.localeCompare(b.name))
       },
-      { name: t("Settings"), href: "/organization/settings" },
+      {
+        name: t("Settings"), href: "/organization/settings",
+        innerSubMenu: [
+          { name: t('System Configuration'), href: "/organization/settings/system-configuration" },
+          { name: t('Custom Fields'), href: "/organization/settings/custom-fields" },
+          { name: t('Email Settings'), href: "/organization/settings/email-settings" },
+          { name: t('Company Settings'), href: "/organization/settings/company-settings" },
+          { name: t('Biometric Device Settings'), href: "/organization/settings/biometric-device-settings" },
+          { name: t('Card Template'), href: "/organization/settings/card-template" },
+        ]
+      },
       { name: t("Departments"), href: "/organization/departments" }
     ]
   }
@@ -274,7 +340,7 @@ export default function Sidebar() {
                     }}>
                       <span className={`zt-menuIcon text-themePrimary/45 hover:text-themePrimary ${router.asPath.includes(item.href) && "!text-themePurple"}`}><item.icon /></span>
                     </a>
-                    <div className="absolute bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div className="absolute z-50 bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       {item.name}
                     </div>
                   </div>

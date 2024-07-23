@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, DropDown, Table, CheckBox } from '@/components/elements'
 import CandidateFieldForm from '@/components/forms/recruitment/add-candidate/create'
 import FilterArea from '@/components/includes/FilterArea'
 import Statistic from '@/components/recruitment/statistic'
@@ -57,6 +57,8 @@ export default function Recruitment() {
   ]
 
   const headings = [
+    { title: t(""), col: "sr", check: true },
+    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Name"), col: "name", /* sort: true */ },
     { title: t("Job Title"), col: "jobTitle", className: "flex justify-center" },
     { title: t("Departments"), col: "departments", /* sort: true */ },
@@ -68,12 +70,17 @@ export default function Recruitment() {
   ]
 
   const rows = [{
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`1`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '1',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-centerw">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -108,12 +115,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Gertrude Kuphal')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`2`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '2',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Gertrude Kuphal')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -148,12 +160,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`3`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '3',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -188,12 +205,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`4`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '4',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -228,12 +250,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`5`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '5',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -268,12 +295,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`6`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '6',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -308,12 +340,17 @@ export default function Recruitment() {
     </DropDown>
   },
   {
-    name: <Link href={'/recruitment/detail/123'} className="flex no-underline items-center justify-start gap-4 grow">
-      <figure className={'w-10 h-10 overflow-hidden rounded-full bg-themePrimary200 shrink-0'}></figure>
-      <div className={'flex flex-col gap-1 text-left'}>
-        <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
-        <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-      </div>
+    sr: <div className="flex items-center">
+      <CheckBox
+        id={`7`}
+        size={'sm'}
+        variant={'dark'}
+      />
+    </div>,
+    SerailNo: '7',
+    name: <Link href={'/recruitment/detail/123'} className="flex flex-col no-underline items-center justify-center">
+      <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
+      <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
     </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
@@ -399,7 +436,7 @@ export default function Recruitment() {
         />
       </div>
 
-      {create && <CandidateFieldForm 
+      {create && <CandidateFieldForm
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}
       />}

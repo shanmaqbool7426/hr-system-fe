@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
@@ -12,6 +12,8 @@ export default function ApptitudeResultPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Name"), col: "name", },
 		{ title: t("Job Title"), col: "jobTitle", },
 		{ title: t("Departments"), col: "Departments", },
@@ -23,7 +25,15 @@ export default function ApptitudeResultPage() {
 
 	const rows = [
 		{
-			name: <div className="flex items-center justify-start gap-3 grow">
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`1`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: "1",
+			name: <div className="flex items-center justify-center gap-3">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
 				</figure>
@@ -61,7 +71,15 @@ export default function ApptitudeResultPage() {
 			</DropDown>
 		},
 		{
-			name: <div className="flex items-center justify-start gap-3 grow">
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`12`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: "2",
+			name: <div className="flex items-center justify-center gap-3">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
 				</figure>
@@ -99,7 +117,15 @@ export default function ApptitudeResultPage() {
 			</DropDown>
 		},
 		{
-			name: <div className="flex items-center justify-start gap-3 grow">
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`3`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: "3",
+			name: <div className="flex items-center justify-center gap-3">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
 				</figure>
@@ -137,7 +163,15 @@ export default function ApptitudeResultPage() {
 			</DropDown>
 		},
 		{
-			name: <div className="flex items-center justify-start gap-3 grow">
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`4`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: "4",
+			name: <div className="flex items-center justify-center gap-3">
 				<figure className={'overflow-hidden rounded-full shrink-0'}>
 					<Image src={'/assets/images/users/user-01.jpg'} height={24} width={24} alt="Profile" />
 				</figure>

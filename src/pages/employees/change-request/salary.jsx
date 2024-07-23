@@ -2,14 +2,15 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from '@/util/toast';
 import { ChangeGrade } from '@/store/actions/employee-change-request.actions';
 
-import { Button, Datepicker, SearchSelect, Textarea } from '@/components/elements';
+import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
+import ChangeSalaryForm from '@/components/forms/employees/changeRequest/ChangeSalary';
 
 const user = ls?.get('auth_user', { decrypt: true })
 
@@ -56,13 +57,111 @@ export default function SalaryPage() {
 
 		}
 	});
-
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const pagination = {
+		totalRecords: 5,
+		showPerPage: true,
+		prevAction: () => page > 1 && setPage(page - 1),
+		clickAction: (value) => setPage(value),
+		nextAction: () => setPage(page + 1),
+	}
+	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
+		{ title: t("Employee"), col: "Employee" },
+		{ title: t("Current Salary"), col: "CurrentSalary" },
+		{ title: t("New Salary"), col: "NewSalary", },
+		{ title: t("Effective Date"), col: "EffectiveDate" },
+		{ title: t("Reason Of Salary Change"), col: "ReasonOfSalaryChange", },
+		{ title: t("Details"), col: "Details", },
+	]
+	const rows = [
+		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`1`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '1',
+			Employee: 'Admin',
+			CurrentSalary: '4656',
+			NewSalary: '8888',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfSalaryChange: 'Correction of Errors',
+			Details: '-',
+		},
+		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`2`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '2',
+			Employee: 'Admin',
+			CurrentSalary: '4656',
+			NewSalary: '8888',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfSalaryChange: 'Correction of Errors',
+			Details: '-',
+		},
+		{
+			sr: <div className="flex items-center">
+			<CheckBox
+				id={`3`}
+				// name={`checkbox-${index}`}
+				// checked={checkedItems[index] || false}
+				// onChange={(e) => handleCheckItem(index, e.target.checked)}
+				size={'sm'}
+				variant={'dark'}
+			/>
+		</div>,
+		SerailNo: '3',
+			Employee: 'Admin',
+			CurrentSalary: '4656',
+			NewSalary: '8888',
+			EffectiveDate: '12 Jun 2025',
+			ReasonOfSalaryChange: 'Correction of Errors',
+			Details: '-',
+		},
+	]
 	return (
 		<section className="flex flex-col grow">
 			{/* {is_loading && <PageLoader/>} */}
-			<h1 className="text-h4 mb-6 flex items-center justify-start gap-3">{t("Change Salary Request")}</h1>
-
-			<form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
+			<div className="flex justify-between pb-6">
+				<h1 className="text-h4 mb-0">{t("Change Salary Request")}</h1>
+				<Button onClick={() => setChange(true)} className={"btn btn-primary"}>{t("Change Salary Request")}</Button>
+			</div>
+			<div className='zt-card grow'>
+				<Table
+					headings={headings}
+					rows={rows}
+					sortCol={sortCol}
+					setSortCol={setSortCol}
+					sortDir={sortDir}
+					pagination={pagination}
+					setSortDir={setSortDir}
+					perPage={perPage}
+					setPerPage={setPerPage}
+					page={page}
+					setPage={setPage}
+					className={'zt-employeeTable zt-changeShiftTable'}
+				/>
+			</div>
+			{/* <form className="zt-themeForm zt-baseForm w-full bg-white p-12 rounded-lg grow" onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
 				<fieldset className='flex flex-col  gap-12'>
 					<div className="grid sm:grid-cols-3 gap-12">
 						<SearchSelect
@@ -155,7 +254,8 @@ export default function SalaryPage() {
 					<Button type="button" value={t("Cancel")} className={"btn btn-dark-outline min-w-32"} />
 					<Button type="submit" value={t("Submit")} className={"btn btn-dark min-w-32"} />
 				</div>
-			</form>
+			</form> */}
+			{change && <ChangeSalaryForm onClose={()=>setChange(false)}/>}
 		</section>
 	)
 }

@@ -80,7 +80,7 @@ export default function AddRemoteWorkForm({onClose, object }) {
         },
     ]
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Add ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? `Edit Remote Work Request` : `Add Remote Work Request`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 

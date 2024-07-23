@@ -42,7 +42,7 @@ export default function AppointmentCard () {
                 <span onClick={() => { setEdit(!edit) }} className={'text-themePurple cursor-pointer'}><Edit width={'1.5rem'} height={'auto'} /></span>
             </div>
             {
-                !edit && <ul className='zt--employeeCardBody !grid !grid-cols-2 !gap-y-4 !gap-x-16'>
+                !edit && <ul className='zt--employeeCardBody flex flex-col !gap-y-4 !gap-x-16'>
                     <li>
                         <span>{t("Joining Date")}</span>
                         <strong>{employee_details?.appointmentDetail?.joiningDate || '------'}</strong>
@@ -50,21 +50,13 @@ export default function AppointmentCard () {
                     <li>
                         <span>{t("Confirmation Date")}</span>
                         <strong>{employee_details?.appointmentDetail?.confirmationDate || '------'}</strong>
-                    </li>
-                    <li>
-                        <span>{t("Last Working Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.lastWorkingDate || '------'}</strong>
-                    </li>
-                    <li>
-                        <span>{t("Resign Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.resignDate || '------'}</strong>
-                    </li>
+                    </li> 
                 </ul>
             }
 
             {
                 edit && <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
-                    <fieldset className='grid grid-cols-2 gap-y-4 gap-x-16'>
+                    <fieldset className='flex flex-col gap-y-4 gap-x-16'>
                         <Input
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
@@ -86,30 +78,7 @@ export default function AppointmentCard () {
                             value={formik.values.confirmationDate}
                             formik={formik}
                             required
-                        />
-                        <Input
-                            containerClass={'zt-formGroupV2'}
-                            className={' gap-4'}
-                            type={'text'}
-                            name={'lastWorkingDate'}
-                            label={t('Last Working Date')}
-                            placeholder={t('Last Working Date')}
-                            value={formik.values.lastWorkingDate}
-                            formik={formik}
-                            required
-                        />
-                        <Input
-                            containerClass={'zt-formGroupV2'}
-                            className={' gap-4'}
-                            type={'text'}
-                            name={'resignDate'}
-                            label={t('Resign Date')}
-                            placeholder={t('Resign Date')}
-                            value={formik.values.resignDate}
-                            formik={formik}
-                            required
-                        />
-
+                        />  
                         <div className="zt-btns !p-0 !pt-4 justify-end col-span-2">
                             <Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
                                 onClick={() => { formik.resetForm(); setEdit(!edit) }} />

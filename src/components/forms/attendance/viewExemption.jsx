@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { Table, Textarea } from '@/components/elements';
 import { useState } from 'react';
 
-export default function ViewExemptionForm({ title, onClose, type, object, additionFields }) {
+export default function ViewExemptionForm({ onClose,  object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [sortCol, setSortCol] = useState(null)
@@ -17,23 +17,20 @@ export default function ViewExemptionForm({ title, onClose, type, object, additi
     const [perPage, setPerPage] = useState(10)
     const formik = useFormik({
         initialValues: {
-            name: object?.name || "",
-            type,
+            name: object?.name || "", 
             icon: object?.icon || "",
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
-            icon: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-            prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
-        }),
+      }),
         onSubmit: async (values) => {
 
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`updated successfully`) : t(`created successfully`))
         onClose()
     }
     const headings = [
@@ -68,7 +65,7 @@ export default function ViewExemptionForm({ title, onClose, type, object, additi
     },
     ] 
     return (
-        <BaseForm title={title} formik={formik} onClose={onClose} is_loading={false} >
+        <BaseForm title={'Exemption Request Details'} formik={formik} onClose={onClose} is_loading={false} >
             <div className='py-6 flex flex-col items-start gap-6'>
                 <Table
                     headings={headings}

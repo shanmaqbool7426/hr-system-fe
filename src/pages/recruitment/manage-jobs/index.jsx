@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
-import { Button, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import { useState } from "react";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import AddJob from "@/components/forms/organization/jobs/AddJob";
@@ -15,6 +15,8 @@ export default function ManageJobsPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
+		{ title: t(""), col: "sr", check: true },
+		{ title: t("Sr#"), col: "SerailNo" },
 		{ title: t("Job Title"), col: "JobTitle", /* sort: true */ },
 		{ title: t("Departments"), col: "departments", /* sort: true */ },
 		{ title: t("Start Date"), col: "StartDate", /* sort: true */ },
@@ -27,6 +29,14 @@ export default function ManageJobsPage() {
 
 	const rows = [
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`1`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '1',
 			JobTitle: 'Manager',
 			departments: 'Outdoors',
 			StartDate: '12 May 2024',
@@ -60,6 +70,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`2`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '2',
 			JobTitle: 'Orchestrator',
 			departments: 'Tools',
 			StartDate: '12 May 2024',
@@ -93,6 +111,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`3`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '3',
 			JobTitle: 'Developer',
 			departments: 'Home',
 			StartDate: '12 May 2024',
@@ -126,6 +152,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`4`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '4',
 			JobTitle: 'Manager',
 			departments: 'Outdoors',
 			StartDate: '12 May 2024',
@@ -159,6 +193,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`5`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '5',
 			JobTitle: 'Orchestrator',
 			departments: 'Tools',
 			StartDate: '12 May 2024',
@@ -192,6 +234,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
+			sr: <div className="flex items-center">
+				<CheckBox
+					id={`6`}
+					size={'sm'}
+					variant={'dark'}
+				/>
+			</div>,
+			SerailNo: '6',
 			JobTitle: 'Developer',
 			departments: 'Home',
 			StartDate: '12 May 2024',
@@ -230,10 +280,10 @@ export default function ManageJobsPage() {
 			{/* {is_loading && <PageLoader/>} */}
 			<div className="flex justify-between pb-6">
 				<div className="flex flex-col">
-					<h1 className="text-h4 mb-0">{t("Recruitment")}</h1> 
+					<h1 className="text-h4 mb-0">{t("Recruitment")}</h1>
 				</div>
 				<div className="flex items-start gap-2">
-					<Button onClick={()=>{setCreate(true)}} className={"btn btn-dark"}>{t("Add New Job")}</Button>
+					<Button onClick={() => { setCreate(true) }} className={"btn btn-dark"}>{t("Add New Job")}</Button>
 				</div>
 			</div>
 			<div className="zt-card grow">
@@ -252,9 +302,9 @@ export default function ManageJobsPage() {
 					className={'zt-employeeTable zt-recruitmentTable'}
 				/>
 			</div>
-			{create && <AddJob 
-                onClose={() => { setCreate(false) }}
-            />}
+			{create && <AddJob
+				onClose={() => { setCreate(false) }}
+			/>}
 		</section>
 	)
 }

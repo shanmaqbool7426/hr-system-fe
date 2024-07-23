@@ -1,4 +1,4 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
 import CreateProjectsForm from '@/components/forms/projects/createProjects' 
 import FilterArea from '@/components/includes/FilterArea'

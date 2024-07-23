@@ -1,4 +1,4 @@
-import { Table, Tabs } from '@/components/elements'
+import { CheckBox, Table, Tabs } from '@/components/elements'
 import { Tab } from '@headlessui/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +11,8 @@ export const EmployeeListed = () => {
     const [perPage, setPerPage] = useState(10)
 
     const headings = [
+        { title: t(""), col: "sr", check: true },
+        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Job Title"), col: "JobTitle" },
         { title: t("Positions"), col: "Positions" },
         { title: t("Applications"), col: "Applications" },
@@ -21,6 +23,14 @@ export const EmployeeListed = () => {
     ]
 
     const rows = [{
+        sr: <div className="flex items-center">
+            <CheckBox
+                id={`1`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '1',
         JobTitle: <div className="flex flex-col text-xs">
             <span className='font-medium'>{t('Customer Web Executive')}</span>
             <span className='text-themeSuccess'>{t("1 day ago")}</span>
@@ -33,6 +43,14 @@ export const EmployeeListed = () => {
         Offered: '9',
     },
     {
+        sr: <div className="flex items-center">
+            <CheckBox
+                id={`2`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '2',
         JobTitle: <div className="flex flex-col text-xs">
             <span className='font-medium'>{t('Future Interactions Technician')}</span>
             <span className='text-themeSuccess'>{t("1 day ago")}</span>
@@ -45,6 +63,14 @@ export const EmployeeListed = () => {
         Offered: '9',
     },
     {
+        sr: <div className="flex items-center">
+            <CheckBox
+                id={`3`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '3',
         JobTitle: <div className="flex flex-col text-xs">
             <span className='font-medium'>{t('Chief Response Planner')}</span>
             <span className='text-themeSuccess'>{t("1 day ago")}</span>
@@ -57,6 +83,14 @@ export const EmployeeListed = () => {
         Offered: '9',
     },
     {
+        sr: <div className="flex items-center">
+            <CheckBox
+                id={`4`}
+                size={'sm'}
+                variant={'dark'}
+            />
+        </div>,
+        SerailNo: '4',
         JobTitle: <div className="flex flex-col text-xs">
             <span className='font-medium'>{t('Lead Branding Orchestrator')}</span>
             <span className='text-themeSuccess'>{t("1 day ago")}</span>
