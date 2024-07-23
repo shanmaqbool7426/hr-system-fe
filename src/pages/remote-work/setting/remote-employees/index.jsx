@@ -5,6 +5,7 @@ import { EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 import Toast from "@/util/toast";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -102,10 +103,10 @@ export default function Employees() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
-                        <a href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><EyeOn /></span>
                             <span>{t("Detail")}</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
@@ -140,10 +141,10 @@ export default function Employees() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
-                        <a href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><EyeOn /></span>
                             <span>{t("Detail")}</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
