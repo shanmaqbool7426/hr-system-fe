@@ -2,21 +2,43 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
-import { useDispatch } from 'react-redux';
+import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions";
+import { useSelector, useDispatch } from 'react-redux';
 import BaseForm from '../../BaseForm';
-import { list } from 'postcss';
+import { createJob } from '@/store/actions/job.actions';
+import { FetchDepartments } from '@/store/actions/department.actions';
+import { useEffect } from 'react';
 
-export default function AddJob({  onClose, type, object, additionFields }) {
-    const { t } = useTranslation()
+export default function AddJob({ onClose, type, object, additionFields }) {
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const departments = useSelector(state => state.departments) || [];
 
-    const dispatch = useDispatch()
+    useEffect(() => {
+        console.log("Fetching departments...");
+        dispatch(FetchDepartments({}));
+    }, [dispatch]);
+
+    useEffect(() => {
+        console.log("Departments data:", departments);
+    }, [departments]);
+
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
-            type,
+            type: object?.jobType || "",
             icon: object?.icon || "",
             prefix: object?.prefix || "",
+            department: object?.department || "",
+            jobLocation: object?.jobLocation || "",
+            noOfVacancies: object?.noOfVacancies || "",
+            experience: object?.experience || "",
+            age: object?.age || "",
+            salaryFrom: object?.salaryFrom || "",
+            salaryTo: object?.salaryTo || "",
+            jobType: object?.jobType || "",
+            status: object?.status || "",
+            description: object?.description || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
@@ -24,18 +46,22 @@ export default function AddJob({  onClose, type, object, additionFields }) {
             prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),
         onSubmit: async (values) => {
-
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
+            console.log("Form values:", values);
+            return object
+                ? dispatch(UpdateCustomfield(object._id, values, onCompleted))
+                : dispatch(createJob(values, onCompleted));
         }
-    })
+    });
+
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
-        onClose()
+        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`));
+        onClose();
     }
+
     const formElements = [
         {
             type: "text",
-            name: "JobTitle",
+            name: "name",
             label: t('Job Title'),
             placeholder: t("Job Title"),
             required: true,
@@ -43,109 +69,96 @@ export default function AddJob({  onClose, type, object, additionFields }) {
         },
         {
             type: "select",
-            name: "Department",
+            name: "department",
             label: t('Department'),
             placeholder: t("Department"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.department,
+            list: departments.filter(item => item.type === 'department').map(item => ({
+                value: item._id,
+                display: item.name
+            }))
         },
         {
             type: "text",
-            name: "JobLocation",
+            name: "jobLocation",
             label: t('Job Location'),
             placeholder: t("Job Location"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.jobLocation,
         },
         {
             type: "text",
-            name: "NoofVacancie",
-            label: t('No of Vacancie'),
+            name: "noOfVacancies",
+            label: t('No of Vacancies'),
             placeholder: t("-"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.noOfVacancies,
         },
         {
             type: "text",
-            name: "Experience",
+            name: "experience",
             label: t('Experience'),
             placeholder: t("Experience"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.experience,
         },
         {
             type: "text",
-            name: "Age",
+            name: "age",
             label: t('Age'),
             placeholder: t("Age"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.age,
         },
         {
             type: "text",
-            name: "SalaryFrom",
+            name: "salaryFrom",
             label: t('Salary From'),
             placeholder: t("Salary From"),
             required: true,
-            value: formik.values.name,
+            value: formik.values.salaryFrom,
         },
         {
             type: "text",
-            name: "SalaryTo",
+            name: "salaryTo",
             label: t('Salary To'),
             placeholder: t("Salary To"),
             required: true,
-            value: formik.values.name,
-        },
-        {
-            type: "text",
-            name: "FlagCount",
-            label: t('Flag Count'),
-            placeholder: t("Flag Count"),
-            required: true,
-            value: formik.values.name,
+            value: formik.values.salaryTo,
         },
         {
             type: "select",
-            name: "ConditionalExemption",
-            label: t('Conditional Exemption'),
-            placeholder: t("Conditional Exemption"),
-            list:[{value: 'none' ,display: 'none'}],
-            required: true,
-            value: formik.values.name,
-        },
-        {
-            type: "select",
-            name: "JobType",
+            name: "jobType",
             label: t('Job Type'),
             placeholder: t("Job Type"),
-            list:[{value: 'Full Time' ,display: 'Full Time'},{value: 'Part Time' ,display: 'Part Time'}],
+            list: [{ value: 'Full Time', display: 'Full Time' }, { value: 'Part Time', display: 'Part Time' }],
             required: true,
-            value: formik.values.name,
+            value: formik.values.jobType,
         },
         {
             type: "select",
-            name: "Status",
+            name: "status",
             label: t('Status'),
             placeholder: t("Status"),
-            list:[{value: 'Open' ,display: 'Open'},{value: 'Closed' ,display: 'Closed'}],
+            list: [{ value: 'Open', display: 'Open' }, { value: 'Closed', display: 'Closed' }],
             required: true,
-            value: formik.values.name,
+            value: formik.values.status,
         },
         {
             type: "textarea",
-            name: "Description",
+            name: "description",
             label: t('Description'),
             placeholder: t("Type Here"),
-            list:[{value: 'Open' ,display: 'Open'},{value: 'Closed' ,display: 'Closed'}],
             containerClass: 'col-span-2',
             required: true,
-            value: formik.values.name,
+            value: formik.values.description,
         },
-    ]
+    ];
+
     return (
         <BaseForm title={object ? `Edit Job` : `Add New Job`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
-    )
+    );
 }
 
 AddJob.defaultProps = {
