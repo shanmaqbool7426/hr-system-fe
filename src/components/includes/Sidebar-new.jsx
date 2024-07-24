@@ -220,7 +220,7 @@ export default function Sidebar() {
         innerSubMenu: [
           // { name: t('Profile'), href: "/remote-work/setting/profile" },
           { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
-          { name: t('Teams'), href: "/remote-work/setting/teams" },
+          { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
           { name: t('Account'), href: "/remote-work/setting/account" },
           { name: t('Apps'), href: "/remote-work/setting/apps" },
           { name: t('Category'), href: "/remote-work/setting/category" },
