@@ -8,7 +8,7 @@ export const Staticts = () => {
     const { t } = useTranslation();
 
     return (
-        <div className='flex flex-col md:flex-row gap-6'>
+        <div className='flex flex-col xl:flex-row gap-6'>
             <div className='w-full flex flex-col gap-4 p-6 bg-white rounded-lg'>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-xl font-bold mb-0'>{t("Statistics")}</h2>
@@ -17,7 +17,7 @@ export const Staticts = () => {
                         placeholder={`Today`}
                     />
                 </div>
-                <div className='flex flex-col justify-between grow'>
+                <div className='flex flex-col gap-4 justify-between grow'>
                     <div className='rounded-lg p-4 bg-themeGrayscale50 flex justify-between'>
                         <div className='flex flex-col justify-between text-sm'>
                             <span className='text-themeGrayscale600 '>{t("Work Time")}</span>
