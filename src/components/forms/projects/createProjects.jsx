@@ -11,6 +11,7 @@ import {
     UpdateProject,
 } from "@/store/actions/project.actions";
 import { useEffect, useState } from 'react';
+import moment from 'moment';
 
 
 export default function CreatProjectsForm({ onClose, object, }) {
@@ -19,9 +20,8 @@ export default function CreatProjectsForm({ onClose, object, }) {
     const { is_loading } = useSelector(state => state.project)
     const { employees_list } = useSelector((state) => state.employee);
     const { auth_user } = useSelector(state => state.auth);
-   
     const [fileName, setFileName] = useState(null);
-
+    
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -38,9 +38,9 @@ export default function CreatProjectsForm({ onClose, object, }) {
             setFileName('No file chosen');
         }
     };
-
-   
-
+    
+    
+    
     useEffect(() => {
         dispatch(FetchEmployees());
     }, [dispatch]);
@@ -70,7 +70,12 @@ export default function CreatProjectsForm({ onClose, object, }) {
             name: Yup.string().required(t('Project name is required')),
             client: Yup.string().required(t('Client name is required')),
             startDate: Yup.string().required(t('Project start date is required')),
-            endDate: Yup.string().required(t('Project end date is required')),
+            endDate: Yup.date().required(t('Project end date is required'))
+            .test('is-greater',t('End date must be later than start date'),
+            function(value) {
+                    const { startDate } = this.parent;
+                    return !startDate || !value || moment(value).isAfter(moment(startDate));
+            }),
             leads: Yup.array().required(t('Project leader is required')),
             members: Yup.array().required(t('Team is required')),
             description: Yup.string().required(t('Description is required')), 

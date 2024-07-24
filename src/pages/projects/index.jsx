@@ -123,8 +123,8 @@ export default function ProjectsModule() {
       Client: item?.client,
       Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
       Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
-      Priority: <span className='zt-tag zt-tag-danger'> {item?.priority} </span>,
-      Status: <span className='zt-tag zt-tag-success'>{item?.status} </span>,
+      Priority: <span className='zt-tag zt-tag-danger'> {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()} </span>,
+      Status: <span className='zt-tag zt-tag-success'>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
       Action: (
         <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-1">

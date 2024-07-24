@@ -271,6 +271,7 @@ export default function Sidebar() {
           { name: t("Station"), href: "/organization/custom-fields/station" },
           { name: t("Bank"), href: "/organization/custom-fields/bank" },
           { name: t("Job Title"), href: "/organization/custom-fields/job-title" },
+          { name: t("Departments"), href: "/organization/custom-fields/departments" },
           { name: t("Job Field"), href: "/organization/custom-fields/job-field" },
           { name: t("Asset Type"), href: "/organization/custom-fields/asset-type" },
           { name: t("Asset Status"), href: "/organization/custom-fields/asset-status" },
@@ -311,7 +312,7 @@ export default function Sidebar() {
           { name: t('Card Template'), href: "/organization/settings/card-template" },
         ]
       },
-      { name: t("Departments"), href: "/organization/departments" }
+     
     ]
   }
   return (

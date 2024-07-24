@@ -19,7 +19,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
 
     const getDisplayValue = () => {
         return list.filter((item) => selectedItem.some((p) =>
-            item.value.toLowerCase().replace(/\s+/g, '') === p.toLowerCase().replace(/\s+/g, '')))
+            item.value.toLowerCase().replace(/\s+/g, '') === p?.toLowerCase().replace(/\s+/g, '')))
             .reduce((acc, item) => {
                 acc.push(item.display)
                 return acc
@@ -27,7 +27,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
     }
 
     const changeHandler = (item) => {
-        onChange(item)
+        onChange(item);
         setSelectedItem(item)
     }
     const clearInput = () => {

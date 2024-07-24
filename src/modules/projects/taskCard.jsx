@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Edit, EyeOn, Plus, ThreeDotsVertical, TransforIcon, Trash } from '@/components/svg';
-import { Button, DropDown } from '@/components/elements';
+import { Button, DisplayDate, DropDown } from '@/components/elements';
 import ProgressBar from '@/components/elements/ProgressBar';
 import Image from 'next/image';
 
@@ -8,7 +8,7 @@ export default function TaskCard({ key, taskData }) {
     const { t } = useTranslation()
 
     return (
-        <div key={key} className={`${taskData.bg} rounded-2xl`}>
+        <div key={key} className={`${taskData?.bg} rounded-2xl`}>
             <div className={`rounded-t-2xl px-6 py-4 flex justify-between ${taskData.headBg}`}>
                 <h3 className='mb-0 text-lg text-white'>{t(taskData.status)}</h3>
                 <DropDown icon={<ThreeDotsVertical className={'text-white'} width={'1.5rem'} />}>
@@ -37,7 +37,7 @@ export default function TaskCard({ key, taskData }) {
             <div className='flex flex-col gap-4 p-6'>
                 <div className='bg-white rounded-lg p-3 flex flex-col gap-4'>
                     <div className={`flex justify-between`}>
-                        <h4 className='mb-0 text-base'>{t(taskData.taskName01)}</h4>
+                        <h4 className='mb-0 text-base'>{t(taskData.name)}</h4>
                         <DropDown icon={<ThreeDotsVertical className={'text-gray-500'} width={'1.5rem'} />}>
                             <ul className="zt-themeDropDownList zt-sm gap-4">
                                 <li className="!p-0">
@@ -61,12 +61,12 @@ export default function TaskCard({ key, taskData }) {
                     </figure>
                     <div className='flex justify-between'>
                         <div>
-                            <time className='text-sm font-semibold mb-2 block' datetime="16-04-2024">16-04-2024</time>
+                            <time className='text-sm font-semibold mb-2 block' datetime="16-04-2024"> <DisplayDate date={taskData.dueDate} /></time>
                             <Button variant={`${taskData.normalBtn}`} className={`!p-2 !leading-3 !font-semibold !text-sm`}>{taskData.firstBtn}</Button>
                         </div>
                         <div className='flex flex-col items-center'>
                             <span className='font-semibold text-sm mb-1'>Task Time</span>
-                            <span className='font-semibold text-sm text-lightOrange'>03:00</span>
+                            <span className='font-semibold text-sm text-lightOrange'> {taskData?.requiredTime} </span>
                             <span className='text-xs text-themeGrayscale500'>hh:mm</span>
                         </div>
                         <div className='flex flex-col items-center'>

@@ -76,8 +76,6 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
     { title: t("Task Board Name"), col: "TaskBoardName" },
     { title: t("Project Name"), col: "ProjectName" },
     { title: t("Sprint"), col: "Sprint" },
@@ -104,14 +102,7 @@ const indexOfFirstItem = indexOfLastItem - perPage;
 const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
 const rows = paginatedData?.map((item) => ({
-  sr: <div className="flex items-center">
-        <CheckBox
-          id={`1`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '1',
+  
   TaskBoardName: <Link href={`/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
   ProjectName: item?.project?.name,
   Sprint: item?.sprintNumber,

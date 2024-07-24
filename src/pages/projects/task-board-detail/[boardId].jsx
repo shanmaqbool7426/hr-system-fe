@@ -1,15 +1,18 @@
-import { Button, CheckBox, DropDown, Table } from '@/components/elements'
+import { Button, CheckBox, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
 import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
+import  Pagination  from '@/components/elements/Table/pagination'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import FeedbackForm from '@/components/forms/projects/feedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
 import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
+import Toast from "@/util/toast";
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { DeleteTask, FetchTask, FetchTaskDetails } from '@/store/actions/task.actions'
 import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,6 +22,8 @@ import {
 import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import { useRouter } from 'next/router'
+import Profil from '@/components/elements/Profile'
+import { FetchEmployees } from '@/store/actions/employee.actions'
 const data = [
     { name: 'High', value: 300 },
     { name: 'Medium', value: 300 },
@@ -74,61 +79,57 @@ const teamData = [
         ],
     }
 ]
-const tableData = [
-    {
-        "leaders": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-        ],
-        "team": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-        ],
-    }
-]
+
 export default function TaskBoardDetailModule() {
     const { t } = useTranslation()
+    const router = useRouter()
     const [view, setView] = useState("grid")
+    const dispatch = useDispatch()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const router = useRouter()
-    const dispatch = useDispatch()
+    const [editTask, setEditTask] = useState(null);
     const [feedback, setFeedback] = useState(false)
     const [discussion, setDiscussion] = useState(false)
     const [task, setTask] = useState(false)
     const [raiseIssue, setRaiseIssue] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
+    const { task_list  } = useSelector(state => state.task)
+
 
     useEffect(() => {
-        const taskBoardId = router.query.taskId;
-        if (taskBoardId)
-            dispatch(FetchTaskBoardDetails(taskBoardId));
+        console.log('task_list', task_list)
+        const {boardId }= router.query;
+        if (boardId){
+            dispatch(FetchEmployees())
+            dispatch(FetchTask(boardId));
+            dispatch(FetchTaskBoardDetails(boardId));
+        }
     }, [ router,dispatch]);
 
-    const [filters, setFilters] = useState({
+    const deleteHandler = (item) => {
+        Toast.confirmDelete(() => {
+          dispatch(
+            DeleteTask(item._id, () => {
+              Toast.success(t("Task deleted successfully"));
+            })
+          );
+        }, t);
+      };
+      const [filters, setFilters] = useState({
         search: "",
-        project: null,
-        department: null,
+        priority: null,
         status: null,
-    })
+      });
     const filterElements = [
         {
             type: "search",
-            name: "Project",
+            name: "Troject",
             value: filters.search,
-            placeholder: t("Project"),
+            placeholder: t("Task Name"),
             className: "xl:col-span-2",
             onChange: (event) => {
                 let _filter = { ...filters }
@@ -137,14 +138,19 @@ export default function TaskBoardDetailModule() {
             }
         },
         {
-            type: "customIcon",
-            name: "employee",
-            value: filters.search,
-            placeholder: t("Employee"),
+            type: "select",
+            name: "TaskPriority",
             className: "xl:col-span-2",
-            onChange: (event) => {
+            placeholder: "Task Priority",
+            value: filters.priority,
+            list: [
+                { value: "low", display: "Low" },
+                { value: "medium", display: "Medium" },
+                { value: "high", display: "High" },
+            ],
+            onChange: (priority) => {
                 let _filter = { ...filters }
-                _filter['search'] = event.target.value
+                _filter['priority'] = priority
                 setFilters(_filter)
             }
         },
@@ -154,34 +160,20 @@ export default function TaskBoardDetailModule() {
             className: "xl:col-span-2",
             placeholder: "Task Status",
             value: filters.status,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            }),
-            onChange: (status) => {
-                let _filter = { ...filters }
-                _filter['status'] = status
-                setFilters(_filter)
+            list: [
+                { value: "pending", display: "Pending" },
+                { value: "progress", display: "Progress" },
+                { value: "completed", display: "Completed" },
+            ],
+        onChange: (status) => {
+            let _filter = { ...filters };
+                _filter['status'] = status;
+                setFilters(_filter);
             }
         },
-        {
-            type: "select",
-            name: "TaskPriority",
-            className: "xl:col-span-2",
-            placeholder: "Task Priority",
-            value: filters.status,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            }),
-            onChange: (status) => {
-                let _filter = { ...filters }
-                _filter['status'] = status
-                setFilters(_filter)
-            }
-        },
+        
     ]
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
         { title: t("Task Id"), col: "TaskId" },
         { title: t("Task Name"), col: "TaskName" },
         { title: t("Task Time"), col: "TaskTime", sort: true },
@@ -194,35 +186,39 @@ export default function TaskBoardDetailModule() {
         { title: t("Action"), col: "action" },
     ]
 
-    const rows = [
-        {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
-            TaskId: "PJT-001",
-            ProjectName: "Office Mangement",
-            TaskName: "Splash",
-            Leader: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Assignee: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Priority: <span className={"zt-tag zt-tag-danger"}>High</span>,
-            TaskTime: "01:00",
-            DueDate: "18 May 2024",
+    let filteredRows = task_list?.filter((item) => {
+        return (
+          (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+          (!filters.priority || item.priority === filters.priority) &&
+          (!filters.status || item.status === filters.status)
+        );
+      })
+        .sort((a, b) => {
+          if (!sortCol) return 0;
+          if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+          else return b[sortCol]?.localeCompare(a[sortCol]);
+        });
+    
+      const indexOfLastItem = page * perPage;
+      const indexOfFirstItem = indexOfLastItem - perPage;
+      const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+    const rows = paginatedData?.map((item,index) => ({    
+            TaskId: item?.taskId,
+            ProjectName: item?.project?.name,
+            TaskName: item?.name,
+            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={[item?.leader]}  />,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={[item?.assignedTo]} />,
+            Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
+            TaskTime: item?.requiredTime,
+            DueDate:  <DisplayDate date={item.dueDate} />,
             Feedback: <div className='flex flex-col justify-start items-start'>
                 <span className='text-xs'>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
                 <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
                 <span className='text-xs'>“Good Job”</span>
             </div>,
-            Status: <span className={"zt-tag zt-tag-success"}>Done</span>,
-            action: <DropDown icon={<ThreeDotsVertical />}>
+            Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,
+            action: 
+            <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
                     <li className="!p-0">
                         <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
@@ -243,83 +239,33 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a onClick={() => {
+                                setCreate(true);
+                                setEditTask(item)
+                                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span><Edit /></span>
                             <span>{t("Change Status")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a onClick={() => {
+                            deleteHandler(item);
+                        }}
+                 className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span><Trash /></span>
                             <span>{t("Delete")}</span>
                         </a>
                     </li>
                 </ul>
-            </DropDown>,
-        },
-        {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
-            TaskId: "PJT-001",
-            ProjectName: "Office Mangement",
-            TaskName: "Login",
-            Leader: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Assignee: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Priority: <span className={"zt-tag zt-tag-warning"}>Normal</span>,
-            TaskTime: "01:00",
-            DueDate: "18 May 2024",
-            Feedback: <div className='flex flex-col justify-start items-start'>
-                <span className='text-xs'>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-                <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-                <span className='text-xs'>“Good Job”</span>
-            </div>,
-            Status: <span className={"zt-tag zt-tag-primary"}>Working</span>,
-            action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
-                    <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><WarningIcon /></span>
-                            <span>{t("Raise Issue")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setTask(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-                            <span><DiscussionIcon /></span>
-                            <span>{t("Discussion")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Status")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Trash /></span>
-                            <span>{t("Delete")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>,
-        },
-    ]
+            </DropDown>
+       }))
+       const pagination = {
+        totalRecords: filteredRows?.length,
+        showPerPage: true,
+        prevAction: () => page > 1 && setPage(page - 1),
+        clickAction: (value) => setPage(value),
+        nextAction: () => setPage(page + 1),
+      };
     const taskStatus = [
         {
             status: "Pending",
@@ -430,7 +376,7 @@ export default function TaskBoardDetailModule() {
                             </div>
                             <ProgressBar percentage={"40%"} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
                             <div className='grid grid-cols-3 gap-6 py-6'>
-                                {taskStatus.map((task, index) => (
+                            {paginatedData?.map((task, index) => (
                                     <TaskCard key={index} taskData={task} />
                                 ))}
                             </div>
@@ -450,7 +396,15 @@ export default function TaskBoardDetailModule() {
                         className={'zt-employeeTable zt-projectsTable'}
                     />
                 }
-                {create && <CreatProjectsForm
+                 {paginatedData?.length > 0 && pagination && <Pagination
+                    pagination={pagination}
+                    currentLength={rows?.length}
+                    perPage={perPage}
+                    setPerPage={setPerPage}
+                    page={page}
+                    setPage={setPage} />
+                }
+                    {create && <CreatProjectsForm
                     onClose={() => { setCreate(false) }}
                 />}
                 {raiseIssue && <RaiseIssueForm
@@ -460,8 +414,9 @@ export default function TaskBoardDetailModule() {
                     onClose={() => { setFeedback(false) }}
                 />}
                 {task && <AddTaskForm 
+                    object={editTask}
                    additionFields={taskboard_details} 
-                    onClose={() => { setTask(false) }}
+                    onClose={() => { setTask(false); setEditTask(null); }}
                 />}
                 {discussion && <DiscussionForm
                     onClose={() => { setDiscussion(false) }}

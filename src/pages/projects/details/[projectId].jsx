@@ -1,17 +1,21 @@
 import { useTranslation } from 'react-i18next'
 import CreateProjectsForm from '@/components/forms/projects/createProjects' 
 import CreateBoardForm from '@/components/forms/projects/createBoard'
-import { Button } from '@/components/elements'
+import * as Yup from 'yup';
+import { Button, MultiSelect } from '@/components/elements'
 import { ChevronLeft, Download, Edit, PdfIcon, Plus, ShareIcon, Tick, Trash } from '@/components/svg' 
 import Link from 'next/link'
 import { useEffect, useState } from 'react' 
 import { useDispatch, useSelector } from 'react-redux'
-import { FetchProjectDetails  } from '@/store/actions/project.actions' 
+import { FetchProjectDetails, UpdateProject  } from '@/store/actions/project.actions' 
 import DisplayDate from "@/components/elements/DisplayDate";
+import { useFormik } from 'formik';
+import moment from 'moment';
 import PageLoader from '@/components/elements/PageLoader' 
 import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
+import { FetchEmployees } from '@/store/actions/employee.actions';
 
 
 export default function ProjectsDetailPage() {
@@ -21,9 +25,13 @@ export default function ProjectsDetailPage() {
     const [board, setBoard] = useState(false)
     const [create, setCreate] = useState(false)
     const [editProject, setEditProject] = useState(null);
+    const [editLeaders, setEditLeaders] = useState(false)
+    const [editMembers, setEditMembers] = useState(false)
     const { project_detail , is_loading} = useSelector((state) => state.project)
+    const {  employees_list} = useSelector((state) => state.employee)
 
     useEffect(() => {
+        dispatch(FetchEmployees())
         const projectId = router.query.projectId;
         if (projectId)
             dispatch(FetchProjectDetails(projectId));
@@ -32,6 +40,39 @@ export default function ProjectsDetailPage() {
         if (!str) return ''
         return str.replace(/<\/?[^>]+(>|$)/g, "")
     }
+
+    const calculateTotalHours = (startDate, endDate) => {
+        if (!startDate || !endDate) return 0;
+        const start = moment(startDate);
+        const end = moment(endDate);
+        const differenceInHours = end.diff(start, 'hours');
+        return differenceInHours;
+    };
+
+    const totalHours = calculateTotalHours(project_detail?.startDate, project_detail?.endDate);
+
+    const formik = useFormik({
+        initialValues: {
+            leads: project_detail?.leads?.map((item) => item._id) || [],
+            members: project_detail?.members?.map((item) => item._id) || [],
+        },
+        validationSchema: Yup.object().shape({
+            leads: Yup.array().required(t('Project leader is required')),
+            members: Yup.array().required(t('Team is required')),
+        }),
+        onSubmit: values => {
+          dispatch(UpdateProject(project_detail._id, values, () => {
+            setEditLeaders(false)
+            setEditMembers(false)
+            Toast.success(t('Project updated successfully'))
+          }))
+        },
+        enableReinitialize: true
+      })
+
+      const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
+      const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
+  
     return (
     <>
         { project_detail &&
@@ -52,7 +93,6 @@ export default function ProjectsDetailPage() {
                     <div className='bg-white p-6 rounded-lg'>
                         <div className='flex justify-between items-center mb-2'>
                             <h2 className='text-lg font-bold mb-0'>{t(project_detail?.name)}</h2>
-                            {/* <span onClick={() => { setEdit(!edit) }} className='cursor-pointer'><Edit /></span> */}
                         </div>
                         <span className='text-themeGrayscale600 text-sm block mb-4'>{t("1 open tasks, 9 tasks completed")}</span>
                         <p className='text-themeGrayscale600 text-sm'> {removeTags(project_detail?.description)} </p>
@@ -98,7 +138,7 @@ export default function ProjectsDetailPage() {
                         <hr className='bg-themeGrayscale200' />
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Total Hours")}</span>
-                            <span className='text-themeGrayscale900 font-semibold'>{t("100 Hours")}</span>
+                            <span className='text-themeGrayscale900 font-semibold'>{t(totalHours + " Hours")}</span>
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Created Date")}</span>
@@ -114,11 +154,11 @@ export default function ProjectsDetailPage() {
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Priority")}</span>
-                            <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority)}</span>
+                            <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority.charAt(0).toUpperCase() + project_detail.priority.slice(1).toLowerCase())}</span>
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Status")}</span>
-                            <span className='text-themeGrayscale900 font-semibold'>{t(project_detail?.status)}</span>
+                            <span className='text-themeGrayscale900 font-semibold'>{t(project_detail?.status.charAt(0).toUpperCase() + project_detail.status.slice(1).toLowerCase())}</span>
                         </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Created by")}</span>
@@ -127,9 +167,31 @@ export default function ProjectsDetailPage() {
                         <ProgressBar percentage={'40%'} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
                     </div>
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
+                       { editLeaders ? ( <>
+                        <div className='flex justify-between items-center'>
+                            <h2 className='text-lg font-bold mb-0'>{t("Add Leader")}</h2>
+                            <Button type="submit"  onClick={() => formik.handleSubmit()} variant={'dark'} className={'!text-xs !px-6 !py-2'}>Save</Button>
+                        </div>
+                        <hr className='bg-themeGrayscale200' />
+                        
+                              <MultiSelect
+                              containerClass={'zt-formGroupV2'}
+                              className={' gap-4'}
+                              name={'leads'}
+                              value={formik.values.leads}
+                              onChange={(value) => {
+                                formik.setFieldValue("leads", value)
+                            }}
+                              list= {filteredLeadersList?.map((item) => ({
+                                      value: item?._id,
+                                      display: item.firstName + " " + item.lastName,
+                                      }))}
+                                      multiple ={true}
+                               />
+                       </>) : ( <>
                         <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Assigned Leader")}</h2>
-                            <Button variant={'dark'} className={'!text-xs !px-6 !py-2'}><Plus className='h-[16px]' /> Add</Button>
+                            <Button onClick={() => { setEditLeaders(!editLeaders) }}   variant={'dark'} className={'!text-xs !px-6 !py-2'}><Plus className='h-[16px]' /> Add</Button>
                         </div>
                         <hr className='bg-themeGrayscale200' />
                         {project_detail?.leads?.map((lead, index) => (
@@ -142,23 +204,48 @@ export default function ProjectsDetailPage() {
                                     <span className='text-themeGrayscale600'>{t(lead?.designation)}</span>
                                 </div>
                             </div>))}
+                       </>) }
                     </div>
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
-                        <div className='flex justify-between items-center'>
-                            <h2 className='text-lg font-bold mb-0'>{t("Assigned Users")}</h2>
-                            <Button variant={'dark'} className={'!text-xs !px-6 !py-2'}><Plus className='h-[16px]' /> Add</Button>
-                        </div>
-                        <hr className='bg-themeGrayscale200' />
-                        {project_detail?.members?.map((member, index) => (
-                        <div key={index} className='flex gap-2 items-center'>
-                            <figure>
-                                <Image src='/assets/images/users/user-01.jpg' alt='profile' width={32} height={32} className='rounded-full object-cover' />
-                            </figure>
-                            <div className='text-xs'>
-                                <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(member?.firstName)} {t(member?.lastName)} </h3>
-                                <span className='text-themeGrayscale600'>{t(member?.designation)}</span>
+                        {editMembers ? (<>
+                            <div className='flex justify-between items-center'>
+                            <h2 className='text-lg font-bold mb-0'>{t("Add Members")}</h2>
+                            <Button  type="submit"  onClick={() => formik.handleSubmit()} variant={'dark'} className={'!text-xs !px-6 !py-2'}> Save</Button>
                             </div>
-                        </div>))}
+                        <hr className='bg-themeGrayscale200' />
+                        <MultiSelect
+                              containerClass={'zt-formGroupV2'}
+                              className={' gap-4'}
+                              name={'members'}
+                              value={formik.values.members}
+                              multiple ={true}
+                              onChange={(value) => {
+                                formik.setFieldValue("members", value)
+                            }}
+                              list= {filteredMembersList?.map((item) => ({
+                                      value: item?._id,
+                                      display: item.firstName + " " + item.lastName,
+                                      }))}
+                               />
+                      
+                        </>):(<>
+                            <div className='flex justify-between items-center'>
+                            <h2 className='text-lg font-bold mb-0'>{t("Assigned Members")}</h2>
+                            <Button variant={'dark'} onClick={() => { setEditMembers(!editMembers) }}  className={'!text-xs !px-6 !py-2'}><Plus className='h-[16px]' /> Add</Button>
+                            </div>
+                        <hr className='bg-themeGrayscale200' />
+                                {project_detail?.members?.map((member, index) => (
+                                    <div key={index} className='flex gap-2 items-center'>
+                                        <figure>
+                                            <Image src='/assets/images/users/user-01.jpg' alt='profile' width={32} height={32} className='rounded-full object-cover' />
+                                        </figure>
+                                        <div className='text-xs'>
+                                            <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(member?.firstName)} {t(member?.lastName)} </h3>
+                                            <span className='text-themeGrayscale600'>{t(member?.designation)}</span>
+                                        </div>
+                                    </div>))}
+                       
+                        </>)}
                     </div>
                 </div>
             </div>
