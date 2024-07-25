@@ -30,14 +30,8 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             dueDate: object?.dueDate || "",
             requiredTime: object?.requiredTime || "",
             priority: object?.priority || "",
-            leader: object?.leader?.reduce((acc, item) => {
-                acc.push(item._id);
-                return acc;
-              }, []) || [],
-            assignedTo: object?.assignedTo?.reduce((acc, item) => {
-                acc.push(item._id);
-                return acc;
-              }, []) || [],
+            leader: object?.leader?.map(item => item._id) || [],
+            assignedTo: object?.assignedTo?.map(item => item._id) || [],
             board: additionFields?._id || "",
             project: additionFields?.project?._id || "",
             parent:object?.parent || "",
@@ -46,7 +40,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             name: Yup.string().required(t('Task name is required')),
             status: Yup.string().required(t('Status is required')),
             dueDate: Yup.string().required(t('Task Due date is required')),
-            assignedTo: Yup.array().required(t('Members are required')),
+            assignedTo: Yup.array().required(t('Member is required')),
             leader: Yup.array().required(t('Leader is required')),
             requiredTime : Yup.string().required(t("Time is required")),
             priority: Yup.string().required(t('Priority is required')),
@@ -60,11 +54,8 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         Toast.success(object ? t('Task updated successfully') : t('Task created successfully'))
         onClose()
     }
-    // const getFilteredEmployees = (list, excludeIds) => {
-    //     return list.filter(employee => !excludeIds.includes(employee._id));
-    // };
-    // const filteredLeaderList = getFilteredEmployees(employees_list, formik.values.leader);
-    // const filteredAssigneList = getFilteredEmployees(employees_list, formik.values.assignedTo);
+    
+
     const formElements = [
         {
             type: "text",
@@ -142,7 +133,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             label: t('Assign to'),
             value: formik.values.assignedTo,
             required: true,
-            list: employees_list.map((item) => ({
+            list: employees_list?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),

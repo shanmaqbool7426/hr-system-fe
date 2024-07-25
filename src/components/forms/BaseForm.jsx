@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, DisplayDate } from "../elements"
 import { useTranslation } from "react-i18next"
 import Radio from "../elements/Radio"
 
@@ -22,6 +22,7 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                         <div className={`grid sm:grid-cols-2 gap-x-6 gap-y-4 ${className}`}>
                             {formElements?.map((element, index) => {
                                 switch (element.type) {
+
                                     case 'date':
                                         return <Datepicker key={index} {...element}
                                             error={formik.touched[element.name] && formik.errors[element.name]}

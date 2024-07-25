@@ -23,12 +23,7 @@ import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import { useRouter } from 'next/router'
 import { FetchEmployees } from '@/store/actions/employee.actions'
-const data = [
-    { name: 'High', value: 300 },
-    { name: 'Medium', value: 300 },
-    { name: 'Low', value: 300 },
-];
-
+import moment from 'moment'
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -56,7 +51,7 @@ const renderCustomizedLabel = ({
         </text>
     );
 };
-const COLORS = ['#165DFF', '#E03137', '#F16E16'];
+const COLORS = [ '#E03137','#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
     const { t } = useTranslation()
@@ -69,11 +64,10 @@ export default function TaskBoardDetailModule() {
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
     const [editTask, setEditTask] = useState(null);
+    const [task, setTask] = useState(false)
     const [feedback, setFeedback] = useState(false)
     const [discussion, setDiscussion] = useState(false)
-    const [task, setTask] = useState(false)
     const [raiseIssue, setRaiseIssue] = useState(false)
-    const { customfield_list } = useSelector(state => state.customfield)
     const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
     const { task_list  } = useSelector(state => state.task)
 
@@ -94,6 +88,39 @@ export default function TaskBoardDetailModule() {
     useEffect(() => {
         localStorage.setItem('View', view);
       }, [view]);
+
+    
+      const calculatePriorityDistribution = (tasks) => {
+        const priorityCount = { low: 0, medium: 0, high: 0 };
+    
+        tasks.forEach(task => {
+            if (priorityCount.hasOwnProperty(task.priority)) {
+                priorityCount[task.priority]++;
+            }
+        });
+    
+        return Object.entries(priorityCount).map(([priority, count]) => ({
+            name: priority.charAt(0).toUpperCase() + priority.slice(1),
+            value: count,
+        }));
+    };
+      const priorityData = calculatePriorityDistribution(task_list);
+
+      const calculateStatusDistribution = (tasks) => {
+        const statusCount = { pending: 0, progress: 0, completed: 0 };
+    
+        tasks.forEach(task => {
+            if (statusCount.hasOwnProperty(task.status)) {
+                statusCount[task.status]++;
+            }
+        });
+    
+        return Object.entries(statusCount).map(([status, count]) => ({
+            name: status.charAt(0).toUpperCase() + status.slice(1),
+            value: count,
+        }));
+    };
+      const statusData = calculateStatusDistribution(task_list);
 
     const deleteHandler = (item) => {
         Toast.confirmDelete(() => {
@@ -159,10 +186,6 @@ export default function TaskBoardDetailModule() {
         
     ]
     const headings = [
-<<<<<<<< HEAD:src/pages/projects/task-board-detail/[boardId].jsx
-========
-    
->>>>>>>> development:src/pages/operations/projects/task-board-detail.jsx
         { title: t("Task Id"), col: "TaskId" },
         { title: t("Task Name"), col: "TaskName" },
         { title: t("Task Time"), col: "TaskTime", sort: true },
@@ -175,7 +198,6 @@ export default function TaskBoardDetailModule() {
         { title: t("Action"), col: "action" },
     ]
 
-<<<<<<<< HEAD:src/pages/projects/task-board-detail/[boardId].jsx
     let filteredRows = task_list?.filter((item) => {
         return (
           (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
@@ -192,38 +214,17 @@ export default function TaskBoardDetailModule() {
       const indexOfLastItem = page * perPage;
       const indexOfFirstItem = indexOfLastItem - perPage;
       const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
-    const rows = paginatedData?.map((item,index) => ({    
-            TaskId: item?.taskId,
+      const rows = paginatedData?.map((item,index) => {    
+        const isPastDue = moment(item.dueDate).isBefore(moment())
+           return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
             Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
             Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
             Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
+            Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,       
             TaskTime: item?.requiredTime,
-            DueDate:  <DisplayDate date={item.dueDate} />,
-========
-    const rows = [
-        {
-          
-            TaskId: "PJT-001",
-            ProjectName: "Office Mangement",
-            TaskName: "Splash",
-            Leader: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Assignee: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Priority: <span className={"zt-tag zt-tag-danger"}>High</span>,
-            TaskTime: "01:00",
-            DueDate: "18 May 2024",
->>>>>>>> development:src/pages/operations/projects/task-board-detail.jsx
-            Feedback: <div className='flex flex-col justify-start items-start'>
-                <span className='text-xs'>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-                <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-                <span className='text-xs'>“Good Job”</span>
-            </div>,
-            Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,
+            DueDate:   <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
             action: 
             <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
@@ -264,81 +265,8 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                 </ul>
-<<<<<<<< HEAD:src/pages/projects/task-board-detail/[boardId].jsx
-            </DropDown>
-       }))
-       const pagination = {
-        totalRecords: filteredRows?.length,
-        showPerPage: true,
-        prevAction: () => page > 1 && setPage(page - 1),
-        clickAction: (value) => setPage(value),
-        nextAction: () => setPage(page + 1),
-      };
-      const totalTasks = filteredRows?.length || 0;
-      const completedTasks = filteredRows?.filter(task => task.status === 'completed').length || 0;
-  
-      const progressPercentage = totalTasks > 0 ? ((completedTasks / totalTasks) * 100).toFixed(0) : 0;
-
-========
-            </DropDown>,
-        },
-        {
-        
-            TaskId: "PJT-001",
-            ProjectName: "Office Mangement",
-            TaskName: "Login",
-            Leader: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Assignee: <div>{tableData.map((ele, i) => (
-                <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-            ))}</div>,
-            Priority: <span className={"zt-tag zt-tag-warning"}>Normal</span>,
-            TaskTime: "01:00",
-            DueDate: "18 May 2024",
-            Feedback: <div className='flex flex-col justify-start items-start'>
-                <span className='text-xs'>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-                <div className='flex gap-1 items-center'><span className='text-sm font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-                <span className='text-xs'>“Good Job”</span>
-            </div>,
-            Status: <span className={"zt-tag zt-tag-primary"}>Working</span>,
-            action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
-                    <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><WarningIcon /></span>
-                            <span>{t("Raise Issue")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setTask(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-                            <span><DiscussionIcon /></span>
-                            <span>{t("Discussion")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Status")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Trash /></span>
-                            <span>{t("Delete")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>,
-        },
-    ]
->>>>>>>> development:src/pages/operations/projects/task-board-detail.jsx
+            </DropDown>}
+        })
     const taskStatus = [
         {
             status: "Pending",
@@ -381,12 +309,24 @@ export default function TaskBoardDetailModule() {
             progress: "40%"
         },
     ]
+    const pagination = {
+        totalRecords: filteredRows?.length,
+        showPerPage: true,
+        prevAction: () => page > 1 && setPage(page - 1),
+        clickAction: (value) => setPage(value),
+        nextAction: () => setPage(page + 1),
+      };
+    const totalTasks = filteredRows?.length || 0;
+    const completedTasks = filteredRows?.filter(task => task.status === 'completed').length || 0;
+  
+    const progressPercentage = totalTasks > 0 ? ((completedTasks / totalTasks) * 100).toFixed(0) : 0;
+
     return (
        taskboard_details && 
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
-                    <Link href={`/projects/task-board`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
+                    <Link href={`/operations/projects/task-board`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
                     <span className='shrink-0'>{t(taskboard_details?.name)}</span>
                 </h1>
                 {/* <h1 className="text-h4 mb-0">{t("Task Board")}</h1> */}
@@ -407,13 +347,14 @@ export default function TaskBoardDetailModule() {
                 />
                 {view === "grid" ?
                     <div>
-                        <div className='zt-taskBoardList'>
-                            {["Task Priority", "Task Status", "Task Time"].map((ele, i) => (
+                        {task_list.length > 0 ? (
+                            <div className='zt-taskBoardList'>
+                            {[ "Task Status"].map((ele, i) => (
                                 <div key={i} className='p-6 rounded-lg bg-white'>
                                     <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
                                     <PieChart width={300} height={300} className='!max-h-[351px] relative'>
                                         <Pie
-                                            data={data}
+                                            data={statusData}
                                             cx={"50%"}
                                             cy={"50%"}
                                             labelLine={false}
@@ -422,7 +363,7 @@ export default function TaskBoardDetailModule() {
                                             fill="#8884d8"
                                             dataKey="value"
                                         >
-                                            {data.map((entry, index) => (
+                                            {priorityData?.map((entry, index) => (
                                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                             ))}
                                         </Pie>
@@ -431,7 +372,32 @@ export default function TaskBoardDetailModule() {
                                     </PieChart>
                                 </div>
                             ))}
-                        </div>
+                            {["Task Priority"].map((ele, i) => (
+                                <div key={i} className='p-6 rounded-lg bg-white'>
+                                    <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
+                                    <PieChart width={300} height={300} className='!max-h-[351px] relative'>
+                                        <Pie
+                                            data={priorityData}
+                                            cx={"50%"}
+                                            cy={"50%"}
+                                            labelLine={false}
+                                            label={renderCustomizedLabel}
+                                            outerRadius={100}
+                                            fill="#8884d8"
+                                            dataKey="value"
+                                        >
+                                            {priorityData?.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip />
+                                        <Legend />
+                                    </PieChart>
+                                </div>
+                            ))}
+                            </div>
+                        ) : (<></>) }
+                        
                         <div>
                             <div className='flex gap-20 mb-4'>
                                 <div className='zt-projectTeam flex flex-col gap-3'>
@@ -446,7 +412,7 @@ export default function TaskBoardDetailModule() {
                             <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'}  />
                             <div className='grid grid-cols-3 gap-6 py-6'>
                             {paginatedData?.map((task, index) => (
-                                    <TaskCard key={index} taskData={task} />
+                                    <TaskCard key={index} taskData={task}   statusStyles={taskStatus}/>
                                 ))}
                             </div>
                         </div>

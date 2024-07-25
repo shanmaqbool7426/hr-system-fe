@@ -125,7 +125,7 @@ export default function ProjectsModule() {
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
   const rows = paginatedData?.map((item,index) => ({
-      Project: <Link href={`/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+      Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
       ProjectID: item?.projectId,
       Client: item?.client,
       Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,

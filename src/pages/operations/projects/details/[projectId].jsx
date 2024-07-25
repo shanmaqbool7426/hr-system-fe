@@ -99,7 +99,7 @@ export default function ProjectsDetailPage() {
       const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
       const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
       const rows = taskboard_list?.map((item) => ({
-        TaskBoards: <Link href={`/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+        TaskBoards: <Link href={`/operations/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
         Sprint: item?.sprintNumber,
         DueDate:   <DisplayDate date={item?.dueDate} />,
         Action: <DropDown icon={<ThreeDotsVertical />}>
@@ -145,7 +145,7 @@ export default function ProjectsDetailPage() {
             {is_loading && <PageLoader />}
             <div className="flex items-center justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
-                    <Link href={`/projects`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
+                    <Link href={`/operations/projects`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
                     <span className='shrink-0'>{t(project_detail?.name)} </span>
                 </h1>
                 <div className='flex gap-4 items-center'>
@@ -233,6 +233,7 @@ export default function ProjectsDetailPage() {
                             <DisplayDate date={project_detail?.endDate} />
                             </span>
                         </div>
+                        <div> {console.log('project_detail', project_detail)} </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Priority")}</span>
                             <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority.charAt(0).toUpperCase() + project_detail.priority.slice(1).toLowerCase())}</span>

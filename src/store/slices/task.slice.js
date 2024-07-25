@@ -6,6 +6,7 @@ export const taskSlice = createSlice({
         is_loading: false,
         task_list: [],
         task_details: null,
+        overdue_task_list: [],
     },
     reducers: {
         setLoading(state, action) {
@@ -13,6 +14,11 @@ export const taskSlice = createSlice({
         },
         setTaskList(state, action) {
             state.task_list = action.payload.list
+        },
+        setOverdueTaskList(state, action) { 
+            state.overdue_task_list = action.payload.list
+            const overdueTaskIds = new Set(action.payload.list.map(task => task._id))
+            state.task_list = state.task_list.filter(task => !overdueTaskIds.has(task._id))
         },
         setTask(state, action) {
             let index = state.task_list.findIndex((item) => item._id === action.payload._id)
@@ -25,6 +31,7 @@ export const taskSlice = createSlice({
         },
         removeTask(state, action) {
             state.task_list = state.task_list.filter((item) => item._id !== action.payload)
+            state.overdue_task_list = state.overdue_task_list.filter((item) => item._id !== action.payload);
         },
         pushTask(state, action) {
             state.task_list.push(action.payload)
@@ -36,6 +43,7 @@ export const {
     setLoading,
     setTaskList,
     setTaskDetails,
+    setOverdueTaskList,
     setTask,
     removeTask,
     pushTask,

@@ -103,7 +103,7 @@ const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
 const rows = paginatedData?.map((item) => ({
   
-  TaskBoardName: <Link href={`/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+  TaskBoardName: <Link href={`/operations/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
   ProjectName: item?.project?.name,
   Sprint: item?.sprintNumber,
   ProjectLeader: <div className='flex justify-center'>{item?.leads?.map((leads, i) => (
