@@ -4,7 +4,7 @@ import DisplayDate from "@/components/elements/DisplayDate";
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import FilterArea from '@/components/includes/FilterArea'
-import { FetchTaskBoard } from '@/store/actions/taskboard.actions'
+import { FetchTaskBoards } from '@/store/actions/taskboard.actions'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -31,7 +31,7 @@ export default function ProjectsModule() {
   })
 
   useEffect(() => {
-    dispatch(FetchTaskBoard());
+    dispatch(FetchTaskBoards());
   }, [dispatch]);
 
   const filterElements = [

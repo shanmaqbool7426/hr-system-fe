@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next'
 import CreateProjectsForm from '@/components/forms/projects/createProjects' 
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import * as Yup from 'yup';
-import { Button, MultiSelect } from '@/components/elements'
-import { ChevronLeft, Download, Edit, PdfIcon, Plus, ShareIcon, Tick, Trash } from '@/components/svg' 
+import { Button, DropDown, MultiSelect,Table  } from '@/components/elements'
+import { ChevronLeft, Download, Edit, EyeOn, PdfIcon, Plus, ShareIcon, ThreeDotsVertical, Tick, Trash } from '@/components/svg' 
 import Link from 'next/link'
 import { useEffect, useState } from 'react' 
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +16,8 @@ import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import { FetchEmployees } from '@/store/actions/employee.actions';
+import { DeleteTaskBoard, FetchProjectTaskBoards} from '@/store/actions/taskboard.actions';
+import Toast from '@/util/toast';
 
 
 export default function ProjectsDetailPage() {
@@ -27,19 +29,35 @@ export default function ProjectsDetailPage() {
     const [editProject, setEditProject] = useState(null);
     const [editLeaders, setEditLeaders] = useState(false)
     const [editMembers, setEditMembers] = useState(false)
+  const [editBoard, setEditBoard] = useState(null);
     const { project_detail , is_loading} = useSelector((state) => state.project)
     const {  employees_list} = useSelector((state) => state.employee)
+  const { taskboard_list } = useSelector(state => state.taskboard);
+
 
     useEffect(() => {
         dispatch(FetchEmployees())
-        const projectId = router.query.projectId;
-        if (projectId)
-            dispatch(FetchProjectDetails(projectId));
+        const {projectId} = router.query
+        if (projectId){
+            dispatch(FetchProjectTaskBoards(projectId))
+            dispatch(FetchProjectDetails(projectId))
+        }
     }, [router, dispatch]);
+
     const removeTags = (str) => {
         if (!str) return ''
         return str.replace(/<\/?[^>]+(>|$)/g, "")
     }
+
+    const deleteHandler = (item) => {
+        Toast.confirmDelete(() => {
+          dispatch(
+            DeleteTaskBoard(item._id, () => {
+              Toast.success(t("Task Board deleted successfully"));
+            })
+          );
+        }, t);
+      };
 
     const calculateTotalHours = (startDate, endDate) => {
         if (!startDate || !endDate) return 0;
@@ -50,6 +68,14 @@ export default function ProjectsDetailPage() {
     };
 
     const totalHours = calculateTotalHours(project_detail?.startDate, project_detail?.endDate);
+
+    const headings = [
+        { title: t("Task Boards"), col: "TaskBoards" },
+        { title: t("Sprint No"), col: "Sprint" },
+        { title: t("Due Date"), col: "DueDate" },
+        { title: t("Action"), col: "Action" },
+
+      ]
 
     const formik = useFormik({
         initialValues: {
@@ -72,7 +98,46 @@ export default function ProjectsDetailPage() {
 
       const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
       const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
-  
+      const rows = taskboard_list?.map((item) => ({
+        TaskBoards: <Link href={`/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+        Sprint: item?.sprintNumber,
+        DueDate:   <DisplayDate date={item?.dueDate} />,
+        Action: <DropDown icon={<ThreeDotsVertical />}>
+              <ul className="zt-themeDropDownList zt-sm gap-1">
+                <li className="!p-0">
+                  <a
+                    className={
+                      "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark"
+                    }
+                    onClick={() => {
+                      setEditBoard(item);
+                      setBoard(true);
+                    }}
+                  >
+                    <span>
+                      <Edit />
+                    </span>
+                    <span>{t("Edit")}</span>
+                  </a>
+                </li>
+                <li className="!p-0">
+                  <a
+                    onClick={() => {
+                      deleteHandler(item);
+                    }}
+                    className={
+                      "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"
+                    }
+                  >
+                    <span>
+                      <Trash />
+                    </span>
+                    <span>{t("Delete")}</span>
+                  </a>
+                </li>
+              </ul>
+            </DropDown>
+      }));
     return (
     <>
         { project_detail &&
@@ -125,7 +190,23 @@ export default function ProjectsDetailPage() {
 
                         </div>
                     </div>
+                    <div className="bg-white p-6 rounded-lg">
+                    <Table
+                    headings={headings}
+                    rows={rows}
+                    //   sortCol={sortCol}
+                    //   setSortCol={setSortCol}
+                    //   sortDir={sortDir}
+                    //   setSortDir={setSortDir}
+                    //   perPage={perPage}
+                    //   setPerPage={setPerPage}
+                    //   page={page}
+                    //   pagination={pagination}
+                    //   setPage={setPage}
+                    className={'zt-employeeTable zt-projectsTable'}/>
+                    </div>
                 </div>
+
                 <div className='flex flex-col gap-6 min-w-[388px]'>
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
                         <div className='flex justify-between items-center'>
@@ -261,8 +342,12 @@ export default function ProjectsDetailPage() {
         {board && <CreateBoardForm
             title={t('Create Task Board')}
             type={'Feedback'}
+            object={editBoard}
             additionFields={project_detail}
-            onClose={() => { setBoard(false) }}
+            onClose={() => { 
+                setBoard(false);
+                setEditBoard(null);
+            }}
           />}
     </>)
 }

@@ -16,7 +16,7 @@ import { FetchProject , DeleteProject} from '@/store/actions/project.actions';
 export default function ProjectsModule() {
   const dispatch = useDispatch();
   const { t } = useTranslation() 
-  const [view, setView] = useState("grid")
+  const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
@@ -30,9 +30,16 @@ export default function ProjectsModule() {
     status: null,
   });
   useEffect(() => {
+    const savedView = localStorage.getItem('View');
+    if (savedView) {
+      setView(savedView);
+    }
     dispatch(FetchProject());
   }, [dispatch]);
   
+  useEffect(() => {
+    localStorage.setItem('View', view);
+  }, [view]);
   const deleteHandler = (item) => {
     Toast.confirmDelete(() => {
       dispatch(
@@ -225,7 +232,7 @@ export default function ProjectsModule() {
           page={page}
           setPage={setPage} />}
         {create && <CreateProjectsForm
-        onClose={() => {
+            onClose={() => {
             setCreate(false);
             setEditProject(null);
           }}

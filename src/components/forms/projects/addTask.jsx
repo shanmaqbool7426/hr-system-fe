@@ -9,7 +9,7 @@ import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfiel
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react'; 
  
-export default function AddTaskForm({ onClose, object , additionFields  }) {
+export default function AddTaskForm({ title,onClose, object , additionFields  }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { employees_list } = useSelector((state) => state.employee);
@@ -33,11 +33,11 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             leader: object?.leader?.reduce((acc, item) => {
                 acc.push(item._id);
                 return acc;
-            }, []) || "",
+              }, []) || [],
             assignedTo: object?.assignedTo?.reduce((acc, item) => {
                 acc.push(item._id);
                 return acc;
-            }, []) || "",
+              }, []) || [],
             board: additionFields?._id || "",
             project: additionFields?.project?._id || "",
             parent:object?.parent || "",
@@ -46,8 +46,8 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             name: Yup.string().required(t('Task name is required')),
             status: Yup.string().required(t('Status is required')),
             dueDate: Yup.string().required(t('Task Due date is required')),
-            assignedTo: Yup.string().required(t('Members are required')),
-            leader: Yup.string().required(t('Leader is required')),
+            assignedTo: Yup.array().required(t('Members are required')),
+            leader: Yup.array().required(t('Leader is required')),
             requiredTime : Yup.string().required(t("Time is required")),
             priority: Yup.string().required(t('Priority is required')),
             description: Yup.string().required(t('Description is required')), 
@@ -60,9 +60,11 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
         Toast.success(object ? t('Task updated successfully') : t('Task created successfully'))
         onClose()
     }
-    const filteredLeaderList = employees_list.filter(employee => !formik.values.assignedTo.includes(employee._id));
-    const filteredMemberList = employees_list.filter(employee => !formik.values.leader.includes(employee._id));
-
+    // const getFilteredEmployees = (list, excludeIds) => {
+    //     return list.filter(employee => !excludeIds.includes(employee._id));
+    // };
+    // const filteredLeaderList = getFilteredEmployees(employees_list, formik.values.leader);
+    // const filteredAssigneList = getFilteredEmployees(employees_list, formik.values.assignedTo);
     const formElements = [
         {
             type: "text",
@@ -128,11 +130,11 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             label: t('Leader'),
             value: formik.values.leader,
             required: true,
-            list: filteredLeaderList?.map((item) => ({
+            list: employees_list?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
-            multiple:false
+            multiple:true
         },
         {
             type: "select",
@@ -140,11 +142,11 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             label: t('Assign to'),
             value: formik.values.assignedTo,
             required: true,
-            list: filteredMemberList?.map((item) => ({
+            list: employees_list.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
-            multiple:false
+            multiple: true,
         },
         {
             type: "textarea",
@@ -156,7 +158,7 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
         }, 
     ]
     return (
-        <BaseForm title={object?"Edit Task":"Add New Task"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
+        <BaseForm title={object? "Edit Task": title} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
           
         </BaseForm>
     )

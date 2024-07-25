@@ -22,7 +22,6 @@ import {
 import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import { useRouter } from 'next/router'
-import Profil from '@/components/elements/Profile'
 import { FetchEmployees } from '@/store/actions/employee.actions'
 const data = [
     { name: 'High', value: 300 },
@@ -59,31 +58,10 @@ const renderCustomizedLabel = ({
 };
 const COLORS = ['#165DFF', '#E03137', '#F16E16'];
 
-const teamData = [
-    {
-        "leaders": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-        ],
-        "team": [
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-            { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-        ],
-    }
-]
-
 export default function TaskBoardDetailModule() {
     const { t } = useTranslation()
     const router = useRouter()
-    const [view, setView] = useState("grid")
+    const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
     const dispatch = useDispatch()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
@@ -101,7 +79,10 @@ export default function TaskBoardDetailModule() {
 
 
     useEffect(() => {
-        console.log('task_list', task_list)
+        const savedView = localStorage.getItem('View');
+        if (savedView) {
+            setView(savedView);
+        }
         const {boardId }= router.query;
         if (boardId){
             dispatch(FetchEmployees())
@@ -109,6 +90,10 @@ export default function TaskBoardDetailModule() {
             dispatch(FetchTaskBoardDetails(boardId));
         }
     }, [ router,dispatch]);
+
+    useEffect(() => {
+        localStorage.setItem('View', view);
+      }, [view]);
 
     const deleteHandler = (item) => {
         Toast.confirmDelete(() => {
@@ -206,8 +191,8 @@ export default function TaskBoardDetailModule() {
             TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={[item?.leader]}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={[item?.assignedTo]} />,
+            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
             Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
             TaskTime: item?.requiredTime,
             DueDate:  <DisplayDate date={item.dueDate} />,
@@ -227,7 +212,10 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={() => { setTask(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                        <a onClick={() => {
+                            setEditTask(item);
+                            setTask(true);
+                            }}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -239,10 +227,7 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={() => {
-                                setCreate(true);
-                                setEditTask(item)
-                                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span><Edit /></span>
                             <span>{t("Change Status")}</span>
                         </a>
@@ -266,6 +251,11 @@ export default function TaskBoardDetailModule() {
         clickAction: (value) => setPage(value),
         nextAction: () => setPage(page + 1),
       };
+      const totalTasks = filteredRows?.length || 0;
+      const completedTasks = filteredRows?.filter(task => task.status === 'completed').length || 0;
+  
+      const progressPercentage = totalTasks > 0 ? ((completedTasks / totalTasks) * 100).toFixed(0) : 0;
+
     const taskStatus = [
         {
             status: "Pending",
@@ -309,7 +299,7 @@ export default function TaskBoardDetailModule() {
         },
     ]
     return (
-       taskboard_details &&
+       taskboard_details && 
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
@@ -363,18 +353,14 @@ export default function TaskBoardDetailModule() {
                             <div className='flex gap-20 mb-4'>
                                 <div className='zt-projectTeam flex flex-col gap-3'>
                                     <strong>Project Leader</strong>
-                                    {teamData.map((ele, i) => (
-                                        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-                                    ))}
+                                        <UserListView imgClass="h-[32px] w-[32px]" list={taskboard_details?.leads} limit={2} />
                                 </div>
                                 <div className='zt-projectLeaders flex flex-col gap-3'>
                                     <strong> Team</strong>
-                                    {teamData.map((ele, i) => (
-                                        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.leaders} limit={3} />
-                                    ))}
+                                        <UserListView imgClass="h-[32px] w-[32px]"  list={taskboard_details?.members} limit={2} />
                                 </div>
                             </div>
-                            <ProgressBar percentage={"40%"} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
+                            <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'}  />
                             <div className='grid grid-cols-3 gap-6 py-6'>
                             {paginatedData?.map((task, index) => (
                                     <TaskCard key={index} taskData={task} />
@@ -414,9 +400,13 @@ export default function TaskBoardDetailModule() {
                     onClose={() => { setFeedback(false) }}
                 />}
                 {task && <AddTaskForm 
+                    title={t('Create Task')}
                     object={editTask}
-                   additionFields={taskboard_details} 
-                    onClose={() => { setTask(false); setEditTask(null); }}
+                    additionFields={taskboard_details} 
+                    onClose={() => { 
+                        setTask(false);
+                        setEditTask(null);
+                    }}
                 />}
                 {discussion && <DiscussionForm
                     onClose={() => { setDiscussion(false) }}
