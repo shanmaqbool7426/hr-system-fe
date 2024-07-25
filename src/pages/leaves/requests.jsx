@@ -102,8 +102,7 @@ export default function LeaveRequestsPage() {
     },
   ]
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
+   
     { title: t("S# Employee"), col: "SEmployee" },
     { title: t("Employee Details"), col: "Employee_Details", },
     { title: t("Leave Details"), col: "Leave_Details" },
@@ -113,14 +112,7 @@ export default function LeaveRequestsPage() {
   ]
   const rows = [
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`1`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '1',
+     
       SEmployee: <div className="flex flex-col items-center justify-center">
         <span className="font-medium">{t("Jhon Carter")}</span>
         <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -193,14 +185,6 @@ export default function LeaveRequestsPage() {
       </DropDown>,
     },
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`2`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '2',
       SEmployee: <div className="flex flex-col items-center justify-center">
         <span className="font-medium">{t("Jhon Carter")}</span>
         <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -273,14 +257,7 @@ export default function LeaveRequestsPage() {
       </DropDown>,
     },
     {
-      sr: <div className="flex items-center">
-        <CheckBox
-          id={`3`}
-          size={'sm'}
-          variant={'dark'}
-        />
-      </div>,
-      SerailNo: '3',
+      
       SEmployee: <div className="flex flex-col items-center justify-center">
         <span className="font-medium">{t("Jhon Carter")}</span>
         <span className="text-themeGrayscale500">{t("10202325")}</span>

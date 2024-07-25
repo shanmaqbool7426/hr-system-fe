@@ -36,7 +36,7 @@ export default function SearchSelect({
       const index = list?.findIndex((item) =>
         item.value
           .replace(/\s+/g, "")
-          .includes(payload.toLowerCase().replace(/\s+/g, ""))
+          .includes(payload?.toLowerCase()?.replace(/\s+/g, ""))
       );
       if (typeof list[index]?.display === "string") return list[index]?.display;
     }

@@ -82,8 +82,7 @@ export default function EmployeesListPage() {
   ];
 
   const headings = [
-    { title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+    
     { title: t("Employee Name"), col: "firstName", sort: true },
     { title: t("Designation"), col: "designation", sort: false },
     { title: t("Project"), col: "project", sort: false },
@@ -119,15 +118,7 @@ export default function EmployeesListPage() {
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
   const rows = paginatedData?.map((item,i) => {
-    return {
-      sr: <div className="flex items-center">
-				<CheckBox
-					id={i} 
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: i+1,
+    return { 
       firstName: (
         <Link
           href={`/employees/details/${item._id}`}

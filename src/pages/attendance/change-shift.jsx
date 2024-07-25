@@ -103,8 +103,7 @@ export default function ChangeShift() {
     ]
 
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Date"), col: "date", },

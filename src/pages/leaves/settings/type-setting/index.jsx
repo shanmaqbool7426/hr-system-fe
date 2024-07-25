@@ -10,8 +10,7 @@ export default function LeaveTypeSettingsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Title"), col: "Title" },
         { title: t("Leave Entitled"), col: "LeaveEntitled" },
         { title: t("Leave Encashment"), col: "LeaveEncashment" },
@@ -22,14 +21,7 @@ export default function LeaveTypeSettingsPage() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             Title: 'Maternity Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -57,14 +49,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             Title: 'Internship Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -92,14 +77,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`3`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '3',
+           
             Title: 'Compensatory leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -127,14 +105,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`4`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '4',
+          
             Title: 'Marriage Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -162,14 +133,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`5`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '5',
+         
             Title: 'Probation Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -197,14 +161,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`6`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '6',
+          
             Title: 'Casual Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -232,14 +189,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`7`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '7',
+          
             Title: 'Sick Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,
@@ -267,14 +217,7 @@ export default function LeaveTypeSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`8`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '8',
+           
             Title: 'Annual Leave',
             LeaveEntitled: "45",
             LeaveEncashment: <span className='flex justify-center'><CloseCross className={'text-themeDanger'} /></span>,

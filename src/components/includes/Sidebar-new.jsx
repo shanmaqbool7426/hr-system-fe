@@ -28,7 +28,7 @@ export default function Sidebar() {
     { icon: Employees, name: t("Employees"), href: "employees" },
     { icon: Attendance, name: t("Attendance"), href: "attendance" },
     { icon: Leave, name: t("Leave"), href: "leave" },
-    { icon: Projects, name: t("Projects"), href: "projects" },
+    { icon: Projects, name: t("Operations"), href: "operations" },
     { icon: Connect, name: t("Connect"), href: "connect", },
     { icon: RemoteWork, name: t("Remote Work"), href: "remoteWork" },
     { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
@@ -125,45 +125,53 @@ export default function Sidebar() {
         ]
       },
     ],
-    projects: [
+    operations: [
       {
-        name: t("Projects Management"), href: "/projects",
+        name: t("Projects Management"), href: "/operations/projects",
         innerSubMenu: [
-          { name: t('Dashboard'), href: "/projects/dashboard" },
-          { name: t("Projects"), href: "/projects" },
-          { name: t("Task Board"), href: "/projects/task-board" },
-          { name: t("Awaiting Tasks"), href: "/projects/awaiting-tasks" },
-          { name: t("Overdue Tasks"), href: "/projects/overdue-tasks" },
-          { name: t("Feedback"), href: "/projects/feedback" },
+          { name: t('Dashboard'), href: "/operations/projects/dashboard" },
+          { name: t("Projects"), href: "/operations/projects" },
+          { name: t("Task Board"), href: "/operations/projects/task-board" },
+          { name: t("Awaiting Tasks"), href: "/operations/projects/awaiting-tasks" },
+          { name: t("Overdue Tasks"), href: "/operations/projects/overdue-tasks" },
+          { name: t("Feedback"), href: "/operations/projects/feedback" },
           // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
         ]
       }, 
       {
-        name: t("Helpdesk"), href: "/helpdesk",
+        name: t("Helpdesk"), href: "/operations/helpdesk",
         innerSubMenu: [
-          { name: t('Dashboard'), href: "/helpdesk/dashboard" },
-          { name: t("Tickets"), href: "/helpdesk/tickets" }, 
+          { name: t('Dashboard'), href: "/operations/helpdesk/dashboard" },
+          { name: t("Tickets"), href: "/operations/helpdesk/tickets" }, 
         ]
       }, 
       {
-        name: t("Vendor Management"), href: "/vendor-management",
+        name: t("Vendor Management"), href: "/operations/vendor-management",
         innerSubMenu: [
-          { name: t('Dashboard'), href: "/vendor-management/dashboard" },
-          { name: t("Vendor Management"), href: "/vendor-management" }, 
+          { name: t('Dashboard'), href: "/operations/vendor-management/dashboard" },
+          { name: t("Vendor Management"), href: "/operations/vendor-management" }, 
         ]
       }, 
       {
-        name: t("Procurement"), href: "/procurement",
+        name: t("Procurement"), href: "/operations/procurement",
         innerSubMenu: [
-          { name: t('Dashboard'), href: "/procurement/dashboard" },
-          { name: t("Procurement"), href: "/procurement" }, 
+          { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
+          { name: t("Procurement"), href: "/operations/procurement" }, 
         ]
       }, 
       {
-        name: t("Meal"), href: "/meal",
+        name: t("Inventory"), href: "/operations/inventory",
         innerSubMenu: [
-          { name: t('Dashboard'), href: "/meal/dashboard" },
-          { name: t("Lunch Menu"), href: "/meal/lunch-menu" }, 
+          { name: t('Asset List'), href: "/operations/inventory" },
+          { name: t('Asset History'), href: "/operations/inventory/asset-history" },
+          { name: t('Repair History'), href: "/operations/inventory/repair-history" },
+          { name: t('Delete History'), href: "/operations/inventory/delete-history" },
+        ]
+      },
+      {
+        name: t("Meal"), href: "/operations/meal",
+        innerSubMenu: [ 
+          { name: t("Meal Menu"), href: "/operations/meal/meal-menu" }, 
         ]
       }, 
     ],
@@ -206,15 +214,13 @@ export default function Sidebar() {
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
-      { name: t("Screenshot"), href: "/remote-work/screenshot" },
-      { name: t("Reports"), href: "/remote-work/reports" },
+      { name: t("Screenshot"), href: "/remote-work/screenshot" }, 
       {
         name: t("Setting"), href: "/remote-work/setting",
         innerSubMenu: [
-          { name: t('Billing'), href: "/remote-work/setting/billing" },
-          { name: t('Profile'), href: "/remote-work/setting/profile" },
-          { name: t('Employees'), href: "/remote-work/setting/employees" },
-          { name: t('Teams'), href: "/remote-work/setting/teams" },
+          // { name: t('Profile'), href: "/remote-work/setting/profile" },
+          { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
+          { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
           { name: t('Account'), href: "/remote-work/setting/account" },
           { name: t('Apps'), href: "/remote-work/setting/apps" },
           { name: t('Category'), href: "/remote-work/setting/category" },
@@ -252,15 +258,6 @@ export default function Sidebar() {
     organization: [
       { name: t("System logs"), href: "/organization/system-logs" },
       { name: t("Announcements"), href: "/organization/announcements" },
-      {
-        name: t("Inventory"), href: "/organization/inventory",
-        innerSubMenu: [
-          { name: t('Asset List'), href: "/organization/inventory" },
-          { name: t('Asset History'), href: "/organization/inventory/asset-history" },
-          { name: t('Repair History'), href: "/organization/inventory/repair-history" },
-          { name: t('Delete History'), href: "/organization/inventory/delete-history" },
-        ]
-      },
       {
         name: t("Custom Fields"), href: "/organization/custom-fields",
         innerSubMenu: [
@@ -313,6 +310,8 @@ export default function Sidebar() {
         ]
       },
      
+      { name: t("Departments"), href: "/organization/departments" },
+      { name: t('Billing'), href: "/organization/billing" },
     ]
   }
   return (

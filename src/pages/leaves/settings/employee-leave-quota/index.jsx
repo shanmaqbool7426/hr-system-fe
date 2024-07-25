@@ -11,8 +11,7 @@ export default function LeaveQuotaSettingsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("S# Employee"), col: "SEmployee" },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Quota Dates"), col: "QuotaDates" },
@@ -24,14 +23,7 @@ export default function LeaveQuotaSettingsPage() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
+          
             SEmployee: <div className="flex flex-col justify-center items-center">
                 <span className="font-medium">{t("Jhon Carter")}</span>
                 <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -114,14 +106,7 @@ export default function LeaveQuotaSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
+        
             SEmployee: <div className="flex flex-col justify-center items-center">
                 <span className="font-medium">{t("Jhon Carter")}</span>
                 <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -204,14 +189,7 @@ export default function LeaveQuotaSettingsPage() {
             </DropDown>,
         },
         {
-            sr: <div className="flex items-center">
-            <CheckBox
-                id={`3`}
-                size={'sm'}
-                variant={'dark'}
-            />
-        </div>,
-        SerailNo: '3',
+            
         SEmployee: <div className="flex flex-col justify-center items-center">
             <span className="font-medium">{t("Jhon Carter")}</span>
             <span className="text-themeGrayscale500">{t("10202325")}</span>

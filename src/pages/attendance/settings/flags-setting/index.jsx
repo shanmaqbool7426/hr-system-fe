@@ -32,8 +32,7 @@ export default function AttendanceFlagsSettingPage() {
   }, [dispatch]);
 
   const headings = [
-    { title: t(""), col: "sr", check: true },
-    { title: t("Sr#"), col: "SerailNo" },
+   
     { title: t("Reason Type"), col: "name" },
     { title: t("Deduction"), col: "deduction" },
     { title: t("Modified On"), col: "modifiedOn" },
@@ -81,14 +80,6 @@ export default function AttendanceFlagsSettingPage() {
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
   const rows = paginatedData?.map((item,i) => ({
-    sr: <div className="flex items-center">
-      <CheckBox
-        id={i}
-        size={'sm'}
-        variant={'dark'}
-      />
-    </div>,
-    SerailNo: i+1,
     name: item?.name,
     deduction: item?.deduction,
     modifiedOn: (

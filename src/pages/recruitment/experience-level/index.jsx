@@ -17,8 +17,7 @@ export default function ExperienceLevelPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
-		{ title: t(""), col: "sr", check: true },
-		{ title: t("Sr#"), col: "SerailNo" },
+		
 		{ title: t("Experience"), col: "Experience" },
 		{ title: t("Status"), col: "Status", },
 		{ title: t("Action"), col: "action" }
@@ -26,14 +25,7 @@ export default function ExperienceLevelPage() {
 
 	const rows = [
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-success !rounded-md">{t("Active")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -60,14 +52,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '2',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-danger !rounded-md">{t("Unactive")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -94,14 +79,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '3',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-success !rounded-md">{t("Active")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -128,14 +106,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '4',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-danger !rounded-md">{t("Unactive")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -162,14 +133,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '5',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-danger !rounded-md">{t("Unactive")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -196,14 +160,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '6',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-danger !rounded-md">{t("Unactive")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -230,14 +187,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '7',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-success !rounded-md">{t("Active")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>
@@ -264,14 +214,7 @@ export default function ExperienceLevelPage() {
 			</DropDown>
 		},
 		{
-			sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '8',
+			
 			Experience: '1-2 Years',
 			Status: <span className="zt-tag zt-tag-success !rounded-md">{t("Active")}</span>,
 			action: <DropDown icon={<ThreeDotsVertical />}>

@@ -15,8 +15,7 @@ export default function AssetsList() {
     const [perPage, setPerPage] = useState(10)
     const [raiseIssue, setRaiseIssue] = useState(false)
     const headings = [
-        { title: t(""), col: "sr", check: true },
-        { title: t("Sr#"), col: "SerailNo" },
+    
         { title: t("Asset ID"), col: "assetID", sort: false },
         { title: t("Asset Name"), col: "AssetName", sort: true },
         { title: t("Assigned Date"), col: "assignedDate", sort: false },
@@ -26,17 +25,7 @@ export default function AssetsList() {
     ]
     const rows = [
         {
-            sr: <div className="flex items-center">
-				<CheckBox
-					id={`1`}
-					// name={`checkbox-${index}`}
-					// checked={checkedItems[index] || false}
-					// onChange={(e) => handleCheckItem(index, e.target.checked)}
-					size={'sm'}
-					variant={'dark'}
-				/>
-			</div>,
-			SerailNo: '1',
+           
             assetID: <Link href={'/organization/inventory/details/REN-L-001'}>REN-L-001</Link>,
             AssetName: "Laptop",
             assignedDate: "14 Apr 2024",
