@@ -18,13 +18,7 @@ export default function CreateBoardForm({ title, onClose, type, object, addition
 
     useEffect(() => {
         dispatch(FetchEmployees());
-    }, [dispatch]);
-    const [filters, setFilters] = useState({
-        search: "",
-        project: null,
-        department: null,
-        status: null,
-    })
+    }, [dispatch]); 
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",

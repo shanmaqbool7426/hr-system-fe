@@ -162,7 +162,7 @@ export const OnGoingProjects = () => {
           <button onClick={handleNextSlide} className='rounded-full bg-themeGrayscale50 h-10 w-10 flex justify-center items-center rotate-180'><ChevronLeft /></button>
         </div>
       </div>
-      <div className='max-w-[300px] md:max-w-[500px] lg:max-w-[1280px] lg:min-w-[1280px]'>
+      <div className='max-w-[300px] md:max-w-[500px] xl:max-w-[1024px] xl:min-w-[1024px]'>
         <Swiper
           spaceBetween={24}
           breakpoints={{

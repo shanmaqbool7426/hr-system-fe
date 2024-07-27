@@ -135,7 +135,7 @@ export default function Sidebar() {
           { name: t("Awaiting Tasks"), href: "/operations/projects/awaiting-tasks" },
           { name: t("Overdue Tasks"), href: "/operations/projects/overdue-tasks" },
           { name: t("Feedback"), href: "/operations/projects/feedback" },
-          // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+          { name: t("Reported Issues"), href: "/operations/projects/reported-issues" },
         ]
       }, 
       {

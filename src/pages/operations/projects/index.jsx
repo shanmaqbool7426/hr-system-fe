@@ -125,7 +125,7 @@ export default function ProjectsModule() {
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
   const rows = paginatedData?.map((item,index) => ({
-      Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+      Project: <Link href={`/operations/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
       ProjectID: item?.projectId,
       Client: item?.client,
       Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
@@ -136,7 +136,7 @@ export default function ProjectsModule() {
         <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-1">
           <li className="!p-0">
-              <a href={`/projects/details/${item?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+              <a href={`/operations/projects/details/${item?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                 <span><EyeOn /></span>
                 <span>Details</span>
               </a>
@@ -207,7 +207,6 @@ export default function ProjectsModule() {
             {paginatedData?.map((project) => (
               <ProjectCard key={project?._id} projectData={project} />
             ))}
-
           </div> :
           <Table
             headings={headings}

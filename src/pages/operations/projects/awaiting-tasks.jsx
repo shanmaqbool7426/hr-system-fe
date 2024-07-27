@@ -20,7 +20,6 @@ export default function AwaitingTasksPage() {
         { title: t("Report"), col: "issue" },
         { title: t("Action"), col: "action" },
     ]
-
     const rows = [
         {
           
