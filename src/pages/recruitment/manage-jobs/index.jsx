@@ -1,11 +1,13 @@
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
-import { useState } from "react";
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Applicants, Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import AddJob from "@/components/forms/organization/jobs/AddJob";
+import { fetchJobs } from "@/store/actions/job.actions";
 
-const user = ls?.get('auth_user', { decrypt: true })
+const user = ls?.get('auth_user', { decrypt: true });
 
 export default function ManageJobsPage() {
 	const { t } = useTranslation()

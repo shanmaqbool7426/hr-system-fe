@@ -2,6 +2,8 @@ import Button from "../elements/Button"
 import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, DisplayDate } from "../elements"
 import { useTranslation } from "react-i18next"
 import Radio from "../elements/Radio"
+import { useSelector } from 'react-redux';
+
 
 export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className }) {
     const { t } = useTranslation()
@@ -9,7 +11,10 @@ export default function BaseForm({ children, formElements, onClose, title, formi
     const submitHamdler = (event) => {
         event.preventDefault()
         formik.submitForm()
+
     }
+
+
     return (
         <div className="zt-backDropSidePanel">
             <div className="zt-sidePanel">
