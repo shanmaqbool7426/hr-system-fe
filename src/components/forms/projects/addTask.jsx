@@ -3,30 +3,21 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateTask,UpdateTask,FetchTask } from '@/store/actions/task.actions';
-import { FetchEmployees } from '@/store/actions/employee.actions';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
+import { CreateTask, UpdateTask } from '@/store/actions/task.actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react'; 
- 
-export default function AddTaskForm({ title,onClose, object , additionFields  }) {
+import { ChevronLeft } from '@/components/svg';
+
+export default function AddTaskForm({ onClose, object, additionFields, back }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { employees_list } = useSelector((state) => state.employee);
-    const {task_list, is_loading } = useSelector(state => state.task)
-   
-    const [filters, setFilters] = useState({
-        search: "",
-        project: null,
-        department: null,
-        status: null,
-    })
+    const { task_list, is_loading } = useSelector(state => state.task)
 
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
             status: object?.status || "",
-            description: object?.description || "", 
+            description: object?.description || "",
             dueDate: object?.dueDate || "",
             requiredTime: object?.requiredTime || "",
             priority: object?.priority || "",
@@ -34,7 +25,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             assignedTo: object?.assignedTo?.map(item => item._id) || [],
             board: additionFields?._id || "",
             project: additionFields?.project?._id || "",
-            parent:object?.parent || "",
+            parent: object?.parent || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('Task name is required')),
@@ -42,10 +33,10 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             dueDate: Yup.string().required(t('Task Due date is required')),
             assignedTo: Yup.array().required(t('Member is required')),
             leader: Yup.array().required(t('Leader is required')),
-            requiredTime : Yup.string().required(t("Time is required")),
+            requiredTime: Yup.string().required(t("Time is required")),
             priority: Yup.string().required(t('Priority is required')),
-            description: Yup.string().required(t('Description is required')), 
-      }),
+            description: Yup.string().required(t('Description is required')),
+        }),
         onSubmit: async (values) => {
             return object ? dispatch(UpdateTask(object._id, values, onCompleted)) : dispatch(CreateTask(values, onCompleted))
         }
@@ -54,7 +45,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         Toast.success(object ? t('Task updated successfully') : t('Task created successfully'))
         onClose()
     }
-    
+
 
     const formElements = [
         {
@@ -75,7 +66,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
                 value: item?._id,
                 display: item?.name,
             })),
-            multiple:false
+            multiple: false
         },
         {
             type: "select",
@@ -92,10 +83,10 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         {
             type: "date",
             name: "dueDate",
-            label: t('Due Date'), 
+            label: t('Due Date'),
             required: true,
             value: formik.values.dueDate,
-        }, 
+        },
         {
             type: "select",
             name: "priority",
@@ -111,10 +102,10 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         {
             type: "time",
             name: "requiredTime",
-            label: t('Task Time'), 
+            label: t('Task Time'),
             required: true,
             value: formik.values.requiredTime,
-        }, 
+        },
         {
             type: "select",
             name: "leader",
@@ -125,7 +116,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
-            multiple:true
+            multiple: true
         },
         {
             type: "select",
@@ -142,16 +133,17 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         {
             type: "textarea",
             name: "description",
-            label: t('Description'), 
-            containerClass:"col-span-2",
+            label: t('Description'),
+            containerClass: "col-span-2",
             required: true,
             value: formik.values.description,
-        }, 
+        },
     ]
     return (
-        <BaseForm title={object? "Edit Task": title} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-          
+        <BaseForm title={object ? "Edit Reported Task" : 'Create Task'} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
+            {back &&
+                <button onClick={() => onClose()} className='absolute left-1 top-9 text-h4'><ChevronLeft className={'h-5 w-4'} /></button>
+            }
         </BaseForm>
     )
 }
- 

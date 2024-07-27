@@ -154,7 +154,7 @@ export default function ProjectsDetailPage() {
                 </div>
             </div>
             <div className='flex gap-6 items-start'>
-                <div className='flex flex-col gap-6'>
+                <div className='flex flex-col gap-6 grow'>
                     <div className='bg-white p-6 rounded-lg'>
                         <div className='flex justify-between items-center mb-2'>
                             <h2 className='text-lg font-bold mb-0'>{t(project_detail?.name)}</h2>

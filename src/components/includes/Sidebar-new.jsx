@@ -135,7 +135,7 @@ export default function Sidebar() {
           { name: t("Awaiting Tasks"), href: "/operations/projects/awaiting-tasks" },
           { name: t("Overdue Tasks"), href: "/operations/projects/overdue-tasks" },
           { name: t("Feedback"), href: "/operations/projects/feedback" },
-          // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+          { name: t("Reported Task"), href: "/operations/projects/reported-task" },
         ]
       }, 
       {
@@ -263,12 +263,13 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Group"), href: "/organization/custom-fields/group" },
           { name: t("Designation"), href: "/organization/custom-fields/designation" },
+          { name: t("Emp Onboarding Tasks"), href: "/organization/custom-fields/employee-onboarding" },
+          { name: t("Exit Clearance"), href: "/organization/custom-fields/exit-clearance" },
           { name: t("Allowance Title"), href: "/organization/custom-fields/allowance-title" },
           { name: t("Deduction Title"), href: "/organization/custom-fields/deduction-title" },
           { name: t("Station"), href: "/organization/custom-fields/station" },
           { name: t("Bank"), href: "/organization/custom-fields/bank" },
-          { name: t("Job Title"), href: "/organization/custom-fields/job-title" },
-          { name: t("Departments"), href: "/organization/custom-fields/departments" },
+          { name: t("Job Title"), href: "/organization/custom-fields/job-title" }, 
           { name: t("Job Field"), href: "/organization/custom-fields/job-field" },
           { name: t("Asset Type"), href: "/organization/custom-fields/asset-type" },
           { name: t("Asset Status"), href: "/organization/custom-fields/asset-status" },

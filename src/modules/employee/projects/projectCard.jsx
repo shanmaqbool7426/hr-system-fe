@@ -37,13 +37,13 @@ export default function ProjectCard ({ key, projectData }) {
      <div className='zt-projectCard'>
       <div className='zt--projectCardHead'>
         <div>
-          <Link href={`/operations/projects/details/${projectData?._id}`} className='mb-0 text-h5 no-underline'>{t(projectData.name)}</Link>
+          <Link href={`/operations/operations/projects/details/${projectData?._id}`} className='mb-0 text-h5 no-underline'>{t(projectData.name)}</Link>
           <p className='mb-0'><span>{t(projectData.openTasks)} open tasks</span>,<span>{t(projectData.completedTasks)} tasks completed</span></p>
         </div>
         <DropDown icon={<ThreeDotsVertical className={'text-themePurple'} width={'1.5rem'} />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
           <li className="!p-0">
-              <a href={`/projects/details/${projectData?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+              <a href={`/operations/projects/details/${projectData?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                 <span><EyeOn /></span>
                 <span>Details</span>
               </a>

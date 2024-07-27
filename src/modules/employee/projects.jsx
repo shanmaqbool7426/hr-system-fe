@@ -3,7 +3,7 @@ import React from 'react'
 
 const Projects = [
   {
-    href:"/projects/details",
+    href:"/operations/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -28,7 +28,7 @@ const Projects = [
     "progress": "70%"
   },
   {
-    href:"/projects/details",
+    href:"/operations/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -53,7 +53,7 @@ const Projects = [
     "progress": "40%"
   },
   {
-    href:"/projects/details",
+    href:"/operations/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -78,7 +78,7 @@ const Projects = [
     "progress": "20%"
   },
   {
-    href:"/projects/details",
+    href:"/operations/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,
@@ -103,7 +103,7 @@ const Projects = [
     "progress": "70%"
   },
   {
-    href:"/projects/details",
+    href:"/operations/projects/details",
     "name": "Office Management",
     "openTasks": 1,
     "completedTasks": 9,

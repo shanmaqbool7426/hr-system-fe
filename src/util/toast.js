@@ -48,9 +48,9 @@ const Toast = {
             }
         });
     },
-    confirmRevoke(successCallback, t) {
+    daynamicTitle(successCallback, t,title) {
         Swal.fire({
-            title: t("Are you want to revoke remote access for this employee?"),
+            title: t(`${title}`),
             showDenyButton: true,
             confirmButtonText: t("Yes"),
             denyButtonText: t("No"),
@@ -59,7 +59,7 @@ const Toast = {
                 successCallback()
             }
         });
-    }
+    }, 
 }
 
 export default Toast

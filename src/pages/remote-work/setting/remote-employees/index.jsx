@@ -113,11 +113,11 @@ export default function Employees() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.confirmRevoke(() => {
+                            Toast.daynamicTitle(() => {
                                 // dispatch(DeleteCustomfield(item._id, () => {
                                 Toast.success(t("Remote Access Revoked Successfully"))
                                 // }))
-                            }, t)
+                            }, t,'Are you want to revoke remote access for this employee?')
                         }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
                             <span><Trash /></span>
                             <span>{t("Revoke")}</span>
@@ -157,11 +157,11 @@ export default function Employees() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.confirmRevoke(() => {
+                            Toast.daynamicTitle(() => {
                                 // dispatch(DeleteCustomfield(item._id, () => {
                                 Toast.success(t("Remote Access Revoked Successfully"))
                                 // }))
-                            }, t)
+                            }, t,'Are you want to revoke remote access for this employee?')
                         }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
                             <span><Trash /></span>
                             <span>{t("Revoke")}</span>

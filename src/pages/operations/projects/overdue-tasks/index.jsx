@@ -228,8 +228,7 @@ export default function TaskBoardDetailModule() {
 				{discussion && <DiscussionForm
 					onClose={() => { setDiscussion(false) }}
 				/>}
-				 {task && <AddTaskForm 
-                    title={t('Create Task')}
+				 {task && <AddTaskForm  
                     object={editTask}
                     // additionFields={taskboard_details} 
                     onClose={() => { 

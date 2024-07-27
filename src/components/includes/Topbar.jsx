@@ -125,7 +125,7 @@ const Topbar = () => {
           <li><span onClick={toggleDarkMode} className="cursor-pointer select-none">{!!darkMode ? <Moon /> : <Sun />}</span></li>
           <li>
             <DropDown size={'zt-lg'} icon={<Profile name={auth_user?.firstName} image={auth_user?.avatar} />}>
-              <div className="absolute bg-white p-4 right-0 top-12 border rounded-lg zt-dropDownSM">
+              <div className="z-50 absolute bg-white p-4 right-0 top-12 border rounded-lg zt-dropDownSM">
                 <Menu.Items as='ul' className={"flex flex-col gap-3"}>
                   <Menu.Item as='li' className='w-full' ><Link href={"/profile"}>Profile</Link></Menu.Item>
                   <Menu.Item as='li' className='w-full cursor-pointer'><span onClick={signoutHandler}>Sign Out</span></Menu.Item>

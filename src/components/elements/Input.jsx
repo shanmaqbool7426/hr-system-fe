@@ -33,7 +33,7 @@ export default function Input({ name, formik, className, containerClass, type, l
                     name={name}
                     onBlur={formik?.handleBlur}
                     onInput={formik?.handleBlur}
-                    className={`zt-themeInput${formik?.touched[name] && formik?.errors[name] ? " zt-error" : ""}${className}`}
+                    className={`zt-themeInput ${formik?.touched[name] && formik?.errors[name] ? " zt-error" : ""}${className}`}
                     type={type}
                     onChange={(e) => { props.onChange ? props.onChange(e) : formik?.handleChange(e) }}
                     {...props}

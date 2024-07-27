@@ -26,10 +26,10 @@ export default function EmployeeProfile() {
       contact: employee_details?.contact || "",
       dateOfBirth: employee_details?.dateOfBirth || "",
       address: employee_details?.address || "",
-      lineManager : object?.lineManager?.reduce((acc, item) => {
-        acc.push(item._id);
-        return acc;
-      }, []) || [],
+      // lineManager : object?.lineManager?.reduce((acc, item) => {
+      //   acc.push(item._id);
+      //   return acc;
+      // }, []) || [],
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t('formik.firstNameRequired')),
