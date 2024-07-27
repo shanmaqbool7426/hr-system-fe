@@ -1,6 +1,5 @@
 import { Button, CheckBox, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
-import ProgressBar from '@/components/elements/ProgressBar'
-import StatusSelect from '@/components/elements/StatusSelect'
+import ProgressBar from '@/components/elements/ProgressBar' 
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import  Pagination  from '@/components/elements/Table/pagination'
