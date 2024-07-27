@@ -1,127 +1,65 @@
 import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import CreateProjectsForm from '@/components/forms/projects/createProjects' 
 import FilterArea from '@/components/includes/FilterArea'
-import { Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash } from '@/components/svg'
+import {  EyeOn, GridIcon, ListIcon } from '@/components/svg'
 import ProjectCard from '@/modules/employee/projects/projectCard'
-import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import  Pagination  from '@/components/elements/Table/pagination'
+import Toast from "@/util/toast";
+import React, { useEffect, useState } from 'react'
+import { Edit,  ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { FetchProject , DeleteProject} from '@/store/actions/project.actions';
 
-const Projects = [
-  {
-    "name": "Office Management",
-    href: "/projects/details",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "70%"
-  },
-  {
-    "name": "Office Management",
-    href: "/projects/details",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-07.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "40%"
-  },
-  {
-    href: "/projects/details",
-    "name": "Office Management",
-    "openTasks": 1,
-    "completedTasks": 9,
-    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...",
-    "deadline": "17 Apr 2024",
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-07.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-    "progress": "20%"
-  },
-]
-const tableData = [
-  {
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-  }
-]
 export default function ProjectsModule() {
-  const { t } = useTranslation()
-  const [view, setView] = useState("grid")
+  const dispatch = useDispatch();
+  const { t } = useTranslation() 
+  const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
+  const { project_list , is_loading} = useSelector(state => state.project);
   const [create, setCreate] = useState(false)
-  const { customfield_list } = useSelector(state => state.customfield)
+  const [editProject, setEditProject] = useState(null);
   const [filters, setFilters] = useState({
     search: "",
-    project: null,
-    department: null,
+    priority: null,
     status: null,
-  })
+  });
+  useEffect(() => {
+    const savedView = localStorage.getItem('View');
+    if (savedView) {
+      setView(savedView);
+    }
+    dispatch(FetchProject());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    localStorage.setItem('View', view);
+  }, [view]);
+  const deleteHandler = (item) => {
+    Toast.confirmDelete(() => {
+      dispatch(
+        DeleteProject(item._id, () => {
+          Toast.success(t("Project deleted successfully"));
+        })
+      );
+    }, t);
+  };
+ 
+  const headings = [
+    { title: t("Project"), col: "Project", sort: true },
+    { title: t("Project ID"), col: "ProjectID", sort: true },
+    { title: t("Client"), col: "Client", sort: true },
+    { title: t("Leader"), col: "Leader", sort: true },
+    { title: t("Team"), col: "Team", sort: true },
+    { title: t("Priority"), col: "Priority", sort: true },
+    { title: t("Status"), col: "Status", sort: true },
+    { title: t("Action"), col: "Action" },
+  ]
   const filterElements = [
     {
       type: "search",
@@ -130,96 +68,121 @@ export default function ProjectsModule() {
       placeholder: t("Project"),
       className: "xl:col-span-2",
       onChange: (event) => {
-        let _filter = { ...filters }
-        _filter['search'] = event.target.value
-        setFilters(_filter)
-      }
-    },
-    {
-      type: "customIcon",
-      name: "employee",
-      value: filters.search,
-      placeholder: t("Employee"),
-      className: "xl:col-span-2",
-      onChange: (event) => {
-        let _filter = { ...filters }
-        _filter['search'] = event.target.value
-        setFilters(_filter)
+        let _filter = { ...filters };
+        _filter['search'] = event.target.value;
+        setFilters(_filter);
       }
     },
     {
       type: "select",
-      name: "Designation",
+      name: "Priority",
       className: "xl:col-span-2",
-      placeholder: "Designation",
-      value: filters.status,
-      list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-        return { value: item._id, display: item.name }
-      }),
-      onChange: (status) => {
-        let _filter = { ...filters }
-        _filter['status'] = status
-        setFilters(_filter)
+      placeholder: t("Priority"),
+      value: filters.priority,
+      list: [
+        { value: "low", display: "Low" },
+        { value: "normal", display: "Normal" },
+        { value: "high", display: "High" },
+      ],
+      onChange: (priority) => {
+        let _filter = { ...filters };
+        _filter['priority'] = priority;
+        setFilters(_filter);
       }
     },
-  ]
-  const headings = [
-		
-    { title: t("Project"), col: "Project", sort: true },
-    { title: t("Project ID"), col: "ProjectID", sort: true },
-    { title: t("Client"), col: "Client", sort: true },
-    { title: t("Leader"), col: "Leader", sort: true },
-    { title: t("Team"), col: "Team", sort: true },
-    { title: t("Task Time"), col: "TaskTime", sort: true },
-    { title: t("Deadline"), col: "Deadline", sort: true },
-    { title: t("Priority"), col: "Priority", sort: true },
-    { title: t("Status"), col: "Status", sort: true },
-    { title: t("Amount"), col: "Amount", sort: true },
-    { title: t("Action"), col: "Action" },
-  ]
+    {
+      type: "select",
+      name: "Status",
+      className: "xl:col-span-2",
+      placeholder: t("Status"),
+      value: filters.status,
+      list: [
+        { value: "new", display: "New" },
+      ],
+      onChange: (status) => {
+        let _filter = { ...filters };
+        _filter['status'] = status;
+        setFilters(_filter);
+      }
+    },
+  ];
 
-  const rows = [
-    {
-     
-      Project: <Link href={'/projects/details'}><span className=''>Office Management</span></Link>,
-      ProjectID: "PJT- 001",
-      Client: 'Arun',
-      Leader: <figure className={`overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div>{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      TaskTime: "548:00",
-      Deadline: "22 March 2023",
-      Priority: <span className='zt-tag zt-tag-danger'>High</span>,
-      Status: <span className='zt-tag zt-tag-success'>Active</span>,
-      Amount: "$1205",
-      Action: <div className='flex gap-2'>
-        <Button variant={"light-primary"} className={'!py-2 !px-2'}><Edit /></Button>
-        <Button variant={"light-danger"} className={'!py-2 !px-2'}><Trash /></Button>
-      </div>,
-    },
-    {
-     
-      Project: <Link href={'/projects/details'}><span className=''>Video Calling</span></Link>,
-      ProjectID: "PJT- 001",
-      Client: 'Arun',
-      Leader: <figure className={`overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div>{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      TaskTime: "548:00",
-      Deadline: "22 March 2023",
-      Priority: <span className='zt-tag zt-tag-warning'>Normal</span>,
-      Status: <span className='zt-tag zt-tag-success'>Active</span>,
-      Amount: "$1205",
-      Action: <div className='flex gap-2'>
-        <Button variant={"light-primary"} className={'!py-2 !px-2'}><Edit /></Button>
-        <Button variant={"light-danger"} className={'!py-2 !px-2'}><Trash /></Button>
-      </div>,
-    },
-  ]
+  let filteredRows = project_list?.filter((item) => {
+    return (
+      (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (!filters.priority || item.priority === filters.priority) &&
+      (!filters.status || item.status === filters.status)
+    );
+  })
+    .sort((a, b) => {
+      if (!sortCol) return 0;
+      if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+      else return b[sortCol]?.localeCompare(a[sortCol]);
+    });
+
+  const indexOfLastItem = page * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const rows = paginatedData?.map((item,index) => ({
+      Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+      ProjectID: item?.projectId,
+      Client: item?.client,
+      Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
+      Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
+      Priority: <span className='zt-tag zt-tag-danger'> {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()} </span>,
+      Status: <span className='zt-tag zt-tag-success'>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
+      Action: (
+        <DropDown icon={<ThreeDotsVertical />}>
+          <ul className="zt-themeDropDownList zt-sm gap-1">
+          <li className="!p-0">
+              <a href={`/projects/details/${item?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                <span><EyeOn /></span>
+                <span>Details</span>
+              </a>
+            </li>
+            <li className="!p-0">
+              <a
+                className={
+                  "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark"
+                }
+                onClick={() => {
+                  setEditProject(item);
+                  setCreate(true);
+                }}
+              >
+                <span>
+                  <Edit />
+                </span>
+                <span>{t("Edit")}</span>
+              </a>
+            </li>
+            <li className="!p-0">
+              <a
+                onClick={() => {
+                  deleteHandler(item);
+                }}
+                className={
+                  "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"
+                }
+              >
+                <span>
+                  <Trash />
+                </span>
+                <span>{t("Delete")}</span>
+              </a>
+            </li>
+          </ul>
+        </DropDown>
+        )}))
+        const pagination = {
+          totalRecords: filteredRows?.length,
+          showPerPage: true,
+          prevAction: () => page > 1 && setPage(page - 1),
+          clickAction: (value) => setPage(value),
+          nextAction: () => setPage(page + 1),
+        };
+
   return (
     <section className="flex flex-col grow">
       <div className="flex justify-between pb-6">
@@ -233,7 +196,7 @@ export default function ProjectsModule() {
         </div>
       </div>
       <div className="w-full bg-white p-6 rounded-lg grow">
-        <FilterArea title={t("")}
+      <FilterArea title={t("")}
           elements={filterElements}
           filters={filters}
           setFilters={setFilters}
@@ -241,9 +204,10 @@ export default function ProjectsModule() {
         {view === "grid" ?
           <div className='zt-projectsList !shadow-none'>
             <h2 className="text-h5 mb-0 col-span-3">{t("Projects")}</h2>
-            {Projects.map((project, index) => (
-              <ProjectCard key={index} projectData={project} />
+            {paginatedData?.map((project) => (
+              <ProjectCard key={project?._id} projectData={project} />
             ))}
+
           </div> :
           <Table
             headings={headings}
@@ -257,12 +221,23 @@ export default function ProjectsModule() {
             page={page}
             setPage={setPage}
             className={'zt-employeeTable zt-projectsTable'}
+            isLoading={is_loading}
           />
-        }
-        {create && <CreatProjectsForm
-          onClose={() => { setCreate(false) }}
-        />}
+       }
+         {paginatedData?.length > 0 && pagination && <Pagination
+          pagination={pagination}
+          currentLength={rows?.length}
+          perPage={perPage}
+          setPerPage={setPerPage}
+          page={page}
+          setPage={setPage} />}
+        {create && <CreateProjectsForm
+            onClose={() => {
+            setCreate(false);
+            setEditProject(null);
+          }}
+          object={editProject} />}
       </div>
     </section>
-  )
+  );
 }

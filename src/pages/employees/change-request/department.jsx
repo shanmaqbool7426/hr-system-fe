@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChangeDepartment } from '@/store/actions/employee-change-request.actions';
+// import { ChangeDepartment } from '@/store/actions/employee-change-request.actions';
 import Toast from '@/util/toast';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
@@ -95,16 +95,16 @@ export default function DepartmentPage() {
 			if (values.attachment) {
 				await uploader(values.attachment, (url) => {
 					values.attachment = url
-					dispatch(ChangeDepartment(values, () => {
-						formik.resetForm()
-						Toast.success(t("Department change request saved successfully"))
-					}))
+					// dispatch(ChangeDepartment(values, () => {
+					// 	formik.resetForm()
+					// 	Toast.success(t("Department change request saved successfully"))
+					// }))
 				})
 			} else {
-				dispatch(ChangeDepartment(values, () => {
-					formik.resetForm()
-					Toast.success(t("Request not proceed"))
-				}))
+				// dispatch(ChangeDepartment(values, () => {
+				// 	formik.resetForm()
+				// 	Toast.success(t("Request not proceed"))
+				// }))
 			}
 		}
 	});

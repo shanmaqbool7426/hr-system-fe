@@ -1,34 +1,17 @@
 import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
+import DisplayDate from "@/components/elements/DisplayDate";
 import CreateBoardForm from '@/components/forms/projects/createBoard'
-import CreatProjectsForm from '@/components/forms/projects/creatProjects'
+import CreatProjectsForm from '@/components/forms/projects/createProjects'
 import FilterArea from '@/components/includes/FilterArea'
+import { FetchTaskBoards } from '@/store/actions/taskboard.actions'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-const tableData = [
-  {
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-  }
-]
+
 export default function ProjectsModule() {
   const { t } = useTranslation()
   const [board, setBoard] = useState(false)
@@ -37,13 +20,20 @@ export default function ProjectsModule() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [create, setCreate] = useState(false)
-  const { customfield_list } = useSelector(state => state.customfield)
+  const dispatch = useDispatch();
+  const { customfield_list } = useSelector(state => state.customfield);
+  const { taskboard_list, is_loading } = useSelector(state => state.taskboard);
   const [filters, setFilters] = useState({
     search: "",
     project: null,
     department: null,
     status: null,
   })
+
+  useEffect(() => {
+    dispatch(FetchTaskBoards());
+  }, [dispatch]);
+
   const filterElements = [
     {
       type: "search",
@@ -86,7 +76,6 @@ export default function ProjectsModule() {
     },
   ]
   const headings = [
-   
     { title: t("Task Board Name"), col: "TaskBoardName" },
     { title: t("Project Name"), col: "ProjectName" },
     { title: t("Sprint"), col: "Sprint" },
@@ -94,39 +83,53 @@ export default function ProjectsModule() {
     { title: t("Project Leader"), col: "ProjectLeader" },
     { title: t("Team"), col: "Team" },
   ]
+  let filteredRows = taskboard_list?.filter((item) => {
+    return (
+      filters.search.length === 0 ||
+      item.name.toLowerCase().includes(filters.search.toLowerCase())
+    );
+  })
+  .sort((a, b) => {
+    if (sortCol) {
+      if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+      else return b[sortCol]?.localeCompare(a[sortCol]);
+    }
+    return 0;
+  });
 
-  const rows = [
-    {
-     
-      TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
-      ProjectName: "Spalsh",
-      Sprint: '01',
-      ProjectLeader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div className='flex justify-center'>{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      DueDate: "22 March 2023",
-    },
-    {
-      TaskBoardName: <Link href={'/projects/task-board-detail'}><span className=''>Office Management</span></Link>,
-      ProjectName: "Spalsh",
-      Sprint: '01',
-      ProjectLeader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div className='flex justify-center'>{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      DueDate: "22 March 2023",
-    },
-  ]
+const indexOfLastItem = page * perPage;
+const indexOfFirstItem = indexOfLastItem - perPage;
+const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+
+const rows = paginatedData?.map((item) => ({
+  
+  TaskBoardName: <Link href={`/operations/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+  ProjectName: item?.project?.name,
+  Sprint: item?.sprintNumber,
+  ProjectLeader: <div className='flex justify-center'>{item?.leads?.map((leads, i) => (
+    <UserListView imgClass="h-[32px] w-[32px]" key={i} list={[leads]} limit={2} />
+  ))}</div>,
+  Team: <div className='flex justify-center'>{item?.members?.map((member, i) => (
+    <UserListView imgClass="h-[32px] w-[32px]" key={i} list={[member]} limit={2} />
+  ))}</div>,
+  DueDate:   <DisplayDate date={item?.dueDate} />,
+}));
+
+const pagination = {
+  totalRecords: filteredRows?.length,
+  showPerPage: true,
+  prevAction: () => page > 1 && setPage(page - 1),
+  clickAction: (value) => setPage(value),
+  nextAction: () => setPage(page + 1),
+};
+
   return (
     <section className="flex flex-col grow">
       <div className="flex justify-between pb-6">
         <h1 className="text-h4 mb-0">{t("Task Board")}</h1>
-        <div className='flex gap-4'>
+        {/* <div className='flex gap-4'>
           <Button className={"btn btn-primary"} onClick={() => setBoard(true)}>{t("Create Task Board")}</Button>
-        </div>
+        </div> */}
       </div>
       <div className="w-full bg-white p-6 rounded-lg grow">
         <FilterArea title={t("")}
@@ -144,6 +147,7 @@ export default function ProjectsModule() {
           perPage={perPage}
           setPerPage={setPerPage}
           page={page}
+          pagination={pagination}
           setPage={setPage}
           className={'zt-employeeTable zt-projectsTable'}
         />
@@ -153,6 +157,7 @@ export default function ProjectsModule() {
 
         {board && <CreateBoardForm
           title={t('Create Task Board')}
+
           type={'Feedback'}
           onClose={() => { setBoard(false) }}
         />}

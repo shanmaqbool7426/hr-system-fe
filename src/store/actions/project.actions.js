@@ -1,6 +1,6 @@
 
 import axios from '@/util/axios';
-import { setLoading, setProjectList,setProject, removeProject, pushProject, setProjectDetails } from '../slices/employee.slice'
+import { setLoading, setProjectList,setProject, removeProject, pushProject, setProjectDetails } from '../slices/project.slice'
 
 export const FetchProject = (payload) => async (dispatch) => {
     try {
@@ -18,7 +18,7 @@ export const FetchProject = (payload) => async (dispatch) => {
 export const FetchProjectDetails = (id) => async (dispatch) => {
     try {
         dispatch(setLoading(true))
-        const data = await axios.get(`/project/details/${id}`)
+        const data = await axios.get(`/projects/details/${id}`)
         dispatch(setProjectDetails(data.project))
         return true
     } catch (err) { console.log("Error", err); }

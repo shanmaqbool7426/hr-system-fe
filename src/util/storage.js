@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 class Storage {
     async upload(file, directory, onSuccess) {
         return new Promise(async (resolve, reject) => {
@@ -13,7 +12,8 @@ class Storage {
                         'Autherization': process.env.NEXT_PUBLIC_STORAGE_KEY
                     }
                 })
-                return resolve(onSuccess(url))
+                onSuccess && onSuccess(url)
+                return resolve(url)
             } catch (error) {
                 return reject(error)
             }

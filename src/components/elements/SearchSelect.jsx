@@ -32,7 +32,7 @@ export default function SearchSelect({
         );
 
   const getDisplayValue = (payload) => {
-    if (payload) {
+    if (payload && typeof payload === 'string') {
       const index = list?.findIndex((item) =>
         item.value
           .replace(/\s+/g, "")

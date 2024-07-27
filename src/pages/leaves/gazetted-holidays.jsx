@@ -30,7 +30,6 @@ export default function LeaveGazettedHolidaysPage() {
   const { holiday_list, is_loading } = useSelector(
     (state) => state.gazetteholiday
   );
-
   useEffect(() => {
     dispatch(FetchGazettedHoliday());
     dispatch(FetchEmployees());
@@ -69,8 +68,7 @@ export default function LeaveGazettedHolidaysPage() {
     },
   ];
 
-  let filteredRows = holiday_list
-    .filter((item) => {
+  let filteredRows = holiday_list?.filter((item) => {
       return (
         filters.search.length === 0 ||
         item.title.toLowerCase().includes(filters.search.toLowerCase())

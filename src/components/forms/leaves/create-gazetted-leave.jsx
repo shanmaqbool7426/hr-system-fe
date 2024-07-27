@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "next-i18next";
+import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from "@/util/toast";
 import {
   CreateGazetteHoliday,
@@ -16,6 +17,12 @@ export default function CreateGazetedLeaveForm({ onClose, object }) {
   const { customfield_list } = useSelector((state) => state.customfield);
   const { employees_list } = useSelector((state) => state.employee);
   const { is_loading } = useSelector((state) => state.gazetteholiday);
+
+
+  useEffect(() => {
+      dispatch(FetchEmployees());
+}, [dispatch]);
+
 
   const formik = useFormik({
     initialValues: {
