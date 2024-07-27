@@ -101,8 +101,7 @@ export default function TaskCard({ key, taskData,statusStyles }) {
                 {/* <button className='flex justify-center w-full text-xs font-bold gap-2 p-2'><Plus className='h-4 w-4' />Add New Task</button> */}
             </div>
         </div>
-        {task && <AddTaskForm 
-            title={t('Create Task')}
+        {task && <AddTaskForm  
             object={editTask}
             // additionFields={taskboard_details} 
             onClose={() => { 

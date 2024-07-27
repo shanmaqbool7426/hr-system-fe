@@ -1,17 +1,19 @@
 import { useTranslation } from 'react-i18next'
-import { Button, DropDown, Table } from '@/components/elements'
+import { DropDown, Table } from '@/components/elements'
 import { useState } from 'react'
-import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
-import { Edit, EyeOn, ThreeDotsVertical, Trash } from '@/components/svg'
+import { EyeOn, SuccessTick, ThreeDotsVertical, Trash } from '@/components/svg'
 import Toast from '@/util/toast'
-import CreateBoardForm from '@/components/forms/projects/createBoard'
 import AddTaskForm from '@/components/forms/projects/addTask'
+import DiscussionForm from '@/components/forms/projects/discussion'
+import CreateReportedIssueForm from '@/components/forms/projects/createIssueDetail'
 
 export default function ReportedIssuesPage() {
     const { t } = useTranslation()
     const [board, setBoard] = useState(false)
+    const [discussion, setDiscussion] = useState(false)
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
+    const [warning, setWarning] = useState(false)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
@@ -33,21 +35,21 @@ export default function ReportedIssuesPage() {
             TaskDeadline: "18 May 2024",
             issue: 'Time need to increas',
             action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-32">
+                <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
                     <li className="!p-0">
-                        <a onClick={() => setBoard(true)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit task")}</span>
+                        <a onClick={() => { setWarning(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("Issue detail")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.confirmDelete(() => {
-                                Toast.success(t("Reported Issue deleted successfully"))
-                            }, t)
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Trash /></span>
-                            <span>{t("Delete")}</span>
+                            Toast.daynamicTitle(() => {
+                                Toast.success(t("Reported Issue Resolved Successfully"))
+                            }, t ,"Did you fix this issue with Assignee?")
+                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                            <span><SuccessTick /></span>
+                            <span>{t("Resolved")}</span>
                         </a>
                     </li>
                 </ul>
@@ -64,25 +66,19 @@ export default function ReportedIssuesPage() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
                     <li className="!p-0">
-                        <a onClick={() => setBoard(true)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setWarning(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><EyeOn /></span>
                             <span>{t("Issue detail")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={() => setBoard(true)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit task")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
                         <a onClick={() => {
-                            Toast.confirmDelete(() => {
-                                Toast.success(t("Reported Issue deleted successfully"))
-                            }, t)
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Trash /></span>
-                            <span>{t("Delete")}</span>
+                            Toast.daynamicTitle(() => {
+                                Toast.success(t("Reported Issue Resolved Successfully"))
+                            }, t ,"Did you fix this issue with Assignee?")
+                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                            <span><SuccessTick /></span>
+                            <span>{t("Resolved")}</span>
                         </a>
                     </li>
                 </ul>
@@ -92,7 +88,7 @@ export default function ReportedIssuesPage() {
     return (
         <section className="flex flex-col grow">
             <div className="flex items-center justify-between pb-6">
-                <h1 className="text-h4 mb-0"> {t("Reported Issues")}</h1>
+                <h1 className="text-h4 mb-0"> {t("Reported Task")}</h1>
             </div>
             <div className='zt-card grow'>
                 <Table
@@ -109,9 +105,15 @@ export default function ReportedIssuesPage() {
                     className={'zt-employeeTable zt-rportedIssueTable '}
                 />
             </div>
+            {warning && <CreateReportedIssueForm
+                onClose={() => { setWarning(false) }}
+            />}
             {board && <AddTaskForm
                 object={true}
                 onClose={() => { setBoard(false) }}
+            />}
+            {discussion && <DiscussionForm
+                onClose={() => { setDiscussion(false) }}
             />}
         </section>
     )

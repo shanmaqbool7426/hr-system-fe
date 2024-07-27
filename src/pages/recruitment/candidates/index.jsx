@@ -17,8 +17,7 @@ export default function Recruitment() {
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const [create, setCreate] = useState(false)
-  const [hide, setHide] = useState(false)
+  const [create, setCreate] = useState(false) 
   const [edit, setEdit] = useState(false)
   const { customfield_list } = useSelector(state => state.customfield)
   const [filters, setFilters] = useState({
@@ -390,14 +389,7 @@ export default function Recruitment() {
           elements={filterElements}
           filters={filters}
           setFilters={setFilters}
-        />
-
-        {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-          <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-          <CloseCross className={'cursor-pointer'}
-            onClick={(() => setHide(true))}
-          />
-        </div>}
+        /> 
 
         <Table
           headings={headings}

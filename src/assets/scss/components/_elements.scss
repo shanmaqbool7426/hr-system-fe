@@ -245,8 +245,7 @@
 
 //
 // Basic table
-//
-
+// 
 .zt-themeTable {
   @apply w-full mb-6 dark:text-white;
 
@@ -255,12 +254,14 @@
       &:first-child {
         > div { @apply justify-start }
       }
+      &:nth-child(2)   { @apply text-left }     
       &:last-child {
         > div { @apply justify-end }
       }
     }
     th, td {
       &:first-child { @apply text-left }
+      &:nth-child(2) { @apply text-left }
       &:last-child { @apply text-right }
     }
   }
