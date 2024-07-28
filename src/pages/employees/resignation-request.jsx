@@ -87,7 +87,7 @@ export default function ResignationRequestPage() {
 			{/* {is_loading && <PageLoader/>} */}
 			<div className="flex justify-between pb-6">
 				<h1 className="text-h4 mb-0">{t("Resignation Request")}</h1>
-				<Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Resignation Request")}</Button>
+				<Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Apply Resignation")}</Button>
 			</div>
 			<div className='zt-card grow'>
 				<Table
