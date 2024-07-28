@@ -9,12 +9,12 @@ import { useRouter } from "next/router";
 import CreateExitClearanceForm from "@/components/forms/projects/createExitClearance";
 export default function ExitClearance() {
   const { t } = useTranslation()
-  const router=useRouter()
+  const router = useRouter()
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const [clearance,setClearance]=useState(false)
+  const [clearance, setClearance] = useState(false)
   const headings = [
 
     { title: t("Name"), col: "name", /* sort: true */ },
@@ -26,10 +26,10 @@ export default function ExitClearance() {
 
   const rows = [{
 
-    name: <div className="flex flex-col no-underline items-center justify-centerw">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -38,9 +38,9 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
         <li className="!p-0">
@@ -59,10 +59,10 @@ export default function ExitClearance() {
   },
   {
 
-    name: <div className="flex flex-col no-underline items-center justify-center">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Gertrude Kuphal')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -71,12 +71,12 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
-       <li className="!p-0">
+        <li className="!p-0">
           <a onClick={() => {
             Toast.daynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
@@ -92,10 +92,10 @@ export default function ExitClearance() {
   },
   {
 
-    name: <div className="flex flex-col no-underline items-center justify-center">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -104,12 +104,12 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
-       <li className="!p-0">
+        <li className="!p-0">
           <a onClick={() => {
             Toast.daynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
@@ -132,10 +132,10 @@ export default function ExitClearance() {
       />
     </div>,
     SerailNo: '4',
-    name: <div className="flex flex-col no-underline items-center justify-center">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -144,12 +144,12 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
-       <li className="!p-0">
+        <li className="!p-0">
           <a onClick={() => {
             Toast.daynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
@@ -172,10 +172,10 @@ export default function ExitClearance() {
       />
     </div>,
     SerailNo: '5',
-    name: <div className="flex flex-col no-underline items-center justify-center">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -184,12 +184,12 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
-       <li className="!p-0">
+        <li className="!p-0">
           <a onClick={() => {
             Toast.daynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
@@ -212,10 +212,10 @@ export default function ExitClearance() {
       />
     </div>,
     SerailNo: '6',
-    name: <div className="flex flex-col no-underline items-center justify-center">
+    name: <Link href={'/employees/details/6689569e410235cd11e326b2'} className="flex flex-col no-underline items-center justify-center">
       <strong className={'text-themeGrayscale900 text-sm'}>{t('Kelli Lebsack')}</strong>
       <span className={'text-themeGrayscale500 text-xs'}>{t('10202325')}</span>
-    </div>,
+    </Link>,
     jobTitle: 'Manager',
     departments: 'Outdoors',
     email: "John@gmail.com",
@@ -224,12 +224,12 @@ export default function ExitClearance() {
     action: <DropDown icon={<ThreeDotsVertical />}>
       <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
         <li className="!p-0">
-          <a onClick={() => {setClearance(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+          <a onClick={() => { setClearance(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
             <span><Edit /></span>
-            <span>{t("Edit")}</span>
+            <span>{t("Clearance")}</span>
           </a>
         </li>
-       <li className="!p-0">
+        <li className="!p-0">
           <a onClick={() => {
             Toast.daynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))

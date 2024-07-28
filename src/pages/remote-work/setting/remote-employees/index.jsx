@@ -77,6 +77,7 @@ export default function Employees() {
 
         { title: t("Name"), col: "Name", },
         { title: t("Department"), col: "Department" },
+        { title: t("Team"), col: "team" },
         { title: t("Line Manager"), col: "LineManager", },
         { title: t("From"), col: "From", sort: true },
         { title: t("To"), col: "To", sort: true },
@@ -95,6 +96,7 @@ export default function Employees() {
                 </div>
             </div>,
             Department: 'Frontend',
+            team:"React",
             From: '23 May 2024',
             To: '23 May 2024',
             LineManager: "Company Admin",
@@ -136,6 +138,7 @@ export default function Employees() {
                     <span className={'text-themeGrayscale500'}>{t('503')}</span>
                 </div>
             </div>,
+            team:"Recruitment",
             Department: 'HR',
             From: '23 May 2024',
             To: '23 May 2024',

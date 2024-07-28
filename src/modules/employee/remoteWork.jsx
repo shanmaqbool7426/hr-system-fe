@@ -1,8 +1,10 @@
-import AssetsList from './assets/AssetsList';
+import RemoteProfile from "./remoteWorkCards";
+
+ 
 
 export default function RemoteWorkModule() {
   
     return (
-        <AssetsList/>
+        <RemoteProfile/>
     )
 }
