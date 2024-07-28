@@ -2,9 +2,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
-
-import { Button, CheckBox, Datepicker, Input, SearchSelect, Table, Textarea } from '@/components/elements';
-import FileUpload from '@/components/elements/FileUpload';
+import { Button,  Table } from '@/components/elements'; 
 import { useState } from 'react';
 import CreateResignationForm from '@/components/forms/employees/createResignation';
 
