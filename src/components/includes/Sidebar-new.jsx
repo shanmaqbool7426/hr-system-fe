@@ -83,6 +83,7 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Approval Level"), href: "/employees/settings/approval-level",},     
           { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+          { name: t("Exit/ Onboarding Assets"), href: "/employees/settings/exit-onboarding-assets" },
         ],
       },
     ],
@@ -219,7 +220,7 @@ export default function Sidebar() {
       {
         name: t("Setting"), href: "/remote-work/setting",
         innerSubMenu: [
-          // { name: t('Profile'), href: "/remote-work/setting/profile" },
+          { name: t('Profile'), href: "/remote-work/setting/profile" },
           { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
           { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
           { name: t('Account'), href: "/remote-work/setting/account" },
