@@ -76,8 +76,8 @@ export default function Sidebar() {
       { name: t("Employee Transition"), href: "/employees/transition" },
       { name: t("Employee Transfer"), href: "/employees/transfer" },
       { name: t("Employee Onboarding"), href: "/employees/onboarding" },
+      { name: t("Inactive Employee"), href: "/employees/inactive" },
       { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
-      { name: t("Final Settlement"), href: "/employees/final-settlement" },
       {
         name: t("Employee Settings"),href: "/employees/settings",
         innerSubMenu: [
@@ -201,6 +201,7 @@ export default function Sidebar() {
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
       { name: t("Payroll Approval"), href: "/payroll/approval" },
+      { name: t("Final Settlement"), href: "/payroll/final-settlement" },
       { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
       { name: t("Overtime Request"), href: "/payroll/overtime" },
       { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
