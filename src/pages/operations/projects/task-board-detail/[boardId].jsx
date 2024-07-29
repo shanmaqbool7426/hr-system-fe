@@ -3,7 +3,6 @@ import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import  Pagination  from '@/components/elements/Table/pagination'
-import CreateBoardForm from '@/components/forms/projects/createBoard'
 import FeedbackForm from '@/components/forms/projects/feedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
@@ -12,7 +11,7 @@ import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { DeleteTask, FetchTask, FetchTaskDetails } from '@/store/actions/task.actions'
+import { DeleteTask, FetchTasks, FetchTaskDetails } from '@/store/actions/task.actions'
 import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -80,7 +79,7 @@ export default function TaskBoardDetailModule() {
         const {boardId }= router.query;
         if (boardId){
             dispatch(FetchEmployees())
-            dispatch(FetchTask(boardId));
+            dispatch(FetchTasks(boardId));
             dispatch(FetchTaskBoardDetails(boardId));
         }
     }, [ router,dispatch]);
@@ -219,8 +218,8 @@ export default function TaskBoardDetailModule() {
            return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
+            Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,
             Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
             Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,       
             TaskTime: item?.requiredTime,

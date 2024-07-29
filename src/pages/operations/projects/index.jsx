@@ -12,6 +12,7 @@ import { Edit,  ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchProject , DeleteProject} from '@/store/actions/project.actions';
+import { FetchEmployees } from '@/store/actions/employee.actions'
 
 export default function ProjectsModule() {
   const dispatch = useDispatch();
@@ -29,12 +30,14 @@ export default function ProjectsModule() {
     priority: null,
     status: null,
   });
+  
   useEffect(() => {
     const savedView = localStorage.getItem('View');
     if (savedView) {
       setView(savedView);
     }
     dispatch(FetchProject());
+    dispatch(FetchEmployees());
   }, [dispatch]);
   
   useEffect(() => {

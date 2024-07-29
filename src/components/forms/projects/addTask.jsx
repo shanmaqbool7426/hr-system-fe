@@ -3,11 +3,9 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateTask,UpdateTask,FetchTask } from '@/store/actions/task.actions';
-import { FetchEmployees } from '@/store/actions/employee.actions';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
+import { CreateTask,UpdateTask } from '@/store/actions/task.actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react'; 
+import { useState } from 'react'; 
  
 export default function AddTaskForm({ title,onClose, object , additionFields  }) {
     const { t } = useTranslation()
@@ -21,6 +19,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         department: null,
         status: null,
     })
+    const getUserID = (user) => (user ? user._id : "");
 
     const formik = useFormik({
         initialValues: {
@@ -30,18 +29,18 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             dueDate: object?.dueDate || "",
             requiredTime: object?.requiredTime || "",
             priority: object?.priority || "",
-            leader: object?.leader?.map(item => item._id) || [],
-            assignedTo: object?.assignedTo?.map(item => item._id) || [],
+            lead: getUserID(object?.lead) || "",
+            assignedTo: getUserID(object?.assignedTo) || "",
             board: additionFields?._id || "",
             project: additionFields?.project?._id || "",
             parent:object?.parent || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('Task name is required')),
-            status: Yup.string().required(t('Status is required')),
+            // status: Yup.string().required(t('Status is required')),
             dueDate: Yup.string().required(t('Task Due date is required')),
-            assignedTo: Yup.array().required(t('Member is required')),
-            leader: Yup.array().required(t('Leader is required')),
+            assignedTo: Yup.string().required(t('Member is required')),
+            lead: Yup.string().required(t('Leader is required')),
             requiredTime : Yup.string().required(t("Time is required")),
             priority: Yup.string().required(t('Priority is required')),
             description: Yup.string().required(t('Description is required')), 
@@ -54,8 +53,9 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         Toast.success(object ? t('Task updated successfully') : t('Task created successfully'))
         onClose()
     }
+    const filteredLeadList = employees_list.filter(employee => employee._id !== formik.values.assignedTo);
+    const filteredAssigneeList = employees_list.filter(employee => employee._id !== formik.values.lead);
     
-
     const formElements = [
         {
             type: "text",
@@ -81,7 +81,6 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             type: "select",
             name: "status",
             label: t('Status'),
-            required: true,
             value: formik.values.status,
             list: [
                 { value: "pending", display: "Pending" },
@@ -117,15 +116,15 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         }, 
         {
             type: "select",
-            name: "leader",
+            name: "lead",
             label: t('Leader'),
-            value: formik.values.leader,
+            value: formik.values.lead,
             required: true,
-            list: employees_list?.map((item) => ({
+            list: filteredLeadList?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
-            multiple:true
+            multiple:false
         },
         {
             type: "select",
@@ -133,11 +132,11 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             label: t('Assign to'),
             value: formik.values.assignedTo,
             required: true,
-            list: employees_list?.map((item) => ({
+            list: filteredAssigneeList?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
-            multiple: true,
+            multiple: false,
         },
         {
             type: "textarea",

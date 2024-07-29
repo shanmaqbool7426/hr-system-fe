@@ -1,5 +1,4 @@
 import { Button, CheckBox, DisplayDate, DropDown, Table } from '@/components/elements'
-import UserListView from '@/components/elements/UserListView'
 import FeedbackForm from '@/components/forms/projects/feedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
@@ -14,26 +13,6 @@ import { DeleteTask, FetchOverDueTasks } from '@/store/actions/task.actions'
 import { FetchEmployees } from '@/store/actions/employee.actions'
 import moment from 'moment'
 
-const tableData = [
-	{
-		"leaders": [
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-		],
-		"team": [
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-			{ "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-		],
-	}
-]
 export default function TaskBoardDetailModule() {
 	const { t } = useTranslation()
 	const dispatch= useDispatch()
@@ -130,17 +109,19 @@ export default function TaskBoardDetailModule() {
 		{ title: t("Action"), col: "action" },
 	]
 	let filteredRows = overdue_task_list?.filter((item) => {
-        return (
-          (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
-          (!filters.priority || item.priority === filters.priority) &&
-          (!filters.status || item.status === filters.status)
-        );
-      })
-        .sort((a, b) => {
-          if (!sortCol) return 0;
-          if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
-          else return b[sortCol]?.localeCompare(a[sortCol]);
-        });
+		const isPastDue = moment(item.dueDate).isBefore(moment());
+		return (
+		  isPastDue && 
+		  (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+		  (!filters.priority || item.priority === filters.priority) &&
+		  (!filters.status || item.status === filters.status)
+		);
+	  })
+		.sort((a, b) => {
+		  if (!sortCol) return 0;
+		  if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+		  else return b[sortCol]?.localeCompare(a[sortCol]);
+		});
     
       const indexOfLastItem = page * perPage;
       const indexOfFirstItem = indexOfLastItem - perPage;
@@ -192,6 +173,14 @@ export default function TaskBoardDetailModule() {
 				</ul>
 			</DropDown>}
 		})
+
+		const pagination = {
+			totalRecords: filteredRows?.length,
+			showPerPage: true,
+			prevAction: () => page > 1 && setPage(page - 1),
+			clickAction: (value) => setPage(value),
+			nextAction: () => setPage(page + 1),
+		  };
 	return (
 		<section className="flex flex-col grow">
 			<div className="flex justify-between pb-6">
@@ -215,6 +204,7 @@ export default function TaskBoardDetailModule() {
 					setSortDir={setSortDir}
 					perPage={perPage}
 					setPerPage={setPerPage}
+					pagination={pagination}
 					page={page}
 					setPage={setPage}
 					className={'zt-employeeTable zt-projectsTable'}

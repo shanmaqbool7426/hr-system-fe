@@ -9,6 +9,7 @@ import Toast from '@/util/toast';
 import { useDispatch } from 'react-redux';
 import AddTaskForm from '@/components/forms/projects/addTask';
 import UserListView from '@/components/elements/UserListView';
+import moment from 'moment'
 
 export default function TaskCard({ key, taskData,statusStyles }) {
     const { t } = useTranslation()
@@ -25,6 +26,7 @@ export default function TaskCard({ key, taskData,statusStyles }) {
           );
         }, t);
       };
+      const isPastDue = moment(taskData.dueDate).isBefore(moment());
     return (
         <>
         <div key={key} className={`${statusStyle?.bg} rounded-2xl`}>
@@ -81,10 +83,10 @@ export default function TaskCard({ key, taskData,statusStyles }) {
                     </div>
                     <hr className='bg-themeGrayscale200' />
                     {/* <ProgressBar percentage={taskData.progress} variant={`${taskData.varient}`} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} /> */}
-                    <UserListView imgClass="h-[32px] w-[32px]"  list={taskData?.assignedTo}  />                    
+                    <UserListView imgClass="h-[32px] w-[32px]"  list={[taskData?.assignedTo]}  />                    
                     <div className='flex justify-between'>
                         <div>
-                            <time className='text-sm font-semibold mb-2 block'> <DisplayDate date={taskData.dueDate} /></time>
+                            <time className='text-sm font-semibold mb-2 block'> <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={taskData.dueDate} /></time>
                             <Button variant={`${taskData.normalBtn}`} className={`!p-2 !leading-3 !font-semibold !text-sm`}>{taskData.firstBtn}</Button>
                         </div>
                         <div className='flex flex-col items-center'>
