@@ -10,7 +10,7 @@ import { RepostModule } from '@/modules/attendance/Repost';
 import RepostHistoryModule from '@/modules/attendance/RepostHistory';
 import { Tabs } from '@/components/elements';
 
-export default function AttendanceRepostForm({ onClose, type, object }) {
+export default function AttendanceRepostForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -34,7 +34,7 @@ export default function AttendanceRepostForm({ onClose, type, object }) {
     return (
         <BaseForm title={'Attendance Repost'} formik={formik} onClose={onClose} is_loading={false} >
             <Tabs
-                containerClasses={'zt-themeTabsV2 grow'}
+                containerClasses={'zt-themeTabsV2 grow col-span-2'}
                 tabNavClasses={'zt-themeTabNav mt-4'}
                 tabs={["Repost", "Repost History"]}
             >

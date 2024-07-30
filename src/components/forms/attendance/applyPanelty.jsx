@@ -34,7 +34,7 @@ export default function ApplyPaneltyForm({ onClose, object }) {
     return (
         <BaseForm title={'Apply Plenty'} formik={formik} onClose={onClose} is_loading={false} >
             <Tabs
-                containerClasses={'zt-themeTabsV2 grow'}
+                containerClasses={'zt-themeTabsV2 grow col-span-2'}
                 tabNavClasses={'zt-themeTabNav mt-4'}
                 tabs={["Leave Plenty", "Leave Plenty History"]}
             >

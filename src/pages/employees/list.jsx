@@ -233,7 +233,7 @@ export default function EmployeesListPage() {
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
         <FilterArea
           title={t("Employees")}
           elements={filterElements}

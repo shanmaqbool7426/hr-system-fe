@@ -200,7 +200,7 @@ export default function TaskBoardDetailModule() {
 				</h1>
 
 			</div>
-			<div className="w-full bg-white p-6 rounded-lg grow">
+			<div className=" zt-card grow">
 				<FilterArea title={t("")}
 					elements={filterElements}
 					filters={filters}

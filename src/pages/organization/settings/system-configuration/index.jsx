@@ -841,7 +841,7 @@ export default function OrganizationSystemConfigurationSettingPage() {
         },
     ] 
     return (
-        <section className="p-4 flex flex-col grow relative">
+        <section className="flex flex-col grow relative">
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <div className="flex flex-col">
