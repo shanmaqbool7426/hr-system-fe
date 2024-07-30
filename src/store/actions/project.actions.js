@@ -19,7 +19,8 @@ export const FetchProjectDetails = (id) => async (dispatch) => {
     try {
         dispatch(setLoading(true))
         const data = await axios.get(`/projects/details/${id}`)
-        dispatch(setProjectDetails(data.project))
+        const { project, total_tasks, completed_tasks } = data;
+        dispatch(setProjectDetails({ project, total_tasks, completed_tasks }));
         return true
     } catch (err) { console.log("Error", err); }
     finally {

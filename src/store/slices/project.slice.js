@@ -6,6 +6,8 @@ export const projectSlice = createSlice({
         is_loading: false,
         project_list: [],
         project_detail: null,
+        total_tasks: 0,
+        completed_tasks: 0,
     },
     reducers: {
         setLoading(state, action) {
@@ -19,10 +21,14 @@ export const projectSlice = createSlice({
             if (index !== -1)
                 state.project_list[index] = action.payload
             state.project_detail = action.payload
+            state.total_tasks = action.payload.total_tasks
+            state.completed_tasks = action.payload.completed_tasks
 
         },
         setProjectDetails(state, action) {
-            state.project_detail = action.payload;
+            state.project_detail = action.payload.project;
+            state.total_tasks = action.payload.total_tasks;
+            state.completed_tasks = action.payload.completed_tasks;
         },
         removeProject(state, action) {
             state.project_list = state.project_list.filter((item) => item._id !== action.payload)

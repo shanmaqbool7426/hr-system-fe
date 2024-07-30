@@ -30,6 +30,7 @@ export default function AwaitingTasksPage() {
         setCurrentTaskId(taskId)
         setCreate(true)
     }
+  
     useEffect(() => {
         dispatch(FetchAwaitingTasks())
     }, [dispatch])

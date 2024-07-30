@@ -7,7 +7,7 @@ import { CreateTask,UpdateTask } from '@/store/actions/task.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react'; 
  
-export default function AddTaskForm({ title,onClose, object , additionFields  }) {
+export default function AddTaskForm({ onClose, object , additionFields  }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { employees_list } = useSelector((state) => state.employee);
@@ -37,7 +37,6 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('Task name is required')),
-            // status: Yup.string().required(t('Status is required')),
             dueDate: Yup.string().required(t('Task Due date is required')),
             assignedTo: Yup.string().required(t('Member is required')),
             lead: Yup.string().required(t('Leader is required')),
@@ -122,7 +121,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             required: true,
             list: filteredLeadList?.map((item) => ({
                 value: item?._id,
-                display: item.firstName + " " + item.lastName,
+                display: item?.firstName + " " + item?.lastName,
             })),
             multiple:false
         },
@@ -134,7 +133,7 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
             required: true,
             list: filteredAssigneeList?.map((item) => ({
                 value: item?._id,
-                display: item.firstName + " " + item.lastName,
+                display: item?.firstName + " " + item?.lastName,
             })),
             multiple: false,
         },
@@ -148,10 +147,10 @@ export default function AddTaskForm({ title,onClose, object , additionFields  })
         },
     ]
     return (
-        <BaseForm title={object ? "Edit Reported Task" : 'Create Task'} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-            {back &&
+        <BaseForm title={object ? "Edit Task" : 'Create Task'} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
+            {/* {back &&
                 <button onClick={() => onClose()} className='absolute left-1 top-9 text-h4'><ChevronLeft className={'h-5 w-4'} /></button>
-            }
+            } */}
         </BaseForm>
     )
 }

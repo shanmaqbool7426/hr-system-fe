@@ -8,6 +8,7 @@ export const taskSlice = createSlice({
         task_details: null,
         overdue_task_list: [],
         awaiting_task_list: [],
+        reported_task_list:[],
     },
     reducers: {
         setLoading(state, action) {
@@ -21,6 +22,9 @@ export const taskSlice = createSlice({
         },
         setAwaitingTaskList(state, action) { 
             state.awaiting_task_list = action.payload.list
+        },
+        setReportedTaskList(state, action) { 
+            state.reported_task_list = action.payload.list
         },
         setTask(state, action) {
             let index = state.task_list.findIndex((item) => item._id === action.payload._id)
@@ -37,18 +41,18 @@ export const taskSlice = createSlice({
         setTaskDetails(state, action) {
             state.task_details = action.payload
         },
+        pushNonAwaitingTask(state, action) {
+            state.task_list.push(action.payload);
+        },
+        removeAwaitingTask(state, action) {
+            state.awaiting_task_list = state.awaiting_task_list.filter((item) => item._id !== action.payload);
+        },
         removeTask(state, action) {
             state.task_list = state.task_list.filter((item) => item._id !== action.payload)
             state.overdue_task_list = state.overdue_task_list.filter((item) => item._id !== action.payload);
         },
         pushTask(state, action) {
             state.awaiting_task_list.push(action.payload)
-        },
-        pushNonAwaitingTask(state, action) {
-            state.task_list.push(action.payload);
-        },
-        removeAwaitingTask(state, action) {
-            state.awaiting_task_list = state.awaiting_task_list.filter((item) => item._id !== action.payload);
         },
     }
 })
@@ -59,6 +63,7 @@ export const {
     setTaskDetails,
     setOverdueTaskList,
     setAwaitingTaskList,
+    setReportedTaskList,
     pushNonAwaitingTask,
     removeAwaitingTask,
     setTask,

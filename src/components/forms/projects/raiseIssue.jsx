@@ -6,6 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 import { CreateRaiseIssue } from '@/store/actions/task-raise-issue.actions';
+import { FetchAwaitingTasks, FetchReportedTasks } from '@/store/actions/task.actions';
 
 export default function RaiseIssueForm({ onClose, object , taskId }) {
     const { t } = useTranslation()
@@ -21,12 +22,17 @@ export default function RaiseIssueForm({ onClose, object , taskId }) {
             description: Yup.string().required(t('Description is required')),
       }),
         onSubmit: async (values) => {
-
             return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateRaiseIssue(values, onCompleted))
+           
         }
     })
     const onCompleted = () => {
         Toast.success(object ? t(`Issue updated successfully`) : t(`Issue created successfully`))
+        setTimeout(() => {
+            dispatch(FetchAwaitingTasks());
+            dispatch(FetchReportedTasks());
+        }, 2000);
+
         onClose()
     }
     const formElements = [

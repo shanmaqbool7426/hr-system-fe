@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { DeleteTaskBoard, FetchProjectTaskBoards} from '@/store/actions/taskboard.actions';
 import Toast from '@/util/toast';
+import { FetchTasks } from '@/store/actions/task.actions';
 
 
 export default function ProjectsDetailPage() {
@@ -30,20 +31,24 @@ export default function ProjectsDetailPage() {
     const [editLeaders, setEditLeaders] = useState(false)
     const [editMembers, setEditMembers] = useState(false)
   const [editBoard, setEditBoard] = useState(null);
-    const { project_detail , is_loading} = useSelector((state) => state.project)
+    const { project_detail , is_loading ,total_tasks, completed_tasks,} = useSelector((state) => state.project)
     const {  employees_list} = useSelector((state) => state.employee)
   const { taskboard_list } = useSelector(state => state.taskboard);
+
 
 
     useEffect(() => {
         dispatch(FetchEmployees())
         const {projectId} = router.query
         if (projectId){
+          dispatch(FetchTasks(projectId));
             dispatch(FetchProjectTaskBoards(projectId))
             dispatch(FetchProjectDetails(projectId))
         }
     }, [router, dispatch]);
 
+    
+    const progressPercentage = total_tasks > 0 ? ((completed_tasks / total_tasks) * 100).toFixed(0) : 0;
     const removeTags = (str) => {
         if (!str) return ''
         return str.replace(/<\/?[^>]+(>|$)/g, "")
@@ -86,6 +91,7 @@ export default function ProjectsDetailPage() {
             leads: Yup.array().required(t('Project leader is required')),
             members: Yup.array().required(t('Team is required')),
         }),
+
         onSubmit: values => {
           dispatch(UpdateProject(project_detail._id, values, () => {
             setEditLeaders(false)
@@ -95,6 +101,8 @@ export default function ProjectsDetailPage() {
         },
         enableReinitialize: true
       })
+
+    
 
       const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
       const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
@@ -142,7 +150,6 @@ export default function ProjectsDetailPage() {
     <>
         { project_detail &&
         <section className="flex flex-col grow">
-            {is_loading && <PageLoader />}
             <div className="flex items-center justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
                     <Link href={`/operations/projects`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
@@ -233,7 +240,6 @@ export default function ProjectsDetailPage() {
                             <DisplayDate date={project_detail?.endDate} />
                             </span>
                         </div>
-                        <div> {console.log('project_detail', project_detail)} </div>
                         <div className='flex justify-between text-sm'>
                             <span className='text-themeGrayscale600'>{t("Priority")}</span>
                             <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority.charAt(0).toUpperCase() + project_detail.priority.slice(1).toLowerCase())}</span>
@@ -246,13 +252,13 @@ export default function ProjectsDetailPage() {
                             <span className='text-themeGrayscale600'>{t("Created by")}</span>
                             <span className='text-themeGrayscale900 font-semibold'>{t(project_detail?.createdBy?.firstName)} {t(project_detail?.createdBy?.lastName)}</span>
                         </div>
-                        <ProgressBar percentage={'40%'} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
+                        <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
                     </div>
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
-                       { editLeaders ? ( <>
+                       { editLeaders ? ( <> <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
                         <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Add Leader")}</h2>
-                            <Button type="submit"  onClick={() => formik.handleSubmit()} variant={'dark'} className={'!text-xs !px-6 !py-2'}>Save</Button>
+                            <Button  type="submit"  value={t("Save")} variant={'dark'} className={'!text-xs !px-6 !py-2'} is_loading={is_loading} disabled={is_loading || !formik.isValid}/>
                         </div>
                         <hr className='bg-themeGrayscale200' />
                         
@@ -268,8 +274,9 @@ export default function ProjectsDetailPage() {
                                       value: item?._id,
                                       display: item.firstName + " " + item.lastName,
                                       }))}
-                                      multiple ={true}
+                              multiple ={true}
                                />
+                               </form>
                        </>) : ( <>
                         <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Assigned Leader")}</h2>
@@ -290,9 +297,10 @@ export default function ProjectsDetailPage() {
                     </div>
                     <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
                         {editMembers ? (<>
+                          <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }} >
                             <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Add Members")}</h2>
-                            <Button  type="submit"  onClick={() => formik.handleSubmit()} variant={'dark'} className={'!text-xs !px-6 !py-2'}> Save</Button>
+                            <Button  type="submit"  value={t("Save")} variant={'dark'} className={'!text-xs !px-6 !py-2'} is_loading={is_loading} disabled={is_loading || !formik.isValid}/>
                             </div>
                         <hr className='bg-themeGrayscale200' />
                         <MultiSelect
@@ -309,7 +317,7 @@ export default function ProjectsDetailPage() {
                                       display: item.firstName + " " + item.lastName,
                                       }))}
                                />
-                      
+                      </form>
                         </>):(<>
                             <div className='flex justify-between items-center'>
                             <h2 className='text-lg font-bold mb-0'>{t("Assigned Members")}</h2>

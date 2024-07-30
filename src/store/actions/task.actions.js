@@ -1,5 +1,5 @@
 import axios from "@/util/axios";
-import { setLoading, setTaskList,setOverdueTaskList, setAwaitingTaskList ,setTaskDetails, setTask, removeTask, pushTask, setOverDueTask, pushNonAwaitingTask, removeAwaitingTask,} from "../slices/task.slice";
+import { setLoading, setTaskList,setOverdueTaskList, setAwaitingTaskList ,setTaskDetails, setTask, removeTask, pushTask, setOverDueTask, pushNonAwaitingTask, removeAwaitingTask, setReportedTaskList, addReportedTask} from "../slices/task.slice";
 
 
 export const FetchTasks = ( board_id,payload) => async (dispatch) => {
@@ -36,6 +36,19 @@ export const FetchTasks = ( board_id,payload) => async (dispatch) => {
       const query = new URLSearchParams(payload).toString();
       const data = await axios.get(`/tasks/list-awaiting/?${query}`);
       dispatch(setAwaitingTaskList(data));
+      return true;
+    } catch (err) {
+      console.log("Error", err);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+  export const FetchReportedTasks = ( payload) => async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      const query = new URLSearchParams(payload).toString();
+      const data = await axios.get(`/tasks/list-reported/?${query}`);
+      dispatch(setReportedTaskList(data));
       return true;
     } catch (err) {
       console.log("Error", err);
@@ -85,7 +98,6 @@ export const FetchTasks = ( board_id,payload) => async (dispatch) => {
         dispatch(removeAwaitingTask(id)); 
         dispatch(pushNonAwaitingTask(data.task));
       }
-  
       onSuccess && onSuccess();
       return true;
     } catch (err) {

@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
-import { ChevronDown, Check, InputErrorInfo, CloseCross } from "@/components/svg"
+import { ChevronDown, Check, InputErrorInfo, CloseCross} from "@/components/svg"
 
 
 export default function MultiSelect({ id, containerClass, type, list, value, onChange, label, placeholder, error, ...props }) {
@@ -75,6 +75,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
                                                 <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{item.display}</span>
                                                 {selected && <span className={`flex items-center pl-3 ${active ? 'text-white' : 'text-themePrimary'}`}>
                                                     <Check className="h-5 w-5" aria-hidden="true" />
+                                                    <CloseCross  className="h-5 w-5" aria-hidden="true"/>
                                                 </span>}
                                             </>)}
                                         </Combobox.Option>

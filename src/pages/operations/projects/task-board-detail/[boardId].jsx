@@ -11,7 +11,7 @@ import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { DeleteTask, FetchTasks, FetchTaskDetails } from '@/store/actions/task.actions'
+import { DeleteTask, FetchTasks, FetchTaskDetails, UpdateTask } from '@/store/actions/task.actions'
 import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,24 +53,28 @@ const renderCustomizedLabel = ({
 const COLORS = [ '#E03137','#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
-
     const { t } = useTranslation();
-    const [status, setStatus] = useState('success');
-    const [priority, setPriority] = useState('success');
   
-    const handleChange = (e) => {
-      setStatus(e.target.value);
-    };
-    const handlePriorityChange = (e) => {
-        setPriority(e.target.value);
+    const handlePriorityChange = (e, taskId) => {
+        const newPriority = e.target.value;
+        dispatch(UpdateTask(taskId, { priority: newPriority }, () => {
+          Toast.success(t("Task priority updated successfully"));
+        }));
+      };
+      
+      const handleStatusChange = (e, taskId) => {
+        const newStatus = e.target.value;
+        dispatch(UpdateTask(taskId, { status: newStatus }, () => {
+          Toast.success(t("Task status updated successfully"));
+        }));
       };
       const getPriorityClass = (priority) => {
         switch (priority.toLowerCase()) {
-          case 'danger':
+          case 'high':
             return 'zt-tag-danger';
-          case 'success':
+          case 'medium':
             return 'zt-tag-dark';
-          case 'completed':
+          case 'low':
             return 'zt-tag-success';
           default:
             return 'zt-tag-default';
@@ -78,9 +82,9 @@ export default function TaskBoardDetailModule() {
       };
     const getStatusClass = (status) => {
       switch (status.toLowerCase()) {
-        case 'danger':
+        case 'pending':
           return 'zt-tag-danger';
-        case 'success':
+        case 'progress':
           return 'zt-tag-dark';
         case 'completed':
           return 'zt-tag-success';
@@ -252,43 +256,41 @@ export default function TaskBoardDetailModule() {
             ProjectName: item?.project?.name,
             TaskName: item?.name,
             Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,
-            Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
-            Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,       
-            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
-            Priority: 
-            <select
-            className={`zt-tag ${getPriorityClass(priority)}`}
-            value={priority}
-            onChange={handlePriorityChange}
-          >
-            <option value="danger" className='zt-tag-danger'>
-            {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}
-            </option>
-            <option value="success" className='zt-tag-secondary'>
-              {t("High")}
-            </option>
-            <option value="completed" className='zt-tag-success'>
-              {t("Normal")}
-            </option>
-          </select>,
-        //   <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
-            Status:   <select
-            className={`zt-tag ${getStatusClass(status)}`}
-            value={status}
-            onChange={handleChange}
-          >
-            <option value="danger" className='zt-tag-danger'>
-              {t(item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase())}
-            </option>
-            <option value="success" className='zt-tag-secondary'>
-              {t("Working")}
-            </option>
-            <option value="completed" className='zt-tag-success'>
-              {t("Completed")}
-            </option>
-          </select>,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
+            Priority: (
+                <select
+                  className={`zt-tag ${getPriorityClass(item.priority)}`}
+                  value={item.priority}
+                  onChange={(e) => handlePriorityChange(e, item._id)}
+                >
+                  <option value="low" className='zt-tag-low'>
+                    Low
+                  </option>
+                  <option value="medium" className='zt-tag-medium'>
+                    Medium
+                  </option>
+                  <option value="high" className='zt-tag-high'>
+                    High
+                  </option>
+                </select>
+              ),
+              Status: (
+                <select
+                  className={`zt-tag ${getStatusClass(item.status)}`}
+                  value={item.status}
+                  onChange={(e) => handleStatusChange(e, item._id)}
+                >
+                  <option value="pending" className='zt-tag-pending'>
+                    {t("Pending")}
+                  </option>
+                  <option value="progress" className='zt-tag-progress'>
+                    {t("Progress")}
+                  </option>
+                  <option value="completed" className='zt-tag-completed'>
+                    {t("Completed")}
+                  </option>
+                </select>
+              ),
             TaskTime: item?.requiredTime,
             DueDate:   <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
             action: 

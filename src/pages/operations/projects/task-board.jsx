@@ -96,7 +96,7 @@ const rows = paginatedData?.map((item) => ({
   Team: <div className='flex justify-center'>{item?.members?.map((member, i) => (
     <UserListView imgClass="h-[32px] w-[32px]" key={i} list={[member]} limit={2} />
   ))}</div>,
-  DueDate:   <DisplayDate date={item?.dueDate} />,
+  DueDate: <DisplayDate date={item?.dueDate} />,
 }));
 
 const pagination = {
