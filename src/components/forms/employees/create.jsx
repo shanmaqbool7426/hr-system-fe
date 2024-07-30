@@ -149,6 +149,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             value: formik.values.role,
             list: []
         },
+        
         {
             type: "select",
             name: "designation",

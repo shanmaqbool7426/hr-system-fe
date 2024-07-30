@@ -25,7 +25,7 @@ export const departmentSlice = createSlice({
         },
         pushDepartment(state, action) {
             state.departments_list.push(action.payload)
-        }
+        },
     },
 });
 

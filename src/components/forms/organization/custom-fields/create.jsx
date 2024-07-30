@@ -48,7 +48,7 @@ export default function CreateCustomFieldForm({ title, onClose, type, object, ad
 
     const getFields = () => new Array(fields).fill(null)
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Create new ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false}>
+        <BaseForm title={object ? `Edit ${title}` : `Create ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false}>
             {dynamicFields &&
                 <div className='col-span-2 flex flex-col gap-4'>
                     <hr />

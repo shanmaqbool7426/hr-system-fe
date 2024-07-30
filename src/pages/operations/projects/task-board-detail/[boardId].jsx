@@ -1,12 +1,12 @@
-import { Button, CheckBox, DisplayDate, DropDown, Profile, Table } from '@/components/elements'
-import ProgressBar from '@/components/elements/ProgressBar'
+import { Button, DisplayDate, DropDown, Table } from '@/components/elements'
+import ProgressBar from '@/components/elements/ProgressBar' 
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
-import  Pagination  from '@/components/elements/Table/pagination'
+import  Pagination  from '@/components/elements/Table/pagination' 
 import FeedbackForm from '@/components/forms/projects/feedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
-import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
+import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
@@ -53,7 +53,41 @@ const renderCustomizedLabel = ({
 const COLORS = [ '#E03137','#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
-    const { t } = useTranslation()
+
+    const { t } = useTranslation();
+    const [status, setStatus] = useState('success');
+    const [priority, setPriority] = useState('success');
+  
+    const handleChange = (e) => {
+      setStatus(e.target.value);
+    };
+    const handlePriorityChange = (e) => {
+        setPriority(e.target.value);
+      };
+      const getPriorityClass = (priority) => {
+        switch (priority.toLowerCase()) {
+          case 'danger':
+            return 'zt-tag-danger';
+          case 'success':
+            return 'zt-tag-dark';
+          case 'completed':
+            return 'zt-tag-success';
+          default:
+            return 'zt-tag-default';
+        }
+      };
+    const getStatusClass = (status) => {
+      switch (status.toLowerCase()) {
+        case 'danger':
+          return 'zt-tag-danger';
+        case 'success':
+          return 'zt-tag-dark';
+        case 'completed':
+          return 'zt-tag-success';
+        default:
+          return 'zt-tag-default';
+      }
+    };
     const router = useRouter()
     const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
     const dispatch = useDispatch()
@@ -88,7 +122,6 @@ export default function TaskBoardDetailModule() {
         localStorage.setItem('View', view);
       }, [view]);
 
-    
       const calculatePriorityDistribution = (tasks) => {
         const priorityCount = { low: 0, medium: 0, high: 0 };
     
@@ -222,6 +255,40 @@ export default function TaskBoardDetailModule() {
             Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,
             Priority: <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
             Status: <span className={"zt-tag zt-tag-success"}>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()}</span>,       
+            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
+            Priority: 
+            <select
+            className={`zt-tag ${getPriorityClass(priority)}`}
+            value={priority}
+            onChange={handlePriorityChange}
+          >
+            <option value="danger" className='zt-tag-danger'>
+            {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}
+            </option>
+            <option value="success" className='zt-tag-secondary'>
+              {t("High")}
+            </option>
+            <option value="completed" className='zt-tag-success'>
+              {t("Normal")}
+            </option>
+          </select>,
+        //   <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
+            Status:   <select
+            className={`zt-tag ${getStatusClass(status)}`}
+            value={status}
+            onChange={handleChange}
+          >
+            <option value="danger" className='zt-tag-danger'>
+              {t(item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase())}
+            </option>
+            <option value="success" className='zt-tag-secondary'>
+              {t("Working")}
+            </option>
+            <option value="completed" className='zt-tag-success'>
+              {t("Completed")}
+            </option>
+          </select>,
             TaskTime: item?.requiredTime,
             DueDate:   <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
             action: 
@@ -447,8 +514,7 @@ export default function TaskBoardDetailModule() {
                 {feedback && <FeedbackForm
                     onClose={() => { setFeedback(false) }}
                 />}
-                {task && <AddTaskForm 
-                    title={t('Create Task')}
+                {task && <AddTaskForm  
                     object={editTask}
                     additionFields={taskboard_details} 
                     onClose={() => { 

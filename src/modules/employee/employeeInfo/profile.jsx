@@ -26,10 +26,10 @@ export default function EmployeeProfile() {
       contact: employee_details?.contact || "",
       dateOfBirth: employee_details?.dateOfBirth || "",
       address: employee_details?.address || "",
-      lineManager : object?.lineManager?.reduce((acc, item) => {
-        acc.push(item._id);
-        return acc;
-      }, []) || [],
+      // lineManager : object?.lineManager?.reduce((acc, item) => {
+      //   acc.push(item._id);
+      //   return acc;
+      // }, []) || [],
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t('formik.firstNameRequired')),
@@ -58,10 +58,10 @@ export default function EmployeeProfile() {
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
               type={'text'}
-              name={'Blood'}
-              label={t('Blood Group')}
-              placeholder={t('Blood Group')}
-              value={formik.values.Blood}
+              name={'Designation'}
+              label={t('Designation')}
+              placeholder={t('Designation')}
+              value={formik.values.Designation}
               formik={formik}
               required
             />
@@ -225,8 +225,8 @@ export default function EmployeeProfile() {
               <address>{employee_details?.address || '-------'}</address>
             </li>
             <li>
-              <span>{t('Blood Group')}</span>
-              <strong>{employee_details?.bloodGroup || '-------'}</strong>
+              <span>{t('Designation')}</span>
+              <strong>{employee_details?.DesignationGroup || '-------'}</strong>
             </li>
           </ul>
         </div>

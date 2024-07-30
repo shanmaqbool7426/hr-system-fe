@@ -52,7 +52,7 @@ export default function CompletedProjectsModule() {
   const rows = [
     {
      
-      Project: <Link href={'/projects/details'}><span className=''>Office Management</span></Link>,
+      Project: <Link href={'/operations/projects/details'}><span className=''>Office Management</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',
       Leader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
@@ -86,7 +86,7 @@ export default function CompletedProjectsModule() {
       </DropDown>,
     },
     {
-      Project: <Link href={'/projects/details'}><span className=''>Video Calling</span></Link>,
+      Project: <Link href={'/operations/projects/details'}><span className=''>Video Calling</span></Link>,
       ProjectID: "PJT- 001",
       Client: 'Arun',
       Leader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>

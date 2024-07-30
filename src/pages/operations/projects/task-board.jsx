@@ -141,7 +141,6 @@ const pagination = {
 
         {board && <CreateBoardForm
           title={t('Create Task Board')}
-
           type={'Feedback'}
           onClose={() => { setBoard(false) }}
         />}

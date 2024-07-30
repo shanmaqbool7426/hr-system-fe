@@ -14,6 +14,10 @@ import project from "./slices/project.slice"
 import taskboard from "./slices/taskboard.slice";
 import task from "./slices/task.slice"
 
+import job from "./slices/job.slice"
+
+
+
 export default configureStore({
   reducer: {
     asset,
@@ -30,5 +34,7 @@ export default configureStore({
     shiftflag,
     task,
     taskboard,
+    job
+   
   },
 });

@@ -76,13 +76,14 @@ export default function Sidebar() {
       { name: t("Employee Transition"), href: "/employees/transition" },
       { name: t("Employee Transfer"), href: "/employees/transfer" },
       { name: t("Employee Onboarding"), href: "/employees/onboarding" },
+      { name: t("Inactive Employee"), href: "/employees/inactive" },
       { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
-      { name: t("Final Settlement"), href: "/employees/final-settlement" },
       {
         name: t("Employee Settings"),href: "/employees/settings",
         innerSubMenu: [
           { name: t("Approval Level"), href: "/employees/settings/approval-level",},     
           { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+          { name: t("Exit/ Onboarding Assets"), href: "/employees/settings/exit-onboarding-assets" },
         ],
       },
     ],
@@ -135,7 +136,7 @@ export default function Sidebar() {
           { name: t("Awaiting Tasks"), href: "/operations/projects/awaiting-tasks" },
           { name: t("Overdue Tasks"), href: "/operations/projects/overdue-tasks" },
           { name: t("Feedback"), href: "/operations/projects/feedback" },
-          // { name: t("Upcoming Tasks"), href: "/projects/upcoming-tasks" },
+          { name: t("Reported Task"), href: "/operations/projects/reported-task" },
         ]
       }, 
       {
@@ -201,6 +202,7 @@ export default function Sidebar() {
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
       { name: t("Payroll Approval"), href: "/payroll/approval" },
+      { name: t("Final Settlement"), href: "/payroll/final-settlement" },
       { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
       { name: t("Overtime Request"), href: "/payroll/overtime" },
       { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
@@ -218,7 +220,7 @@ export default function Sidebar() {
       {
         name: t("Setting"), href: "/remote-work/setting",
         innerSubMenu: [
-          // { name: t('Profile'), href: "/remote-work/setting/profile" },
+          { name: t('Profile'), href: "/remote-work/setting/profile" },
           { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
           { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
           { name: t('Account'), href: "/remote-work/setting/account" },
@@ -263,12 +265,13 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Group"), href: "/organization/custom-fields/group" },
           { name: t("Designation"), href: "/organization/custom-fields/designation" },
+          { name: t("Emp Onboarding Tasks"), href: "/organization/custom-fields/employee-onboarding" },
+          { name: t("Exit Clearance"), href: "/organization/custom-fields/exit-clearance" },
           { name: t("Allowance Title"), href: "/organization/custom-fields/allowance-title" },
           { name: t("Deduction Title"), href: "/organization/custom-fields/deduction-title" },
           { name: t("Station"), href: "/organization/custom-fields/station" },
           { name: t("Bank"), href: "/organization/custom-fields/bank" },
-          { name: t("Job Title"), href: "/organization/custom-fields/job-title" },
-          { name: t("Departments"), href: "/organization/custom-fields/departments" },
+          { name: t("Job Title"), href: "/organization/custom-fields/job-title" }, 
           { name: t("Job Field"), href: "/organization/custom-fields/job-field" },
           { name: t("Asset Type"), href: "/organization/custom-fields/asset-type" },
           { name: t("Asset Status"), href: "/organization/custom-fields/asset-status" },

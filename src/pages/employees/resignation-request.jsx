@@ -2,9 +2,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
-
-import { Button, CheckBox, Datepicker, Input, SearchSelect, Table, Textarea } from '@/components/elements';
-import FileUpload from '@/components/elements/FileUpload';
+import { Button,  Table } from '@/components/elements'; 
 import { useState } from 'react';
 import CreateResignationForm from '@/components/forms/employees/createResignation';
 
@@ -87,7 +85,7 @@ export default function ResignationRequestPage() {
 			{/* {is_loading && <PageLoader/>} */}
 			<div className="flex justify-between pb-6">
 				<h1 className="text-h4 mb-0">{t("Resignation Request")}</h1>
-				<Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Resignation Request")}</Button>
+				<Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Apply Resignation")}</Button>
 			</div>
 			<div className='zt-card grow'>
 				<Table

@@ -1,7 +1,9 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, DisplayDate } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput} from "../elements"
 import { useTranslation } from "react-i18next"
 import Radio from "../elements/Radio"
+import { useSelector } from 'react-redux';
+
 
 export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className }) {
     const { t } = useTranslation()
@@ -9,12 +11,14 @@ export default function BaseForm({ children, formElements, onClose, title, formi
     const submitHamdler = (event) => {
         event.preventDefault()
         formik.submitForm()
+
     }
+
+
     return (
         <div className="zt-backDropSidePanel">
-            <div className="zt-sidePanel">
+            <div className="zt-sidePanel relative">
                 {/* <button className="btn-backOrClose btn bg-white !border-white !rounded-full !py-5 absolute top-28 right-[calc(100%_+_2rem)]" onClick={close}><ChevronLeft /></button> */}
-
                 <h3 className="mb-0 px-6">{title || ""}</h3>
 
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
@@ -33,6 +37,8 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                                 formik.setFieldValue(element.name, value)
                                             }}
                                         />
+                                        case 'button':
+                                            return <Button className={element.btn} key={index} {...element} />
                                     case 'search':
                                         return <SearchInput label={element.label} key={index} {...element} />
                                     case 'select':
@@ -117,7 +123,6 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                             {children && children}
                         </div>
                     </fieldset>
-
                     <div className="zt-btns">
                         <Button type="button" value={t("Cancel")} className={"btn w-full btn-primary-outline"} onClick={close} />
                         <Button type="button" onClick={submitHamdler} value={t("Save")} className={"btn w-full btn-success"} is_loading={is_loading} disabled={!formik?.isValid} />
