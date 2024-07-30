@@ -173,7 +173,7 @@ export default function InventoryPage() {
 				</div>
 			</div>
 
-			<div className="w-full bg-white p-6 rounded-lg grow">
+			<div className=" zt-card grow">
 				<FilterArea title={t("Inventory")}
 					elements={filterElements}
 					filters={filters}

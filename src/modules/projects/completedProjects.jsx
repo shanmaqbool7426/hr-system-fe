@@ -122,7 +122,7 @@ export default function CompletedProjectsModule() {
   ]
 
   return (
-    <div className="w-full bg-white p-6 rounded-lg grow">
+    <div className=" zt-card grow">
       <h2 className="text-h4">{t("Completed Projects")}</h2>
       <Table
         headings={headings}

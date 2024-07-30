@@ -16,7 +16,7 @@ export default function EmployeesPage() {
                 <p className="mb-0">{t("Manage your employee")}</p>
             </div>
 
-            <div className="w-full bg-white p-6 rounded-lg grow">
+            <div className=" zt-card grow">
             </div>
         </section>
     )

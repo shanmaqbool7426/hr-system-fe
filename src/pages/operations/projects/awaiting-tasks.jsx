@@ -59,7 +59,7 @@ export default function AwaitingTasksPage() {
                     <Button className={"btn btn-primary"}>{t("Accept")}</Button>
                 </div> */}
             </div>
-            <div className='w-full bg-white p-6 rounded-lg'>
+            <div className=' zt-card'>
                 <Table
                     headings={headings}
                     rows={rows}
@@ -74,7 +74,7 @@ export default function AwaitingTasksPage() {
                     className={'zt-employeeTable zt-projectsAwaitingTasksTable '}
                 />
             </div>
-            {/* <div className="w-full bg-white p-6 rounded-lg grow flex flex-col divide-y divide-themeGrayscale300">
+            {/* <div className=" zt-card grow flex flex-col divide-y divide-themeGrayscale300">
                 {["Appointment booking", "Appointment booking with payment gateway", "Appointment booking with payment gateway", "Profile add"].map((ele, i) => (
                     <div className='flex justify-between p-4' key={i}>
                         <div className='flex flex-col gap-2'>

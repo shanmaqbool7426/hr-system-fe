@@ -384,7 +384,7 @@ export default function Recruitment() {
         <Statistic variant={'success'} statIcon={<ShortListed />} title={'Short Listed'} statCount={'37'} statRatio={'+9,5%'} />
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
         <FilterArea title={t("Employees")}
           elements={filterElements}
           filters={filters}

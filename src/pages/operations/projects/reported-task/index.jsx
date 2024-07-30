@@ -44,7 +44,7 @@ export default function ReportedIssuesPage() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.daynamicTitle(() => {
+                            Toast.dynamicTitle(() => {
                                 Toast.success(t("Reported Issue Resolved Successfully"))
                             }, t ,"Did you fix this issue with Assignee?")
                         }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
@@ -73,7 +73,7 @@ export default function ReportedIssuesPage() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.daynamicTitle(() => {
+                            Toast.dynamicTitle(() => {
                                 Toast.success(t("Reported Issue Resolved Successfully"))
                             }, t ,"Did you fix this issue with Assignee?")
                         }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>

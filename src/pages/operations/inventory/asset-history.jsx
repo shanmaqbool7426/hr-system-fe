@@ -112,7 +112,7 @@ export default function AssetHistoryPage() {
 				</div>
 			</div>
 
-			<div className="w-full bg-white p-6 rounded-lg grow">
+			<div className=" zt-card grow">
 				<FilterArea title={t("Asset History")}
 					elements={filterElements}
 					filters={filters}

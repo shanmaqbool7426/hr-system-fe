@@ -73,7 +73,7 @@ export default function ManageMaritalTypePage () {
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
 
         {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
           <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>

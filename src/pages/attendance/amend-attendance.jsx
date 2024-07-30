@@ -103,20 +103,20 @@ export default function AmmendAttendance() {
     ]
 
     const headings = [
-    
+
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
-        { title: t("Schedule Details"), col: "ScheduleDetails", },
+        { title: t("Shift Plan"), col: "ScheduleDetails", },
         { title: t("Date In"), col: "DateIn", },
         { title: t("Date Out"), col: "DateOut" },
         { title: t("Time In"), col: "TimeIn" },
         { title: t("Time Out"), col: "TimeOut" },
-        { title: t("Remote Work"), col: "RemoteWork" },
+        { title: t("Work Mode"), col: "RemoteWork" },
         { title: t("Status"), col: "Status" }
     ]
     const rows = [
         {
-          
+
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
@@ -139,9 +139,9 @@ export default function AmmendAttendance() {
             Status: <span className='zt-tag zt-tag-danger'> Absent</span>,
         },
         {
-        
+
             Employee: <div className="flex items-center justify-center gap-4 grow">
-               <div className={'flex flex-col gap-1 text-left'}>
+                <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
                     <span className={'text-themeGrayscale500 '}>{t('10202325')}</span>
                 </div>
@@ -174,20 +174,12 @@ export default function AmmendAttendance() {
                     <Button className={"btn btn-primary"} onClick={() => setAmend(true)}>{t("Attendance Repost")}</Button>
                 </div>
             </div>
-
             <div className="zt-card grow">
                 <FilterArea title={t("Attendance")}
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
                 />
-                {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-                    <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-                    <CloseCross className={'cursor-pointer'}
-                        onClick={(() => setHide(true))}
-                    />
-                </div>}
-
                 <Table
                     headings={headings}
                     rows={rows}

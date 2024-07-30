@@ -1,4 +1,4 @@
-import { CheckBox, Input, SearchSelect, ToggleCheck } from "@/components/elements";
+import { Input, SearchSelect, ToggleCheck } from "@/components/elements";
 import { useTranslation } from "next-i18next";
 
 export default function RemoteProfile() {

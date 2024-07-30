@@ -99,7 +99,7 @@ export default function AddNewSchedule() {
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Add New Schedule")}</h1>
             </div>
-            <div className="w-full bg-white p-6 rounded-lg grow">
+            <div className=" zt-card grow">
                 <FilterArea title={t("Add New Schedule")}
                     elements={filterElements}
                     filters={filters}

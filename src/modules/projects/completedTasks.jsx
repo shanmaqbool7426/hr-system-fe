@@ -160,7 +160,7 @@ export default function CompletedTaskModule() {
     ]
 
     return (
-        <div className="w-full bg-white p-6 rounded-lg grow">
+        <div className=" zt-card grow">
             <h2 className="text-h4">{t("Completed Tasks")}</h2>
             <Table
                 headings={headings}

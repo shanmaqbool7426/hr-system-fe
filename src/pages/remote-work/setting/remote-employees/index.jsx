@@ -115,7 +115,7 @@ export default function Employees() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.daynamicTitle(() => {
+                            Toast.dynamicTitle(() => {
                                 // dispatch(DeleteCustomfield(item._id, () => {
                                 Toast.success(t("Remote Access Revoked Successfully"))
                                 // }))
@@ -160,7 +160,7 @@ export default function Employees() {
                     </li>
                     <li className="!p-0">
                         <a onClick={() => {
-                            Toast.daynamicTitle(() => {
+                            Toast.dynamicTitle(() => {
                                 // dispatch(DeleteCustomfield(item._id, () => {
                                 Toast.success(t("Remote Access Revoked Successfully"))
                                 // }))
