@@ -10,7 +10,7 @@ import {
     CreateProject,
     UpdateProject,
 } from "@/store/actions/project.actions";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import moment from 'moment';
 
 
@@ -39,13 +39,6 @@ export default function CreatProjectsForm({ onClose, object, }) {
         }
     };
     
-    
-    
-    useEffect(() => {
-        dispatch(FetchEmployees());
-    }, [dispatch]);
-
-
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
