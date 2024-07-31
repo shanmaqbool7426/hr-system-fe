@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button, DropDown, Table } from "@/components/elements";
 import AddPenaltyForm from "@/components/forms/attendance/addPenaltyRule";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+import PenaltyLeaveDeductionForm from "@/components/forms/attendance/createPenaltyLeaveDeduction";
 export default function AttendancePenaltyRuleSettingPage() {
     const { t } = useTranslation();
     const [sortCol, setSortCol] = useState(null)
@@ -10,22 +11,23 @@ export default function AttendancePenaltyRuleSettingPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [add, setAdd] = useState(false)
+    const [penalty, setPanelty] = useState(false)
 
     const headings = [
-    
+
         { title: t("Reason Name"), col: 'ReasonName', },
         { title: t("Flag"), col: 'Flag' },
         { title: t("Flag Count"), col: "FlagCount" },
         { title: t("Exempted Count"), col: "ExemptedCount" },
         { title: t("Effect Frequency"), col: "EffectFrequency" },
-        { title: t("Exemption"), col: "Exemption" },
-        { title: t("Effect Quantity"), col: "EffectQuantity" },
+        // { title: t("Exemption"), col: "Exemption" },
+        // { title: t("Effect Quantity"), col: "EffectQuantity" },
         { title: t("Modified On"), col: "ModifiedOn" },
         { title: t("Action"), col: "action" },
     ]
     const rows = [
         {
-          
+
             ReasonName: 'Late Penalty',
             Flag: "Late",
             FlagCount: "2",
@@ -60,7 +62,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-        
+
             ReasonName: 'Half Day Penalty',
             Flag: "Half Day",
             FlagCount: "2",
@@ -95,7 +97,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-           
+
             ReasonName: 'Early',
             Flag: "Early",
             FlagCount: "2",
@@ -130,7 +132,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-          
+
             ReasonName: ' Short Day Simple',
             FlagCount: "2",
             ExemptedCount: "2",
@@ -164,7 +166,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-         
+
             ReasonName: 'Absent for Short TIme',
             Flag: "Absent for Short TIme",
             FlagCount: "2",
@@ -199,7 +201,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-          
+
             ReasonName: 'Absent',
             Flag: "Absent",
             FlagCount: "2",
@@ -234,7 +236,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-          
+
             ReasonName: 'Missing Attendance',
             Flag: "Missing Entry",
             FlagCount: "2",
@@ -269,7 +271,7 @@ export default function AttendancePenaltyRuleSettingPage() {
             </DropDown>,
         },
         {
-           
+
             ReasonName: 'Short Day Flexible',
             Flag: "Short Day",
             FlagCount: "2",
@@ -308,7 +310,10 @@ export default function AttendancePenaltyRuleSettingPage() {
         <section className="flex flex-col grow relative">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Attendance Settings")}</h1>
-                <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add New Rule")}</Button>
+                <div className="flex items-start gap-2">
+                    <Button className={"btn btn-primary "} onClick={() => setPanelty(true)}>{t("Panelty Leave Deduction")}</Button>
+                    <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add New Rule")}</Button>
+                </div>
             </div>
             <div className="zt-card grow">
                 <div className="flex justify-between pb-6">
@@ -328,9 +333,8 @@ export default function AttendancePenaltyRuleSettingPage() {
                     className={'zt-employeeTable zt-attendancePaneltyTable'}
                 />
 
-                {add && <AddPenaltyForm
-                    onClose={() => { setAdd(false) }}
-                />}
+                {add && <AddPenaltyForm onClose={() => { setAdd(false) }} />}
+                {penalty && <PenaltyLeaveDeductionForm onClose={() => { setPanelty(false) }}/>}
             </div>
 
         </section>

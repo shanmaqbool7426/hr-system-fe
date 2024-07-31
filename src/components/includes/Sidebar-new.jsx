@@ -113,14 +113,14 @@ export default function Sidebar() {
     ],
     leave: [
       { name: t("Leave Dashboard"), href: "/leaves/dashboard" },
-      { name: t("Leave Policies"), href: "/leaves" },
       { name: t("Leave Request"), href: "/leaves/requests" },
       { name: t("CPL Request"), href: "/leaves/cpl-requests" },
       { name: t("Gazetted Holidays"), href: "/leaves/gazetted-holidays" },
       {
         name: t("Leave Setting"), href: "/leaves/settings",
         innerSubMenu: [
-          { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
+          { name: t("Leave Policies"), href: "/leaves" },
+          // { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
           { name: t('Employee Leave Quota'), href: "/leaves/settings/employee-leave-quota" },
           { name: t('General Leave Settings'), href: "/leaves/settings/general-setting" },
         ]
@@ -145,19 +145,18 @@ export default function Sidebar() {
           { name: t('Dashboard'), href: "/operations/helpdesk/dashboard" },
           { name: t("Tickets"), href: "/operations/helpdesk/tickets" },
         ]
-      },
-      {
-        name: t("Vendor Management"), href: "/operations/vendor-management",
-        innerSubMenu: [
-          { name: t('Dashboard'), href: "/operations/vendor-management/dashboard" },
-          { name: t("Vendor Management"), href: "/operations/vendor-management" },
-        ]
-      },
+      }, 
       {
         name: t("Procurement"), href: "/operations/procurement",
         innerSubMenu: [
+          // name: t("Vendor"), href: "/operations/vendor",
           { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
-          { name: t("Procurement"), href: "/operations/procurement" },
+          { name: t('Vendors'), href: "/operations/procurement/vendors" },
+          { name: t('Quotations'), href: "/operations/procurement/quotations" },
+          { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
+          { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
+          { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
+          { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
         ]
       },
       {
@@ -173,6 +172,7 @@ export default function Sidebar() {
         name: t("Meal"), href: "/operations/meal",
         innerSubMenu: [
           { name: t("Meal Menu"), href: "/operations/meal/meal-menu" },
+          { name: t("Employee Availing"), href: "/operations/meal/employee-availing" }, 
         ]
       },
     ],
