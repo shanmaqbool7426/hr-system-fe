@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 import { Edit,  ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchProject , DeleteProject} from '@/store/actions/project.actions';
+import { FetchProject , DeleteProject, UpdateProject} from '@/store/actions/project.actions';
 import { FetchEmployees } from '@/store/actions/employee.actions'
 
 export default function ProjectsModule() {
@@ -31,6 +31,47 @@ export default function ProjectsModule() {
     status: null,
   });
   
+
+  const handlePriorityChange = (e, projectId) => {
+    const newPriority = e.target.value;
+    dispatch(UpdateProject(projectId, { priority: newPriority }, () => {
+      Toast.success(t("Project priority updated successfully"));
+    }));
+  };
+  
+  const handleStatusChange = (e, projectId) => {
+    const newStatus = e.target.value;
+    dispatch(UpdateProject(projectId, { status: newStatus }, () => {
+      Toast.success(t("Project status updated successfully"));
+    }));
+  };
+  const getPriorityClass = (priority) => {
+    switch (priority.toLowerCase()) {
+      case 'high':
+        return 'zt-tag-danger';
+      case 'medium':
+        return 'zt-tag-dark';
+      case 'low':
+        return 'zt-tag-success';
+      default:
+        return 'zt-tag-default';
+    }
+  };
+const getStatusClass = (status) => {
+  switch (status.toLowerCase()) {
+    case 'pending':
+      return 'zt-tag-danger';
+    case 'progress':
+      return 'zt-tag-dark';
+    case 'completed':
+      return 'zt-tag-success';
+      case "new":
+        return 'zt-tag-dark';
+    default:
+      return 'zt-tag-default';
+  }
+};
+
   useEffect(() => {
     const savedView = localStorage.getItem('View');
     if (savedView) {
@@ -43,6 +84,7 @@ export default function ProjectsModule() {
   useEffect(() => {
     localStorage.setItem('View', view);
   }, [view]);
+
   const deleteHandler = (item) => {
     Toast.confirmDelete(() => {
       dispatch(
@@ -133,8 +175,45 @@ export default function ProjectsModule() {
       Client: item?.client,
       Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
       Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
-      Priority: <span className='zt-tag zt-tag-danger'> {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()} </span>,
-      Status: <span className='zt-tag zt-tag-success'>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
+      Priority: (
+        <select
+          className={`zt-tag ${getPriorityClass(item.priority)}`}
+          value={item.priority}
+          onChange={(e) => handlePriorityChange(e, item._id)}
+        >
+          <option value="low" className='zt-tag-low'>
+            Low
+          </option>
+          <option value="medium" className='zt-tag-medium'>
+            Medium
+          </option>
+          <option value="high" className='zt-tag-high'>
+            High
+          </option>
+        </select>
+      ),
+      Status:(
+        <select
+          className={`zt-tag ${getStatusClass(item.status)}`}
+          value={item.status}
+          onChange={(e) => handleStatusChange(e, item._id)}
+        >
+          {item.status === "new" && (
+            <option value="new" className='zt-tag-new'>
+              {t("New")}
+            </option>
+          )}
+          <option value="pending" className='zt-tag-pending'>
+            Pending
+          </option>
+          <option value="progress" className='zt-tag-progress'>
+            Progress
+          </option>
+          <option value="completed" className='zt-tag-completed'>
+            Completed
+          </option>
+        </select>
+      ),
       Action: (
         <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-1">

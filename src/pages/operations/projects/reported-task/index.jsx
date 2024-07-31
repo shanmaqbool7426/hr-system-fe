@@ -24,11 +24,12 @@ export default function ReportedIssuesPage() {
     const [selectedIssue, setSelectedIssue] = useState(null) 
     const {reported_task_list} = useSelector(state => state.task)
 
+    
     const handleViewIssue = (issue) => {
         setSelectedIssue(issue); 
         setWarning(true); 
     };
-
+    
     useEffect(() => {
         dispatch(FetchEmployees())
         dispatch(FetchReportedTasks())
@@ -53,7 +54,7 @@ export default function ReportedIssuesPage() {
         ProjectName: item?.project?.name,
         TaskTime: item?.requiredTime,
         TaskDeadline: <DisplayDate date={item?.dueDate} />,
-            issue: item?.raiseIssue?.name,
+            issue: item?.issueRaised?.map(issue => issue.name).join(', '),
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
                     <li className="!p-0">

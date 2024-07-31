@@ -107,9 +107,9 @@ export default function CompletedProjectsModule() {
             page={page}
             setPage={setPage} />
         }
-      {feedback && <FeedbackForm
+      {/* {feedback && <FeedbackForm
         onClose={() => { setFeedback(false) }}
-      />}
+      />} */}
       {raiseIssue && <RaiseIssueForm
         onClose={() => { setRaiseIssue(false) }}
       />}

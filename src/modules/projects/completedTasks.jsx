@@ -45,7 +45,7 @@ export default function CompletedTaskModule() {
             TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            Leader:    <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
             Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,   
             TaskTime: "01:00",
             DueDate: "18 May 2024",

@@ -319,12 +319,6 @@ export default function TaskBoardDetailModule() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Status")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
                         <a onClick={() => {
                             deleteHandler(item);
                         }}
