@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Storage {
-    async upload(file, directory, onSuccess) {
+    async upload(file, directory, onSuccess = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let payload = new FormData()

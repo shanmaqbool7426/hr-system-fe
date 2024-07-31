@@ -25,9 +25,7 @@ export default function ProjectsModule() {
   const { taskboard_list, is_loading } = useSelector(state => state.taskboard);
   const [filters, setFilters] = useState({
     search: "",
-    project: null,
-    department: null,
-    status: null,
+    project: "",
   })
 
   useEffect(() => {
@@ -39,7 +37,7 @@ export default function ProjectsModule() {
       type: "search",
       name: "search",
       value: filters.search,
-      placeholder: t("Project"),
+      placeholder: t("Task Board Name"),
       className: "xl:col-span-2",
       onChange: (event) => {
         let _filter = { ...filters }
@@ -48,33 +46,19 @@ export default function ProjectsModule() {
       }
     },
     {
-      type: "customIcon",
-      name: "employee",
-      value: filters.search,
-      placeholder: t("Employee"),
+      type: "search",
+      name: "project",
+      value: filters.project,
+      placeholder: t("Project Name"),
       className: "xl:col-span-2",
       onChange: (event) => {
         let _filter = { ...filters }
-        _filter['search'] = event.target.value
-        setFilters(_filter)
-      }
-    },
-    {
-      type: "select",
-      name: "Designation",
-      className: "xl:col-span-2",
-      placeholder: "Designation",
-      value: filters.status,
-      list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-        return { value: item._id, display: item.name }
-      }),
-      onChange: (status) => {
-        let _filter = { ...filters }
-        _filter['status'] = status
+        _filter['project'] = event.target.value
         setFilters(_filter)
       }
     },
   ]
+
   const headings = [
     { title: t("Task Board Name"), col: "TaskBoardName" },
     { title: t("Project Name"), col: "ProjectName" },
@@ -85,8 +69,8 @@ export default function ProjectsModule() {
   ]
   let filteredRows = taskboard_list?.filter((item) => {
     return (
-      filters.search.length === 0 ||
-      item.name.toLowerCase().includes(filters.search.toLowerCase())
+      (filters.search.length === 0 || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+      (filters.project.length === 0 || item.project?.name.toLowerCase().includes(filters.project.toLowerCase()))
     );
   })
   .sort((a, b) => {
@@ -112,7 +96,7 @@ const rows = paginatedData?.map((item) => ({
   Team: <div className='flex justify-center'>{item?.members?.map((member, i) => (
     <UserListView imgClass="h-[32px] w-[32px]" key={i} list={[member]} limit={2} />
   ))}</div>,
-  DueDate:   <DisplayDate date={item?.dueDate} />,
+  DueDate: <DisplayDate date={item?.dueDate} />,
 }));
 
 const pagination = {

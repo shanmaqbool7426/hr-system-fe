@@ -5,43 +5,51 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
+import { CreateRaiseIssue } from '@/store/actions/task-raise-issue.actions';
+import { FetchAwaitingTasks, FetchReportedTasks } from '@/store/actions/task.actions';
 
-export default function RaiseIssueForm({ onClose, object }) {
+export default function RaiseIssueForm({ onClose, object , taskId }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             name: object?.name || "", 
-            icon: object?.icon || "",
-            prefix: object?.prefix || "",
+           description: object?.description || "",
+           task: taskId || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
+            name: Yup.string().required(t('Task name is required')),
+            description: Yup.string().required(t('Description is required')),
       }),
         onSubmit: async (values) => {
-
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
+            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateRaiseIssue(values, onCompleted))
+           
         }
     })
     const onCompleted = () => {
         Toast.success(object ? t(`Issue updated successfully`) : t(`Issue created successfully`))
+        setTimeout(() => {
+            dispatch(FetchAwaitingTasks());
+            dispatch(FetchReportedTasks());
+        }, 1000);
+
         onClose()
     }
     const formElements = [
         {
             type: "text",
-            name: "title",
+            name: "name",
             label: t('Issue Title'),
             containerClass: 'col-span-2',
-            value: formik.values.reason,
+            value: formik.values.name,
             required: true,
         },
         {
             type: "textarea",
-            name: "reason",
+            name: "description",
             label: t('Describe Issue'),
             containerClass: 'col-span-2',
-            value: formik.values.reason,
+            value: formik.values.description,
             required: true,
         },
 
