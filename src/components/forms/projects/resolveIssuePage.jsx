@@ -6,15 +6,23 @@ import Toast from "@/util/toast";
 import { useEffect, useState } from 'react'
 import { Button, DetailPanel } from '@/components/elements'
 import DiscussionForm from "./discussion";
+import { UpdateRaiseIssue } from '@/store/actions/task-raise-issue.actions';
+import { FetchReportedTasks } from '@/store/actions/task.actions';
 
-export default function CreateReportedIssueForm({ onClose, object}) {
+export default function ResolveIssuePage({ onClose, object}) {
     const { t } = useTranslation();
     const [task, setTask] = useState(false)
     const [discussion, setDiscussion] = useState(false)
     const dispatch = useDispatch();
 
     const resolveHandler = async()=>{
-        onClose()
+        const id = object?.raiseIssue?._id; 
+        const payload = { issueResolve: true };
+        dispatch(UpdateRaiseIssue(id, payload, () => {
+          Toast.success(t("Issue resolved successfully"));
+          dispatch(FetchReportedTasks())
+          onClose();
+        }));
     }
    
     return (

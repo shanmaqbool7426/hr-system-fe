@@ -5,6 +5,7 @@ export const projectSlice = createSlice({
     initialState: {
         is_loading: false,
         project_list: [],
+        completed_project_list:[],
         project_detail: null,
         total_tasks: 0,
         completed_tasks: 0,
@@ -15,6 +16,9 @@ export const projectSlice = createSlice({
         },
         setProjectList(state, action) {
             state.project_list = action.payload.list; 
+        },
+        setCompletedProjectList(state, action) { 
+            state.completed_project_list = action.payload.list
         },
         setProject(state, action) {
             let index = state.project_list.findIndex((item) => item._id === action.payload._id)
@@ -44,6 +48,7 @@ export const projectSlice = createSlice({
 export const {
     setLoading,
     setProjectList,
+    setCompletedProjectList,
     setProject,
     removeProject,
     pushProject,

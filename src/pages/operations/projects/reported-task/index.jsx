@@ -6,10 +6,10 @@ import Toast from '@/util/toast'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import Pagination from '@/components/elements/Table/pagination' 
 import DiscussionForm from '@/components/forms/projects/discussion'
-import CreateReportedIssueForm from '@/components/forms/projects/createIssueDetail'
+import ReportedIssueDetail from '@/components/forms/projects/resolveIssuePage'
 import { useDispatch, useSelector } from 'react-redux'
 import { FetchReportedTasks } from '@/store/actions/task.actions'
-import { FetchEmployeeDetails, FetchEmployees } from '@/store/actions/employee.actions'
+import { FetchEmployees } from '@/store/actions/employee.actions'
 
 export default function ReportedIssuesPage() {
     const { t } = useTranslation()
@@ -100,7 +100,7 @@ export default function ReportedIssuesPage() {
                     setPage={setPage} />
                 }
             </div>
-            {warning && selectedIssue && <CreateReportedIssueForm
+            {warning && selectedIssue && <ReportedIssueDetail
                 object={selectedIssue} 
                 onClose={() => { setWarning(false) }}
             />}

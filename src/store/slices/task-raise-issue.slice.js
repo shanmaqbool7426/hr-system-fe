@@ -13,11 +13,18 @@ export const taskRaiseIssueSlice = createSlice({
     pushRaiseIssue(state, action) {
       state.raise_issue_list.push(action.payload);
     },
+    setRaiseIssue(state, action) {
+      let index = state.raise_issue_list.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      if (index !== -1) state.raise_issue_list[index] = action.payload;
+    },
   },
 });
 export const {
     setLoading,
-    pushRaiseIssue
+    pushRaiseIssue,
+    setRaiseIssue
 } = taskRaiseIssueSlice.actions;
 
 export default taskRaiseIssueSlice.reducer;

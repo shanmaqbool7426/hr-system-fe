@@ -77,17 +77,6 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             multiple: false
         },
         {
-            type: "select",
-            name: "status",
-            label: t('Status'),
-            value: formik.values.status,
-            list: [
-                { value: "pending", display: "Pending" },
-                { value: "progress", display: "Progress" },
-                { value: "completed", display: "Completed" },
-            ]
-        },
-        {
             type: "date",
             name: "dueDate",
             label: t('Due Date'),

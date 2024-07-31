@@ -31,7 +31,7 @@ export default function RaiseIssueForm({ onClose, object , taskId }) {
         setTimeout(() => {
             dispatch(FetchAwaitingTasks());
             dispatch(FetchReportedTasks());
-        }, 2000);
+        }, 1000);
 
         onClose()
     }

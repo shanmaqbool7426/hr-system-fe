@@ -54,8 +54,41 @@ const COLORS = [ '#E03137','#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
     const { t } = useTranslation();
-  
-    const handlePriorityChange = (e, taskId) => {
+    const router = useRouter()
+    const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
+    const dispatch = useDispatch()
+    const [sortCol, setSortCol] = useState(null)
+    const [sortDir, setSortDir] = useState(null)
+    const [page, setPage] = useState(1)
+    const [perPage, setPerPage] = useState(10)
+    const [create, setCreate] = useState(false)
+    const [editTask, setEditTask] = useState(null);
+    const [task, setTask] = useState(false)
+    const [feedback, setFeedback] = useState(false)
+    const [discussion, setDiscussion] = useState(false)
+    const [raiseIssue, setRaiseIssue] = useState(false)
+    const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
+    const { task_list  } = useSelector(state => state.task)
+
+
+    useEffect(() => {
+        const savedView = localStorage.getItem('View');
+        if (savedView) {
+            setView(savedView);
+        }
+        const {boardId }= router.query;
+        if (boardId){
+            dispatch(FetchEmployees())
+            dispatch(FetchTasks(boardId));
+            dispatch(FetchTaskBoardDetails(boardId));
+        }
+    }, [ router,dispatch]);
+
+    useEffect(() => {
+        localStorage.setItem('View', view);
+      }, [view]);
+
+      const handlePriorityChange = (e, taskId) => {
         const newPriority = e.target.value;
         dispatch(UpdateTask(taskId, { priority: newPriority }, () => {
           Toast.success(t("Task priority updated successfully"));
@@ -92,39 +125,6 @@ export default function TaskBoardDetailModule() {
           return 'zt-tag-default';
       }
     };
-    const router = useRouter()
-    const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
-    const dispatch = useDispatch()
-    const [sortCol, setSortCol] = useState(null)
-    const [sortDir, setSortDir] = useState(null)
-    const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false)
-    const [editTask, setEditTask] = useState(null);
-    const [task, setTask] = useState(false)
-    const [feedback, setFeedback] = useState(false)
-    const [discussion, setDiscussion] = useState(false)
-    const [raiseIssue, setRaiseIssue] = useState(false)
-    const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
-    const { task_list  } = useSelector(state => state.task)
-
-
-    useEffect(() => {
-        const savedView = localStorage.getItem('View');
-        if (savedView) {
-            setView(savedView);
-        }
-        const {boardId }= router.query;
-        if (boardId){
-            dispatch(FetchEmployees())
-            dispatch(FetchTasks(boardId));
-            dispatch(FetchTaskBoardDetails(boardId));
-        }
-    }, [ router,dispatch]);
-
-    useEffect(() => {
-        localStorage.setItem('View', view);
-      }, [view]);
 
       const calculatePriorityDistribution = (tasks) => {
         const priorityCount = { low: 0, medium: 0, high: 0 };
@@ -250,6 +250,7 @@ export default function TaskBoardDetailModule() {
       const indexOfLastItem = page * perPage;
       const indexOfFirstItem = indexOfLastItem - perPage;
       const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+      
       const rows = paginatedData?.map((item,index) => {    
         const isPastDue = moment(item.dueDate).isBefore(moment())
            return { TaskId: item?.taskId,

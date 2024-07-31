@@ -5,6 +5,7 @@ export const taskSlice = createSlice({
     initialState: {
         is_loading: false,
         task_list: [],
+        completed_task_list:[],
         task_details: null,
         overdue_task_list: [],
         awaiting_task_list: [],
@@ -16,6 +17,9 @@ export const taskSlice = createSlice({
         },
         setTaskList(state, action) {
             state.task_list = action.payload.list
+        },
+        setCompletedTaskList(state, action) { 
+            state.completed_task_list = action.payload.list
         },
         setOverdueTaskList(state, action) { 
             state.overdue_task_list = action.payload.list
@@ -41,9 +45,6 @@ export const taskSlice = createSlice({
         setTaskDetails(state, action) {
             state.task_details = action.payload
         },
-        pushNonAwaitingTask(state, action) {
-            state.task_list.push(action.payload);
-        },
         removeAwaitingTask(state, action) {
             state.awaiting_task_list = state.awaiting_task_list.filter((item) => item._id !== action.payload);
         },
@@ -61,10 +62,10 @@ export const {
     setLoading,
     setTaskList,
     setTaskDetails,
+    setCompletedTaskList,
     setOverdueTaskList,
     setAwaitingTaskList,
     setReportedTaskList,
-    pushNonAwaitingTask,
     removeAwaitingTask,
     setTask,
     setOverDueTask,

@@ -30,10 +30,10 @@ export default function ProjectsDetailPage() {
     const [editProject, setEditProject] = useState(null);
     const [editLeaders, setEditLeaders] = useState(false)
     const [editMembers, setEditMembers] = useState(false)
-  const [editBoard, setEditBoard] = useState(null);
+    const [editBoard, setEditBoard] = useState(null);
     const { project_detail , is_loading ,total_tasks, completed_tasks,} = useSelector((state) => state.project)
     const {  employees_list} = useSelector((state) => state.employee)
-  const { taskboard_list } = useSelector(state => state.taskboard);
+    const { taskboard_list } = useSelector(state => state.taskboard);
 
 
 
@@ -106,6 +106,7 @@ export default function ProjectsDetailPage() {
 
       const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
       const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
+      
       const rows = taskboard_list?.map((item) => ({
         TaskBoards: <Link href={`/operations/projects/task-board-detail/${item?._id}`}><span className=''>{item?.name}</span></Link>,
         Sprint: item?.sprintNumber,
