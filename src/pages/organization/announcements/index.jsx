@@ -18,8 +18,8 @@ export default function AnnouncementsPage() {
 	const [sortDir, setSortDir] = useState(null)
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
-	const [create, setCreate] = useState("")
-	const [selected, setSelected] = useState(null)
+	const [create, setCreate] = useState("") 
+	const [edit, setEdit] = useState(false) 
 	const [filters, setFilters] = useState({
 		search: "",
 		project: null,
@@ -100,15 +100,7 @@ export default function AnnouncementsPage() {
 			}
 		},
 	]
-
-	const removeRole = (item = null) => {
-		Toast.confirmDelete(() => {
-			// dispatch(DeleteEmployee(item._id, () => {
-			Toast.success(t("Employee role deleted successfully"))
-			// }))
-		}, t)
-	}
-
+ 
 	const headings = [
 
 		{ title: t("Title"), col: "Title" },
@@ -133,7 +125,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -164,7 +156,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -195,7 +187,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -226,7 +218,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -257,7 +249,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -288,7 +280,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -319,7 +311,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -350,7 +342,7 @@ export default function AnnouncementsPage() {
 				<DropDown icon={<ThreeDotsVertical />}>
 					<ul className="zt-themeDropDownList zt-sm gap-4">
 						<li className="!p-0">
-							<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<a onClick={() => { setEdit(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 								<span><Edit /></span>
 								<span>{t("Edit")}</span>
 							</a>
@@ -411,7 +403,9 @@ export default function AnnouncementsPage() {
 					className={'zt-employeeRoleTable'}
 				/>
 			</div>
-
+			{edit && <CreateAnnouncementForm onClose={() => {
+				setEdit(false) 
+			}} />}
 			{create && <CreateAnnouncementForm onClose={() => {
 				setCreate(false)
 			}} />}
