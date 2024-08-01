@@ -7,7 +7,7 @@ import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
 import { useEffect } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
-import { ChangeDepartment } from '@/store/actions/employee-change-request.actions';
+// import { ChangeDepartment } from '@/store/actions/employee-change-request.actions';
 
 export default function ChangeDepartementForm({ onClose, object }) {
     const { t } = useTranslation();
@@ -43,16 +43,16 @@ export default function ChangeDepartementForm({ onClose, object }) {
             if (values.attachment) {
                 await uploader(values.attachment, (url) => {
                     values.attachment = url
-                    dispatch(ChangeDepartment(values, () => {
-                        formik.resetForm()
-                        Toast.success(t("Department change request saved successfully"))
-                    }))
+                    // dispatch(ChangeDepartment(values, () => {
+                    //     formik.resetForm()
+                    //     Toast.success(t("Department change request saved successfully"))
+                    // }))
                 })
             } else {
-                dispatch(ChangeDepartment(values, () => {
-                    formik.resetForm()
-                    Toast.success(t("Request not proceed"))
-                }))
+                // dispatch(ChangeDepartment(values, () => {
+                //     formik.resetForm()
+                //     Toast.success(t("Request not proceed"))
+                // }))
             }
         }
     });

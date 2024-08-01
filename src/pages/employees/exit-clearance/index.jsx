@@ -45,7 +45,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')
@@ -78,7 +78,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')
@@ -111,7 +111,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')
@@ -151,7 +151,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')
@@ -191,7 +191,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')
@@ -231,7 +231,7 @@ export default function ExitClearance() {
         </li>
         <li className="!p-0">
           <a onClick={() => {
-            Toast.daynamicTitle(() => {
+            Toast.dynamicTitle(() => {
               Toast.success(t("Employee moved for Final Settlement"))
               router.push('/payroll/final-settlement')
             }, t, 'Do you want to move this Employee for Final Settlment ?')

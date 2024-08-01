@@ -1,6 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
-import FilterArea from "@/components/includes/FilterArea";
+import { Button, DropDown, Table } from "@/components/elements"; 
 import { useEffect, useState } from "react";
 import CreateLeaveForm from "@/components/forms/leaves/create";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,21 +73,16 @@ export default function LeavesPage() {
     <section className="flex flex-col grow">
       <div className="flex justify-between items-center pb-6">
         <div className="">
-          <h1 className="text-h4 mb-0">{t("Leave Policies")}</h1>
-          <p className="mb-0">{t("Manage your leaves")}</p>
+          <h1 className="text-h4 mb-0">{t("Leave Types")}</h1>
+          <p className="mb-0">{t("Manage your Leaves Types")}</p>
         </div>
         <div className="flex items-start gap-2">
-          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Leave")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Leave Type")}</Button>
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
-        <FilterArea title={t("Leave Policies")}
-          elements={[]}
-          filters={[]}
-          setFilters={() => { }}
-          filterHandler={() => { }}
-        />
+      <div className=" zt-card grow">
+       
 
         <Table
           headings={headings}

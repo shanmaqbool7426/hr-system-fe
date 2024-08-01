@@ -16,10 +16,7 @@ export const Requests = () => {
             <div className='grid sm:grid-cols-2 gap-6'>
                 <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full'}><Calendar className={'text-white'} /> Attendance Request</Button>
                 <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full'}><CheckOutIcon /> Leave Request</Button>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {['Casual Leave', "Sick Leave", "Sick Leave", "Annual Leave", "Earn Leave", "Earn Leave"].map((ele, i) => (
+                 {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
                     <div key={i} className="p-2 flex justify-between gap-4 items-center bg-themeGrayscale50 rounded-lg">
                         <div className="shrink-0">
                             <h3 className="text-sm font-semibold mb-2">{ele}</h3>

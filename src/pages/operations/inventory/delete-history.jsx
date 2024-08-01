@@ -113,7 +113,7 @@ export default function DeleteHistoryPage() {
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
         <FilterArea
           elements={filterElements}
           filters={filters}

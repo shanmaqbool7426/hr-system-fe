@@ -1,11 +1,8 @@
 import {
-  Button,
-  SearchInput,
-  Table,
-  SearchSelect,
+  Button, 
+  Table, 
   DropDown,
-  Profile,
-  CheckBox,
+  Profile, 
 } from "@/components/elements";
 import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
@@ -13,28 +10,22 @@ import {
   BlockIcon,
   Edit,
   EyeOff,
-  EyeOn,
-  ThreeDotsHorizontal,
-  ThreeDotsVertical,
-  Trash,
+  EyeOn, 
+  ThreeDotsVertical, 
 } from "@/components/svg";
 import {
-  FetchEmployees,
-  DeleteEmployee,
+  FetchEmployees, 
 } from "@/store/actions/employee.actions";
-import PageLoader from "@/components/elements/PageLoader";
-import Toast from "@/util/toast";
+import PageLoader from "@/components/elements/PageLoader"; 
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux"; 
 import Link from "next/link";
 import ReHireForm from "@/components/forms/employees/reHire";
 
 export default function EmployeesListPage() {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch = useDispatch(); 
   const { is_loading, employees_list } = useSelector((state) => state.employee);
   const { customfield_list } = useSelector((state) => state.customfield);
   const [sortCol, setSortCol] = useState(null);
@@ -233,7 +224,7 @@ export default function EmployeesListPage() {
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
         <FilterArea
           title={t("Employees")}
           elements={filterElements}

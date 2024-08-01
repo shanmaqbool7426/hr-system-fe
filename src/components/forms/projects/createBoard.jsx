@@ -16,19 +16,23 @@ export default function CreateBoardForm({ title, onClose, type, object, addition
     const {is_loading} = useSelector(state=> state.taskboard)
     const { employees_list } = useSelector((state) => state.employee);
 
-    useEffect(() => {
-        dispatch(FetchEmployees());
-    }, [dispatch]); 
+   
+    const [filters, setFilters] = useState({
+        search: "",
+        project: null,
+        department: null,
+        status: null,
+    })
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
             sprintNumber: object?.sprintNumber || "",
             dueDate: object?.dueDate || "",
-            leads: additionFields?.leads?.reduce((acc, item) => {
+            leads: object?.leads?.reduce((acc, item) => {
                 acc.push(item._id);
                 return acc;
               }, []) || [],
-            members: additionFields?.members?.reduce((acc, item) => {
+            members: object?.members?.reduce((acc, item) => {
                 acc.push(item._id);
                 return acc;
               }, []) || [],
@@ -51,6 +55,16 @@ export default function CreateBoardForm({ title, onClose, type, object, addition
         Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
         onClose()
     }
+
+    
+    const getFilteredEmployees = (list, excludeIds) => {
+        return list.filter(employee => !excludeIds.includes(employee._id));
+    };
+
+    
+    const filteredLeadsList = getFilteredEmployees(employees_list, formik.values.members);
+    const filteredMembersList = getFilteredEmployees(employees_list, formik.values.leads);
+
     const formElements = [
         {
             type: "text",
@@ -83,7 +97,7 @@ export default function CreateBoardForm({ title, onClose, type, object, addition
             required: true,
             placeholder: t("Search Leader"),
             value: formik.values.leads,
-            list: employees_list?.map((item) => ({
+            list: filteredLeadsList?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),
@@ -95,7 +109,7 @@ export default function CreateBoardForm({ title, onClose, type, object, addition
             label: t('Add Team'),
             value: formik.values.members,
             required: true,
-            list: employees_list?.map((item) => ({
+            list: filteredMembersList?.map((item) => ({
                 value: item?._id,
                 display: item.firstName + " " + item.lastName,
             })),

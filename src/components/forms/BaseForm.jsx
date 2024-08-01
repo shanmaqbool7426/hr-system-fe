@@ -20,7 +20,6 @@ export default function BaseForm({ children, formElements, onClose, title, formi
             <div className="zt-sidePanel relative">
                 {/* <button className="btn-backOrClose btn bg-white !border-white !rounded-full !py-5 absolute top-28 right-[calc(100%_+_2rem)]" onClick={close}><ChevronLeft /></button> */}
                 <h3 className="mb-0 px-6">{title || ""}</h3>
-
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
                     <fieldset className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_185px)]">
                         <div className={`grid sm:grid-cols-2 gap-x-6 gap-y-4 ${className}`}>

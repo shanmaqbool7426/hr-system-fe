@@ -1,4 +1,6 @@
 import { Button, CheckBox, DropDown, Table } from '@/components/elements'
+import ChangeShiftForm from '@/components/forms/attendance/ChangeShift'
+import CreatLeaveRequestForm from '@/components/forms/leaves/creat-leave-request'
 import FilterArea from '@/components/includes/FilterArea'
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
@@ -14,9 +16,7 @@ export default function ChangeShift() {
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false)
-    const [hide, setHide] = useState(false)
-    const [edit, setEdit] = useState(false)
+    const [create, setCreate] = useState(false)  
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
         search: "",
@@ -103,7 +103,7 @@ export default function ChangeShift() {
     ]
 
     const headings = [
-    
+
         { title: t("Employee"), col: "Employee", },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Date"), col: "date", },
@@ -112,26 +112,7 @@ export default function ChangeShift() {
         { title: t("Schedule Time"), col: "scheduleTime" },
         { title: t("Shift"), col: "Shift" },
         { title: t("Action"), col: "action" }
-    ]
-    const [allChecked, setAllChecked] = useState(false)
-    const [checkedItems, setCheckedItems] = useState({})
-
-    const handleCheckAll = (checked) => {
-        setAllChecked(checked)
-        const newCheckedItems = {}
-        rows.forEach((_, index) => {
-            newCheckedItems[index] = checked
-        })
-        setCheckedItems(newCheckedItems)
-    }
-
-    const handleCheckItem = (index, checked) => {
-        setCheckedItems(prevState => ({
-            ...prevState,
-            [index]: checked
-        }))
-    }
-
+    ] 
     const rows = [
         {
             sr: <div className="flex items-center">
@@ -141,7 +122,7 @@ export default function ChangeShift() {
                     // checked={checkedItems[index] || false}
                     // onChange={(e) => handleCheckItem(index, e.target.checked)}
                     size={'sm'}
-                    variant={'dark'} 
+                    variant={'dark'}
                 />
             </div>,
             SerailNo: '1',
@@ -173,7 +154,7 @@ export default function ChangeShift() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -201,7 +182,7 @@ export default function ChangeShift() {
                     // checked={checkedItems[index] || false}
                     // onChange={(e) => handleCheckItem(index, e.target.checked)}
                     size={'sm'}
-                    variant={'dark'}                   
+                    variant={'dark'}
                 />
             </div>,
             SerailNo: '2',
@@ -233,7 +214,7 @@ export default function ChangeShift() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -260,8 +241,8 @@ export default function ChangeShift() {
                     //  name={`checkbox-${index}`}
                     //  checked={checkedItems[index] || false}
                     //  onChange={(e) => handleCheckItem(index, e.target.checked)}
-                     size={'sm'}
-                     variant={'dark'}
+                    size={'sm'}
+                    variant={'dark'}
                 />
             </div>,
             SerailNo: '3',
@@ -293,7 +274,7 @@ export default function ChangeShift() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -320,8 +301,8 @@ export default function ChangeShift() {
                     //  name={`checkbox-${index}`}
                     //  checked={checkedItems[index] || false}
                     //  onChange={(e) => handleCheckItem(index, e.target.checked)}
-                     size={'sm'}
-                     variant={'dark'}
+                    size={'sm'}
+                    variant={'dark'}
                 />
             </div>,
             SerailNo: '4',
@@ -353,7 +334,7 @@ export default function ChangeShift() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -380,25 +361,18 @@ export default function ChangeShift() {
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Change Employee Shift")}</h1>
-                <Button className={"btn btn-primary"}>{t("Upload Excel")}</Button>
+                <div className='flex gap-6'>
+                    <Button className={"btn btn-primary"}>{t("Upload Excel")}</Button>
+                    <Button onClick={()=>{setCreate(true)}} className={"btn btn-primary"}>{t("Change Shift")}</Button>
+                </div>
             </div>
-
             <div className="zt-card grow">
-                <FilterArea title={t("Attendance")}
+                <FilterArea
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
                 />
-                {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-                    <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-                    <CloseCross className={'cursor-pointer'}
-                        onClick={(() => setHide(true))}
-                    />
-                </div>}
-
-                <Table
-                //   allChecked={allChecked}
-                //   handleCheckAll={handleCheckAll}
+                <Table 
                     headings={headings}
                     rows={rows}
                     sortCol={sortCol}
@@ -413,6 +387,7 @@ export default function ChangeShift() {
                     className={'zt-employeeTable zt-changeShiftTable'}
                 />
             </div>
+            {create && <ChangeShiftForm onClose={()=>{setCreate(false)}}/>}
         </section>
     )
 }

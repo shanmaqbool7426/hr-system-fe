@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -79,9 +79,9 @@ export default function Sidebar() {
       { name: t("Inactive Employee"), href: "/employees/inactive" },
       { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
       {
-        name: t("Employee Settings"),href: "/employees/settings",
+        name: t("Employee Settings"), href: "/employees/settings",
         innerSubMenu: [
-          { name: t("Approval Level"), href: "/employees/settings/approval-level",},     
+          { name: t("Approval Level"), href: "/employees/settings/approval-level", },
           { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
           { name: t("Exit/ Onboarding Assets"), href: "/employees/settings/exit-onboarding-assets" },
         ],
@@ -97,7 +97,7 @@ export default function Sidebar() {
       },
       { name: t("Change Shift"), href: "/attendance/change-shift" },
       { name: t("Amend Attendance"), href: "/attendance/amend-attendance" },
-      { name: t("Close Attendance"), href: "/attendance/close-attendance" },
+      { name: t("Month Close"), href: "/attendance/month-close" },
       { name: t("Attendance Restrictions"), href: "/attendance/restrictions" },
       {
         name: t("Attendance Settings"), href: "/attendance/settings",
@@ -113,14 +113,14 @@ export default function Sidebar() {
     ],
     leave: [
       { name: t("Leave Dashboard"), href: "/leaves/dashboard" },
-      { name: t("Leave Policies"), href: "/leaves" },
       { name: t("Leave Request"), href: "/leaves/requests" },
       { name: t("CPL Request"), href: "/leaves/cpl-requests" },
       { name: t("Gazetted Holidays"), href: "/leaves/gazetted-holidays" },
       {
         name: t("Leave Setting"), href: "/leaves/settings",
         innerSubMenu: [
-          { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
+          { name: t("Leave Policies"), href: "/leaves" },
+          // { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
           { name: t('Employee Leave Quota'), href: "/leaves/settings/employee-leave-quota" },
           { name: t('General Leave Settings'), href: "/leaves/settings/general-setting" },
         ]
@@ -138,28 +138,27 @@ export default function Sidebar() {
           { name: t("Feedback"), href: "/operations/projects/feedback" },
           { name: t("Reported Task"), href: "/operations/projects/reported-task" },
         ]
-      }, 
+      },
       {
         name: t("Helpdesk"), href: "/operations/helpdesk",
         innerSubMenu: [
           { name: t('Dashboard'), href: "/operations/helpdesk/dashboard" },
-          { name: t("Tickets"), href: "/operations/helpdesk/tickets" }, 
-        ]
-      }, 
-      {
-        name: t("Vendor Management"), href: "/operations/vendor-management",
-        innerSubMenu: [
-          { name: t('Dashboard'), href: "/operations/vendor-management/dashboard" },
-          { name: t("Vendor Management"), href: "/operations/vendor-management" }, 
+          { name: t("Tickets"), href: "/operations/helpdesk/tickets" },
         ]
       }, 
       {
         name: t("Procurement"), href: "/operations/procurement",
-        innerSubMenu: [
+        innerSubMenu: [ 
           { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
-          { name: t("Procurement"), href: "/operations/procurement" }, 
+          { name: t('Vendors'), href: "/operations/procurement/vendors" },
+          { name: t('Quotations'), href: "/operations/procurement/quotations" },
+          { name: t('Quoted Prices'), href: "/operations/procurement/quoted-prices" },
+          { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
+          { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
+          { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
+          { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
         ]
-      }, 
+      },
       {
         name: t("Inventory"), href: "/operations/inventory",
         innerSubMenu: [
@@ -171,10 +170,11 @@ export default function Sidebar() {
       },
       {
         name: t("Meal"), href: "/operations/meal",
-        innerSubMenu: [ 
-          { name: t("Meal Menu"), href: "/operations/meal/meal-menu" }, 
+        innerSubMenu: [
+          { name: t("Meal Menu"), href: "/operations/meal/meal-menu" },
+          { name: t("Employee Availing"), href: "/operations/meal/employee-availing" }, 
         ]
-      }, 
+      },
     ],
     connect: [
       { name: t("Chat"), href: "/connect/chat" },
@@ -216,11 +216,11 @@ export default function Sidebar() {
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
-      { name: t("Screenshot"), href: "/remote-work/screenshot" }, 
+      { name: t("Screenshot"), href: "/remote-work/screenshot" },
       {
         name: t("Setting"), href: "/remote-work/setting",
         innerSubMenu: [
-          { name: t('Profile'), href: "/remote-work/setting/profile" },
+          // { name: t('Profile'), href: "/remote-work/setting/profile" },
           { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
           { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
           { name: t('Account'), href: "/remote-work/setting/account" },
@@ -271,7 +271,7 @@ export default function Sidebar() {
           { name: t("Deduction Title"), href: "/organization/custom-fields/deduction-title" },
           { name: t("Station"), href: "/organization/custom-fields/station" },
           { name: t("Bank"), href: "/organization/custom-fields/bank" },
-          { name: t("Job Title"), href: "/organization/custom-fields/job-title" }, 
+          { name: t("Job Title"), href: "/organization/custom-fields/job-title" },
           { name: t("Job Field"), href: "/organization/custom-fields/job-field" },
           { name: t("Asset Type"), href: "/organization/custom-fields/asset-type" },
           { name: t("Asset Status"), href: "/organization/custom-fields/asset-status" },
@@ -282,6 +282,7 @@ export default function Sidebar() {
           { name: t("Country"), href: "/organization/custom-fields/country" },
           { name: t("Province"), href: "/organization/custom-fields/province" },
           { name: t("City"), href: "/organization/custom-fields/city" },
+          { name: t("Departments"), href: "/organization/custom-fields/departments" },
           { name: t("Area"), href: "/organization/custom-fields/area" },
           { name: t("Vendor"), href: "/organization/custom-fields/vendor" },
           { name: t("Region"), href: "/organization/custom-fields/region" },
@@ -305,15 +306,13 @@ export default function Sidebar() {
         name: t("Settings"), href: "/organization/settings",
         innerSubMenu: [
           { name: t('System Configuration'), href: "/organization/settings/system-configuration" },
-          { name: t('Custom Fields'), href: "/organization/settings/custom-fields" },
           { name: t('Email Settings'), href: "/organization/settings/email-settings" },
           { name: t('Company Settings'), href: "/organization/settings/company-settings" },
           { name: t('Biometric Device Settings'), href: "/organization/settings/biometric-device-settings" },
           { name: t('Card Template'), href: "/organization/settings/card-template" },
         ]
       },
-     
-      { name: t("Departments"), href: "/organization/departments" },
+
       { name: t('Billing'), href: "/organization/billing" },
     ]
   }

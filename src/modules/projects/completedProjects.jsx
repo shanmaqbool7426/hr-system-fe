@@ -1,40 +1,32 @@
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DisplayDate, DropDown, Table } from "@/components/elements";
+import Pagination from "@/components/elements/Table/pagination";
 import UserListView from "@/components/elements/UserListView";
-import FeedbackForm from "@/components/forms/projects/feedback";
-import RaiseIssueForm from "@/components/forms/projects/raiseIssue";
+import ProjectFeedbackForm from "@/components/forms/projects/projectFeedback";
+import FeedbackReplyForm from "@/components/forms/projects/feedbackReply";
 import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
-import Image from "next/image";
+import { FetchCompletedProjects } from "@/store/actions/project.actions";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-const tableData = [
-  {
-    "leaders": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-02.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-    ],
-    "team": [
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-01.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-03.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-04.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-05.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-06.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-08.jpg" },
-      { "firstName": "ahmed", "lastName": "raza", "avatar": "/assets/images/users/user-09.jpg" }
-    ],
-  }
-]
+import { useDispatch, useSelector } from "react-redux";
+
 export default function CompletedProjectsModule() {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [feedback, setFeedback] = useState(false)
+  const [feedbackReply, setFeedbackReply] = useState(false)
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [raiseIssue, setRaiseIssue] = useState(false)
+  const {completed_project_list} = useSelector((state) => state.project)
+
+  useEffect(()=>{
+    dispatch(FetchCompletedProjects())
+  }, [dispatch])
 
   const headings = [
    
@@ -49,80 +41,67 @@ export default function CompletedProjectsModule() {
     { title: t("Action"), col: "action" },
   ]
 
-  const rows = [
-    {
-     
-      Project: <Link href={'/operations/projects/details'}><span className=''>Office Management</span></Link>,
-      ProjectID: "PJT- 001",
-      Client: 'Arun',
-      Leader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div className="flex justify-center">{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      TaskTime: "548:00",
-      Deadline: "22 March 2023",
-      Status: <span className='zt-tag zt-tag-success'>Active</span>,
-      Feedback: <div className='flex flex-col items-center'>
-        <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-        <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-        <span className=''>“Good Job”</span>
-      </div>,
-      action: <DropDown icon={<ThreeDotsVertical />}>
-        <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
-          <li className="!p-0">
-            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-              <span><WarningIcon /></span>
-              <span>{t("Raise Issue")}</span>
-            </a>
-          </li>
-          <li className="!p-0">
-            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-              <span><FeedbackIcon /></span>
-              <span>{t("Feedback")}</span>
-            </a>
-          </li>
-        </ul>
-      </DropDown>,
-    },
-    {
-      Project: <Link href={'/operations/projects/details'}><span className=''>Video Calling</span></Link>,
-      ProjectID: "PJT- 001",
-      Client: 'Arun',
-      Leader: <figure className={`flex justify-center overflow-hidden rounded-full  border-2 border-white m-0`}>
-        <Image src={'/assets/images/users/user-03.jpg'} width={32} height={32} alt="Leade" /></figure>,
-      Team: <div className="flex justify-center">{tableData.map((ele, i) => (
-        <UserListView imgClass="h-[32px] w-[32px]" key={i} list={ele.team} limit={2} />
-      ))}</div>,
-      TaskTime: "548:00",
-      Deadline: "22 March 2023",
-      Status: <span className='zt-tag zt-tag-success'>Active</span>,
-      Feedback: <div className='flex flex-col items-center'>
-        <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-        <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-        <span className=''>“Good Job”</span>
-      </div>,
-      action: <DropDown icon={<ThreeDotsVertical />}>
-        <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
-          <li className="!p-0">
-            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-              <span><WarningIcon /></span>
-              <span>{t("Raise Issue")}</span>
-            </a>
-          </li>
-          <li className="!p-0">
-            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-              <span><FeedbackIcon /></span>
-              <span>{t("Feedback")}</span>
-            </a>
-          </li>
-        </ul>
-      </DropDown>,
-    },
-  ]
+  const indexOfLastItem = page * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const paginatedData = completed_project_list?.slice(indexOfFirstItem, indexOfLastItem);
 
+  const rows = paginatedData?.map((item, index) => (
+    {
+      Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+      ProjectID: item?.projectId,
+      Client: item?.client,
+      Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,
+      Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
+      Deadline: <DisplayDate date={item?.endDate} />,
+      Status: <span className='zt-tag zt-tag-success'>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
+      Feedback: <div className='flex flex-col items-center'>
+                {item?.feedback?._id ?  <>
+                <span className=''>Feedback From <span className='text-themePurple font-semibold'>  {item?.feedback?.createdBy?.firstName} {item?.feedback?.createdBy?.lastName} </span></span>
+                <div className='flex gap-1 items-center'><span className='font-semibold'>{item?.feedback?.rating.toFixed(1)} </span> <div className='flex'>
+                {[...Array(5)].map((_, index) => (
+                        <StarIcon
+                            key={index}
+                            className={`${item?.feedback?.rating > index ? 'text-themeSecondary' : 'text-gray-300'}`}
+                        />
+                    ))}
+                    </div></div>
+                <span className=''>“{item?.feedback?.comments}”</span>
+                </> : <span className='text-themePurple font-semibold'> No Feedback </span>  }   
+            </div>,
+      action: <DropDown icon={<ThreeDotsVertical />}>
+        <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
+          <li className="!p-0">
+            <a onClick={() => { 
+              if (item?.feedback?._id) {
+                  setSelectedFeedback(item?.feedback); 
+                  setFeedbackReply(true); 
+              }
+          }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+              <span><FeedbackIcon /></span>
+              <span>{t("Reply")}</span>
+            </a>
+          </li>
+          {!item?.feedback?._id && (
+          <li className="!p-0">
+            <a onClick={() => { setSelectedProject(item); setFeedback(true); }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+              <span><FeedbackIcon /></span>
+              <span>{t("Feedback")}</span>
+            </a>
+          </li>
+          )}
+        </ul>
+      </DropDown>,
+    }))
+
+    const pagination = {
+      totalRecords: completed_project_list?.length,
+      showPerPage: true,
+      prevAction: () => page > 1 && setPage(page - 1),
+      clickAction: (value) => setPage(value),
+      nextAction: () => setPage(page + 1),
+  };
   return (
-    <div className="w-full bg-white p-6 rounded-lg grow">
+    <div className=" zt-card grow">
       <h2 className="text-h4">{t("Completed Projects")}</h2>
       <Table
         headings={headings}
@@ -137,12 +116,22 @@ export default function CompletedProjectsModule() {
         setPage={setPage}
         className={'zt-employeeTable zt-projectsTable'}
       />
-      {feedback && <FeedbackForm
+        {paginatedData?.length > 0 && pagination && <Pagination
+            pagination={pagination}
+            currentLength={rows?.length}
+            perPage={perPage}
+            setPerPage={setPerPage}
+            page={page}
+            setPage={setPage} />
+        }
+      {feedback && <ProjectFeedbackForm
+        project={selectedProject}
         onClose={() => { setFeedback(false) }}
       />}
-      {raiseIssue && <RaiseIssueForm
-        onClose={() => { setRaiseIssue(false) }}
-      />}
+       {feedbackReply && selectedFeedback && <FeedbackReplyForm
+           onClose={() => { setFeedbackReply(false); }}
+           object={selectedFeedback}
+        />}
     </div>
   )
 }

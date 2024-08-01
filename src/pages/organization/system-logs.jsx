@@ -1,10 +1,6 @@
-import { Button, SearchInput, Table, SearchSelect, DropDown, CheckBox } from "@/components/elements";
-import PageLoader from "@/components/elements/PageLoader";
-import CreateDepartmentForm from "@/components/forms/departments/create";
+import { Table } from "@/components/elements";
 import FilterArea from "@/components/includes/FilterArea";
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
-import { FetchDepartments, DeleteDepartment } from "@/store/actions/department.actions";
-import Toast from "@/util/toast";
+import { FetchDepartments } from "@/store/actions/department.actions";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -13,13 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 export default function SystemLogsPage() {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { is_loading, departments_list } = useSelector((state) => state.department)
+    const { departments_list } = useSelector((state) => state.department)
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState("")
-    const [selected, setSelected] = useState(null)
     const [filters, setFilters] = useState({
         search: "",
         project: null,
@@ -179,19 +173,6 @@ export default function SystemLogsPage() {
         prevAction: () => page > 1 && setPage(page - 1),
         clickAction: (value) => setPage(value),
         nextAction: () => setPage(page + 1),
-    }
-
-    const editDepartment = (item) => {
-        setSelected({ ...item })
-        setCreate('department')
-    }
-
-    const removeDepartment = (item) => {
-        Toast.confirmDelete(() => {
-            dispatch(DeleteDepartment(item._id, () => {
-                Toast.success(t("Department deleted successfully"))
-            }))
-        }, t)
     }
 
     useEffect(() => {

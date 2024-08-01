@@ -3,7 +3,7 @@ import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import  Pagination  from '@/components/elements/Table/pagination' 
-import FeedbackForm from '@/components/forms/projects/feedback'
+import FeedbackForm from '@/components/forms/projects/taskFeedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
 import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
@@ -11,7 +11,7 @@ import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { DeleteTask, FetchTask } from '@/store/actions/task.actions'
+import { DeleteTask, FetchTasks, FetchTaskDetails, UpdateTask } from '@/store/actions/task.actions'
 import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,41 +53,7 @@ const renderCustomizedLabel = ({
 const COLORS = [ '#E03137','#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
-
     const { t } = useTranslation();
-    const [status, setStatus] = useState('success');
-    const [priority, setPriority] = useState('success');
-  
-    const handleChange = (e) => {
-      setStatus(e.target.value);
-    };
-    const handlePriorityChange = (e) => {
-        setPriority(e.target.value);
-      };
-      const getPriorityClass = (priority) => {
-        switch (priority.toLowerCase()) {
-          case 'danger':
-            return 'zt-tag-danger';
-          case 'success':
-            return 'zt-tag-dark';
-          case 'completed':
-            return 'zt-tag-success';
-          default:
-            return 'zt-tag-default';
-        }
-      };
-    const getStatusClass = (status) => {
-      switch (status.toLowerCase()) {
-        case 'danger':
-          return 'zt-tag-danger';
-        case 'success':
-          return 'zt-tag-dark';
-        case 'completed':
-          return 'zt-tag-success';
-        default:
-          return 'zt-tag-default';
-      }
-    };
     const router = useRouter()
     const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
     const dispatch = useDispatch()
@@ -113,7 +79,7 @@ export default function TaskBoardDetailModule() {
         const {boardId }= router.query;
         if (boardId){
             dispatch(FetchEmployees())
-            dispatch(FetchTask(boardId));
+            dispatch(FetchTasks(boardId));
             dispatch(FetchTaskBoardDetails(boardId));
         }
     }, [ router,dispatch]);
@@ -121,6 +87,44 @@ export default function TaskBoardDetailModule() {
     useEffect(() => {
         localStorage.setItem('View', view);
       }, [view]);
+
+      const handlePriorityChange = (e, taskId) => {
+        const newPriority = e.target.value;
+        dispatch(UpdateTask(taskId, { priority: newPriority }, () => {
+          Toast.success(t("Task priority updated successfully"));
+        }));
+      };
+      
+      const handleStatusChange = (e, taskId) => {
+        const newStatus = e.target.value;
+        dispatch(UpdateTask(taskId, { status: newStatus }, () => {
+          Toast.success(t("Task status updated successfully"));
+        }));
+      };
+      const getPriorityClass = (priority) => {
+        switch (priority.toLowerCase()) {
+          case 'high':
+            return 'zt-tag-danger';
+          case 'medium':
+            return 'zt-tag-dark';
+          case 'low':
+            return 'zt-tag-success';
+          default:
+            return 'zt-tag-default';
+        }
+      };
+    const getStatusClass = (status) => {
+      switch (status.toLowerCase()) {
+        case 'pending':
+          return 'zt-tag-danger';
+        case 'progress':
+          return 'zt-tag-dark';
+        case 'completed':
+          return 'zt-tag-success';
+        default:
+          return 'zt-tag-default';
+      }
+    };
 
       const calculatePriorityDistribution = (tasks) => {
         const priorityCount = { low: 0, medium: 0, high: 0 };
@@ -246,45 +250,48 @@ export default function TaskBoardDetailModule() {
       const indexOfLastItem = page * perPage;
       const indexOfFirstItem = indexOfLastItem - perPage;
       const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+      
       const rows = paginatedData?.map((item,index) => {    
         const isPastDue = moment(item.dueDate).isBefore(moment())
            return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leader}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.assignedTo} />,
-            Priority: 
-            <select
-            className={`zt-tag ${getPriorityClass(priority)}`}
-            value={priority}
-            onChange={handlePriorityChange}
-          >
-            <option value="danger" className='zt-tag-danger'>
-            {item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}
-            </option>
-            <option value="success" className='zt-tag-secondary'>
-              {t("High")}
-            </option>
-            <option value="completed" className='zt-tag-success'>
-              {t("Normal")}
-            </option>
-          </select>,
-        //   <span className={"zt-tag zt-tag-danger"}>{item?.priority.charAt(0).toUpperCase() + item.priority.slice(1).toLowerCase()}</span>,
-            Status:   <select
-            className={`zt-tag ${getStatusClass(status)}`}
-            value={status}
-            onChange={handleChange}
-          >
-            <option value="danger" className='zt-tag-danger'>
-              {t(item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase())}
-            </option>
-            <option value="success" className='zt-tag-secondary'>
-              {t("Working")}
-            </option>
-            <option value="completed" className='zt-tag-success'>
-              {t("Completed")}
-            </option>
-          </select>,
+            // Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            // Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
+            Priority: (
+                <select
+                  className={`zt-tag ${getPriorityClass(item.priority)}`}
+                  value={item.priority}
+                  onChange={(e) => handlePriorityChange(e, item._id)}
+                >
+                  <option value="low" className='zt-tag-low'>
+                    Low
+                  </option>
+                  <option value="medium" className='zt-tag-medium'>
+                    Medium
+                  </option>
+                  <option value="high" className='zt-tag-high'>
+                    High
+                  </option>
+                </select>
+              ),
+              Status: (
+                <select
+                  className={`zt-tag ${getStatusClass(item.status)}`}
+                  value={item.status}
+                  onChange={(e) => handleStatusChange(e, item._id)}
+                >
+                  <option value="pending" className='zt-tag-pending'>
+                    {t("Pending")}
+                  </option>
+                  <option value="progress" className='zt-tag-progress'>
+                    {t("Progress")}
+                  </option>
+                  <option value="completed" className='zt-tag-completed'>
+                    {t("Completed")}
+                  </option>
+                </select>
+              ),
             TaskTime: item?.requiredTime,
             DueDate:   <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
             action: 
@@ -309,12 +316,6 @@ export default function TaskBoardDetailModule() {
                         <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><DiscussionIcon /></span>
                             <span>{t("Discussion")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Status")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
@@ -401,7 +402,7 @@ export default function TaskBoardDetailModule() {
 
                 </div>
             </div>
-            <div className="w-full bg-white p-6 rounded-lg grow">
+            <div className=" zt-card grow">
                 <FilterArea title={t("")}
                     elements={filterElements}
                     filters={filters}

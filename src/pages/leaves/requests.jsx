@@ -1,13 +1,12 @@
 import { useTranslation } from "next-i18next";
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button,  DropDown, Table } from "@/components/elements";
 import FilterArea from "@/components/includes/FilterArea";
 import { useEffect, useState } from "react";
 import CreateLeaveRequestForm from "@/components/forms/leaves/create-request";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchLeavePolicies } from "@/store/actions/leave-policy.actions";
-import { FetchLeaveRequests } from "@/store/actions/leave-request.actions";
-import Image from "next/image";
-import { Edit, EyeOn, ThreeDotsVertical } from "@/components/svg";
+import { FetchLeaveRequests } from "@/store/actions/leave-request.actions"; 
+import { ThreeDotsVertical } from "@/components/svg";
 import CreateLeaveDetailForm from "@/components/forms/leaves/create-request-detail";
 
 export default function LeaveRequestsPage() {

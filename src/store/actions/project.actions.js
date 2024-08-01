@@ -1,6 +1,6 @@
 
 import axios from '@/util/axios';
-import { setLoading, setProjectList,setProject, removeProject, pushProject, setProjectDetails } from '../slices/project.slice'
+import { setLoading, setProjectList,setProject, removeProject, pushProject, setProjectDetails, setCompletedProjectList } from '../slices/project.slice'
 
 export const FetchProject = (payload) => async (dispatch) => {
     try {
@@ -15,11 +15,25 @@ export const FetchProject = (payload) => async (dispatch) => {
     }
 };
 
+export const FetchCompletedProjects = ( payload) => async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      const query = new URLSearchParams(payload).toString();
+      const data = await axios.get(`/projects/list-completed/?${query}`);
+      dispatch(setCompletedProjectList(data));
+      return true;
+    } catch (err) {
+      console.log("Error", err);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 export const FetchProjectDetails = (id) => async (dispatch) => {
     try {
         dispatch(setLoading(true))
         const data = await axios.get(`/projects/details/${id}`)
-        dispatch(setProjectDetails(data.project))
+        const { project, total_tasks, completed_tasks } = data;
+        dispatch(setProjectDetails({ project, total_tasks, completed_tasks }));
         return true
     } catch (err) { console.log("Error", err); }
     finally {

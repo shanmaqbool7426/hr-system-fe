@@ -35,7 +35,7 @@ export default function InactiveEmployee() {
             <ul className="zt-themeDropDownList zt-sm gap-4 w-32">
                 <li className="!p-0">
                     <a onClick={() => {
-                        Toast.daynamicTitle(() => {
+                        Toast.dynamicTitle(() => {
                             Toast.success(t("Employee Re-Hired Successfully"));
                             router.push('/employees/onboarding')
                         }, t, "Do you want to re-hire this employee?")
@@ -60,7 +60,7 @@ export default function InactiveEmployee() {
             <ul className="zt-themeDropDownList zt-sm gap-4 w-32">
                 <li className="!p-0">
                     <a onClick={() => {
-                        Toast.daynamicTitle(() => {
+                        Toast.dynamicTitle(() => {
                             Toast.success(t("Employee Re-Hired Successfully"));
                             router.push('/employees/onboarding')
                         }, t, "Do you want to re-hire this employee?")
