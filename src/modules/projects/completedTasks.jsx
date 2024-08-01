@@ -1,13 +1,14 @@
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DisplayDate, DropDown, Table } from "@/components/elements";
 import Pagination from "@/components/elements/Table/pagination";
 import UserListView from "@/components/elements/UserListView";
-import FeedbackForm from "@/components/forms/projects/feedback";
-import RaiseIssueForm from "@/components/forms/projects/raiseIssue";
+import TaskFeedbackForm from "@/components/forms/projects/taskFeedback";
+import FeedbackReplyForm from "@/components/forms/projects/feedbackReply";
 import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
 import { FetchCompletedTasks } from "@/store/actions/task.actions";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { FetchEmployees } from "@/store/actions/employee.actions";
 
 export default function CompletedTaskModule() {
     const { t } = useTranslation()
@@ -17,10 +18,14 @@ export default function CompletedTaskModule() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [feedback, setFeedback] = useState(false)
-    const [raiseIssue, setRaiseIssue] = useState(false)
+    const [feedbackReply, setFeedbackReply] = useState(false)
+    const [selectedFeedback, setSelectedFeedback] = useState(null);
+    const [selectedTask, setSelectedTask] = useState(null);
     const { completed_task_list} = useSelector(state => state.task)
 
     useEffect(()=>{
+        console.log('first', completed_task_list)
+        dispatch(FetchEmployees())
         dispatch(FetchCompletedTasks())
     }, [dispatch])
 
@@ -45,30 +50,46 @@ export default function CompletedTaskModule() {
             TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            Leader:    <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
             Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,   
-            TaskTime: "01:00",
-            DueDate: "18 May 2024",
+            TaskTime: item?.requiredTime,
+            DueDate: <DisplayDate date={item?.dueDate} />,
             Feedback: <div className='flex flex-col items-center'>
-                <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-                <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-                <span className=''>“Good Job”</span>
+                {item?.feedback?._id ?  <>
+                <span className=''>Feedback From <span className='text-themePurple font-semibold'>  {item?.feedback?.createdBy?.firstName} {item?.feedback?.createdBy?.lastName} </span></span>
+                <div className='flex gap-1 items-center'><span className='font-semibold'>{item?.feedback?.rating.toFixed(1)} </span> <div className='flex'>
+                {[...Array(5)].map((_, index) => (
+                        <StarIcon
+                            key={index}
+                            className={`${item?.feedback?.rating > index ? 'text-themeSecondary' : 'text-gray-300'}`}
+                        />
+                    ))}
+                    </div></div>
+                <span className=''>“{item?.feedback?.comments}”</span>
+                </> : <span className='text-themePurple font-semibold'> No Feedback </span>  }   
             </div>,
             Status: <span className={'zt-tag zt-tag-success'}> {item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
                     <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><WarningIcon /></span>
-                            <span>{t("Raise Issue")}</span>
+                        <a onClick={() => { 
+                    if (item?.feedback?._id) {
+                        setSelectedFeedback(item?.feedback); 
+                        setFeedbackReply(true); 
+                    }
+                }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><FeedbackIcon /></span>
+                            <span>{t("Reply")}</span>
                         </a>
                     </li>
+                    {!item?.feedback?._id && (
                     <li className="!p-0">
-                        <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                        <a onClick={() => { setSelectedTask(item); setFeedback(true); }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><FeedbackIcon /></span>
                             <span>{t("Feedback")}</span>
                         </a>
                     </li>
+                )}
                 </ul>
             </DropDown>,
         }))
@@ -83,6 +104,7 @@ export default function CompletedTaskModule() {
     return (
         <div className=" zt-card grow">
             <h2 className="text-h4">{t("Completed Tasks")}</h2>
+       
             <Table
                 headings={headings}
                 rows={rows}
@@ -104,11 +126,13 @@ export default function CompletedTaskModule() {
                     page={page}
                     setPage={setPage} />
                 }
-            {feedback && <FeedbackForm
-                onClose={() => { setFeedback(false) }}
+            {feedback && <TaskFeedbackForm
+                task={selectedTask}
+                onClose={() => { setFeedback(false);  }}
             />}
-            {raiseIssue && <RaiseIssueForm
-                onClose={() => { setRaiseIssue(false) }}
+           {feedbackReply && selectedFeedback && <FeedbackReplyForm
+                onClose={() => { setFeedbackReply(false); }}
+                object={selectedFeedback}
             />}
         </div>
     )

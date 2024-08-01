@@ -3,7 +3,7 @@ import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
 import  Pagination  from '@/components/elements/Table/pagination' 
-import FeedbackForm from '@/components/forms/projects/feedback'
+import FeedbackForm from '@/components/forms/projects/taskFeedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
 import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
@@ -256,8 +256,8 @@ export default function TaskBoardDetailModule() {
            return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
-            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
+            // Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            // Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
             Priority: (
                 <select
                   className={`zt-tag ${getPriorityClass(item.priority)}`}
@@ -316,12 +316,6 @@ export default function TaskBoardDetailModule() {
                         <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
                             <span><DiscussionIcon /></span>
                             <span>{t("Discussion")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Status")}</span>
                         </a>
                     </li>
                     <li className="!p-0">

@@ -1,11 +1,10 @@
 import { Button, CheckBox, DisplayDate, DropDown, Table } from "@/components/elements";
 import Pagination from "@/components/elements/Table/pagination";
 import UserListView from "@/components/elements/UserListView";
-import FeedbackForm from "@/components/forms/projects/feedback";
-import RaiseIssueForm from "@/components/forms/projects/raiseIssue";
+import ProjectFeedbackForm from "@/components/forms/projects/projectFeedback";
+import FeedbackReplyForm from "@/components/forms/projects/feedbackReply";
 import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
 import { FetchCompletedProjects } from "@/store/actions/project.actions";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +18,9 @@ export default function CompletedProjectsModule() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [feedback, setFeedback] = useState(false)
+  const [feedbackReply, setFeedbackReply] = useState(false)
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [raiseIssue, setRaiseIssue] = useState(false)
   const {completed_project_list} = useSelector((state) => state.project)
 
@@ -45,7 +47,6 @@ export default function CompletedProjectsModule() {
 
   const rows = paginatedData?.map((item, index) => (
     {
-     
       Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
       ProjectID: item?.projectId,
       Client: item?.client,
@@ -54,24 +55,40 @@ export default function CompletedProjectsModule() {
       Deadline: <DisplayDate date={item?.endDate} />,
       Status: <span className='zt-tag zt-tag-success'>{item?.status.charAt(0).toUpperCase() + item.status.slice(1).toLowerCase()} </span>,
       Feedback: <div className='flex flex-col items-center'>
-        <span className=''>Feedback From <span className='text-themePurple font-semibold'>Jhon</span></span>
-        <div className='flex gap-1 items-center'><span className='font-semibold'>3.0</span> <div className='flex'><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-themeSecondary'} /><StarIcon className={'text-gray-400'} /><StarIcon className={'text-gray-400'} /></div></div>
-        <span className=''>“Good Job”</span>
-      </div>,
+                {item?.feedback?._id ?  <>
+                <span className=''>Feedback From <span className='text-themePurple font-semibold'>  {item?.feedback?.createdBy?.firstName} {item?.feedback?.createdBy?.lastName} </span></span>
+                <div className='flex gap-1 items-center'><span className='font-semibold'>{item?.feedback?.rating.toFixed(1)} </span> <div className='flex'>
+                {[...Array(5)].map((_, index) => (
+                        <StarIcon
+                            key={index}
+                            className={`${item?.feedback?.rating > index ? 'text-themeSecondary' : 'text-gray-300'}`}
+                        />
+                    ))}
+                    </div></div>
+                <span className=''>“{item?.feedback?.comments}”</span>
+                </> : <span className='text-themePurple font-semibold'> No Feedback </span>  }   
+            </div>,
       action: <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
           <li className="!p-0">
-            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-              <span><WarningIcon /></span>
-              <span>{t("Raise Issue")}</span>
+            <a onClick={() => { 
+              if (item?.feedback?._id) {
+                  setSelectedFeedback(item?.feedback); 
+                  setFeedbackReply(true); 
+              }
+          }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+              <span><FeedbackIcon /></span>
+              <span>{t("Reply")}</span>
             </a>
           </li>
+          {!item?.feedback?._id && (
           <li className="!p-0">
-            <a onClick={() => { setFeedback(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+            <a onClick={() => { setSelectedProject(item); setFeedback(true); }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
               <span><FeedbackIcon /></span>
               <span>{t("Feedback")}</span>
             </a>
           </li>
+          )}
         </ul>
       </DropDown>,
     }))
@@ -107,12 +124,14 @@ export default function CompletedProjectsModule() {
             page={page}
             setPage={setPage} />
         }
-      {feedback && <FeedbackForm
+      {feedback && <ProjectFeedbackForm
+        project={selectedProject}
         onClose={() => { setFeedback(false) }}
       />}
-      {raiseIssue && <RaiseIssueForm
-        onClose={() => { setRaiseIssue(false) }}
-      />}
+       {feedbackReply && selectedFeedback && <FeedbackReplyForm
+           onClose={() => { setFeedbackReply(false); }}
+           object={selectedFeedback}
+        />}
     </div>
   )
 }

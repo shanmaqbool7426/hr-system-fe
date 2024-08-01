@@ -1,5 +1,5 @@
 import { Button, CheckBox, DisplayDate, DropDown, Table } from '@/components/elements'
-import FeedbackForm from '@/components/forms/projects/feedback'
+import FeedbackForm from '@/components/forms/projects/taskFeedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
 import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'

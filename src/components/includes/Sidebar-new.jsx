@@ -148,11 +148,11 @@ export default function Sidebar() {
       }, 
       {
         name: t("Procurement"), href: "/operations/procurement",
-        innerSubMenu: [
-          // name: t("Vendor"), href: "/operations/vendor",
+        innerSubMenu: [ 
           { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
           { name: t('Vendors'), href: "/operations/procurement/vendors" },
           { name: t('Quotations'), href: "/operations/procurement/quotations" },
+          { name: t('Quoted Prices'), href: "/operations/procurement/quoted-prices" },
           { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
           { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
           { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },

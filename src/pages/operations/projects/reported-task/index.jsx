@@ -24,11 +24,12 @@ export default function ReportedIssuesPage() {
     const [selectedIssue, setSelectedIssue] = useState(null)
     const { reported_task_list } = useSelector(state => state.task)
 
+    
     const handleViewIssue = (issue) => {
         setSelectedIssue(issue);
         setWarning(true);
     };
-
+    
     useEffect(() => {
         dispatch(FetchEmployees())
         dispatch(FetchReportedTasks())
@@ -53,27 +54,17 @@ export default function ReportedIssuesPage() {
         ProjectName: item?.project?.name,
         TaskTime: item?.requiredTime,
         TaskDeadline: <DisplayDate date={item?.dueDate} />,
-        issue: item?.raiseIssue?.name,
-        action: <DropDown icon={<ThreeDotsVertical />}>
-            <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
-                <li className="!p-0">
-                    <a onClick={() => handleViewIssue(item)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                        <span><EyeOn /></span>
-                        <span>{t("Issue detail")}</span>
-                    </a>
-                </li>
-                <li className="!p-0">
-                    <a onClick={() => {
-                        Toast.dynamicTitle(() => {
-                            Toast.success(t("Reported Issue Resolved Successfully"))
-                        }, t, "Did you fix this issue with Assignee?")
-                    }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-                        <span><SuccessTick /></span>
-                        <span>{t("Resolved")}</span>
-                    </a>
-                </li>
-            </ul>
-        </DropDown>,
+            issue: item?.issueRaised?.map(issue => issue.name).join(', '),
+            action: <DropDown icon={<ThreeDotsVertical />}>
+                <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
+                    <li className="!p-0">
+                        <a onClick={() => handleViewIssue(item)}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("Issue detail")}</span>
+                        </a>
+                    </li>
+                </ul>
+            </DropDown>,
     }))
     const pagination = {
         totalRecords: reported_task_list?.length,
