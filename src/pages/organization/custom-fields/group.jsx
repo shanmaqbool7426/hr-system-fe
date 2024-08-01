@@ -69,7 +69,7 @@ export default function ManageEmployeeGroupPage() {
           <p className="mb-0">{t("Manage your employee Group")}</p>
         </div>
         <div className="flex items-start gap-2">
-          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create New Group")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create Group")}</Button>
         </div>
       </div>
 
