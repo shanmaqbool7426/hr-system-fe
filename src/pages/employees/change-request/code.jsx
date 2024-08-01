@@ -5,7 +5,7 @@ import ls from 'localstorage-slim';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from '@/util/toast';
-import { changeCode } from '@/store/actions/employee-change-request.actions';
+// import { changeCode } from '@/store/actions/employee-change-request.actions';
 import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { useState } from 'react';
@@ -40,16 +40,16 @@ export default function EmployeeCodePage() {
 			if (values.attachment) {
 				await uploader(values.attachment, (url) => {
 					values.attachment = url;
-					dispatch(changeCode(values, () => {
-						formik.resetForm();
-						Toast.success(t("Grade change request saved successfully"));
-					}));
+					// dispatch(changeCode(values, () => {
+					// 	formik.resetForm();
+					// 	Toast.success(t("Grade change request saved successfully"));
+					// }));
 				});
 			} else {
-				dispatch(changeCode(values, () => {
-					formik.resetForm();
-					Toast.success(t("Request not proceed"));
-				}));
+				// dispatch(changeCode(values, () => {
+				// 	formik.resetForm();
+				// 	Toast.success(t("Request not proceed"));
+				// }));
 			}
 		}
 	});

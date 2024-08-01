@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { EyeOn, SuccessTick, ThreeDotsVertical, Trash } from '@/components/svg'
 import Toast from '@/util/toast'
 import AddTaskForm from '@/components/forms/projects/addTask'
-import Pagination from '@/components/elements/Table/pagination' 
+import Pagination from '@/components/elements/Table/pagination'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import ReportedIssueDetail from '@/components/forms/projects/resolveIssuePage'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,7 +13,7 @@ import { FetchEmployees } from '@/store/actions/employee.actions'
 
 export default function ReportedIssuesPage() {
     const { t } = useTranslation()
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
     const [board, setBoard] = useState(false)
     const [discussion, setDiscussion] = useState(false)
     const [sortCol, setSortCol] = useState(null)
@@ -21,13 +21,13 @@ export default function ReportedIssuesPage() {
     const [warning, setWarning] = useState(false)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [selectedIssue, setSelectedIssue] = useState(null) 
-    const {reported_task_list} = useSelector(state => state.task)
+    const [selectedIssue, setSelectedIssue] = useState(null)
+    const { reported_task_list } = useSelector(state => state.task)
 
     
     const handleViewIssue = (issue) => {
-        setSelectedIssue(issue); 
-        setWarning(true); 
+        setSelectedIssue(issue);
+        setWarning(true);
     };
     
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function ReportedIssuesPage() {
     const paginatedData = reported_task_list?.slice(indexOfFirstItem, indexOfLastItem);
 
     const rows = paginatedData?.map((item, index) => ({
-        TaskId: <a className='cursor-pointer' onClick={(event) => {event.preventDefault(); handleViewIssue(item);}}>{ item?.taskId }</a>,
+        TaskId: <a className='cursor-pointer' onClick={(event) => { event.preventDefault(); handleViewIssue(item); }}>{item?.taskId}</a>,
         TaskName: item?.name,
         ProjectName: item?.project?.name,
         TaskTime: item?.requiredTime,
@@ -92,7 +92,7 @@ export default function ReportedIssuesPage() {
                     setPage={setPage}
                     className={'zt-employeeTable zt-rportedIssueTable '}
                 />
-                 {paginatedData?.length > 0 && pagination && <Pagination
+                {paginatedData?.length > 0 && pagination && <Pagination
                     pagination={pagination}
                     currentLength={rows?.length}
                     perPage={perPage}
@@ -102,7 +102,7 @@ export default function ReportedIssuesPage() {
                 }
             </div>
             {warning && selectedIssue && <ReportedIssueDetail
-                object={selectedIssue} 
+                object={selectedIssue}
                 onClose={() => { setWarning(false) }}
             />}
 

@@ -51,7 +51,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
                             readOnly={true}
                             onChange={(event) => setQuery(event.target.value)}
                         />
-                        {selectedItem.length > 0 && (
+                        {selectedItem?.length > 0 && (
                             <ul className='zt-multiSelectedList'>
                                 {getDisplayValue().map((item, index) => (
                                     <li key={index} className='zt-tag'>{item}</li>
