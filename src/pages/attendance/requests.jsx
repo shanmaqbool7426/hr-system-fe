@@ -1,8 +1,8 @@
-import { Button, CheckBox, DropDown, Table } from '@/components/elements'
+import { Button, DropDown, Table } from '@/components/elements'
 import AddRequestForm from '@/components/forms/attendance/addRequest'
 import ViewAttendanceForm from '@/components/forms/attendance/view'
 import FilterArea from '@/components/includes/FilterArea'
-import { CloseCross, InputErrorInfo, ThreeDotsVertical } from '@/components/svg'
+import { ThreeDotsVertical } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
 import React, { useState } from 'react'
@@ -17,8 +17,7 @@ export default function Requests() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const [view, setView] = useState(false)
-    const [hide, setHide] = useState(false)
+    const [view, setView] = useState(false) 
     const [edit, setEdit] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
@@ -282,13 +281,7 @@ export default function Requests() {
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
-                />
-                {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-                    <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-                    <CloseCross className={'cursor-pointer'}
-                        onClick={(() => setHide(true))}
-                    />
-                </div>}
+                /> 
 
                 <Table
                     headings={headings}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, InputErrorInfo } from "../svg";
-export default function Input({ name, formik, className, containerClass, type, label, ...props }) {
+export default function Input({ name, formik, className, containerClass, type, label,disabled, ...props }) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -30,6 +30,7 @@ export default function Input({ name, formik, className, containerClass, type, l
                 </div>
             ) : (
                 <input
+                    disabled={disabled}
                     name={name}
                     onBlur={formik?.handleBlur}
                     onInput={formik?.handleBlur}

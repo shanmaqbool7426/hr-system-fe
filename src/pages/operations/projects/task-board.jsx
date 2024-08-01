@@ -115,7 +115,7 @@ const pagination = {
           <Button className={"btn btn-primary"} onClick={() => setBoard(true)}>{t("Create Task Board")}</Button>
         </div> */}
       </div>
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
         <FilterArea title={t("")}
           elements={filterElements}
           filters={filters}

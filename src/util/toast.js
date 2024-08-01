@@ -48,7 +48,7 @@ const Toast = {
             }
         });
     },
-    daynamicTitle(successCallback, t,title) {
+    dynamicTitle(successCallback, t,title) {
         Swal.fire({
             title: t(`${title}`),
             showDenyButton: true,

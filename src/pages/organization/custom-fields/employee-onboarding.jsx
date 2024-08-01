@@ -65,7 +65,7 @@ export default function ManageEmployeeOnboardingPage () {
         </div>
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
 
         <Table
           headings={headings}

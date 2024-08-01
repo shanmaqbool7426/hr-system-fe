@@ -98,7 +98,7 @@ export default function ViewRemoteWorkForm({onClose, object }) {
     ]
     return (
         <BaseForm title={'Attendance Approval Routing'} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
-            <div className='py-6 flex flex-col items-start gap-6'>
+            <div className='py-6 flex flex-col items-start gap-6 col-span-2'>
                 <Table
                     headings={headings}
                     rows={rows}

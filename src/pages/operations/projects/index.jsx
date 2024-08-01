@@ -277,7 +277,7 @@ const getStatusClass = (status) => {
           <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Project")}</Button>
         </div>
       </div>
-      <div className="w-full bg-white p-6 rounded-lg grow">
+      <div className=" zt-card grow">
       <FilterArea title={t("")}
           elements={filterElements}
           filters={filters}
