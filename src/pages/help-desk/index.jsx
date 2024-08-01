@@ -1,12 +1,12 @@
-import { Button, Table } from "@/components/elements"; 
+import { Button, DetailPanel, Table } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
-import CreateVendorForm from "@/components/forms/procurement/vendors/createVendor";
+import { useDispatch, useSelector } from "react-redux";
+import CreatHelpDeskForm from "@/components/forms/helpDesk/create";
 
 
-export default function VendorsPage() {
+export default function HelpDeskPage() {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { total_records } = useSelector((state) => state.employee)
@@ -15,7 +15,6 @@ export default function VendorsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const [rating, setRating] = useState(false) 
 
     const headings = [
 
@@ -47,14 +46,9 @@ export default function VendorsPage() {
         <section className="flex flex-col grow">
             <div className="flex justify-between items-center pb-6">
                 <div className="">
-                    <h1 className="text-h4 mb-0">{t("Vender")}</h1>
-                </div>
-                <div className="flex items-start gap-2">
-                    <Button className={"btn btn-dark-outline"} onClick={() => setRating(true)}>{t("Vendors Rating")}</Button>
-                    <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Venders")}</Button>
+                    <h1 className="text-h4 mb-0">{t("Help Desk")}</h1>
                 </div>
             </div>
-
             <div className="zt-card grow">
                 <Table
                     headings={headings}
@@ -72,7 +66,8 @@ export default function VendorsPage() {
                 />
             </div>
 
-            {create && <CreateVendorForm onClose={() => { setCreate(false)}} />}
+            {create && <CreatHelpDeskForm onClose={() => setCreate(false)} />}
+
         </section>
     )
 }

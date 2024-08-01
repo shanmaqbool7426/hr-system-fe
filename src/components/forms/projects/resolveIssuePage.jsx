@@ -1,9 +1,8 @@
-import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import AddTaskForm from '@/components/forms/projects/addTask'
 import Toast from "@/util/toast";
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, DetailPanel } from '@/components/elements'
 import DiscussionForm from "./discussion";
 import { UpdateRaiseIssue } from '@/store/actions/task-raise-issue.actions';
@@ -40,7 +39,7 @@ export default function ResolveIssuePage({ onClose, object}) {
     return (
         <>
             <DetailPanel>
-                <div className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_185px)]">
+                <div className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_120px)]">
                 <h4>{t('Reported Issue detail')}</h4>
                 <div className='text-left'>
                 {object?.issueRaised?.map((issue, index) => (
