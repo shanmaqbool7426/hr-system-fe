@@ -23,14 +23,15 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             cnic: employee?.cnic || "",
             dateOfBirth: employee?.dateOfBirth || "",
             email: employee?.email || "",
+            contact: employee?.contact || "",
             joiningDate: employee?.joiningDate || new Date(),
             password: "",
             canLogin: true,
-            designation: employee?.designation || "",
-            status: employee?.status || "",
+            status: employee?.status._id || "",
+            designation: employee?.designation._id || "",
+            lineManager: employee?.lineManager._id || "",
             mobileAttendance: employee?.mobileAttendance || false,
             webAttendance: employee?.webAttendance || false,
-            lineManager: employee?.lineManager || "",
         },
         validationSchema: Yup.object().shape({
             firstName: Yup.string().required(t('formik.firstNameRequired')),
@@ -38,6 +39,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             fatherName: Yup.string().required(t('formik.fatherNameRequired')),
             fatherCnic: Yup.string().required(t('formik.fatherCnicRequired')),
             employeeCode: Yup.string().required(t('formik.employeeCodeRequired')),
+            contact: Yup.string().required(t('formik.contactRequired')),
             cnic: Yup.string().required(t('formik.cnicRequired')),
             designation: Yup.string().required(t('formik.designationRequired')),
             dateOfBirth: Yup.string().required(t('formik.dateOfBirthRequired')),
@@ -140,7 +142,8 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             name: "contact",
             label: t('Contact Number'),
             placeholder: t("Enter contact number"),
-            required: true, value: formik.values.contact,
+            required: true,
+            value: formik.values.contact,
         },
         {
             type: "select",
@@ -170,7 +173,6 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             list: employees_list.filter(item => item._id !== employee?._id).map(item => ({
                 value: item._id,
                 display: item.firstName + " " + item.lastName,
-                type: 'linemanager' // Set the type here
             }))
         },
         {

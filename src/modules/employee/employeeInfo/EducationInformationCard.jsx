@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next';
 import { Edit, Plus, Trash } from '../../../components/svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -9,17 +9,18 @@ import Toast from '@/util/toast';
 import { CreateAcademic, DeleteAcademic, UpdateAcademic } from '@/store/actions/employee-academic.actions';
 
 export default function EducationInformationCard() {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const [add, setAdd] = useState(false)
-  const [edit, setEdit] = useState(null)
-  const { is_loading, employee_details } = useSelector((state) => state.employee)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [add, setAdd] = useState(false);
+  const [edit, setEdit] = useState(null);
+  const { is_loading, employee_details } = useSelector((state) => state.employee);
+  
   const formik = useFormik({
     initialValues: {
       institution: edit?.institution || "",
       degree: edit?.degree || "",
-      startDate: edit?.startDate || "",
-      endDate: edit?.endDate || "",
+      startDate: edit?.startDate ? new Date(edit.startDate) : null,
+      endDate: edit?.endDate ? new Date(edit.endDate) : null,
     },
     validationSchema: Yup.object().shape({
       institution: Yup.string().required(t('formik.institutionRequired')),
@@ -28,36 +29,43 @@ export default function EducationInformationCard() {
     }),
     onSubmit: values => {
       const onSuccess = () => {
-        formik.resetForm()
-        setAdd(false)
-        setEdit(false)
-        Toast.success(edit ? t('Education record updated successfully') : t('Education record added successfully'))
-      }
+        formik.resetForm();
+        setAdd(false);
+        setEdit(null);
+        Toast.success(edit ? t('Education record updated successfully') : t('Education record added successfully'));
+      };
+      const valuesToSubmit = {
+        ...values,
+        startDate: values.startDate ? values.startDate.toISOString() : null,
+        endDate: values.endDate ? values.endDate.toISOString() : null,
+      };
       if (edit) {
-        dispatch(UpdateAcademic(edit._id, { user: employee_details._id, ...values }, onSuccess))
+        dispatch(UpdateAcademic(edit._id, { user: employee_details._id, ...valuesToSubmit }, onSuccess));
       } else {
-        dispatch(CreateAcademic({ user: employee_details._id, ...values }, onSuccess))
+        dispatch(CreateAcademic({ user: employee_details._id, ...valuesToSubmit }, onSuccess));
       }
-
     },
     enableReinitialize: true
-  })
+  });
 
   const submitHandler = (event) => {
-    event.preventDefault()
-    formik.handleSubmit()
-  }
+    event.preventDefault();
+    formik.handleSubmit();
+  };
+
   const editHandler = (item) => {
-    setEdit({ ...item })
-    setAdd(true)
-  }
+    setEdit({ ...item });
+    setAdd(true);
+  };
+
   const deleteHandler = (id) => {
     Toast.confirmDelete(() => {
       dispatch(DeleteAcademic(id, () => {
-        Toast.success(t('Education record removed successfully'))
-      }))
-    }, t)
-  }
+        Toast.success(t('Education record removed successfully'));
+      }));
+    }, t);
+  };
+
   return (
     <div className='zt-employeeCardTimeLine'>
       <div className='zt--employeeCardHead'>
@@ -84,7 +92,6 @@ export default function EducationInformationCard() {
       }
       {add && <div>
         <form onSubmit={submitHandler}>
-
           <fieldset className='flex flex-col gap-4'>
             <Input
               type={'text'}
@@ -112,7 +119,7 @@ export default function EducationInformationCard() {
               onBlur={formik.handleBlur}
               onInput={formik.handleBlur}
               onChange={(value) => {
-                formik.setFieldValue('startDate', value)
+                formik.setFieldValue('startDate', value);
               }}
               required
             />
@@ -125,12 +132,12 @@ export default function EducationInformationCard() {
               onBlur={formik.handleBlur}
               onInput={formik.handleBlur}
               onChange={(value) => {
-                formik.setFieldValue('endDate', value)
+                formik.setFieldValue('endDate', value);
               }}
             />
             <div className="zt-btns !p-0 !pt-4 justify-end">
               <Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
-                onClick={() => { formik.resetForm(); setAdd(false); setEdit(false) }} />
+                onClick={() => { formik.resetForm(); setAdd(false); setEdit(null); }} />
               <Button type="button" onClick={submitHandler} value={t("Save")} variant={'dark'} className={'min-w-40'}
                 is_loading={is_loading} disabled={is_loading || !formik.isValid}
               />
@@ -139,5 +146,5 @@ export default function EducationInformationCard() {
         </form>
       </div>}
     </div>
-  )
+  );
 }

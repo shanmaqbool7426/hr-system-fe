@@ -1,35 +1,42 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'next-i18next'
-import { UpdateEmployee } from '@/store/actions/employee.actions';
+import { FetchEmployeeDetails, UpdateEmployee } from '@/store/actions/employee.actions';
 import { Edit } from '../../../components/svg';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Datepicker, DisplayDate, Input, Profile, SearchSelect } from '@/components/elements';
 import Toast from '@/util/toast';
+import { FetchDepartments } from '@/store/actions/department.actions';
 
-export default function EmployeeProfile() {
+
+export default function EmployeeProfile({ employeeId }) {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(false)
+  const { customfield_list } = useSelector(state => state.customfield);
+  const {  departments_list } = useSelector(state => state.department);
   const { is_loading, employee_details , employees_list} = useSelector((state) => state.employee)
   useEffect(()=>{
+    dispatch(FetchDepartments())
     dispatch(FetchEmployees())
-  }, [dispatch])
+    if (employeeId) {
+      dispatch(FetchEmployeeDetails(employeeId));
+    }
+  }, [dispatch , employeeId])
   const formik = useFormik({
     initialValues: {
       firstName: employee_details?.firstName || "",
       lastName: employee_details?.lastName || "",
+      email: employee_details?.email || "",
       joiningDate: employee_details?.joiningDate || "",
-      department: employee_details?.department || "",
+      department: employee_details?.department?._id || "",
       contact: employee_details?.contact || "",
       dateOfBirth: employee_details?.dateOfBirth || "",
       address: employee_details?.address || "",
-      // lineManager : object?.lineManager?.reduce((acc, item) => {
-      //   acc.push(item._id);
-      //   return acc;
-      // }, []) || [],
+      designation: employee_details?.designation._id || "",
+      lineManager: employee_details?.lineManager._id || "",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t('formik.firstNameRequired')),
@@ -54,15 +61,22 @@ export default function EmployeeProfile() {
       {edit ? <form className='col-span-2' onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
         <fieldset className='grid grid-cols-2'>
           <div className='px-4 border-r border-dashed border-themeGrayscale600 flex flex-col gap-4'>
-            <Input
+            <SearchSelect
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
               type={'text'}
-              name={'Designation'}
+              name={'designation'}
               label={t('Designation')}
               placeholder={t('Designation')}
-              value={formik.values.Designation}
+              value={formik.values.designation}
               formik={formik}
+              list= {customfield_list.filter(item => item.type === 'designation').map(item => ({
+                value: item._id,
+                display: item.name
+            }))}
+            onChange={(value) => {
+              formik.setFieldValue('designation', value)
+            }}
               required
             />
             <SearchSelect
@@ -71,12 +85,16 @@ export default function EmployeeProfile() {
               name={'department'}
               label={t('Department')}
               value={formik.values.department}
-              // list={customfield_list.filter((item) => item.type === "departments").map((item) => {
-              //   return { value: item._id, display: item.name };
-              // })}
+              list= {departments_list?.map((item) => ({
+                value: item?._id,
+                display: item.name,
+              }))}
               onBlur={() => {
                 formik.setFieldTouched('department', true)
               }} 
+              onChange={(value) => {
+                formik.setFieldValue('department', value)
+              }}
               required
             />
             <Datepicker
@@ -97,7 +115,7 @@ export default function EmployeeProfile() {
               <SearchSelect
               containerClass={'zt-formGroupV2'}
               className={' gap-4'}
-              name={'LineManager'}
+              name={'lineManager'}
               label={t('Line Manager')}
               value={formik.values.lineManager}
               list= {employees_list?.map((item) => ({
@@ -105,8 +123,11 @@ export default function EmployeeProfile() {
                 display: item.firstName + " " + item.lastName,
               }))}
               onBlur={() => {
-                formik.setFieldTouched('LineManager', true)
+                formik.setFieldTouched('lineManager', true)
               }} 
+              onChange={(value) => {
+                formik.setFieldValue('lineManager', value)
+              }}
               multiple ={false}
               required
             />
@@ -179,9 +200,9 @@ export default function EmployeeProfile() {
 
           <div className='flex flex-col'>
             <h2 className='mb-0 text-h5'>{employee_details?.firstName + " " + employee_details?.lastName}</h2>
-            <p className='flex-col !items-start'>
-              <span>{t(employee_details?.department?.name)}</span>
-              <strong className='text-themePurple'>{employee_details?.designation?.title}</strong>
+            <p className='flex-col !items-start'> 
+              <span>{employee_details?.department?.name}</span>
+              <strong className='text-themePurple'>{employee_details?.designation?.name}</strong>
             </p>
             <ul>
               <li>
@@ -190,7 +211,7 @@ export default function EmployeeProfile() {
               </li>
               {employee_details?.department && <li >
                 <span>{t('Department')}</span>
-                <strong>{t(employee_details?.department?.name)}</strong>
+                <strong>{employee_details?.department?.name}</strong>
               </li>}
               <li>
                 <p className='gap-4 mb-0'>
@@ -226,7 +247,7 @@ export default function EmployeeProfile() {
             </li>
             <li>
               <span>{t('Designation')}</span>
-              <strong>{employee_details?.DesignationGroup || '-------'}</strong>
+              <strong>{employee_details?.designation?.name || '-------'}</strong>
             </li>
           </ul>
         </div>

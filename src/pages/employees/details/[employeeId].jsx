@@ -28,6 +28,8 @@ export default function EmployeeDetailPage() {
         }
     }, [router, dispatch])
 
+    const employeeId = router.query.employeeId;
+
     return (
         <section className="flex flex-col grow">
             {is_loading && <PageLoader />}
@@ -38,7 +40,7 @@ export default function EmployeeDetailPage() {
             {employee_details &&
                 <>
                     <div className='zt-employeeCard zt-employeeInfoCard mb-12 relative'>
-                        <EmployeeProfile />
+                        <EmployeeProfile employeeId={employeeId} />
                     </div>
                     <Tabs
                         containerClasses={'zt-themeTabsV2 grow'}

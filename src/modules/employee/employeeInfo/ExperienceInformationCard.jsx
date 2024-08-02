@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next';
 import { Edit, Plus, Trash } from '../../../components/svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -9,18 +9,34 @@ import Toast from '@/util/toast';
 import { CreateJobExperience, DeleteJobExperience, UpdateJobExperience } from '@/store/actions/employee-job-experience.actions';
 
 export default function ExperienceInformationCard() {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const [add, setAdd] = useState(false)
-  const [edit, setEdit] = useState(null)
-  const { is_loading, employee_details } = useSelector((state) => state.employee)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const [add, setAdd] = useState(false);
+  const [edit, setEdit] = useState(null);
+  const { is_loading, employee_details } = useSelector((state) => state.employee);
+  
+  const calculateExperience = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = endDate ? new Date(endDate) : new Date();
+
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    return `${years}y ${months}mos`;
+  };
+
   const formik = useFormik({
     initialValues: {
       company: edit?.organization || "",
       location: edit?.location || "",
       designation: edit?.designation || "",
-      startDate: edit?.startDate || "",
-      endDate: edit?.endDate || "",
+      startDate: edit?.startDate ? new Date(edit.startDate) : null,
+      endDate: edit?.endDate ? new Date(edit.endDate) : null,
     },
     validationSchema: Yup.object().shape({
       company: Yup.string().required(t('formik.companyRequired')),
@@ -31,36 +47,43 @@ export default function ExperienceInformationCard() {
     }),
     onSubmit: values => {
       const onSuccess = () => {
-        formik.resetForm()
-        setAdd(false)
-        setEdit(false)
-        Toast.success(edit ? t('Expirence record updated successfully') : t('Expirence record added successfully'))
-      }
+        formik.resetForm();
+        setAdd(false);
+        setEdit(null);
+        Toast.success(edit ? t('Experience record updated successfully') : t('Experience record added successfully'));
+      };
+      const valuesToSubmit = {
+        ...values,
+        startDate: values.startDate.toISOString(),
+        endDate: values.endDate ? values.endDate.toISOString() : null,
+      };
       if (edit) {
-        dispatch(UpdateJobExperience(edit._id, { user: employee_details._id, ...values }, onSuccess))
+        dispatch(UpdateJobExperience(edit._id, { user: employee_details._id, ...valuesToSubmit }, onSuccess));
       } else {
-        dispatch(CreateJobExperience({ user: employee_details._id, ...values }, onSuccess))
+        dispatch(CreateJobExperience({ user: employee_details._id, ...valuesToSubmit }, onSuccess));
       }
-
     },
     enableReinitialize: true
-  })
+  });
 
   const submitHandler = (event) => {
-    event.preventDefault()
-    formik.handleSubmit()
-  }
+    event.preventDefault();
+    formik.handleSubmit();
+  };
+
   const editHandler = (item) => {
-    setEdit({ ...item })
-    setAdd(true)
-  }
+    setEdit({ ...item });
+    setAdd(true);
+  };
+
   const deleteHandler = (id) => {
     Toast.confirmDelete(() => {
       dispatch(DeleteJobExperience(id, () => {
-        Toast.success(t('Expirence record removed successfully'))
-      }))
-    }, t)
-  }
+        Toast.success(t('Experience record removed successfully'));
+      }));
+    }, t);
+  };
+
   return (
     <div className='zt-employeeCardTimeLine'>
       <div className='zt--employeeCardHead'>
@@ -75,8 +98,8 @@ export default function ExperienceInformationCard() {
               <h4>{item.designation} {t('at')} {item.organization} ({item.location})</h4>
               <p>
                 <DisplayDate date={item.startDate} /> -- {item.endDate ? <DisplayDate date={item.endDate} /> : t('Present')}
-                {/* TODO  */}
-                (calculated experience)
+                {/* TODO */}
+                ({calculateExperience(item.startDate, item.endDate)})
               </p>
               <p className='flex gap-2'>
                 <Edit className={'text-themePurple cursor-pointer'} onClick={() => editHandler(item)} />
@@ -88,7 +111,6 @@ export default function ExperienceInformationCard() {
       }
       {add && <div>
         <form onSubmit={submitHandler}>
-
           <fieldset className='flex flex-col gap-4'>
             <Input
               type={'text'}
@@ -125,7 +147,7 @@ export default function ExperienceInformationCard() {
               onBlur={formik.handleBlur}
               onInput={formik.handleBlur}
               onChange={(value) => {
-                formik.setFieldValue('startDate', value)
+                formik.setFieldValue('startDate', value);
               }}
               required
             />
@@ -138,13 +160,13 @@ export default function ExperienceInformationCard() {
               onBlur={formik.handleBlur}
               onInput={formik.handleBlur}
               onChange={(value) => {
-                formik.setFieldValue('endDate', value)
+                formik.setFieldValue('endDate', value);
               }}
               required
             />
             <div className="zt-btns !p-0 !pt-4 justify-end">
               <Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
-                onClick={() => { formik.resetForm(); setAdd(false); setEdit(false) }} />
+                onClick={() => { formik.resetForm(); setAdd(false); setEdit(null); }} />
               <Button type="button" onClick={submitHandler} value={t("Save")} variant={'dark'} className={'min-w-40'}
                 is_loading={is_loading} disabled={is_loading || !formik.isValid}
               />
@@ -153,5 +175,5 @@ export default function ExperienceInformationCard() {
         </form>
       </div>}
     </div>
-  )
+  );
 }

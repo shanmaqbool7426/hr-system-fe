@@ -13,13 +13,13 @@ export default function CreateDepartmentForm({ onClose, department }) {
     const dispatch = useDispatch()
     const { is_loading, departments_list } = useSelector((state) => state.department)
     const { employees_list } = useSelector((state) => state.employee)
+    console.log('department', department)
     const formik = useFormik({
         initialValues: {
             name: department?.name || "",
             code: department?.code || "",
             parent: department?.parent?._id || "",
             head: department?.head?._id || "",
-            status: department?.status || "",
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),

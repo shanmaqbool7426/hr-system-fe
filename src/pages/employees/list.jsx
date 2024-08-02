@@ -42,6 +42,10 @@ export default function EmployeesListPage() {
     status: null,
   });
 
+    useEffect(()=>{
+      dispatch(FetchEmployees())
+    },[dispatch])
+    
   const filterElements = [
     {
       type: "search",
@@ -120,10 +124,10 @@ export default function EmployeesListPage() {
         </Link>
       ),
       designation: item?.designation?.name || "------",
-      project: item?.project?.title || "------",
-      department: item?.department?.title || "------",
+      project: item?.project?.name || "------",
+      department: item?.department?.name || "------",
       lineManager: item?.lineManager
-        ? `${item.lineManager.firstName} ${item.lineManager.lastName}`
+        ? `${item?.lineManager?.firstName} ${item?.lineManager?.lastName}`
         : "------",
       status: item?.status?.name || "------",
       workMode: item?.workMode?.name || "------",
