@@ -166,6 +166,7 @@ export default function Sidebar() {
           { name: t('Asset History'), href: "/operations/inventory/asset-history" },
           { name: t('Repair History'), href: "/operations/inventory/repair-history" },
           { name: t('Delete History'), href: "/operations/inventory/delete-history" },
+          { name: t('Inventory Reported Task'), href: "/operations/inventory/inventory-reported-task" },
         ]
       },
       {

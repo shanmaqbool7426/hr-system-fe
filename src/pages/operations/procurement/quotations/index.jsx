@@ -1,9 +1,10 @@
-import { Button, Table } from "@/components/elements"; 
+import { Button, Table,ToggleCheck } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";  
+import { useDispatch, useSelector } from "react-redux";
 import CreateQuotationForm from "@/components/forms/procurement/quotations/create";
+import StatusSelect from "@/components/elements/SelectStatus";
 
 
 export default function QuotationsPage() {
@@ -14,20 +15,27 @@ export default function QuotationsPage() {
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false) 
-
+    const [create, setCreate] = useState(false)
+    const VendorOptions = [
+        { value: 'purple', label: 'John', className: 'zt-tag-purple' },
+        { value: 'purple', label: 'Mink', className: 'zt-tag-purple' },
+    ];
+    const item = { status: 'success' };
     const headings = [
-
-        { title: t("Name"), col: "name" },
-        { title: t("Contact"), col: "Contact" },
-        { title: t("Status"), col: "status" },
+        { title: t("Quote ID"), col: "QuoteID" },
+        { title: t("Quotation Title"), col: "QuotationTitle" },
+        { title: t("Vendor"), col: "Vendor" },
+        { title: t("Amount"), col: "Amount" },
+        { title: t("Accept/Reject"), col: "AcceptReject" },
     ]
 
     const rows = [{
 
-        name: "John",
-        Contact: "+92 302 646587",
-        status: "active",
+        QuoteID: "675",
+        QuotationTitle: "Quotation Title",
+        Vendor: <StatusSelect item={item} options={VendorOptions} />,
+        Amount: "50$",
+        AcceptReject: <div className="flex justify-end"><ToggleCheck id={'AcceptReject'}/></div>,
     }
     ]
     const pagination = {
@@ -70,7 +78,7 @@ export default function QuotationsPage() {
                 />
             </div>
 
-            {create && <CreateQuotationForm onClose={() => { setCreate(false)}} />}
+            {create && <CreateQuotationForm onClose={() => { setCreate(false) }} />}
         </section>
     )
 }
