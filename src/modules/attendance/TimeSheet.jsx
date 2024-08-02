@@ -83,9 +83,16 @@ export const TimeSheet = () => {
                 <span className='text-themeGrayscale600 '>{t("Current Shift")}</span>
                 <time className='font-semibold' dateTime="09:00 AM - 06:00 PM">{t("09:00 AM - 06:00 PM")}</time>
             </div>
-            <div className='col-span-2 bg-themeGrayscale50 rounded-lg px-4 py-3 flex flex-col gap-1'>
-                <span className='text-themeGrayscale600'>{t("Punch In at")}</span>
-                <span className='font-semibold text-themeGrayscale900'>{checkInTime ? checkInTime.toLocaleTimeString() : t("Not checked in")}</span>
+            <div className='bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex justify-between'>
+
+                <div className='flex flex-col gap-1'>
+                    <span className='text-themeGrayscale600'>{t("Punch In at")}</span>
+                    <span className='font-semibold text-themeGrayscale900'>{checkInTime ? checkInTime.toLocaleTimeString() : t("Not checked in")}</span>
+                </div>
+                <div className='flex flex-col gap-1'>
+                    <span className='text-themeGrayscale600'>{t("Work Mode")}</span>
+                    <span className='font-semibold text-themeGrayscale900'>{t("Onsite")}</span>
+                </div>
             </div>
             <div className='col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 mx-auto flex justify-center items-center'>
                 <time className='text-xs font-bold' dateTime={formatTime(workedHours)}>{t(formatTime(workedHours))}</time>

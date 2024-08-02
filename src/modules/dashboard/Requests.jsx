@@ -1,5 +1,5 @@
 import { Button } from '@/components/elements';
-import { Calendar, CheckOutIcon } from '@/components/svg';
+import { Calendar, CheckOutIcon, RemoteWork } from '@/components/svg';
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { RadialChart } from './RadialChart';
@@ -13,10 +13,13 @@ export const Requests = () => {
 
     return (
         <div className={`col-span-3 lg:col-span-2 p-6 bg-white rounded-lg flex flex-col gap-6`}>
-            <div className='grid sm:grid-cols-2 gap-6'>
+            <div className='flex gap-6'>
                 <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full'}><Calendar className={'text-white'} /> Attendance Request</Button>
                 <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full'}><CheckOutIcon /> Leave Request</Button>
-                 {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
+                <Button variant={'primary'} className={'flex items-center w-full'}><RemoteWork /> Apply overtime </Button>
+            </div>
+            <div className='grid sm:grid-cols-2 gap-6'>
+                {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
                     <div key={i} className="p-4 flex justify-between gap-4 items-center bg-themeGrayscale50 rounded-lg">
                         <div className="shrink-0">
                             <h3 className="text-xl font-semibold mb-4">{ele}</h3>
@@ -33,14 +36,14 @@ export const Requests = () => {
                                 <span className="text-themeGrayscale600 leading-3">{t("Remaining - 3")}</span>
                             </div>
                         </div>
-                        <RadialChart textSize='20' circleSize={140} fillColor='#8C62FF' circularValue={'/10'}/>
+                        <RadialChart textSize='20' circleSize={140} fillColor='#8C62FF' circularValue={'/10'} />
                     </div>
                 ))}
             </div>
-      {leave && <CreateLeaveRequestForm onClose={() => { setLeave(false) }} />}
+            {leave && <CreateLeaveRequestForm onClose={() => { setLeave(false) }} />}
 
-            {create && <AddRequestForm 
-                onClose={() => { setCreate(false) }} 
+            {create && <AddRequestForm
+                onClose={() => { setCreate(false) }}
             />}
         </div>
     )

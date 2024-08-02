@@ -26,7 +26,8 @@ export default function QuotationsPage() {
         { title: t("Quotation Title"), col: "QuotationTitle" },
         { title: t("Vendor"), col: "Vendor" },
         { title: t("Amount"), col: "Amount" },
-        { title: t("Accept/Reject"), col: "AcceptReject" },
+        { title: t("Expiry "), col: "Expiry" },
+        { title: t("Reject/ Accept"), col: "AcceptReject" },
     ]
 
     const rows = [{
@@ -35,6 +36,7 @@ export default function QuotationsPage() {
         QuotationTitle: "Quotation Title",
         Vendor: <StatusSelect item={item} options={VendorOptions} />,
         Amount: "50$",
+        Expiry:"25 Dec 2024",
         AcceptReject: <div className="flex justify-end"><ToggleCheck id={'AcceptReject'}/></div>,
     }
     ]

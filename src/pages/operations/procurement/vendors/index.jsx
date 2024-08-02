@@ -1,10 +1,11 @@
-import { Button, Table } from "@/components/elements"; 
+import { Button, Table } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import CreateVendorForm from "@/components/forms/procurement/vendors/createVendor";
-
+import StatusSelect from "@/components/elements/SelectStatus";
+import CreateVendorRatingForm from "@/components/forms/procurement/vendors/createRating";
 
 export default function VendorsPage() {
     const { t } = useTranslation()
@@ -15,21 +16,54 @@ export default function VendorsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const [rating, setRating] = useState(false) 
+    const [rating, setRating] = useState(false)
 
     const headings = [
 
-        { title: t("Name"), col: "name" },
+        { title: t("Vendor Name"), col: "VendorName" },
+        { title: t("Products"), col: "Products" },
+        { title: t("Key Person"), col: "KeyPerson" },
         { title: t("Contact"), col: "Contact" },
-        { title: t("Status"), col: "status" },
+        { title: t("Responsible Department"), col: "ResponsibleDepartment" },
+        { title: t("Quality"), col: "Quality" },
+        { title: t("Perfornance"), col: "Perfornance" },
+        { title: t("Communication"), col: "Communication" },
+        { title: t("Value Addition"), col: "ValueAddition" },
+        { title: t("Score"), col: "Score" },
+        { title: t("Status"), col: "Status" },
     ]
-
-    const rows = [{
-
-        name: "John",
-        Contact: "+92 302 646587",
-        status: "active",
-    }
+    const StatusOptions = [
+        { value: 'success', label: 'Active', className: 'zt-tag-success' },
+        { value: 'danger', label: 'Inactive', className: 'zt-tag-danger' },
+    ];
+    const item = { status: 'success' };
+    const rows = [
+        {
+            VendorName: "PC",
+            Products: "Laptop",
+            KeyPerson: "John",
+            Contact: "+92 301 564657",
+            ResponsibleDepartment: "Admin",
+            Quality: "Good",
+            Perfornance: "Good",
+            Communication: "Good",
+            ValueAddition: "Mouse",
+            Score: "10",
+            Status: <StatusSelect item={item} options={StatusOptions} />,
+        },
+        {
+            VendorName: "PC",
+            Products: "Laptop",
+            KeyPerson: "John",
+            Contact: "+92 301 564657",
+            ResponsibleDepartment: "Admin",
+            Quality: "Good",
+            Perfornance: "Good",
+            Communication: "Good",
+            ValueAddition: "Mouse",
+            Score: "10",
+            Status: <StatusSelect item={item} options={StatusOptions} />,
+        },
     ]
     const pagination = {
         totalRecords: total_records,
@@ -72,7 +106,8 @@ export default function VendorsPage() {
                 />
             </div>
 
-            {create && <CreateVendorForm onClose={() => { setCreate(false)}} />}
+            {create && <CreateVendorForm onClose={() => { setCreate(false) }} />}
+            {rating && <CreateVendorRatingForm onClose={() => { setRating(false) }} />}
         </section>
     )
 }
