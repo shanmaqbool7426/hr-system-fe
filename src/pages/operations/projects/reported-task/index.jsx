@@ -48,13 +48,15 @@ export default function ReportedIssuesPage() {
     const indexOfFirstItem = indexOfLastItem - perPage;
     const paginatedData = reported_task_list?.slice(indexOfFirstItem, indexOfLastItem);
 
-    const rows = paginatedData?.map((item, index) => ({
-        TaskId: <a className='cursor-pointer' onClick={(event) => { event.preventDefault(); handleViewIssue(item); }}>{item?.taskId}</a>,
+    const rows = paginatedData?.map((item, index) => {
+        const recentIssue = item?.issueRaised?.[item.issueRaised.length - 1] || {}
+
+       return{TaskId: <a className='cursor-pointer' onClick={(event) => { event.preventDefault(); handleViewIssue(item); }}>{item?.taskId}</a>,
         TaskName: item?.name,
         ProjectName: item?.project?.name,
         TaskTime: item?.requiredTime,
         TaskDeadline: <DisplayDate date={item?.dueDate} />,
-            issue: item?.issueRaised?.map(issue => issue.name).join(', '),
+            issue: recentIssue?.name,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-40">
                     <li className="!p-0">
@@ -64,8 +66,8 @@ export default function ReportedIssuesPage() {
                         </a>
                     </li>
                 </ul>
-            </DropDown>,
-    }))
+            </DropDown>}
+    })
     const pagination = {
         totalRecords: reported_task_list?.length,
         showPerPage: true,
