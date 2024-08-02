@@ -2,8 +2,7 @@ import { Button, DropDown, Table } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CreateQuotationForm from "@/components/forms/procurement/quotations/create";
+import { useDispatch, useSelector } from "react-redux"; 
 import CreatePurchaseForm from "@/components/forms/procurement/purchase/create";
 import StatusSelect from "@/components/elements/SelectStatus";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -101,7 +100,6 @@ export default function PurchasingPage() {
                     className={'zt-employeeRoleTable'}
                 />
             </div>
-
             {create && <CreatePurchaseForm onClose={() => { setCreate(false) }} />}
         </section>
     )

@@ -46,10 +46,10 @@ export default function QuotedPricesPage() {
         <section className="flex flex-col grow">
             <div className="flex justify-between items-center pb-6">
                 <div className="">
-                    <h1 className="text-h4 mb-0">{t("Quoted Prices")}</h1>
+                    <h1 className="text-h4 mb-0">{t("Items Price")}</h1>
                 </div>
                 <div className="flex items-start gap-2">
-                    <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Quoted Prices")}</Button>
+                    <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Items Price")}</Button>
                 </div>
             </div>
 
