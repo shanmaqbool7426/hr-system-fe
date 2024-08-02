@@ -100,7 +100,7 @@ export default function TaskCard({ key, taskData,statusStyles }) {
                         </div>
                     </div>
                 </div>
-                {/* <button className='flex justify-center w-full text-xs font-bold gap-2 p-2'><Plus className='h-4 w-4' />Add New Task</button> */}
+                {/* <button className='flex justify-center w-full text-xs font-bold gap-2 p-2'><Plus className='h-4 w-4' />Add Task</button> */}
             </div>
         </div>
         {task && <AddTaskForm  

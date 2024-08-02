@@ -17,23 +17,23 @@ export const Requests = () => {
                 <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full'}><Calendar className={'text-white'} /> Attendance Request</Button>
                 <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full'}><CheckOutIcon /> Leave Request</Button>
                  {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
-                    <div key={i} className="p-2 flex justify-between gap-4 items-center bg-themeGrayscale50 rounded-lg">
+                    <div key={i} className="p-4 flex justify-between gap-4 items-center bg-themeGrayscale50 rounded-lg">
                         <div className="shrink-0">
-                            <h3 className="text-sm font-semibold mb-2">{ele}</h3>
-                            <div className="flex gap-1 mb-1">
-                                <span className="h-3 w-3 rounded bg-themePurple/50"></span>
-                                <span className="text-[10px] text-themeGrayscale600 leading-3">{t("Total 10")}</span>
+                            <h3 className="text-xl font-semibold mb-4">{ele}</h3>
+                            <div className="flex gap-2 mb-3 items-center ">
+                                <span className="h-6 w-6 rounded bg-themePurple/50"></span>
+                                <span className="text-themeGrayscale600 leading-3">{t("Total 10")}</span>
                             </div>
-                            <div className="flex gap-1 mb-1">
-                                <span className="h-3 w-3 rounded bg-themePurple"></span>
-                                <span className="text-[10px] text-themeGrayscale600 leading-3">{t("Used - 4")}</span>
+                            <div className="flex gap-2 mb-3 items-center">
+                                <span className="h-6 w-6 rounded bg-themePurple"></span>
+                                <span className="text-themeGrayscale600 leading-3">{t("Used - 4")}</span>
                             </div>
-                            <div className="flex gap-1">
-                                <span className="h-3 w-3 rounded bg-primary"></span>
-                                <span className="text-[10px] text-themeGrayscale600 leading-3">{t("Remaining - 3")}</span>
+                            <div className="flex gap-2 items-center">
+                                <span className="h-6 w-6 rounded bg-primary"></span>
+                                <span className="text-themeGrayscale600 leading-3">{t("Remaining - 3")}</span>
                             </div>
                         </div>
-                        <RadialChart circleSize={90} fillColor='#8C62FF' circularValue={'/10'}/>
+                        <RadialChart textSize='20' circleSize={140} fillColor='#8C62FF' circularValue={'/10'}/>
                     </div>
                 ))}
             </div>

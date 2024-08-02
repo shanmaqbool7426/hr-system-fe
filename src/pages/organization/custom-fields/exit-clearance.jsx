@@ -60,7 +60,7 @@ export default function ManageEmployeeExitClearanceTypePage () {
           <p className="mb-0">{t("Manage your Exit Clearance")}</p>
         </div>
         <div className="flex items-start gap-2">
-          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add New Exit Clearance")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Exit Clearance")}</Button>
         </div>
       </div>
 

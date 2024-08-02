@@ -73,7 +73,7 @@ export default function AddNewSchedule() {
         { date: "2", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "3", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "6", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
-        { date: "7", btn: "Add New Shift", del: "none" },
+        { date: "7", btn: "Add Shift", del: "none" },
         { date: "8", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "9", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "10", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
@@ -97,10 +97,10 @@ export default function AddNewSchedule() {
         <section className="flex flex-col grow">
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
-                <h1 className="text-h4 mb-0">{t("Add New Schedule")}</h1>
+                <h1 className="text-h4 mb-0">{t("Add Schedule")}</h1>
             </div>
             <div className=" zt-card grow">
-                <FilterArea title={t("Add New Schedule")}
+                <FilterArea title={t("Add Schedule")}
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
@@ -124,7 +124,7 @@ export default function AddNewSchedule() {
                                     <span >{ele.break}</span>
                                 </div>
                             }
-                            {ele.btn && <Button onClick={() => setNewShift(true)} className={"btn-dark !text-xs !px-6 !py-2"}>{t("Add New Shift")}</Button>}
+                            {ele.btn && <Button onClick={() => setNewShift(true)} className={"btn-dark !text-xs !px-6 !py-2"}>{t("Add Shift")}</Button>}
                         </div>
                     ))}
                 </div>

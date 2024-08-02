@@ -51,7 +51,7 @@ export default function AddTemplateForm({ onClose, asset ,object}) {
  
     return (
         <BaseForm
-            title={object?"Add New Template":"Add New Template"}
+            title={object?"Add Template":"Add Template"}
             formElements={formElements}
             formik={formik}
             onClose={onClose}

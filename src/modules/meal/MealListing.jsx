@@ -202,7 +202,7 @@ const MealListing = () => {
           </div>
           <div className='flex gap-4'>
             <Button onClick={() => setEdit(true)} className={'btn btn-dark-outline'}>{t("Edit Full Menu")}</Button>
-            <Button onClick={() => setCreate(true)} className={'btn btn-primary'}>{t("Add New Menu")}</Button>
+            <Button onClick={() => setCreate(true)} className={'btn btn-primary'}>{t("Add Menu")}</Button>
           </div>
         </div>
         <Table

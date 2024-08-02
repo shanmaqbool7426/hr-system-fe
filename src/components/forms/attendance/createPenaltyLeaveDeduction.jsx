@@ -78,7 +78,7 @@ export default function PenaltyLeaveDeductionForm({onClose,object }) {
                     setPage={setPage}
                     className={'zt-employeeTable zt-addPaneltyRuleTable'}
                 />
-                <Button variant={'dark-outline'}><Plus /> Add New Line</Button>
+                <Button variant={'dark-outline'}><Plus /> Add Line</Button>
             </div>
 
         </BaseForm>

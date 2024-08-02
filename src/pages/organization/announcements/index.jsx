@@ -379,7 +379,7 @@ export default function AnnouncementsPage() {
 				<div className="">
 					<h1 className="text-h4 mb-0">{t("Announcement")}</h1>
 				</div>
-				<Button className={"btn btn-primary"} onClick={() => setCreate('roles')}>{t("Add New Announcement")}</Button>
+				<Button className={"btn btn-primary"} onClick={() => setCreate('roles')}>{t("Add Announcement")}</Button>
 			</div>
 
 			<div className=" zt-card grow">

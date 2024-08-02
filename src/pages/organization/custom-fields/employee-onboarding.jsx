@@ -15,7 +15,7 @@ export default function ManageEmployeeOnboardingPage () {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [create, setCreate] = useState(false)
-  const [hide, setHide] = useState(false)
+ 
   const [edit, setEdit] = useState(false)
  
   const headings = [

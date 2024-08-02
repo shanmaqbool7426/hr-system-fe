@@ -665,7 +665,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
               className={"zt-employeeTable zt-addAttendanceTable"}
             />
             <Button variant={"dark-outline"}>
-              <Plus /> Add New Line
+              <Plus /> Add Line
             </Button>
           </div>
         </div>
@@ -700,7 +700,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
               className={"zt-employeeTable zt-addAttendanceTable"}
             />
             <Button variant={"dark-outline"}>
-              <Plus /> Add New Line
+              <Plus /> Add Line
             </Button>
           </div>
         </div>

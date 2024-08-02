@@ -124,7 +124,7 @@ export default function EmployeeRolesPage() {
 				<div className="flex items-start gap-2">
 					<Button className={"btn btn-dark-outline"}>{t("Export")}</Button>
 					<Button className={"btn btn-dark-outline"}>{t("Import")}</Button>
-					<Button className={"btn btn-primary"} onClick={() => setCreate('roles')}>{t("Create New Role")}</Button>
+					<Button className={"btn btn-primary"} onClick={() => setCreate('roles')}>{t("Create Role")}</Button>
 				</div>
 			</div>
 

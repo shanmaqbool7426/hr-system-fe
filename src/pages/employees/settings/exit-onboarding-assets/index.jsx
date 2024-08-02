@@ -28,7 +28,7 @@ export default function ExitOnboardingPage() {
                     </div>
                 </div>
                 <div className='zt-card'>
-                    <h2 className='text-h4'>{t("Clearance Tasks")}</h2>
+                    <h2 className='text-h4'>{t("Exit Clearance")}</h2>
                     <div className='flex flex-col gap-4'>
                         {clearanceTasks.map((ele, i) => (
                             <div key={i} className='flex items-center justify-between gap-4 border bg-themeGrayscale50 p-3 rounded'>

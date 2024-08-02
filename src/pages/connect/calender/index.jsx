@@ -73,7 +73,7 @@ export default function CalenderPage() {
         { date: "2", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "3", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "6", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
-        { date: "7", btn: "Add New Shift", del: "none" },
+        { date: "7", btn: "Add Shift", del: "none" },
         { date: "8", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "9", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },
         { date: "10", shift: "09 AM - 06 PM -Morning", break: "Break Time 12:00AM - 1:00 PM" },

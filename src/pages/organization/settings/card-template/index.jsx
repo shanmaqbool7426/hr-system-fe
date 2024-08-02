@@ -18,7 +18,7 @@ export default function OrganizationCardTemplateSettingPage() {
             <div className='zt-card'>
                 <div className="flex justify-between pb-6">
                     <h2 className="text-h4 mb-0">{t("Card Template")}</h2>
-                    <Button onClick={() => { setAdd(true) }} className={'btn-dark'}>{t("Add New Template")}</Button>
+                    <Button onClick={() => { setAdd(true) }} className={'btn-dark'}>{t("Add Template")}</Button>
                 </div>
                 <div className='flex flex-col gap-2'>
                     {['Employee Card', 'Management Card', 'Admiration Card'].map((ele, i) => (

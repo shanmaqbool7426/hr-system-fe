@@ -273,7 +273,7 @@ export default function Requests() {
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Attendance Request")}</h1>
-                <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add New Request")}</Button>
+                <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Request")}</Button>
             </div>
 
             <div className="zt-card grow">
