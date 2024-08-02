@@ -219,7 +219,7 @@ export default function EmployeesListPage() {
             className={"btn btn-primary"}
             onClick={() => setCreate("employee")}
           >
-            {t("Add new employee")}
+            {t("Add employee")}
           </Button>
         </div>
       </div>

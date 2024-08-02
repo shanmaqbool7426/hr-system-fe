@@ -15,7 +15,7 @@ export default function AmmendAttendance() {
     const [perPage, setPerPage] = useState(10)
     const [amend, setAmend] = useState(false)
     const [panelty, setPanelty] = useState(false)
-    const [hide, setHide] = useState(false)
+   
     const [edit, setEdit] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({

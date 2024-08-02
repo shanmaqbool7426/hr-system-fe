@@ -86,7 +86,7 @@ export default function CandidateFieldForm({ onClose, object }) {
 
     return (
         <BaseForm
-            title={object ? `Edit Candidate` : `Add new Candidate`}
+            title={object ? `Edit Candidate` : `Add Candidate`}
             formElements={[]}
             formik={formik}
             onClose={onClose}

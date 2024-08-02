@@ -144,7 +144,7 @@ export default function DepartmentsPage() {
         <div className="flex items-start gap-2">
           {/* <Button className={"btn btn-dark-outline"}>{t("Export")}</Button> */}
           {/* <Button className={"btn btn-dark-outline"}>{t("Import")}</Button> */}
-          <Button className={"btn btn-primary"} onClick={() => setCreate('department')}>{t("Add new department")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate('department')}>{t("Add department")}</Button>
         </div>
       </div>
 

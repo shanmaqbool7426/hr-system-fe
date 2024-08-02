@@ -87,7 +87,7 @@ export default function Teams() {
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Remote Teams")}</h1>
-                <Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add New Teams")}</Button>
+                <Button onClick={() => setCreate(true)} className={"btn btn-primary"}>{t("Add Teams")}</Button>
             </div>
             <div className="zt-card grow">
                 <Table

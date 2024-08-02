@@ -157,7 +157,7 @@ export default function AddJob({ onClose, type, object, additionFields }) {
     ];
 
     return (
-        <BaseForm title={object ? `Edit Job` : `Add New Job`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? `Edit Job` : `Add Job`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     );
 }
 

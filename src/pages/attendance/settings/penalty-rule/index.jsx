@@ -312,7 +312,7 @@ export default function AttendancePenaltyRuleSettingPage() {
                 <h1 className="text-h4 mb-0">{t("Attendance Settings")}</h1>
                 <div className="flex items-start gap-2">
                     <Button className={"btn btn-primary "} onClick={() => setPanelty(true)}>{t("Panelty Leave Deduction")}</Button>
-                    <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add New Rule")}</Button>
+                    <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add Rule")}</Button>
                 </div>
             </div>
             <div className="zt-card grow">

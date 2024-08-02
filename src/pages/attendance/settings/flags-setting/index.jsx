@@ -149,7 +149,7 @@ export default function AttendanceFlagsSettingPage() {
           className={"btn btn-primary"}
           onClick={() => setAdd(true)}
         >
-          {t("Add New Flag")}
+          {t("Add Flag")}
         </Button>
       </div>
       <div className="zt-card grow">

@@ -279,7 +279,7 @@ export default function AttendanceSettingShiftPlanPage() {
         <section className="flex flex-col grow relative">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Attendance Settings")}</h1>
-                <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add New Shift")}</Button>
+                <Button className={"btn btn-primary "} onClick={() => setAdd(true)}>{t("Add Shift")}</Button>
             </div>
             <div className="zt-card grow">
                 <div className="flex justify-between pb-6">
