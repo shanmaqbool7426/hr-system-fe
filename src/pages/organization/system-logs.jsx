@@ -72,7 +72,7 @@ export default function SystemLogsPage() {
         {
             Employee: <div className="flex justify-center gap-3">
                 <figure>
-                    <Image height={32} width={32} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile" height={32} width={32} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
                 <div className="flex flex-col text-xs ">
                     <span className="font-semibold">{t("Jhon Carter")}</span>
                     <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -91,7 +91,7 @@ export default function SystemLogsPage() {
         {
             Employee: <div className="flex justify-center gap-3">
                 <figure>
-                    <Image height={32} width={32} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile"  height={32} width={32} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
                 <div className="flex flex-col text-xs ">
                     <span className="font-semibold">{t("Jhon Carter")}</span>
                     <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -110,7 +110,7 @@ export default function SystemLogsPage() {
         {
             Employee: <div className="flex justify-center gap-3">
                 <figure>
-                    <Image height={32} width={32} src={'/assets/images/users/user-03.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile"  height={32} width={32} src={'/assets/images/users/user-03.jpg'} className="rounded-full" /></figure>
                 <div className="flex flex-col text-xs ">
                     <span className="font-semibold">{t("Jhon Carter")}</span>
                     <span className="text-themeGrayscale500">{t("10202325")}</span>
@@ -129,7 +129,7 @@ export default function SystemLogsPage() {
         {
             Employee: <div className="flex justify-center gap-3">
                 <figure>
-                    <Image height={32} width={32} src={'/assets/images/users/user-04.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile" height={32} width={32} src={'/assets/images/users/user-04.jpg'} className="rounded-full" /></figure>
                 <div className="flex flex-col text-xs ">
                     <span className="font-semibold">{t("Jhon Carter")}</span>
                     <span className="text-themeGrayscale500">{t("10202325")}</span>
