@@ -145,10 +145,10 @@ export default function Sidebar() {
           { name: t('Dashboard'), href: "/operations/helpdesk/dashboard" },
           { name: t("Tickets"), href: "/operations/helpdesk/tickets" },
         ]
-      }, 
+      },
       {
         name: t("Procurement"), href: "/operations/procurement",
-        innerSubMenu: [ 
+        innerSubMenu: [
           { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
           { name: t('Vendors'), href: "/operations/procurement/vendors" },
           { name: t('Quotations'), href: "/operations/procurement/quotations" },
@@ -172,7 +172,7 @@ export default function Sidebar() {
         name: t("Meal"), href: "/operations/meal",
         innerSubMenu: [
           { name: t("Meal Menu"), href: "/operations/meal/meal-menu" },
-          { name: t("Employee Availing"), href: "/operations/meal/employee-availing" }, 
+          { name: t("Employee Availing"), href: "/operations/meal/employee-availing" },
         ]
       },
     ],
@@ -265,7 +265,10 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Group"), href: "/organization/custom-fields/group" },
           { name: t("Designation"), href: "/organization/custom-fields/designation" },
-          { name: t("Emp Onboarding Tasks"), href: "/organization/custom-fields/employee-onboarding" },
+          { name: t("Helpdesk Departement"), href: "/organization/custom-fields/helpdesk-departement" },
+          { name: t("Helpdesk Categories"), href: "/organization/custom-fields/helpdesk-categories" },
+          { name: t("Vendors Rating Values"), href: "/organization/custom-fields/vendors-rating-values" },
+          { name: t("Onboarding Tasks"), href: "/organization/custom-fields/employee-onboarding" },
           { name: t("Exit Clearance"), href: "/organization/custom-fields/exit-clearance" },
           { name: t("Allowance Title"), href: "/organization/custom-fields/allowance-title" },
           { name: t("Deduction Title"), href: "/organization/custom-fields/deduction-title" },
@@ -353,7 +356,7 @@ export default function Sidebar() {
         </nav>
 
         <span className="flex justify-center">
-          <Link href={"/help-desk"} className="btn-helpDesk text-white">
+          <Link href={"/operations/helpdesk/tickets"} className="btn-helpDesk">
             <span className="zt-menuIcon text-white">
               <HelpLine width={28} height={28} />
             </span>
