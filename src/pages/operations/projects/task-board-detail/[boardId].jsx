@@ -1,12 +1,12 @@
-import { Button, DisplayDate, DropDown, Table } from '@/components/elements'
-import ProgressBar from '@/components/elements/ProgressBar' 
+import { Button, DetailPanel, DisplayDate, DropDown, Table } from '@/components/elements'
+import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
 import AddTaskForm from '@/components/forms/projects/addTask'
-import  Pagination  from '@/components/elements/Table/pagination' 
+import Pagination from '@/components/elements/Table/pagination'
 import FeedbackForm from '@/components/forms/projects/taskFeedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
-import { ChevronLeft, DiscussionIcon, Edit, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
+import { ChevronLeft, DiscussionIcon, Edit, EyeOn, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
@@ -23,6 +23,7 @@ import DiscussionForm from '@/components/forms/projects/discussion'
 import { useRouter } from 'next/router'
 import { FetchEmployees } from '@/store/actions/employee.actions'
 import moment from 'moment'
+import { check_rights } from '@/util/helpers'
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -50,7 +51,7 @@ const renderCustomizedLabel = ({
         </text>
     );
 };
-const COLORS = [ '#E03137','#165DFF', '#F16E16'];
+const COLORS = ['#E03137', '#165DFF', '#F16E16'];
 
 export default function TaskBoardDetailModule() {
     const { t } = useTranslation();
@@ -64,11 +65,13 @@ export default function TaskBoardDetailModule() {
     const [create, setCreate] = useState(false)
     const [editTask, setEditTask] = useState(null);
     const [task, setTask] = useState(false)
+    const [details, setDetails] = useState(null)
     const [feedback, setFeedback] = useState(false)
     const [discussion, setDiscussion] = useState(false)
     const [raiseIssue, setRaiseIssue] = useState(false)
-    const { taskboard_details ,is_loading } = useSelector(state => state.taskboard)
-    const { task_list  } = useSelector(state => state.task)
+    const { auth_user } = useSelector(state => state.auth)
+    const { taskboard_details, is_loading } = useSelector(state => state.taskboard)
+    const { task_list } = useSelector(state => state.task)
 
 
     useEffect(() => {
@@ -76,102 +79,102 @@ export default function TaskBoardDetailModule() {
         if (savedView) {
             setView(savedView);
         }
-        const {boardId }= router.query;
-        if (boardId){
+        const { boardId } = router.query;
+        if (boardId) {
             dispatch(FetchEmployees())
             dispatch(FetchTasks(boardId));
             dispatch(FetchTaskBoardDetails(boardId));
         }
-    }, [ router,dispatch]);
+    }, [router, dispatch]);
 
     useEffect(() => {
         localStorage.setItem('View', view);
-      }, [view]);
+    }, [view]);
 
-      const handlePriorityChange = (e, taskId) => {
+    const handlePriorityChange = (e, taskId) => {
         const newPriority = e.target.value;
         dispatch(UpdateTask(taskId, { priority: newPriority }, () => {
-          Toast.success(t("Task priority updated successfully"));
+            Toast.success(t("Task priority updated successfully"));
         }));
-      };
-      
-      const handleStatusChange = (e, taskId) => {
-        const newStatus = e.target.value;
-        dispatch(UpdateTask(taskId, { status: newStatus }, () => {
-          Toast.success(t("Task status updated successfully"));
-        }));
-      };
-      const getPriorityClass = (priority) => {
-        switch (priority.toLowerCase()) {
-          case 'high':
-            return 'zt-tag-danger';
-          case 'medium':
-            return 'zt-tag-dark';
-          case 'low':
-            return 'zt-tag-success';
-          default:
-            return 'zt-tag-default';
-        }
-      };
-    const getStatusClass = (status) => {
-      switch (status.toLowerCase()) {
-        case 'pending':
-          return 'zt-tag-danger';
-        case 'progress':
-          return 'zt-tag-dark';
-        case 'completed':
-          return 'zt-tag-success';
-        default:
-          return 'zt-tag-default';
-      }
     };
 
-      const calculatePriorityDistribution = (tasks) => {
+    const handleStatusChange = (e, taskId) => {
+        const newStatus = e.target.value;
+        dispatch(UpdateTask(taskId, { status: newStatus }, () => {
+            Toast.success(t("Task status updated successfully"));
+        }));
+    };
+    const getPriorityClass = (priority) => {
+        switch (priority.toLowerCase()) {
+            case 'high':
+                return 'zt-tag-danger';
+            case 'medium':
+                return 'zt-tag-dark';
+            case 'low':
+                return 'zt-tag-success';
+            default:
+                return 'zt-tag-default';
+        }
+    };
+    const getStatusClass = (status) => {
+        switch (status.toLowerCase()) {
+            case 'pending':
+                return 'zt-tag-danger';
+            case 'progress':
+                return 'zt-tag-dark';
+            case 'completed':
+                return 'zt-tag-success';
+            default:
+                return 'zt-tag-default';
+        }
+    };
+
+    const calculatePriorityDistribution = (tasks) => {
         const priorityCount = { low: 0, medium: 0, high: 0 };
-    
+
         tasks.forEach(task => {
             if (priorityCount.hasOwnProperty(task.priority)) {
                 priorityCount[task.priority]++;
             }
         });
-    
+
         return Object.entries(priorityCount).map(([priority, count]) => ({
             name: priority.charAt(0).toUpperCase() + priority.slice(1),
             value: count,
         }));
     };
-      const priorityData = calculatePriorityDistribution(task_list);
+    const priorityData = calculatePriorityDistribution(task_list);
 
-      const calculateStatusDistribution = (tasks) => {
+    const calculateStatusDistribution = (tasks) => {
         const statusCount = { pending: 0, progress: 0, completed: 0 };
-    
+
         tasks.forEach(task => {
             if (statusCount.hasOwnProperty(task.status)) {
                 statusCount[task.status]++;
             }
         });
-    
+
         return Object.entries(statusCount).map(([status, count]) => ({
             name: status.charAt(0).toUpperCase() + status.slice(1),
             value: count,
         }));
     };
-      const statusData = calculateStatusDistribution(task_list);
+    const statusData = calculateStatusDistribution(task_list);
 
     const deleteHandler = (item) => {
         Toast.confirmDelete(() => {
-          dispatch(
-            DeleteTask(item._id, () => {
-              Toast.success(t("Task deleted successfully"));
-            })
-          );
+            dispatch(
+                DeleteTask(item._id, () => {
+                    Toast.success(t("Task deleted successfully"));
+                })
+            );
         }, t);
-      };
-      const [filters, setFilters] = useState({
+    };
+    const [filters, setFilters] = useState({
         search: "",
         priority: null,
         status: null,
-      });
+    });
     const filterElements = [
         {
             type: "search",
@@ -213,13 +216,13 @@ export default function TaskBoardDetailModule() {
                 { value: "progress", display: "Progress" },
                 { value: "completed", display: "Completed" },
             ],
-        onChange: (status) => {
-            let _filter = { ...filters };
+            onChange: (status) => {
+                let _filter = { ...filters };
                 _filter['status'] = status;
                 setFilters(_filter);
             }
         },
-        
+
     ]
     const headings = [
         { title: t("Task Id"), col: "TaskId" },
@@ -236,100 +239,108 @@ export default function TaskBoardDetailModule() {
 
     let filteredRows = task_list?.filter((item) => {
         return (
-          (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
-          (!filters.priority || item.priority === filters.priority) &&
-          (!filters.status || item.status === filters.status)
+            (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
+            (!filters.priority || item.priority === filters.priority) &&
+            (!filters.status || item.status === filters.status)
         );
-      })
+    })
         .sort((a, b) => {
-          if (!sortCol) return 0;
-          if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
-          else return b[sortCol]?.localeCompare(a[sortCol]);
+            if (!sortCol) return 0;
+            if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+            else return b[sortCol]?.localeCompare(a[sortCol]);
         });
-    
-      const indexOfLastItem = page * perPage;
-      const indexOfFirstItem = indexOfLastItem - perPage;
-      const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
-      
-      const rows = paginatedData?.map((item,index) => {    
+
+    const indexOfLastItem = page * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+
+    const rows = paginatedData?.map((item, index) => {
         const isPastDue = moment(item.dueDate).isBefore(moment())
-           return { TaskId: item?.taskId,
+        return {
+            TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            // Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
-            // Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
+            Leader: <UserListView imgClass="h-[32px] w-[32px]" list={[item?.lead]} />,
+            Assignee: <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,
             Priority: (
-                <select
-                  className={`zt-tag ${getPriorityClass(item.priority)}`}
-                  value={item.priority}
-                  onChange={(e) => handlePriorityChange(e, item._id)}
+                check_rights(auth_user) ? <select
+                    className={`zt-tag ${getPriorityClass(item.priority)}`}
+                    value={item.priority}
+                    onChange={(e) => handlePriorityChange(e, item._id)}
                 >
-                  <option value="low" className='zt-tag-low'>
-                    Low
-                  </option>
-                  <option value="medium" className='zt-tag-medium'>
-                    Medium
-                  </option>
-                  <option value="high" className='zt-tag-high'>
-                    High
-                  </option>
-                </select>
-              ),
-              Status: (
+                    <option value="low" className='zt-tag-low'>
+                        Low
+                    </option>
+                    <option value="medium" className='zt-tag-medium'>
+                        Medium
+                    </option>
+                    <option value="high" className='zt-tag-high'>
+                        High
+                    </option>
+                </select> : <span className={`zt-tag ${getPriorityClass(item.priority)}`}>{item.priority}</span>
+            ),
+            Status: (
                 <select
-                  className={`zt-tag ${getStatusClass(item.status)}`}
-                  value={item.status}
-                  onChange={(e) => handleStatusChange(e, item._id)}
+                    className={`zt-tag ${getStatusClass(item.status)}`}
+                    value={item.status}
+                    onChange={(e) => handleStatusChange(e, item._id)}
                 >
-                  <option value="pending" className='zt-tag-pending'>
-                    {t("Pending")}
-                  </option>
-                  <option value="progress" className='zt-tag-progress'>
-                    {t("Progress")}
-                  </option>
-                  <option value="completed" className='zt-tag-completed'>
-                    {t("Completed")}
-                  </option>
+                    <option value="pending" className='zt-tag-pending'>
+                        {t("Pending")}
+                    </option>
+                    <option value="progress" className='zt-tag-progress'>
+                        {t("Progress")}
+                    </option>
+                    <option value="completed" className='zt-tag-completed'>
+                        {t("Completed")}
+                    </option>
                 </select>
-              ),
+            ),
             TaskTime: item?.requiredTime,
-            DueDate:   <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
-            action: 
-            <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
-                    <li className="!p-0">
-                        <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><WarningIcon /></span>
-                            <span>{t("Raise Issue")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => {
-                            setEditTask(item);
-                            setTask(true);
-                            }}  className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-                            <span><Edit /></span>
-                            <span>{t("Edit")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
-                            <span><DiscussionIcon /></span>
-                            <span>{t("Discussion")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => {
-                            deleteHandler(item);
-                        }}
-                 className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                            <span><Trash /></span>
-                            <span>{t("Delete")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>}
-        })
+            DueDate: <DisplayDate style={{ color: isPastDue ? 'red' : 'black' }} date={item?.dueDate} />,
+            action:
+                <DropDown icon={<ThreeDotsVertical />}>
+                    <ul className="zt-themeDropDownList zt-sm gap-4 w-52 h-40 overflow-y-auto">
+                        <li className="!p-0">
+                            <a onClick={() => { setDetails(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                                <span><EyeOn /></span>
+                                <span>{t("Details")}</span>
+                            </a>
+                        </li>
+                        <li className="!p-0">
+                            <a onClick={() => { setDiscussion(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                                <span><DiscussionIcon /></span>
+                                <span>{t("Discussion")}</span>
+                            </a>
+                        </li>
+                        <li className="!p-0">
+                            <a onClick={() => { setRaiseIssue(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                                <span><WarningIcon /></span>
+                                <span>{t("Raise Issue")}</span>
+                            </a>
+                        </li>
+                        {check_rights(auth_user) && <><li className="!p-0">
+                            <a onClick={() => {
+                                setEditTask(item);
+                                setTask(true);
+                            }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccess'}>
+                                <span><Edit /></span>
+                                <span>{t("Edit")}</span>
+                            </a>
+                        </li>
+                            <li className="!p-0">
+                                <a onClick={() => {
+                                    deleteHandler(item);
+                                }}
+                                    className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                                    <span><Trash /></span>
+                                    <span>{t("Delete")}</span>
+                                </a>
+                            </li></>}
+                    </ul>
+                </DropDown>
+        }
+    })
     const taskStatus = [
         {
             status: "Pending",
@@ -378,14 +389,14 @@ export default function TaskBoardDetailModule() {
         prevAction: () => page > 1 && setPage(page - 1),
         clickAction: (value) => setPage(value),
         nextAction: () => setPage(page + 1),
-      };
+    };
     const totalTasks = filteredRows?.length || 0;
     const completedTasks = filteredRows?.filter(task => task.status === 'completed').length || 0;
-  
+
     const progressPercentage = totalTasks > 0 ? ((completedTasks / totalTasks) * 100).toFixed(0) : 0;
 
     return (
-       taskboard_details && 
+        taskboard_details &&
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0 flex items-center justify-start gap-3">
@@ -398,8 +409,7 @@ export default function TaskBoardDetailModule() {
                         <button onClick={() => setView('list')} className={`${view === "list" ? "bg-themePurple" : ""} rounded-full p-2`}><ListIcon className={`${view === "list" ? "text-white" : "text-themeGrayscale500"}`} /></button>
                         <button onClick={() => setView('grid')} className={`${view === "grid" ? "bg-themePurple" : ""} rounded-full p-2`}><GridIcon className={`${view === "grid" ? "text-white" : "text-themeGrayscale500"}`} /></button>
                     </div>
-                    <Button className={"btn btn-dark-outline"} onClick={() => setTask(true)}>{t("Add Task")}</Button>
-
+                    {check_rights(auth_user) && <Button className={"btn btn-dark-outline"} onClick={() => setTask(true)}>{t("Add Task")}</Button>}
                 </div>
             </div>
             <div className=" zt-card grow">
@@ -412,70 +422,70 @@ export default function TaskBoardDetailModule() {
                     <div>
                         {task_list.length > 0 ? (
                             <div className='zt-taskBoardList'>
-                            {[ "Task Status"].map((ele, i) => (
-                                <div key={i} className='p-6 rounded-lg bg-white'>
-                                    <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
-                                    <PieChart width={300} height={300} className='!max-h-[351px] relative'>
-                                        <Pie
-                                            data={statusData}
-                                            cx={"50%"}
-                                            cy={"50%"}
-                                            labelLine={false}
-                                            label={renderCustomizedLabel}
-                                            outerRadius={100}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                        >
-                                            {priorityData?.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip />
-                                        <Legend />
-                                    </PieChart>
-                                </div>
-                            ))}
-                            {["Task Priority"].map((ele, i) => (
-                                <div key={i} className='p-6 rounded-lg bg-white'>
-                                    <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
-                                    <PieChart width={300} height={300} className='!max-h-[351px] relative'>
-                                        <Pie
-                                            data={priorityData}
-                                            cx={"50%"}
-                                            cy={"50%"}
-                                            labelLine={false}
-                                            label={renderCustomizedLabel}
-                                            outerRadius={100}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                        >
-                                            {priorityData?.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip />
-                                        <Legend />
-                                    </PieChart>
-                                </div>
-                            ))}
+                                {["Task Status"].map((ele, i) => (
+                                    <div key={i} className='p-6 rounded-lg bg-white'>
+                                        <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
+                                        <PieChart width={300} height={300} className='!max-h-[351px] relative'>
+                                            <Pie
+                                                data={statusData}
+                                                cx={"50%"}
+                                                cy={"50%"}
+                                                labelLine={false}
+                                                label={renderCustomizedLabel}
+                                                outerRadius={100}
+                                                fill="#8884d8"
+                                                dataKey="value"
+                                            >
+                                                {priorityData?.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                            <Legend />
+                                        </PieChart>
+                                    </div>
+                                ))}
+                                {["Task Priority"].map((ele, i) => (
+                                    <div key={i} className='p-6 rounded-lg bg-white'>
+                                        <h2 className='text-lg text-themeGrayscale900 font-bold mb-8'>{ele}</h2>
+                                        <PieChart width={300} height={300} className='!max-h-[351px] relative'>
+                                            <Pie
+                                                data={priorityData}
+                                                cx={"50%"}
+                                                cy={"50%"}
+                                                labelLine={false}
+                                                label={renderCustomizedLabel}
+                                                outerRadius={100}
+                                                fill="#8884d8"
+                                                dataKey="value"
+                                            >
+                                                {priorityData?.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                            <Legend />
+                                        </PieChart>
+                                    </div>
+                                ))}
                             </div>
-                        ) : (<></>) }
-                        
+                        ) : (<></>)}
+
                         <div>
                             <div className='flex gap-20 mb-4'>
                                 <div className='zt-projectTeam flex flex-col gap-3'>
                                     <strong>Project Leader</strong>
-                                        <UserListView imgClass="h-[32px] w-[32px]" list={taskboard_details?.leads} limit={2} />
+                                    <UserListView imgClass="h-[32px] w-[32px]" list={taskboard_details?.leads} limit={2} />
                                 </div>
                                 <div className='zt-projectLeaders flex flex-col gap-3'>
                                     <strong> Team</strong>
-                                        <UserListView imgClass="h-[32px] w-[32px]"  list={taskboard_details?.members} limit={2} />
+                                    <UserListView imgClass="h-[32px] w-[32px]" list={taskboard_details?.members} limit={2} />
                                 </div>
                             </div>
-                            <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'}  />
+                            <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
                             <div className='grid grid-cols-3 gap-6 py-6'>
-                            {paginatedData?.map((task, index) => (
-                                    <TaskCard key={index} taskData={task}   statusStyles={taskStatus}/>
+                                {paginatedData?.map((task, index) => (
+                                    <TaskCard key={index} taskData={task} statusStyles={taskStatus} />
                                 ))}
                             </div>
                         </div>
@@ -494,7 +504,7 @@ export default function TaskBoardDetailModule() {
                         className={'zt-employeeTable zt-projectsTable'}
                     />
                 }
-                 {paginatedData?.length > 0 && pagination && <Pagination
+                {paginatedData?.length > 0 && pagination && <Pagination
                     pagination={pagination}
                     currentLength={rows?.length}
                     perPage={perPage}
@@ -502,7 +512,7 @@ export default function TaskBoardDetailModule() {
                     page={page}
                     setPage={setPage} />
                 }
-                    {create && <CreatProjectsForm
+                {create && <CreatProjectsForm
                     onClose={() => { setCreate(false) }}
                 />}
                 {raiseIssue && <RaiseIssueForm
@@ -511,10 +521,10 @@ export default function TaskBoardDetailModule() {
                 {feedback && <FeedbackForm
                     onClose={() => { setFeedback(false) }}
                 />}
-                {task && <AddTaskForm  
+                {task && <AddTaskForm
                     object={editTask}
-                    additionFields={taskboard_details} 
-                    onClose={() => { 
+                    additionFields={taskboard_details}
+                    onClose={() => {
                         setTask(false);
                         setEditTask(null);
                     }}
@@ -523,6 +533,16 @@ export default function TaskBoardDetailModule() {
                     onClose={() => { setDiscussion(false) }}
                 />}
             </div>
+            {details && <DetailPanel>
+                <div className="px-4">
+                    <h4>{details.name}</h4>
+                    <p className='font-bold'>Description</p>
+                    <p>{details.description}</p>
+                    <Button onClick={() => { setDetails(null) }} value={"Close"} />
+                </div>
+            </DetailPanel>
+            }
         </section>
+
     )
 }

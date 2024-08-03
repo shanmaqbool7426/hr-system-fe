@@ -16,10 +16,12 @@ import {
   RemoteWork,
   Report,
 } from "../svg";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
   const router = useRouter()
   const route = router.asPath?.split('/')
+  const { auth_user } = useSelector(state => state.auth)
   const { t } = useTranslation()
   const [selected, setSelected] = useState(route[1] || "")
   const [subMenu, setSubMenu] = useState(route.slice(0, 3).join('/'))
@@ -322,7 +324,7 @@ export default function Sidebar() {
       <div className="border-r border-gray-50 flex flex-col py-4">
         <nav id="zt-sidebarNav" className="zt-customScrollbar grow">
           <ul className="flex flex-col items-center">
-            {MiniBar.map((item, index) => (
+            {MiniBar.filter((item) => auth_user?.role?.rights === 'admin' || item.href === '/dashboard' || item.href === 'operations').map((item, index) => (
               <li key={index} className={`px-5 py-3`}>
                 {item?.page ?
                   <div className="relative group">
