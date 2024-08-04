@@ -7,7 +7,7 @@ import { CreateEmployee, UpdateEmployee } from "@/store/actions/employee.actions
 import Toast from "@/util/toast";
 import BaseForm from '../../BaseForm';
 import { StarIcon } from '@/components/svg';
-import { Input, SearchSelect, Textarea } from '@/components/elements'; 
+import { Input, SearchSelect, Textarea } from '@/components/elements';
 
 export default function CreateVendorRatingForm({ onClose, object }) {
     const { t } = useTranslation();
@@ -52,9 +52,10 @@ export default function CreateVendorRatingForm({ onClose, object }) {
 
     const formElements = [
         {
-            type: "text",
+            type: "select",
             name: "vendorName",
             label: t('Vendor Name'),
+            list: [{ display: "John", value: "John" }, { display: "Mink", value: "Mink" }],
             placeholder: t('Vendor Name'),
             value: formik.values.vendorName,
             required: true,
@@ -98,7 +99,7 @@ export default function CreateVendorRatingForm({ onClose, object }) {
             placeholder: t('Status'),
             required: true,
             value: formik.values.Status,
-            list:[{display:"Pass",value:"Pass"},{display:"Fail",value:"Fail"}]
+            list: [{ display: "Pass", value: "Pass" }, { display: "Fail", value: "Fail" }]
         },
     ];
 
@@ -119,9 +120,9 @@ export default function CreateVendorRatingForm({ onClose, object }) {
                     { label: 'Quality of Output', key: "qualityOfOutput" },
                     { label: 'Quality Price Ratio', key: "qualityPriceRatio" }
                 ].map((criterion, i) => (
-                    <div key={i} className='flex items-center gap-6 w-full'>
+                    <div key={i} className='grid grid-cols-2 items-center gap-6 w-full'>
                         <span className='block text-start'>{t(criterion.label)}</span>
-                        <div className='flex  justify-between gap-1 mb-2'>
+                        <div className='flex gap-1 mb-2'>
                             {[...Array(5)].map((_, index) => (
                                 <button key={index} onClick={() => handleStarClick(criterion.key, index + 1)}>
                                     <StarIcon className={`h-8 w-8 ${ratings[criterion.key] > index ? 'text-yellow-500' : 'text-gray-300'}`} />
@@ -138,9 +139,9 @@ export default function CreateVendorRatingForm({ onClose, object }) {
                     { label: 'Timing of Performance', key: "timingOfOutput" },
                     { label: 'Performance Reliability', key: "performanceReliability" }
                 ].map((criterion, i) => (
-                    <div key={i} className='flex items-center gap-6 w-full'>
+                    <div key={i} className='grid grid-cols-2 items-center gap-6 w-full'>
                         <span className='block text-start'>{t(criterion.label)}</span>
-                        <div className='flex  justify-between gap-1 mb-2'>
+                        <div className='flex gap-1 mb-2'>
                             {[...Array(5)].map((_, index) => (
                                 <button key={index} onClick={() => handleStarClick(criterion.key, index + 1)}>
                                     <StarIcon className={`h-8 w-8 ${ratings[criterion.key] > index ? 'text-yellow-500' : 'text-gray-300'}`} />
@@ -157,9 +158,9 @@ export default function CreateVendorRatingForm({ onClose, object }) {
                     { label: 'Modes of Communication', key: "modesCommunication" },
                     { label: 'Response Time', key: "responseTime" }
                 ].map((criterion, i) => (
-                    <div key={i} className='flex items-center gap-6 w-full'>
+                    <div key={i} className='grid grid-cols-2 items-center gap-6 w-full'>
                         <span className='block text-start'>{t(criterion.label)}</span>
-                        <div className='flex  justify-between gap-1 mb-2'>
+                        <div className='flex gap-1 mb-2'>
                             {[...Array(5)].map((_, index) => (
                                 <button key={index} onClick={() => handleStarClick(criterion.key, index + 1)}>
                                     <StarIcon className={`h-8 w-8 ${ratings[criterion.key] > index ? 'text-yellow-500' : 'text-gray-300'}`} />
@@ -169,7 +170,7 @@ export default function CreateVendorRatingForm({ onClose, object }) {
                     </div>
                 ))}
             </div>
-             <Textarea containerClass={'col-span-2'} label={'Remarks'} placeholder='Remarks'/>
+            <Textarea containerClass={'col-span-2'} label={'Remarks'} placeholder='Remarks' />
         </BaseForm>
     );
 }

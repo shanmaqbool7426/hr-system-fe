@@ -157,6 +157,7 @@ export default function Sidebar() {
           { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
           { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
           { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
+          { name: t("Setting"), href: "/operations/procurement/setting" },
         ]
       },
       {

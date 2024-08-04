@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CreateRepairingRequestForm from "@/components/forms/procurement/assetRepearing/create";
 import StatusSelect from "@/components/elements/SelectStatus";
 import Toast from "@/util/toast";
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 
 
 export default function AssetRepearingPage() {
@@ -50,6 +50,12 @@ export default function AssetRepearingPage() {
                 <ul className="zt-themeDropDownList zt-sm gap-4 ">
                     <li className="!p-0">
                         <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("View")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
                         </a>
@@ -76,6 +82,12 @@ export default function AssetRepearingPage() {
             Status: <StatusSelect item={item} options={StatusOptions} />,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 ">
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("View")}</span>
+                        </a>
+                    </li>
                     <li className="!p-0">
                         <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
