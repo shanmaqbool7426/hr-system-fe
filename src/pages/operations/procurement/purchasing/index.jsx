@@ -2,10 +2,11 @@ import { Button, DropDown, Table } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import CreatePurchaseForm from "@/components/forms/procurement/purchase/create";
 import StatusSelect from "@/components/elements/SelectStatus";
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
+import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import Toast from "@/util/toast";
 
 
 export default function PurchasingPage() {
@@ -41,6 +42,12 @@ export default function PurchasingPage() {
         Status: "InProgress",
         action: <DropDown icon={<ThreeDotsVertical />}>
             <ul className="zt-themeDropDownList zt-sm gap-4 ">
+                <li className="!p-0">
+                    <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <span><EyeOn /></span>
+                        <span>{t("View")}</span>
+                    </a>
+                </li>
                 <li className="!p-0">
                     <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                         <span><Edit /></span>
