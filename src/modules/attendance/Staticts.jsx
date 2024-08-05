@@ -6,7 +6,7 @@ export const Staticts = () => {
     const { t } = useTranslation()
 
     return (
-        <div className='zt-card'>
+        <div className='zt-card col-span-3 xl:col-span-1'>
             <h2 className='mb-4 font-bold text-xl'>{t("Statistics")}</h2>
             <div className='flex flex-col gap-2'>
                 <ProgressBar

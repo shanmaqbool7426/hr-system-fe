@@ -56,7 +56,7 @@ export default function ViewRemoteWorkForm({onClose, object }) {
         { title: t("Employee Name"), col: 'name' },
         { title: t("Status"), col: 'status' },
         { title: t("Action"), col: "action" },
-        { title: t("Remarks"), col: "Remarks" },
+        { title: t("Remarks"), col: "Remarks" }, 
     ]
     const rows = [{
         name: <div className="flex items-center justify-start gap-4 grow">

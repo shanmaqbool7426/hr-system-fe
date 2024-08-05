@@ -97,7 +97,7 @@
 /* Main Style start here */
 .zt-main {
   @apply grow dark:bg-gray-800;
-  .zt-content { @apply grow flex flex-col p-6 border-t border-l border-themeGrayscale300 overflow-y-auto }
+  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 overflow-y-auto }
 }
 /* Main Style end here */
 
@@ -233,7 +233,7 @@
 }
 
 
-.zt-card { @apply rounded-lg bg-white p-6 }
+.zt-card { @apply rounded-lg bg-white p-3 sm:p-6 }
 .zt-announcementsTabs,
 .zt-myRequestsTabs {
   .zt-themeTabNav {

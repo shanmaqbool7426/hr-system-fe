@@ -256,8 +256,8 @@ export default function TaskBoardDetailModule() {
            return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
             TaskName: item?.name,
-            // Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
-            // Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
+            Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
+            Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
             Priority: (
                 <select
                   className={`zt-tag ${getPriorityClass(item.priority)}`}

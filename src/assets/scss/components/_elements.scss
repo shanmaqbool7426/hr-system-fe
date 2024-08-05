@@ -31,14 +31,14 @@
 }
 
 .zt-themeTabsV2 {
-  @apply flex flex-col gap-6;
+  @apply flex flex-col gap-3 md:gap-6;
   .zt-themeTabNav {
     ul {
-      @apply flex gap-8;
+      @apply flex gap-3 md:gap-8 overflow-x-auto;
       li { @apply focus-within:outline-none }
     }
     button {
-      @apply inline-flex justify-center items-center rounded-full border border-white bg-white text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
+      @apply whitespace-nowrap inline-flex justify-center items-center rounded-full border border-white bg-white text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
       &.zt-activeTab { @apply border-themePurple bg-themePurple text-white; }
     }
   }
@@ -375,7 +375,7 @@
 
 // Theme Tags
 .zt-tag {
-  @apply inline-flex overflow-hidden gap-2 min-w-24 text-sm rounded-full text-themeGrayscale bg-themeGrayscale300 justify-center py-2 px-5 font-medium transition-all duration-300 cursor-pointer;
+  @apply whitespace-nowrap inline-flex overflow-hidden gap-2 min-w-24 text-sm rounded-full text-themeGrayscale bg-themeGrayscale300 justify-center py-2 px-5 font-medium transition-all duration-300 cursor-pointer;
 
   &.zt-tag-primary { @apply bg-themePrimary/15 text-themePrimary }
   &.zt-tag-dark { @apply bg-themeGrayscale/15 text-themeGrayscale }

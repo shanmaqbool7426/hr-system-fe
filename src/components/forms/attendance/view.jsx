@@ -55,7 +55,7 @@ export default function ViewAttendanceForm({ onClose,object }) {
         { title: t("Employee Name"), col: 'name' },
         { title: t("Status"), col: 'status' },
         { title: t("Action"), col: "action" },
-        { title: t("Remarks"), col: "Remarks" },
+        { title: t("Remarks"), col: "Remarks" }, 
     ]
     const rows = [{
         name: <div className="flex items-center justify-start gap-4 grow">
@@ -100,7 +100,7 @@ export default function ViewAttendanceForm({ onClose,object }) {
     ]
     return (
         <BaseForm title={'Attendance Approval Routing'} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
-            <div className='py-6 flex flex-col items-start gap-6'>
+            <div className='py-6 flex flex-col items-start gap-6 col-span-2'>
                 <Table
                     headings={headings}
                     rows={rows}
@@ -112,7 +112,7 @@ export default function ViewAttendanceForm({ onClose,object }) {
                     setPerPage={setPerPage}
                     page={page}
                     setPage={setPage}
-                    className={'zt-employeeTable zt-attendanceTableTable'}
+                    className={'zt-employeeTable zt-attendanceTableTable w-full'}
                 />
                 <h3>{t('Attendance Request Comparison')}</h3>
                 <div className='grid grid-cols-2 gap-6 w-full'>

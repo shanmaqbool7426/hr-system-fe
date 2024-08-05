@@ -12,16 +12,16 @@ export const Requests = () => {
     const [leave, setLeave] = useState(false)
 
     return (
-        <div className={`col-span-3 lg:col-span-2 p-6 bg-white rounded-lg flex flex-col gap-6`}>
-            <div className='flex gap-6'>
-                <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full'}><Calendar className={'text-white'} /> Attendance Request</Button>
-                <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full'}><CheckOutIcon /> Leave Request</Button>
-                <Button variant={'primary'} className={'flex items-center w-full'}><RemoteWork /> Apply overtime </Button>
+        <div className={`col-span-3 lg:col-span-2 zt-card flex flex-col gap-6`}>
+            <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-6 flex-wrap'>
+                <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full whitespace-nowrap'}><Calendar className={'text-white shrink-0'} /> Attendance Request</Button>
+                <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full whitespace-nowrap'}><CheckOutIcon className={'text-white shrink-0'}/> Leave Request</Button>
+                <Button variant={'primary'} className={'flex items-center w-full whitespace-nowrap'}><RemoteWork  className={'text-white shrink-0'}/> Apply overtime </Button>
             </div>
             <div className='grid sm:grid-cols-2 gap-6'>
                 {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
-                    <div key={i} className="p-4 flex justify-between gap-4 items-center bg-themeGrayscale50 rounded-lg">
-                        <div className="shrink-0">
+                    <div key={i} className="p-4 flex flex-col md:flex-row justify-between gap-4 md:items-center bg-themeGrayscale50 rounded-lg">
+                        <div className="shri">
                             <h3 className="text-xl font-semibold mb-4">{ele}</h3>
                             <div className="flex gap-2 mb-3 items-center ">
                                 <span className="h-6 w-6 rounded bg-themePurple/50"></span>

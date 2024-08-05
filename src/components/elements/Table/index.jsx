@@ -59,7 +59,7 @@ export default function Table({
     };
 
     return (
-        <>
+        <div className='overflow-auto w-full'>
             <table className={`zt-themeTable ${className}`}>
                 <thead>
                     <tr className='rounded-lg bg-themeGrayscale100'>
@@ -154,6 +154,6 @@ export default function Table({
                     setPage={setPage}
                 />
             )}
-        </>
+        </div>
     );
 };
