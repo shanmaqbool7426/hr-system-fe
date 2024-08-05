@@ -17,7 +17,7 @@ export default function Tabs({ children, tabs, panels, containerClasses, tabNavC
              <Tab.Panels className={`zt-themeTabPanels ${tabPanelClasses}`}>
                 {panels.map((value, index) => (
                     <Tab.Panel className={'zt-themeTabPanel'} key={index}>
-                        {value}
+                        {/* {value} */}
                     </Tab.Panel>
                 ))}
             </Tab.Panels>}

@@ -18,12 +18,13 @@ export default function EmployeeProfile({ employeeId }) {
   const { customfield_list } = useSelector(state => state.customfield);
   const {  departments_list } = useSelector(state => state.department);
   const { is_loading, employee_details , employees_list} = useSelector((state) => state.employee)
+  
   useEffect(()=>{
-    dispatch(FetchDepartments())
-    dispatch(FetchEmployees())
     if (employeeId) {
       dispatch(FetchEmployeeDetails(employeeId));
     }
+    dispatch(FetchEmployees())
+    dispatch(FetchDepartments())
   }, [dispatch , employeeId])
   const formik = useFormik({
     initialValues: {

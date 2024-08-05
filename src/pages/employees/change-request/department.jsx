@@ -8,21 +8,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import Toast from '@/util/toast';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
-import { Button, Datepicker, SearchSelect, Textarea , Table, CheckBox} from '@/components/elements';
+import { Button, Datepicker, SearchSelect, Textarea , Table, CheckBox, DisplayDate} from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import ChangeDepartementForm from '@/components/forms/employees/changeRequest/ChangeDepartement'; 
+import { FetchDepartments } from '@/store/actions/department.actions';
+import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
 const user = ls?.get('auth_user', { decrypt: true })
 
 export default function DepartmentPage() {
 	const { t } = useTranslation(); 
 	const dispatch = useDispatch() 
-	const { employees_list } = useSelector((state) => state.employee) 
 	const [sortCol, setSortCol] = useState(null)
 	const [sortDir, setSortDir] = useState(null)
 	const [page, setPage] = useState(1)
 	const [change, setChange] = useState(false)
 	const [perPage, setPerPage] = useState(10)
+	const {change_request_list, employees_list } = useSelector(state => state.employee)
+	const { customfield_list } = useSelector(state => state.customfield)
+
+	useEffect(() => {
+		if (employees_list.length === 0)
+			dispatch(FetchEmployees())
+		dispatch(FetchChangeRequests())
+	}, [dispatch])
+
 	const pagination = {
 		totalRecords: 5,
 		showPerPage: true,
@@ -39,39 +49,16 @@ export default function DepartmentPage() {
 		{ title: t("Reason Of Department Change"), col: "ReasonOfDepartmentChange", },
 		{ title: t("Details"), col: "Details", },
 	]
-	const rows = [
-		{
-		
-			Employee: 'Admin',
-			CurrentDepartment: 'Admin',
-			NewDepartment: 'HR',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfDepartmentChange: 'Promotion',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentDepartment: 'Admin',
-			NewDepartment: 'HR',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfDepartmentChange: 'Promotion',
-			Details: '-',
-		},
-		{
-			
-			Employee: 'Admin',
-			CurrentDepartment: 'Admin',
-			NewDepartment: 'HR',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfDepartmentChange: 'Promotion',
-			Details: '-',
-		},
-	]
-	useEffect(() => {
-		if (employees_list.length === 0)
-			dispatch(FetchEmployees())
-	}, [dispatch])
+	const rows = change_request_list
+	.filter(request => request.type === 'department')
+	.map(request => ({
+		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
+		CurrentDepartment: request.currentCode || "---", 
+		NewDepartment: request?.department?.name, 
+		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
+		ReasonOfDepartmentChange: request.reason,
+		Details: request.detail || '-', 
+	}));
 	const formik = useFormik({
 		initialValues: {
 			employee: "",

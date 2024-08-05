@@ -2,11 +2,12 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { ChangeDesignation } from '@/store/actions/employee-change-request.actions';
+import { ChangeDesignation, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import Toast from "@/util/toast";
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { uploader } from '@/util/helpers';
 import FileUpload from '@/components/elements/FileUpload';
 
 
@@ -15,11 +16,15 @@ export default function ChangeDesignationForm({ onClose, object }) {
     const dispatch = useDispatch();	
 	const { customfield_list } = useSelector(state => state.customfield)
     const { employees_list } = useSelector((state) => state.employee)
+    const { is_loading } = useSelector((state) => state.employee);
+    const [currentDesignation, setCurrentDesignation] = useState("");
+
 	useEffect(() => {
 		if (employees_list.length === 0)
 			dispatch(FetchEmployees())
 	}, [dispatch])
-    const { is_loading } = useSelector((state) => state.employee);
+
+   
     const formik = useFormik({
 		initialValues: {
 			employee: "",
@@ -41,39 +46,50 @@ export default function ChangeDesignationForm({ onClose, object }) {
 					values.attachment = url
 					dispatch(ChangeDesignation(values, () => {
 						formik.resetForm()
-						Toast.success(t("Designation change request saved successfully"))
+                        onCompleted();
 					}))
 				})
 			} else {
 				dispatch(ChangeDesignation(values, () => {
 					formik.resetForm()
-					Toast.success(t("Designation change request saved successfully"))
+                    onCompleted();
 				}))
 			}
 		}
 	});
     const onCompleted = () => {
-        Toast.success(object ? t("Employee updated successfully") : t("Employee created successfully"));
+        Toast.success(object ? t("Designation Change Request saved Updated Successfully") : t("Designation Change Request Created Successfully"));
+        dispatch(FetchChangeRequests())
         onClose();
     };
+    useEffect(() => {
+        const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
+        if (selectedEmployee) {
+            const designation = customfield_list.find(field => field._id === selectedEmployee.designation?._id);
+            console.log('deisgnation', designation)
+            setCurrentDesignation(designation ? designation.name : ""); 
+        }
+    }, [formik.values.employee, employees_list]);
 
     const formElements = [
         {
             type: "select",
-            name:'employee',
-            label:'Employee',
+            name: 'employee',
+            label: 'Employee',
             value: formik.values.employee,
-            error: formik.touched.employee && formik.errors.employee,  
-            list:employees_list.map((item) => {
+            error: formik.touched.employee && formik.errors.employee,
+            list: employees_list.map((item) => {
                 return { display: item.firstName + " " + item.lastName, value: item._id }
             }),
-            required:true
+            required: true
         },
         {
             type: "text",
-            name: "cnic",
             label: t('Current Designation'),
-            placeholder: t("Enter Current Designation"), 
+            placeholder: t("Current Designation"), 
+            value: currentDesignation,
+            readOnly: true, 
+            className:"cursor-not-allowed"
         },
         {
             type: "select",
@@ -114,7 +130,6 @@ export default function ChangeDesignationForm({ onClose, object }) {
             value: formik.values.detail,
             error: formik.touched.detail && formik.errors.detail,  
             containerClass: 'col-span-2',
-            required:true
         },
     ];
 

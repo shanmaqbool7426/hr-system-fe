@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FetchProject , DeleteProject, UpdateProject} from '@/store/actions/project.actions';
 import { FetchEmployees } from '@/store/actions/employee.actions'
 
-export default function ProjectsModule() {
+export default function ProjectsPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation() 
   const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
@@ -96,7 +96,7 @@ const getStatusClass = (status) => {
   };
  
   const headings = [
-    { title: t("Project"), col: "Project", sort: true },
+    { title: t("Project"), col: "name", sort: true },
     { title: t("Project ID"), col: "ProjectID", sort: true },
     { title: t("Client"), col: "Client", sort: true },
     { title: t("Leader"), col: "Leader", sort: true },
@@ -170,7 +170,7 @@ const getStatusClass = (status) => {
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
   const rows = paginatedData?.map((item,index) => ({
-      Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+      name: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
       ProjectID: item?.projectId,
       Client: item?.client,
       Leader:  <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads}  />,

@@ -6,9 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from '@/util/toast';
-import { ChangeGrade } from '@/store/actions/employee-change-request.actions';
-
-import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { ChangeGrade, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import ChangeSalaryForm from '@/components/forms/employees/changeRequest/ChangeSalary';
 
@@ -17,9 +16,21 @@ const user = ls?.get('auth_user', { decrypt: true })
 export default function SalaryPage() {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { employees_list } = useSelector(state => state.employee);
-	const { customfield_list } = useSelector(state => state.customfield);
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
 	const changeSaleryRef = useRef(null);
+	const {change_request_list, employees_list } = useSelector(state => state.employee)
+	const { customfield_list } = useSelector(state => state.customfield)
+
+	useEffect(() => {
+		if (employees_list.length === 0)
+			dispatch(FetchEmployees())
+		dispatch(FetchChangeRequests())
+	}, [dispatch])
+
 	const formik = useFormik({
 		employee: "",
 		initialValues: {
@@ -57,11 +68,7 @@ export default function SalaryPage() {
 
 		}
 	});
-	const [sortCol, setSortCol] = useState(null)
-	const [sortDir, setSortDir] = useState(null)
-	const [page, setPage] = useState(1)
-	const [change, setChange] = useState(false)
-	const [perPage, setPerPage] = useState(10)
+	
 	const pagination = {
 		totalRecords: 5,
 		showPerPage: true,
@@ -78,35 +85,17 @@ export default function SalaryPage() {
 		{ title: t("Reason Of Salary Change"), col: "ReasonOfSalaryChange", },
 		{ title: t("Details"), col: "Details", },
 	]
-	const rows = [
-		{
-		
-			Employee: 'Admin',
-			CurrentSalary: '4656',
-			NewSalary: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfSalaryChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentSalary: '4656',
-			NewSalary: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfSalaryChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-			
-			Employee: 'Admin',
-			CurrentSalary: '4656',
-			NewSalary: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfSalaryChange: 'Correction of Errors',
-			Details: '-',
-		},
-	]
+	const rows = change_request_list
+	.filter(request => request.type === 'salary')
+	.map(request => ({
+		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
+		CurrentSalary:  "---", 
+		NewSalary: request?.salary, 
+		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
+		ReasonOfSalaryChange: request.reason,
+		Details: request.detail || '-', 
+	}));
+
 	return (
 		<section className="flex flex-col grow">
 			{/* {is_loading && <PageLoader/>} */}

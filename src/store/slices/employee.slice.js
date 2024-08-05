@@ -6,6 +6,8 @@ export const employeeSlice = createSlice({
         is_loading: false,
         employees_list: [],
         employee_details: null,
+        employee_projects: [],
+        change_request_list:[],
     },
     reducers: {
         setLoading(state, action) {
@@ -13,6 +15,9 @@ export const employeeSlice = createSlice({
         },
         setEmployeesList(state, action) {
             state.employees_list = action.payload.list
+        },
+        setChangeRequestList(state, action) {
+            state.change_request_list = action.payload.list
         },
         setEmployee(state, action) {
             let index = state.employees_list.findIndex((item) => item._id === action.payload._id)
@@ -23,6 +28,9 @@ export const employeeSlice = createSlice({
         setEmployeeDetails(state, action) {
             state.employee_details = action.payload
         },
+        setEmployeeProjects(state, action) { 
+            state.employee_projects = action.payload;
+          },
         removeEmployee(state, action) {
             state.employees_list = state.employees_list.filter((item) => item._id !== action.payload)
         },
@@ -61,12 +69,14 @@ export const employeeSlice = createSlice({
 export const {
     setLoading,
     setEmployeesList,
+    setChangeRequestList,
     setEmployee,
     removeEmployee,
     pushEmployee,
     setEmployeeDetails,
     setAcademic,
     pushAcademic,
+    setEmployeeProjects,
     removeAcademic,
     setJobExperience,
     pushJobExperience,

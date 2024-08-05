@@ -6,9 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from '@/util/toast';
-import { ChangeGrade } from '@/store/actions/employee-change-request.actions';
-
-import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { ChangeGrade, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import ChangeGradeForm from '@/components/forms/employees/changeRequest/ChangeGrade';
 
@@ -17,13 +16,19 @@ const user = ls?.get('auth_user', { decrypt: true });
 export default function GradePage() {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { employees_list } = useSelector(state => state.employee);
-	const { customfield_list } = useSelector(state => state.customfield);
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const {change_request_list, employees_list } = useSelector(state => state.employee)
+	const { customfield_list } = useSelector(state => state.customfield)
 	const ChangeGradeRef = useRef(null);
 
 	useEffect(() => {
 		if (employees_list.length === 0)
 			dispatch(FetchEmployees());
+		dispatch(FetchChangeRequests())
 	}, [dispatch]);
 
 	const formik = useFormik({
@@ -62,11 +67,7 @@ export default function GradePage() {
 			}
 		}
 	});
-	const [sortCol, setSortCol] = useState(null)
-	const [sortDir, setSortDir] = useState(null)
-	const [page, setPage] = useState(1)
-	const [change, setChange] = useState(false)
-	const [perPage, setPerPage] = useState(10)
+	
 	const pagination = {
 		totalRecords: 5,
 		showPerPage: true,
@@ -83,35 +84,17 @@ export default function GradePage() {
 		{ title: t("Reason Of Grade Change"), col: "ReasonOfGradeChange", },
 		{ title: t("Details"), col: "Details", },
 	]
-	const rows = [
-		{
-		
-			Employee: 'Admin',
-			CurrentGrade: 'B',
-			NewGrade: 'A',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfGradeChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentGrade: 'B',
-			NewGrade: 'A',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfGradeChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-			
-			Employee: 'Admin',
-			CurrentGrade: 'B',
-			NewGrade: 'A',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfGradeChange: 'Correction of Errors',
-			Details: '-',
-		},
-	]
+	const rows = change_request_list
+	.filter(request => request.type === 'grade')
+	.map(request => ({
+		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
+		CurrentGrade:  request?.employee?.grade?.name|| "---", 
+		NewGrade: request?.grade?.name, 
+		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
+		ReasonOfGradeChange: request.reason,
+		Details: request.detail || '-', 
+	}));
+	
 	return (
 		<section className="flex flex-col grow">
 			<div className="flex justify-between pb-6">
