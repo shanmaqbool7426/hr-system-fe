@@ -142,7 +142,7 @@ export default function AddPenaltyForm({ onClose, object }) {
     },
     ]
     return (
-        <BaseForm title={object ? `Edit New Rule` : `Add New Rule`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? `Edit New Rule` : `Add Rule`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
 
     )
 } 

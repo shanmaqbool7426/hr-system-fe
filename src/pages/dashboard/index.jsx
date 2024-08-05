@@ -2,7 +2,7 @@ import { auth } from "@/store/actions/auth.actions"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useTranslation } from "react-i18next";
-import { AttendanceChart } from "@/modules/dashboard/AttendanceChart"; 
+import { AttendanceChart } from "@/modules/dashboard/AttendanceChart";
 import { Requests } from "@/modules/dashboard/Requests";
 import { TopEmployee } from "@/modules/dashboard/TopEmployee";
 import { MyRequests } from "@/modules/dashboard/MyRequests";
@@ -17,7 +17,7 @@ import { TimeSheet } from "@/modules/attendance/TimeSheet";
 export default function Dashboard() {
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const [hide, setHide] = useState(false)
+   
     const [filters, setFilters] = useState({
         search: "",
         project: null,
@@ -84,17 +84,11 @@ export default function Dashboard() {
                             filters={filters}
                             setFilters={setFilters}
                         />
-                        {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-                            <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-                            <CloseCross className={'cursor-pointer'}
-                                onClick={(() => setHide(true))}
-                            />
-                        </div>}
                     </div>
                     <AttendanceChart />
                 </div>
                 <AttendanceSummaryStatistic />
-                <TimeSheet className={'col-span-3 lg:col-span-1'}/>
+                <TimeSheet className={'col-span-3 lg:col-span-1'} />
                 {/* <DailyAttendanceLogs /> */}
                 <Requests />
                 <TopEmployee />
@@ -105,7 +99,7 @@ export default function Dashboard() {
                     <EmployeePayslip />
                 </div>
             </div>
-            <UpcomingSchedule title={'Upcoming Schedule'} options={true}/>
+            <UpcomingSchedule title={'Upcoming Schedule'} options={true} />
         </div>
     )
 }

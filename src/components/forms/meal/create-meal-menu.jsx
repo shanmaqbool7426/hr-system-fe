@@ -26,7 +26,7 @@ export default function CreateMealMenuForm({ onClose, object }) {
         onClose()
     }
     return (
-        <BaseForm title={object ? t(`Edit Meal Menu`) : t(`Add New Menu`)} formik={formik} onClose={onClose} is_loading={false}>
+        <BaseForm title={object ? t(`Edit Meal Menu`) : t(`Add Menu`)} formik={formik} onClose={onClose} is_loading={false}>
             <div className='col-span-2 grid gap-x-2 gap-y-4 grid-cols-7'>
                 <div className='flex gap-4 col-span-7'>
                     <p>{t("Can employee avail meal for specific day?")}</p>

@@ -242,7 +242,7 @@ export default function ManageJobsPage() {
 					<h1 className="text-h4 mb-0">{t("Recruitment")}</h1>
 				</div>
 				<div className="flex items-start gap-2">
-					<Button onClick={() => { setCreate(true) }} className={"btn btn-dark"}>{t("Add New Job")}</Button>
+					<Button onClick={() => { setCreate(true) }} className={"btn btn-dark"}>{t("Add Job")}</Button>
 				</div>
 			</div>
 			<div className="zt-card grow">

@@ -1,9 +1,12 @@
-import { Button, Table } from "@/components/elements"; 
+import { Button, DropDown, Table, ToggleCheck } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";  
+import { useDispatch, useSelector } from "react-redux";
 import CreateQuotationForm from "@/components/forms/procurement/quotations/create";
+import StatusSelect from "@/components/elements/SelectStatus";
+import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import Toast from "@/util/toast";
 
 
 export default function QuotationsPage() {
@@ -14,20 +17,61 @@ export default function QuotationsPage() {
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false) 
-
+    const [create, setCreate] = useState(false)
+    const VendorOptions = [
+        { value: 'purple', label: 'John', className: 'zt-tag-purple' },
+        { value: 'purple', label: 'Mink', className: 'zt-tag-purple' },
+    ];
+    const StatusOptions = [
+        { value: 'success', label: 'Approved', className: 'zt-tag-success' },
+        { value: 'purple', label: 'Working', className: 'zt-tag-purple' },
+        { value: 'danger', label: 'Pending', className: 'zt-tag-danger' },
+    ];
+    const item = { status: 'success' };
     const headings = [
-
-        { title: t("Name"), col: "name" },
-        { title: t("Contact"), col: "Contact" },
-        { title: t("Status"), col: "status" },
+        { title: t("Quote ID"), col: "QuoteID" },
+        { title: t("Quotation Title"), col: "QuotationTitle" },
+        { title: t("Vendor"), col: "Vendor" },
+        { title: t("Amount"), col: "Amount" },
+        { title: t("Expiry "), col: "Expiry" },
+        { title: t("Status"), col: "Status" },
+        { title: t("Action"), col: "Action" },
     ]
 
     const rows = [{
 
-        name: "John",
-        Contact: "+92 302 646587",
-        status: "active",
+        QuoteID: "675",
+        QuotationTitle: "Quotation Title",
+        Vendor: <StatusSelect item={item} options={VendorOptions} />,
+        Amount: "50$",
+        Expiry: "25 Dec 2024",
+        Status: <StatusSelect item={item} options={StatusOptions} />,
+        Action: <DropDown icon={<ThreeDotsVertical />}>
+            <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
+                <li className="!p-0">
+                    <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <span><EyeOn /></span>
+                        <span>{t("View")}</span>
+                    </a>
+                </li>
+                <li className="!p-0">
+                    <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <span><Edit /></span>
+                        <span>{t("Edit")}</span>
+                    </a>
+                </li>
+                <li className="!p-0">
+                    <a onClick={() => {
+                        Toast.confirmDelete(() => {
+                            Toast.success(t("Quotation deleted successfully"))
+                        }, t)
+                    }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                        <span><Trash /></span>
+                        <span>{t("Delete")}</span>
+                    </a>
+                </li>
+            </ul>
+        </DropDown>
     }
     ]
     const pagination = {
@@ -70,7 +114,7 @@ export default function QuotationsPage() {
                 />
             </div>
 
-            {create && <CreateQuotationForm onClose={() => { setCreate(false)}} />}
+            {create && <CreateQuotationForm onClose={() => { setCreate(false) }} />}
         </section>
     )
 }

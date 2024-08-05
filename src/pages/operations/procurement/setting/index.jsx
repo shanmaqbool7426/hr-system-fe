@@ -3,11 +3,11 @@ import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import FilterArea from "@/components/includes/FilterArea";
 
 
-export default function RejectedItemsPage() {
+export default function SettingPage() {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { total_records } = useSelector((state) => state.employee)
@@ -35,12 +35,6 @@ export default function RejectedItemsPage() {
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 ">
                     <li className="!p-0">
-                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("View")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
                         <a onClick={() => { }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
                             <span>{t("Edit")}</span>
@@ -67,12 +61,6 @@ export default function RejectedItemsPage() {
             Reason: "Description",
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4 ">
-                    <li className="!p-0">
-                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("View")}</span>
-                        </a>
-                    </li>
                     <li className="!p-0">
                         <a onClick={() => { }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Edit /></span>
@@ -105,22 +93,22 @@ export default function RejectedItemsPage() {
         dispatch(FetchEmployees())
     }, [dispatch])
     const [filters, setFilters] = useState({
-        order: "",
+        order: "", 
     })
     const filterElements = [
         {
-            type: "search",
-            name: "order",
-            placeholder: "Search Order",
-            className: "col-span-2",
-            value: filters.order,
-            onChange: (order) => {
-                let _filter = { ...filters }
-                _filter['order'] = order
-                setFilters(_filter)
-            }
-        },
-    ]
+             type: "search",
+             name: "order",
+             placeholder:"Search Order",
+             className:"col-span-2",
+             value: filters.order, 
+             onChange: (order) => {
+                 let _filter = { ...filters }
+                 _filter['order'] = order
+                 setFilters(_filter)
+             }
+         }, 
+     ]
     return (
         <section className="flex flex-col grow">
             <div className="flex justify-between items-center pb-6">

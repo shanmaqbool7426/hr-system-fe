@@ -62,7 +62,7 @@ const onCompleted = () => {
         },
     ]
     return (
-        <BaseForm title={object ? t(`Edit New Shift`) : t(`Add New Shift`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Edit New Shift`) : t(`Add Shift`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 
