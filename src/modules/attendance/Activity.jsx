@@ -6,7 +6,7 @@ export const Activity = () => {
     const { t } = useTranslation()
 
     return (
-        <div className='zt-card'>
+        <div className='zt-card col-span-3 xl:col-span-1'>
             <h2 className='mb-4 font-bold text-xl'>{t("Today Activity")}</h2>
 
             <ul className='zt-activityLogs'>

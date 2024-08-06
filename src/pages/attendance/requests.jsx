@@ -3,21 +3,19 @@ import AddRequestForm from '@/components/forms/attendance/addRequest'
 import ViewAttendanceForm from '@/components/forms/attendance/view'
 import FilterArea from '@/components/includes/FilterArea'
 import { ThreeDotsVertical } from '@/components/svg'
-import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function Requests() {
     const { t } = useTranslation()
-    const dispatch = useDispatch()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-    const [view, setView] = useState(false) 
+    const [view, setView] = useState(false)
     const [edit, setEdit] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
@@ -105,7 +103,7 @@ export default function Requests() {
     ]
 
     const headings = [
-    
+
         { title: t("Employee"), col: "Employee", /* sort: true */ },
         { title: t("Employee Details"), col: "EmployeeDetails" },
         { title: t("Attendance Date"), col: "AttendanceDate", /* sort: true */ },
@@ -117,7 +115,7 @@ export default function Requests() {
 
     const rows = [
         {
-          
+
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
@@ -144,9 +142,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span>{t("Accept")}</span>
@@ -155,9 +151,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span>{t("Reject")}</span>
@@ -167,7 +161,7 @@ export default function Requests() {
             </DropDown>
         },
         {
-        
+
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
@@ -194,9 +188,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span>{t("Accept")}</span>
@@ -205,9 +197,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span>{t("Reject")}</span>
@@ -217,7 +207,7 @@ export default function Requests() {
             </DropDown>
         },
         {
-           
+
             Employee: <div className="flex items-center justify-center gap-4 grow">
                 <div className={'flex flex-col gap-1 text-left'}>
                     <strong className={'text-themeGrayscale text-sm'}>{t('Kelli Lebsack')}</strong>
@@ -244,9 +234,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span>{t("Accept")}</span>
@@ -255,9 +243,7 @@ export default function Requests() {
                     <li className="!p-0">
                         <a onClick={() => {
                             Toast.confirmDelete(() => {
-                                dispatch(DeleteCustomfield(item._id, () => {
-                                    Toast.success(t("Asset Type deleted successfully"))
-                                }))
+                                Toast.success(t("Asset Type deleted successfully"))
                             }, t)
                         }} className={'no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
                             <span>{t("Reject")}</span>
@@ -281,7 +267,7 @@ export default function Requests() {
                     elements={filterElements}
                     filters={filters}
                     setFilters={setFilters}
-                /> 
+                />
 
                 <Table
                     headings={headings}
@@ -303,10 +289,7 @@ export default function Requests() {
                 object={edit}
             />}
 
-            {create && <AddRequestForm
-                onClose={() => { setCreate(false); setEdit(null) }}
-                object={edit}
-            />}
+            {create && <AddRequestForm onClose={() => { setCreate(false) }} />}
         </section>
     )
 }

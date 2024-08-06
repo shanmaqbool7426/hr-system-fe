@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Bar, BarChart, CartesianGrid, Cell, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis } from 'recharts'
 
 const data = [
     { name: '01 Apr', uv: 4000, pv: 2400, amt: 2400 },

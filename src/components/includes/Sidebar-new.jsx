@@ -368,7 +368,8 @@ export default function Sidebar() {
 
       {selected &&
         MiniBar.findIndex((item) => item.href === selected) !== -1 && (
-          <div className="p-4 w-64 h-full overflow-y-scroll">
+          // <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute md:static ml-[74px] md:ml-0 z-10">
+          <div className="p-4 w-64 h-full overflow-y-scroll bg-white">
             <h4>{MiniBar.find((item) => item.href === selected)?.name}</h4>
             <ul className="flex flex-col gap-3">
               {Navigation[selected].map((item, index) => (

@@ -9,10 +9,10 @@ import { MyRequests } from "@/modules/dashboard/MyRequests";
 import { Announcements } from "@/modules/dashboard/Announcements";
 import { EmployeePayslip } from "@/modules/dashboard/EmployeePayslip";
 import { UpcomingSchedule } from "@/modules/dashboard/UpcomingSchedule";
-import FilterArea from "@/components/includes/FilterArea";
-import { CloseCross, InputErrorInfo } from "@/components/svg";
+import FilterArea from "@/components/includes/FilterArea"; 
 import { AttendanceSummaryStatistic } from "@/modules/dashboard/AttendanceSummaryStatistic";
 import { TimeSheet } from "@/modules/attendance/TimeSheet";
+import { DailyAttendanceLogs } from "@/modules/dashboard/DailyAttendanceLogs";
 
 export default function Dashboard() {
     const dispatch = useDispatch()
