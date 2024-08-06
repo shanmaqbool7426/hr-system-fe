@@ -1,16 +1,13 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
-import Toast from '@/util/toast';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
-import { useDispatch } from 'react-redux';
+import Toast from '@/util/toast'; 
+import BaseForm from '../../BaseForm';
 
-export default function ApplyOvertimeForm({ onClose, object }) {
+export default function ApplyAdvanceSalaryForm({ onClose, object }) {
     const { t } = useTranslation()
     const { t: tv } = useTranslation("validation")
-
-    const dispatch = useDispatch()
+ 
     const formik = useFormik({
         initialValues: {
             employee: object?.employee?._id || "",
@@ -32,8 +29,7 @@ export default function ApplyOvertimeForm({ onClose, object }) {
         }),
         onSubmit: async (values) => {
 
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
-        }
+       }
     })
     const onCompleted = () => {
         Toast.success(object ? t(`${type} Request completed successfully`) : t(`${type} created successfully`))
@@ -43,7 +39,7 @@ export default function ApplyOvertimeForm({ onClose, object }) {
         {
             type: "select",
             name: "employee",
-            label: t('Employee Name'),
+            label: t('Employee'),
             placeholder: "Select Employee",
             list: [{ display: "John", value: "John" }, { display: "Mink", value: "Mink" }],
             required: true,
@@ -52,7 +48,7 @@ export default function ApplyOvertimeForm({ onClose, object }) {
         {
             type: "text",
             name: "title",
-            placeholder: "Title",
+            placeholder: "Advance",
             label: t('Title'),
             required: true,
             value: formik.values.title,
@@ -67,32 +63,24 @@ export default function ApplyOvertimeForm({ onClose, object }) {
         },
         {
             type: "text",
-            name: "overtimeHours",
-            placeholder: "5",
-            label: t('Overtime Hours'),
+            name: "amount",
+            placeholder: "$12000",
+            label: t('Amount'),
             required: true,
-            value: formik.values.overtimeHours,
-        },
-        {
-            type: "select",
-            name: "overtimeType",
-            label: t('Overtime Type'),
-            placeholder: "Select Overtime Type",
-            list: [{ display: "Work day overtime", value: "Work day overtime" }, { display: "Holidays Overtime", value: "Holidays Overtime" }, { display: "Ghazzatted Holidays", value: "Ghazzatted Holidays" }],
-            required: true,
-            value: formik.values.overtimeType,
-        },
+            value: formik.values.amount,
+        },   
         {
             type: "textarea",
-            name: "description",
-            label: t('Description'),
+            name: "reason",
+            label: t('Reason'),
             containerClass: 'col-span-2',
             required: true,
-            value: formik.values.description,
+            value: formik.values.reason,
 
         },
     ]
     return (
-        <BaseForm title={object ? t(`Apply Overtime`) : t(`Apply Overtime`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Apply For Advance Salary`) : t(`Apply For Advance Salary`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
-} 
+}
+
