@@ -1,4 +1,4 @@
-import { Tab } from '@headlessui/react' 
+import { Tab } from '@headlessui/react'
 
 
 export default function Tabs({ children, tabs, panels, containerClasses, tabNavClasses, tabPanelClasses }) {
@@ -13,14 +13,7 @@ export default function Tabs({ children, tabs, panels, containerClasses, tabNavC
                     ))}
                 </Tab.List>
             </nav>
-            {children ? children :
-             <Tab.Panels className={`zt-themeTabPanels ${tabPanelClasses}`}>
-                {panels.map((value, index) => (
-                    <Tab.Panel className={'zt-themeTabPanel'} key={index}>
-                        {/* {value} */}
-                    </Tab.Panel>
-                ))}
-            </Tab.Panels>}
+            {children}
         </Tab.Group>
     )
 }

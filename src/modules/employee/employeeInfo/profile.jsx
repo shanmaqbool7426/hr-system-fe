@@ -36,8 +36,8 @@ export default function EmployeeProfile({ employeeId }) {
       contact: employee_details?.contact || "",
       dateOfBirth: employee_details?.dateOfBirth || "",
       address: employee_details?.address || "",
-      designation: employee_details?.designation._id || "",
-      lineManager: employee_details?.lineManager._id || "",
+      designation: employee_details?.designation?._id || "",
+      lineManager: employee_details?.lineManager?._id || "",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t('formik.firstNameRequired')),

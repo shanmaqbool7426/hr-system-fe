@@ -15,12 +15,13 @@ import PageLoader from '@/components/elements/PageLoader'
 import EmployeeProfile from '@/modules/employee/employeeInfo/profile'
 import RemoteWorkModule from '@/modules/employee/remoteWork'
 import WarningsModule from '@/modules/employee/warnings'
+import { Tab } from '@headlessui/react'
 
 export default function EmployeeDetailPage() {
     const { t } = useTranslation()
     const router = useRouter()
     const dispatch = useDispatch()
-    const { is_loading, employee_details,  employee_projects } = useSelector((state) => state.employee)
+    const { is_loading, employee_details, employee_projects } = useSelector((state) => state.employee)
     useEffect(() => {
         console.log('first', employee_projects)
         const employeeId = router.query.employeeId
@@ -46,14 +47,34 @@ export default function EmployeeDetailPage() {
                     <Tabs
                         containerClasses={'zt-themeTabsV2 grow'}
                         tabNavClasses={'zt-themeTabNav'}
-                        tabPanelClasses={'zt-employeeTabsPanel !bg-transparent !p-0'}
-                        tabs={["Employee Info", "Projects", "Salary", "Documents", "Assets",'Remote Work', 'Warnings']}
-                        panels={
-                            [InfoModule, ProjectsModule, SalaryModule, DocumentsModule, AssetsModule,RemoteWorkModule,WarningsModule]
-                        }
-                    />
-                    <DocumentsModule/>
-                    <ProjectsModule/>
+                        tabs={["Employee Info", "Projects", "Salary", "Documents", "Assets", 'Remote Work', 'Warnings']}
+                    >
+                        <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0`}>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <InfoModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <ProjectsModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <SalaryModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <DocumentsModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <AssetsModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <RemoteWorkModule />
+                            </Tab.Panel>
+                            <Tab.Panel className={'zt-themeTabPanel'}>
+                                <WarningsModule />
+                            </Tab.Panel>
+
+                        </Tab.Panels>
+
+                    </Tabs>
                 </>}
         </section>
     )
