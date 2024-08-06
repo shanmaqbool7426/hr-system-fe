@@ -6,7 +6,6 @@ import {
   setEmployee,
   pushEmployee,
   removeEmployee,
-  setEmployeeProjects,
 } from "../slices/employee.slice";
 
 export const FetchEmployees = (payload) => async (dispatch) => {
@@ -28,7 +27,6 @@ export const FetchEmployeeDetails = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     const data = await axios.get(`/employees/details/${id}`);
     dispatch(setEmployeeDetails(data.employee));
-    dispatch(setEmployeeProjects(data.projects));
     return true;
   } catch (err) {
     console.log("Error", err);

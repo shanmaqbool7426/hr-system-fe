@@ -66,7 +66,6 @@ export default function ChangeDesignationForm({ onClose, object }) {
         const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
         if (selectedEmployee) {
             const designation = customfield_list.find(field => field._id === selectedEmployee.designation?._id);
-            console.log('deisgnation', designation)
             setCurrentDesignation(designation ? designation.name : ""); 
         }
     }, [formik.values.employee, employees_list]);

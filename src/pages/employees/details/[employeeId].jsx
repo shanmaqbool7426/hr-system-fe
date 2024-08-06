@@ -21,9 +21,8 @@ export default function EmployeeDetailPage() {
     const { t } = useTranslation()
     const router = useRouter()
     const dispatch = useDispatch()
-    const { is_loading, employee_details, employee_projects } = useSelector((state) => state.employee)
+    const { is_loading, employee_details } = useSelector((state) => state.employee)
     useEffect(() => {
-        console.log('first', employee_projects)
         const employeeId = router.query.employeeId
         if (employeeId) {
             dispatch(FetchEmployeeDetails(employeeId))

@@ -161,7 +161,7 @@ export default function Sidebar() {
         ]
       },
       {
-        name: t("Inventory"), href: "/operations/inventory",
+        name: t("Asset Inventory"), href: "/operations/inventory",
         innerSubMenu: [
           { name: t('Asset List'), href: "/operations/inventory" },
           { name: t('Asset History'), href: "/operations/inventory/asset-history" },

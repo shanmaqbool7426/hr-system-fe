@@ -1,18 +1,20 @@
 import Link from 'next/link';
-import { useState } from 'react';
-import { useSelector } from "react-redux";
-import { Button, CheckBox, DropDown, Table } from '@/components/elements';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { Button, CheckBox, DisplayDate, DropDown, Table } from '@/components/elements';
 import { EyeOn, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg';
-import RaiseIssueForm from '@/components/forms/projects/raiseIssue';
 import { useTranslation } from 'react-i18next';
 import CreateWarningForm from '@/components/forms/employees/createWarning';
 import Toast from '@/util/toast';
 import CreateWarningRevokeForm from '@/components/forms/employees/createWarningRevoke';
-import CreateWarningDetailForm from '@/components/forms/employees/createwarningsDetail';
+import WarningDetail from '@/components/forms/employees/warningsDetail';
+import { DeleteWarning } from '@/store/actions/employee-warning.actions';
 
 export default function WarningsList() {
     const { t } = useTranslation()
+    const dispatch = useDispatch()
     const { total_records } = useSelector((state) => state.employee)
+    const { is_loading , employee_details} = useSelector((state) => state.employee);
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
@@ -20,6 +22,19 @@ export default function WarningsList() {
     const [detail, setDetail] = useState(false)
     const [warning, setWarning] = useState(false)
     const [revoke, setRevoke] = useState(false)
+    const [selectedWarning, setSelectedWarning] = useState(null)
+
+    useEffect(()=>{
+        console.log('employee_details?.warning', employee_details?.warnings)
+    },[])
+    const deleteHandler = (id) => {
+        Toast.confirmDelete(() => {
+          dispatch(DeleteWarning(id, () => {
+            Toast.success(t('Warning removed successfully'));
+          }));
+        }, t);
+      };
+    
     const headings = [
     
         { title: t("Warning Issue by"), col: "WarningIssueby", },
@@ -28,27 +43,15 @@ export default function WarningsList() {
         { title: t("Reason"), col: "Reason", },
         { title: t("Action"), col: "action" },
     ]
-    const rows = [
-        {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`1`}
-                    // name={`checkbox-${index}`}
-                    // checked={checkedItems[index] || false}
-                    // onChange={(e) => handleCheckItem(index, e.target.checked)}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '1',
-            WarningIssueby: 'John',
-            WarningDate: "14 Apr 2024",
+    const rows = employee_details?.warnings?.map((item, index) => ({
+            WarningIssueby: `${item?.createdBy?.firstName} ${item?.createdBy?.lastName}` ,
+            WarningDate: <DisplayDate date={item?.createdAt}/>,
             ReviewDate: '15 Apr 2025',
-            Reason: "-",
+            Reason: item?.name,
             action: <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
                     <li className="!p-0">
-                        <a onClick={() => { setDetail(true) }} className={'flex items-center no-underline gap-2 cursor-pointer'}
+                        <a onClick={() => { setDetail(true); setSelectedWarning(item); }} className={'flex items-center no-underline gap-2 cursor-pointer'}
                         >
                             <span className='flex gap-2 hover:text-themePrimary'><EyeOn /> {t("Detail")}</span>
                         </a>
@@ -60,62 +63,14 @@ export default function WarningsList() {
                         </a>
                     </li>
                     <li className="!p-0">
-                        <a onClick={() => {
-                            Toast.confirmDelete(() => { 
-                                    Toast.success(t("Warning deleted successfully")) 
-                            }, t)
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer'}
+                        <a onClick={() => deleteHandler(item._id)} className={'flex items-center no-underline gap-2 cursor-pointer'}
                         >
                             <span className='flex gap-2 hover:text-themeDanger'><Trash /> {t("Delete")}</span>
                         </a>
                     </li>
                 </ul>
             </DropDown>
-        },
-        {
-            sr: <div className="flex items-center">
-                <CheckBox
-                    id={`2`}
-                    // name={`checkbox-${index}`}
-                    // checked={checkedItems[index] || false}
-                    // onChange={(e) => handleCheckItem(index, e.target.checked)}
-                    size={'sm'}
-                    variant={'dark'}
-                />
-            </div>,
-            SerailNo: '2',
-            WarningIssueby: 'John',
-            WarningDate: "14 Apr 2024",
-            ReviewDate: '15 Apr 2025',
-            Reason: "-",
-            action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4">
-                <li className="!p-0">
-                        <a onClick={() => { setDetail(true) }} className={'flex items-center no-underline gap-2 cursor-pointer'}
-                        >
-                            <span className='flex gap-2 hover:text-themePrimary'><EyeOn /> {t("Detail")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => { setRevoke(true) }} className={'flex items-center no-underline gap-2 cursor-pointer'}
-                        >
-                            <span className='flex gap-2 hover:text-themeDanger'><WarningIcon /> {t("Revoke")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => {
-                            Toast.confirmDelete(() => { 
-                                    Toast.success(t("Warning deleted successfully")) 
-                            }, t)
-                        }}  className={'flex items-center no-underline gap-2 cursor-pointer'}
-                        >
-                            <span className='flex gap-2 hover:text-themeDanger'><Trash /> {t("Delete")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>
-        }
-    ]
+}))
     const pagination = {
         totalRecords: total_records,
         showPerPage: true,
@@ -151,8 +106,9 @@ export default function WarningsList() {
              {warning && <CreateWarningForm
                 onClose={() => { setWarning(false) }}
             />}
-              {detail && <CreateWarningDetailForm
-                onClose={() => { setDetail(false) }}
+              {detail && selectedWarning &&  <WarningDetail
+                onClose={() => { setDetail(false); setSelectedWarning(null); }}
+                object={selectedWarning}
             />}
         </div>
     )

@@ -57,7 +57,7 @@ export default function DesignationPage() {
 	.filter(request => request.type === 'designation')
 	.map(request => ({
 		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
-		CurrentDesignation: request.currentDesignation, 
+		CurrentDesignation: request.currentDesignation || "--", 
 		NewDesignation: request.designation?.name, 
 		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
 		ReasonOfDesignationChange: request.reason,

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import Storage from "@/util/storage"
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "@/util/toast";
@@ -7,14 +8,15 @@ import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
 import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
-import { ChangeEmployeeCode, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { uploader } from '@/util/helpers';
+import { ChangeEmployeeCode, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
 export default function ChangeCodeForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { employees_list } = useSelector((state) => state.employee)
     const { is_loading } = useSelector((state) => state.employee);
+    const { auth_user } = useSelector(state => state.auth);
     const [currentCode, setCurrentCode] = useState("");
 
     useEffect(() => {
@@ -39,13 +41,12 @@ export default function ChangeCodeForm({ onClose, object }) {
 		}),
         onSubmit: async (values) => {
 			if (values.attachment) {
-				await uploader(values.attachment, (url) => {
-					values.attachment = url
+                let {url} = await Storage.upload(values.attachment, auth_user?.company?._id )
+                values.attachment = url
 					dispatch(ChangeEmployeeCode(values, () => {
 						formik.resetForm()
                         onCompleted();
 					}))
-				})
 			} else {
 				dispatch(ChangeEmployeeCode(values, () => {
 					formik.resetForm()
