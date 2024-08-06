@@ -223,14 +223,14 @@ export default function TaskBoardDetailModule() {
     ]
     const headings = [
         { title: t("Task Id"), col: "TaskId" },
-        { title: t("Task Name"), col: "TaskName" },
+        { title: t("Task Name"), col: "name" , sort:true },
         { title: t("Task Time"), col: "TaskTime", sort: true },
         { title: t("Project Name"), col: "ProjectName" },
         { title: t("Due Date"), col: "DueDate", sort: true },
         { title: t("Leader"), col: "Leader" },
         { title: t("Assignee"), col: "Assignee" },
-        { title: t("Priority"), col: "Priority", sort: true },
-        { title: t("Status"), col: "Status", sort: true },
+        { title: t("Priority"), col: "priority", sort: true },
+        { title: t("Status"), col: "status", sort: true },
         { title: t("Action"), col: "action" },
     ]
 
@@ -252,13 +252,14 @@ export default function TaskBoardDetailModule() {
       const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
       
       const rows = paginatedData?.map((item,index) => {    
-        const isPastDue = moment(item.dueDate).isBefore(moment())
+        // overdue date issue solve
+        const isPastDue = moment(item.dueDate).isBefore(moment().startOf('day'));
            return { TaskId: item?.taskId,
             ProjectName: item?.project?.name,
-            TaskName: item?.name,
+            name: item?.name,
             Leader: <UserListView imgClass="h-[32px] w-[32px]"  list={[item?.lead]}  />,
             Assignee:  <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,     
-            Priority: (
+            priority: (
                 <select
                   className={`zt-tag ${getPriorityClass(item.priority)}`}
                   value={item.priority}
@@ -275,7 +276,7 @@ export default function TaskBoardDetailModule() {
                   </option>
                 </select>
               ),
-              Status: (
+              status: (
                 <select
                   className={`zt-tag ${getStatusClass(item.status)}`}
                   value={item.status}
