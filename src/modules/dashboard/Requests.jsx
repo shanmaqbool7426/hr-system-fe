@@ -5,18 +5,20 @@ import { useTranslation } from 'react-i18next';
 import { RadialChart } from './RadialChart';
 import AddRequestForm from '@/components/forms/attendance/addRequest';
 import CreateLeaveRequestForm from '@/components/forms/leaves/create-request';
+import ApplyOvertimeForm from '@/components/forms/overTime/create';
 
 export const Requests = () => {
     const { t } = useTranslation()
     const [create, setCreate] = useState(false)
     const [leave, setLeave] = useState(false)
+    const [overTime, setOverTime] = useState(false)
 
     return (
         <div className={`col-span-3 lg:col-span-2 zt-card flex flex-col gap-6`}>
             <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-6 flex-wrap'>
                 <Button onClick={() => setCreate(true)} variant={'success'} className={'flex items-center w-full whitespace-nowrap'}><Calendar className={'text-white shrink-0'} /> Attendance Request</Button>
-                <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full whitespace-nowrap'}><CheckOutIcon className={'text-white shrink-0'}/> Leave Request</Button>
-                <Button variant={'primary'} className={'flex items-center w-full whitespace-nowrap'}><RemoteWork  className={'text-white shrink-0'}/> Apply overtime </Button>
+                <Button onClick={() => setLeave(true)} variant={'purple'} className={'flex items-center w-full whitespace-nowrap'}><CheckOutIcon className={'text-white shrink-0'} /> Leave Request</Button>
+                <Button onClick={() => setOverTime(true)} variant={'primary'} className={'flex items-center w-full whitespace-nowrap'}><RemoteWork className={'text-white shrink-0'} /> Apply overtime </Button>
             </div>
             <div className='grid sm:grid-cols-2 gap-6'>
                 {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
@@ -41,10 +43,8 @@ export const Requests = () => {
                 ))}
             </div>
             {leave && <CreateLeaveRequestForm onClose={() => { setLeave(false) }} />}
-
-            {create && <AddRequestForm
-                onClose={() => { setCreate(false) }}
-            />}
+            {create && <AddRequestForm onClose={() => { setCreate(false) }} />}
+            {overTime && <ApplyOvertimeForm onClose={() => { setOverTime(false) }} />}
         </div>
     )
 }

@@ -11,8 +11,7 @@ import { EmployeePayslip } from "@/modules/dashboard/EmployeePayslip";
 import { UpcomingSchedule } from "@/modules/dashboard/UpcomingSchedule";
 import FilterArea from "@/components/includes/FilterArea"; 
 import { AttendanceSummaryStatistic } from "@/modules/dashboard/AttendanceSummaryStatistic";
-import { TimeSheet } from "@/modules/attendance/TimeSheet";
-import { DailyAttendanceLogs } from "@/modules/dashboard/DailyAttendanceLogs";
+import { TimeSheet } from "@/modules/attendance/TimeSheet"; 
 
 export default function Dashboard() {
     const dispatch = useDispatch()

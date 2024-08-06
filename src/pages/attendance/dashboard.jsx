@@ -2,6 +2,7 @@ import { Button, DisplayDate, Profile, Table } from '@/components/elements'
 import AddExemptionForm from '@/components/forms/attendance/addExemption'
 import AddRequestForm from '@/components/forms/attendance/addRequest'
 import ChangeShiftForm from '@/components/forms/attendance/ChangeShift'
+import ApplyOvertimeForm from '@/components/forms/overTime/create'
 import FilterArea from '@/components/includes/FilterArea'
 import { Activity } from '@/modules/attendance/Activity'
 import { Staticts } from '@/modules/attendance/Staticts'
@@ -72,6 +73,7 @@ export default function Dashboard() {
   const dispatch = useDispatch()
   const [request, setRequest] = useState(false)
   const [create, setCreate] = useState(false)
+  const [overTime, setOverTime] = useState(false)
   const [changeShift, setChangeShift] = useState(false)
   const [edit, setEdit] = useState(false)
   const [sortCol, setSortCol] = useState(null)
@@ -182,7 +184,7 @@ export default function Dashboard() {
       <div className="flex flex-col xl:flex-row justify-between gap-2 xl:items-center">
         <h1 className="text-h4 mb-0">{t("Dashboard")}</h1>
         <div className='flex gap-4 flex-wrap xl:flex-nowrap'>
-          <Button className={"btn whitespace-nowrap btn-dark-outline"} onClick={() => setCreate(true)}>{t("Apply Overtime")}</Button>
+          <Button className={"btn whitespace-nowrap btn-dark-outline"} onClick={() => setOverTime(true)}>{t("Apply Overtime")}</Button>
           <Button className={"btn whitespace-nowrap btn-dark-outline"} onClick={() => setChangeShift(true)}>{t("Shift change Request")}</Button>
           <Button className={"btn whitespace-nowrap btn-dark-outline"} onClick={() => setCreate(true)}>{t("Exemption Request")}</Button>
           <Button className={"btn whitespace-nowrap btn-primary"} onClick={() => setRequest(true)}>{t("Attendance Request")}</Button>
@@ -235,7 +237,7 @@ export default function Dashboard() {
       </div>
       {request && <AddRequestForm onClose={() => { setRequest(false) }} object={edit} />}
       {changeShift && <ChangeShiftForm onClose={() => { setChangeShift(false) }} />}
-
+      {overTime && <ApplyOvertimeForm onClose={() => { setOverTime(false) }} />}
       {create && <AddExemptionForm onClose={() => { setCreate(false); setEdit(null) }} object={edit} />}
     </section>
   )
