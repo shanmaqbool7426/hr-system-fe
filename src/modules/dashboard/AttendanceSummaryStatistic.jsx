@@ -4,7 +4,7 @@ const COLORS = ['#8C62FF', '#8C62FF', '#8C62FF', '#8C62FF', '#FFD023', '#0BA259'
 
 export const AttendanceSummaryStatistic = () => {
   return (
-    <div className={'zt-attendanceStatistics col-span-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:hidden'}>
+    <div className={'zt-attendanceStatistics custom__grid col-span-3 grid gap-6 lg:hidden'}>
       <div className={'zt-attendanceStatisticCard'}>
         <h2><span className={'text-themePurple'}>10</span><sup className={'pl-2 font-normal -top-3 text-sm'}>Days</sup></h2>
         <h3 className={'text-themePurple'}>Present</h3>

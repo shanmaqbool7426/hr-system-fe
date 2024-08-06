@@ -15,8 +15,8 @@ export default function CompanyInfoCard() {
     const { customfield_list } = useSelector(state => state.customfield)
     const formik = useFormik({
         initialValues: {
-            station: employee_details?.station || "",
-            grade: employee_details?.station || "",
+            station: employee_details?.station?._id || "",
+            grade: employee_details?.grade?._id || "",
             mobileAttendance: employee_details?.mobileAttendance || false,
             webAttendance: employee_details?.webAttendance || false,
         },
@@ -63,24 +63,6 @@ export default function CompanyInfoCard() {
                         <SearchSelect
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
-                            name={'station'}
-                            label={t('Station')}
-                            value={formik.values.station}
-                            list={customfield_list.filter(item => item.type === 'station').map(item => {
-                                return { value: item._id, display: item.name }
-                            })}
-                            error={formik.touched.station && formik.errors.station}
-                            onBlur={() => {
-                                formik.setFieldTouched('station', true)
-                            }}
-                            onInput={formik.handleBlur}
-                            onChange={(value) => {
-                                formik.setFieldValue('station', value)
-                            }}
-                        />
-                        <SearchSelect
-                            containerClass={'zt-formGroupV2'}
-                            className={' gap-4'}
                             name={'grade'}
                             label={t('Grade')}
                             value={formik.values.grade}
@@ -91,9 +73,25 @@ export default function CompanyInfoCard() {
                             onBlur={() => {
                                 formik.setFieldTouched('grade', true)
                             }}
-                            onInput={formik.handleBlur}
                             onChange={(value) => {
                                 formik.setFieldValue('grade', value)
+                            }}
+                        />
+                         <SearchSelect
+                            containerClass={'zt-formGroupV2'}
+                            className={' gap-4'}
+                            name={'station'}
+                            label={t('Station')}
+                            value={formik.values.station}
+                            list={customfield_list.filter(item => item.type === 'station').map(item => {
+                                return { value: item._id, display: item.name }
+                            })}
+                            error={formik.touched.station && formik.errors.station}
+                            onBlur={() => {
+                                formik.setFieldTouched('station', true)
+                            }}
+                            onChange={(value) => {
+                                formik.setFieldValue('station', value)
                             }}
                         />
                         <ToggleCheck id="mobileAttendance"
@@ -114,17 +112,6 @@ export default function CompanyInfoCard() {
                                 formik.setFieldValue('webAttendance', event.target.checked)
                             }}
                         />
-                        {/* <Input
-                            containerClass={'zt-formGroupV2'}
-                            className={' gap-4'}
-                            type={'text'}
-                            name={'fatherName'}
-                            label={t('Father Name')}
-                            placeholder={t('Father Name')}
-                            value={formik.values.fatherName}
-                            formik={formik}
-                            required
-                        /> */}
 
 
                         <div className="zt-btns !p-0 !pt-4 justify-end">

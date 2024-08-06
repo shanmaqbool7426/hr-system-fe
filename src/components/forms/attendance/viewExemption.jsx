@@ -66,7 +66,7 @@ export default function ViewExemptionForm({ onClose,  object }) {
     ] 
     return (
         <BaseForm title={'Exemption Request Details'} formik={formik} onClose={onClose} is_loading={false} >
-            <div className='py-6 flex flex-col items-start gap-6'>
+            <div className='py-6 flex flex-col items-start gap-6 col-span-2'>
                 <Table
                     headings={headings}
                     rows={rows}

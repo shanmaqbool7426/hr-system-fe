@@ -54,7 +54,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
                         {selectedItem?.length > 0 && (
                             <ul className='zt-multiSelectedList'>
                                 {getDisplayValue().map((item, index) => (
-                                    <li key={index} className='zt-tag'>{item}</li>
+                                    <li key={index} className='zt-tag '>{item}</li>
                                 ))}
                             </ul>
                         )}

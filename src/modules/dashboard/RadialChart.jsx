@@ -1,12 +1,12 @@
 import React from 'react'
 
 import { RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
-export const RadialChart = ({circleSize,fillColor , circularValue,textSize}) => {
+export const RadialChart = ({circleSize,fillColor , circularValue,textSize ,className}) => {
     const circulardata = [
         { name: 'L1', value: 4 }
     ]; 
     return (
-        <>
+        <div className={`${className}`}>
             <RadialBarChart
                 width={circleSize}
                 height={circleSize}
@@ -41,6 +41,6 @@ export const RadialChart = ({circleSize,fillColor , circularValue,textSize}) => 
                     {circulardata[0].value}{circularValue}
                 </text>
             </RadialBarChart>
-        </>
+        </div>
     )
 }

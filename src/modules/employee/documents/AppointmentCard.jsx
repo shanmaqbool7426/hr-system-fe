@@ -5,7 +5,7 @@ import { UpdateEmployee } from '@/store/actions/employee.actions';
 import { Edit } from '../../../components/svg';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input } from '@/components/elements';
+import { Button, Datepicker, DisplayDate, Input } from '@/components/elements';
 import Toast from '@/util/toast';
 
 export default function AppointmentCard () {
@@ -15,19 +15,15 @@ export default function AppointmentCard () {
     const { is_loading, employee_details } = useSelector((state) => state.employee)
     const formik = useFormik({
         initialValues: {
-            joiningDate: employee_details?.appointmentDetail?.joiningDate || "",
-            confirmationDate: employee_details?.appointmentDetail?.confirmationDate || "",
-            lastWorkingDate: employee_details?.appointmentDetail?.lastWorkingDate || "",
-            resignDate: employee_details?.appointmentDetail?.resignDate || "",
+            joiningDate: employee_details?.joiningDate || "",
+            confirmationDate: employee_details?.confirmationDate || "",
         },
         validationSchema: Yup.object().shape({
             joiningDate: Yup.string().required(t('formik.joiningDateRequired')),
             confirmationDate: Yup.string().required(t('formik.confirmationDateRequired')),
-            lastWorkingDate: Yup.string().required(t('formik.lastWorkingDateRequired')),
-            resignDate: Yup.string().required(t('formik.resignDateRequired')),
         }),
         onSubmit: values => {
-            dispatch(UpdateEmployee(employee_details._id, { appointmentDetail: { ...values } }, () => {
+            dispatch(UpdateEmployee(employee_details._id, values , () => {
                 setEdit(false)
                 Toast.success(t('Appointment details updated successfully'))
             }))
@@ -45,11 +41,11 @@ export default function AppointmentCard () {
                 !edit && <ul className='zt--employeeCardBody flex flex-col !gap-y-4 !gap-x-16'>
                     <li>
                         <span>{t("Joining Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.joiningDate || '------'}</strong>
+                        <strong>{employee_details?.joiningDate ? <DisplayDate date={employee_details?.joiningDate} /> : '-------' }</strong>
                     </li>
                     <li>
                         <span>{t("Confirmation Date")}</span>
-                        <strong>{employee_details?.appointmentDetail?.confirmationDate || '------'}</strong>
+                        <strong>{employee_details?.confirmationDate ? <DisplayDate date={employee_details?.confirmationDate} /> : '------'}</strong>
                     </li> 
                 </ul>
             }
@@ -57,28 +53,34 @@ export default function AppointmentCard () {
             {
                 edit && <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
                     <fieldset className='flex flex-col gap-y-4 gap-x-16'>
-                        <Input
+                         <Datepicker
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
-                            type={'text'}
                             name={'joiningDate'}
                             label={t('Joining Date')}
-                            placeholder={t('Joining Date')}
                             value={formik.values.joiningDate}
-                            formik={formik}
+                            error={formik.errors.joiningDate}
+                            onBlur={formik.handleBlur}
+                            onInput={formik.handleBlur}
+                            onChange={(value) => {
+                                formik.setFieldValue('joiningDate', value)
+                            }}
                             required
                         />
-                        <Input
+                         <Datepicker
                             containerClass={'zt-formGroupV2'}
                             className={' gap-4'}
-                            type={'text'}
                             name={'confirmationDate'}
                             label={t('Confirmation Date')}
-                            placeholder={t('Confirmation Date')}
                             value={formik.values.confirmationDate}
-                            formik={formik}
+                            error={formik.errors.confirmationDate}
+                            onBlur={formik.handleBlur}
+                            onInput={formik.handleBlur}
+                            onChange={(value) => {
+                                formik.setFieldValue('confirmationDate', value)
+                            }}
                             required
-                        />  
+                        />
                         <div className="zt-btns !p-0 !pt-4 justify-end col-span-2">
                             <Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
                                 onClick={() => { formik.resetForm(); setEdit(!edit) }} />

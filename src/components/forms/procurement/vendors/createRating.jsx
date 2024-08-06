@@ -70,9 +70,17 @@ export default function CreateVendorRatingForm({ onClose, object }) {
         },
         {
             type: "text",
-            name: "contact",
+            name: "contactPerson",
             label: t('Key Contact Person'),
             placeholder: t('John'),
+            required: true,
+            value: formik.values.contactPerson,
+        },
+        {
+            type: "text",
+            name: "contact",
+            label: t('Contact'),
+            placeholder: t('+92 301 6546545'),
             required: true,
             value: formik.values.contact,
         },

@@ -3,7 +3,7 @@ import { CheckOutIcon, TakeBreakIcon } from '@/components/svg'
 import React, { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export const TimeSheet = () => {
+export const TimeSheet = ({className}) => {
     const { t } = useTranslation()
     const [isCheckedIn, setIsCheckedIn] = useState(false)
     const [onBreak, setOnBreak] = useState(false)
@@ -74,17 +74,16 @@ export const TimeSheet = () => {
     }
 
     return (
-        <div className={`zt-card grid grid-cols-2 gap-4 text-bmd`}>
-            <div className='flex flex-col text-left'>
+        <div className={`${className} zt-card grid grid-cols-2 gap-4`}>
+            <div className='col-span-2 sm:col-span-1 flex flex-col text-left'>
                 <h2 className='text-xl font-bold mb-0'>{t("TimeSheet")}</h2>
                 <time dateTime={new Date().toISOString()} className='text-themeGrayscale600 text-sm block'>{t(getFormattedDate())}</time>
             </div>
-            <div className='flex flex-col gap-2 text-right'>
+            <div className='col-span-2 sm:col-span-1 flex flex-col gap-2 sm:text-right'>
                 <span className='text-themeGrayscale600 '>{t("Current Shift")}</span>
                 <time className='font-semibold' dateTime="09:00 AM - 06:00 PM">{t("09:00 AM - 06:00 PM")}</time>
             </div>
-            <div className='bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex justify-between'>
-
+            <div className='bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between'>
                 <div className='flex flex-col gap-1'>
                     <span className='text-themeGrayscale600'>{t("Punch In at")}</span>
                     <span className='font-semibold text-themeGrayscale900'>{checkInTime ? checkInTime.toLocaleTimeString() : t("Not checked in")}</span>
@@ -106,11 +105,11 @@ export const TimeSheet = () => {
             ) : (
                 <>
                     {!onBreak ? (
-                        <Button onClick={handleTakeBreak} variant={'orange'} className={'flex w-full items-center whitespace-nowrap'}>Take Break <TakeBreakIcon className={'shrink-0'} /></Button>
+                        <Button onClick={handleTakeBreak} variant={'orange'} className={'flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1'}>Take Break <TakeBreakIcon className={'shrink-0'} /></Button>
                     ) : (
-                        <Button onClick={handleBreakOff} variant={'orange'} className={'flex w-full items-center whitespace-nowrap'}>Break Off <TakeBreakIcon className={'shrink-0'} /></Button>
+                        <Button onClick={handleBreakOff} variant={'orange'} className={'flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1'}>Break Off <TakeBreakIcon className={'shrink-0'} /></Button>
                     )}
-                    <Button onClick={handleCheckOut} variant={'primary'} className={'flex w-full items-center whitespace-nowrap'}>Check Out <CheckOutIcon className={'shrink-0'} /></Button>
+                    <Button onClick={handleCheckOut} variant={'primary'} className={'flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1'}>Check Out <CheckOutIcon className={'shrink-0'} /></Button>
                 </>
             )}
             <div className='w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1'>
