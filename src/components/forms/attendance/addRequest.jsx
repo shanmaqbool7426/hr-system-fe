@@ -102,7 +102,7 @@ export default function AddRequestForm({onClose, object }) {
         },
     ]
     return (
-        <BaseForm title={object ? t(`Edit Request`) : t(`Add New Request`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t(`Edit Request`) : t(`Add Request`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 

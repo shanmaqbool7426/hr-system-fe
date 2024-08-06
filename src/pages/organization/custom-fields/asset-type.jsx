@@ -16,7 +16,7 @@ export default function ManageAssetTypesPage() {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [create, setCreate] = useState(false)
-  const [hide, setHide] = useState(false)
+ 
   const [edit, setEdit] = useState(false)
   const { customfield_list } = useSelector(state => state.customfield)
   const headings = [
@@ -74,18 +74,13 @@ export default function ManageAssetTypesPage() {
           <p className="mb-0">{t("Manage your Asset Type")}</p>
         </div>
         <div className="flex items-start gap-2">
-          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create New Asset Type")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create Asset Type")}</Button>
         </div>
       </div>
 
       <div className=" zt-card grow">
 
-        {!hide && <div className="p-2 bg-themeBlue/30 rounded-lg mb-4 text-themeBlue/80 flex items-center justify-between">
-          <div className='flex items-center gap-2'><InputErrorInfo /><strong> {t("Note")}</strong> {t('You cannot change predefined values')}</div>
-          <CloseCross className={'cursor-pointer'}
-            onClick={(() => setHide(true))}
-          />
-        </div>}
+     
 
         <Table
           headings={headings}
@@ -143,6 +138,11 @@ export default function ManageAssetTypesPage() {
               },
             ]
           },
+          {
+            type:'switch',
+            label:"Onboarding Asset",
+            id:"OnboardingAsset"
+          }
         ]}
         dynamicFields={true}
       />}

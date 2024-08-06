@@ -89,7 +89,7 @@ export default function Employees() {
 
             Name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className="shrink-0">
-                    <Image height={40} width={40} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile" height={40} width={40} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
                     <span className={'text-themeGrayscale500'}>{t('23056')}</span>
@@ -132,7 +132,7 @@ export default function Employees() {
 
             Name: <div className="flex items-center justify-center gap-4 grow">
                 <figure className="shrink-0">
-                    <Image height={40} width={40} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
+                    <Image alt="profile" height={40} width={40} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
                 <div className={'flex flex-col text-left'}>
                     <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
                     <span className={'text-themeGrayscale500'}>{t('503')}</span>

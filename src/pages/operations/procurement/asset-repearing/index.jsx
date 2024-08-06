@@ -1,9 +1,12 @@
-import { Button, Table } from "@/components/elements"; 
+import { Button, DropDown, Table } from "@/components/elements";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";     
+import { useDispatch, useSelector } from "react-redux";
 import CreateRepairingRequestForm from "@/components/forms/procurement/assetRepearing/create";
+import StatusSelect from "@/components/elements/SelectStatus";
+import Toast from "@/util/toast";
+import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 
 
 export default function AssetRepearingPage() {
@@ -14,21 +17,96 @@ export default function AssetRepearingPage() {
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false) 
+    const [create, setCreate] = useState(false)
 
     const headings = [
 
-        { title: t("Name"), col: "name" },
-        { title: t("Contact"), col: "Contact" },
-        { title: t("Status"), col: "status" },
+        { title: t("Asset ID"), col: "AssetID" },
+        { title: t("Asset Name"), col: "AssetName" },
+        { title: t("Issue"), col: "Issue" },
+        { title: t("Reported Date"), col: "ReportedDate" },
+        { title: t("Assign Technician"), col: "AssignTechnician" },
+        { title: t("Status"), col: "Status" },
+        { title: t("Action"), col: "action" },
     ]
-
-    const rows = [{
-
-        name: "John",
-        Contact: "+92 302 646587",
-        status: "active",
-    }
+    const options = [
+        { value: 'success', label: 'Owner', className: 'zt-tag-success' },
+        { value: 'purple', label: 'Employee', className: 'zt-tag-purple' },
+    ];
+    const StatusOptions = [
+        { value: 'success', label: 'Open', className: 'zt-tag-success' },
+        { value: 'danger', label: 'Closed', className: 'zt-tag-danger' },
+    ];
+    const item = { status: 'success' };
+    const rows = [
+        {
+            AssetID: "098765",
+            AssetName: "Printer",
+            Issue: "Description",
+            ReportedDate: "01-08-2024",
+            AssignTechnician: <StatusSelect item={item} options={options} />,
+            Status: <StatusSelect item={item} options={StatusOptions} />,
+            action: <DropDown icon={<ThreeDotsVertical />}>
+                <ul className="zt-themeDropDownList zt-sm gap-4 ">
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("View")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><Edit /></span>
+                            <span>{t("Edit")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => {
+                            Toast.confirmDelete(() => {
+                                Toast.success(t("Asset Repearing deleted successfully"))
+                            }, t)
+                        }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><Trash /></span>
+                            <span>{t("Delete")}</span>
+                        </a>
+                    </li>
+                </ul>
+            </DropDown>
+        },
+        {
+            AssetID: "098765",
+            AssetName: "Printer",
+            Issue: "Description",
+            ReportedDate: "01-08-2024",
+            AssignTechnician: <StatusSelect item={item} options={options} />,
+            Status: <StatusSelect item={item} options={StatusOptions} />,
+            action: <DropDown icon={<ThreeDotsVertical />}>
+                <ul className="zt-themeDropDownList zt-sm gap-4 ">
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><EyeOn /></span>
+                            <span>{t("View")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setCreate(true) }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><Edit /></span>
+                            <span>{t("Edit")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => {
+                            Toast.confirmDelete(() => {
+                                Toast.success(t("Asset Repearing deleted successfully"))
+                            }, t)
+                        }} className={'no-underline flex items-center gap-1 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><Trash /></span>
+                            <span>{t("Delete")}</span>
+                        </a>
+                    </li>
+                </ul>
+            </DropDown>
+        },
     ]
     const pagination = {
         totalRecords: total_records,
@@ -70,7 +148,7 @@ export default function AssetRepearingPage() {
                 />
             </div>
 
-            {create && <CreateRepairingRequestForm onClose={() => { setCreate(false)}} />}
+            {create && <CreateRepairingRequestForm onClose={() => { setCreate(false) }} />}
         </section>
     )
 }

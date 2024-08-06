@@ -1,12 +1,8 @@
-import { Button, SearchInput, Table, SearchSelect, DropDown, Profile, DisplayDate } from "@/components/elements";
+import { Table,  DropDown, Profile, DisplayDate } from "@/components/elements";
 import FilterArea from "@/components/includes/FilterArea";
-import { AssignTo, Edit, EyeOn, HandFree, HeadPhone, Led, ReturnTo, ThreeDotsVertical, Trash } from "@/components/svg";
-import { FetchDepartments, DeleteDepartment } from "@/store/actions/department.actions";
-import Toast from "@/util/toast";
-import { useTranslation } from "next-i18next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FetchEmployees } from "@/store/actions/employee.actions";
+import { EyeOn, ThreeDotsVertical } from "@/components/svg"; 
+import { useTranslation } from "next-i18next"; 
+import { useEffect, useState } from "react"; 
 import { useDispatch, useSelector } from "react-redux";
 import { FetchAssets, RestoreAsset } from "@/store/actions/asset.actions";
 

@@ -18,7 +18,7 @@ export default function Approvels() {
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
     const [view, setView] = useState(false)
-    const [hide, setHide] = useState(false)
+   
     const [edit, setEdit] = useState(false)
     const { customfield_list } = useSelector(state => state.customfield)
     const [filters, setFilters] = useState({
@@ -273,7 +273,7 @@ export default function Approvels() {
             {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Attendance Approvels")}</h1>
-                <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add New Request")}</Button>
+                <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Request")}</Button>
             </div>
 
             <div className="zt-card grow">

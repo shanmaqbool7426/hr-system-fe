@@ -15,7 +15,7 @@ import IconCompnent from "@/components/forms/organization/inventory/IconCompnent
 export default function InventoryPage() {
 	const { t } = useTranslation()
 	const dispatch = useDispatch()
-	const { is_loading, asset_list } = useSelector((state) => state.asset)
+	const { asset_list } = useSelector((state) => state.asset)
 	const [sortCol, setSortCol] = useState(null)
 	const [sortDir, setSortDir] = useState(null)
 	const [page, setPage] = useState(1)

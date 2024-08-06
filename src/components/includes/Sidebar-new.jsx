@@ -152,11 +152,12 @@ export default function Sidebar() {
           { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
           { name: t('Vendors'), href: "/operations/procurement/vendors" },
           { name: t('Quotations'), href: "/operations/procurement/quotations" },
-          { name: t('Quoted Prices'), href: "/operations/procurement/quoted-prices" },
+          { name: t('Items Price'), href: "/operations/procurement/items-price" },
           { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
           { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
           { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
           { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
+          { name: t("Setting"), href: "/operations/procurement/setting" },
         ]
       },
       {
@@ -166,6 +167,7 @@ export default function Sidebar() {
           { name: t('Asset History'), href: "/operations/inventory/asset-history" },
           { name: t('Repair History'), href: "/operations/inventory/repair-history" },
           { name: t('Delete History'), href: "/operations/inventory/delete-history" },
+          { name: t('Inventory Reported Task'), href: "/operations/inventory/inventory-reported-task" },
         ]
       },
       {

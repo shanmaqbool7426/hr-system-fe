@@ -84,7 +84,7 @@ export default function AttendanceBiometricSettingPage() {
         <section className="flex flex-col grow relative">
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Biometric Settings")}</h1>
-                <Button className={"btn btn-primary"} onClick={() => setAdd(true)}>{t("Add New Device")}</Button>
+                <Button className={"btn btn-primary"} onClick={() => setAdd(true)}>{t("Add Device")}</Button>
             </div>
             <div className="zt-card grow">
                 <h2 className="font-bold text-xl">{t("Biometric Devices")}</h2>
