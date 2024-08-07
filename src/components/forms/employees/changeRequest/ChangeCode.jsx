@@ -1,65 +1,72 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import Storage from "@/util/storage"
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "@/util/toast";
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
-// import { changeCode } from '@/store/actions/employee-change-request.actions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
+import { uploader } from '@/util/helpers';
+import { ChangeEmployeeCode, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
 export default function ChangeCodeForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { customfield_list } = useSelector(state => state.customfield)
     const { employees_list } = useSelector((state) => state.employee)
+    const { is_loading } = useSelector((state) => state.employee);
+    const { auth_user } = useSelector(state => state.auth);
+    const [currentCode, setCurrentCode] = useState("");
+
     useEffect(() => {
         if (employees_list.length === 0)
             dispatch(FetchEmployees())
     }, [dispatch])
-    const { is_loading } = useSelector((state) => state.employee);
 
     const formik = useFormik({
 		initialValues: {
-			employee: "",
-			currentEmployeeCode: "",
-			newEmployeeCode: "",
+            employee: "",
+			employeeCode: "",
 			effectiveDate: "",
-			reasonOfChangeEmployeeCode: "",
+			reason: "",
 			detail: "",
-			fileEmployeeCode: "",
+			attachment: null,
 		},
 		validationSchema: Yup.object().shape({
-			employee: Yup.string().required(t('formik.employeeRequired')),
-			currentEmployeeCode: Yup.string().required(t('formik.currentEmployeeCodeRequired')),
-			newEmployeeCode: Yup.string().required(t('formik.newEmployeeCodeRequired')),
+            employee: Yup.string().required(t('formik.employeeRequired')),
+			employeeCode: Yup.string().required(t('New Employee Code is Required')),
 			effectiveDate: Yup.string().required(t('formik.effectiveDateRequired')),
-			reasonOfChangeEmployeeCode: Yup.string().required(t('formik.reasonOfChangeEmployeeCodeRequired')),
-			detail: Yup.string(),
-			fileEmployeeCode: Yup.string(),
+			reason: Yup.string().required(t('formik.reasonOfDesignationChangeRequired')),
 		}),
-		onSubmit: async (values) => {
+        onSubmit: async (values) => {
 			if (values.attachment) {
-				await uploader(values.attachment, (url) => {
-					values.attachment = url;
-					// dispatch(changeCode(values, () => {
-						formik.resetForm();
-						Toast.success(t("Grade change request saved successfully"));
-					// }));
-				});
+                let {url} = await Storage.upload(values.attachment, auth_user?.company?._id )
+                values.attachment = url
+					dispatch(ChangeEmployeeCode(values, () => {
+						formik.resetForm()
+                        onCompleted();
+					}))
 			} else {
-				// dispatch(changeCode(values, () => {
-					formik.resetForm();
-					Toast.success(t("Request not proceed"));
-				// }));
+				dispatch(ChangeEmployeeCode(values, () => {
+					formik.resetForm()
+                    onCompleted();
+				}))
 			}
 		}
 	});
     const onCompleted = () => {
-        Toast.success(object ? t("Employee updated successfully") : t("Employee created successfully"));
+        Toast.success(object ? t("Employee Code Change Request Updated Successfully") : t("Employee Code Change Request Created Successfully"));
+        dispatch(FetchChangeRequests())
         onClose();
     };
+
+    useEffect(() => {
+        const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
+        if (selectedEmployee) {
+            setCurrentCode(selectedEmployee.employeeCode || ""); 
+        }
+    }, [formik.values.employee, employees_list]);
 
     const formElements = [
         {
@@ -78,41 +85,46 @@ export default function ChangeCodeForm({ onClose, object }) {
             name: "currentEmployeeCode",
             label: t('Current Code'),
             placeholder: t("Enter Current Code"),
+            value: currentCode,
+            readOnly: true, 
+            className:"cursor-not-allowed"
         },
         {
-            type: "select",
-            name: 'newEmployeeCode',
+            type: "text",
+            name: 'employeeCode',
             label: 'New Code',
-            value: formik.values.newEmployeeCode,
-            error: formik.touched.newEmployeeCode && formik.errors.newEmployeeCode,
-            list: [{ display: '1088', value: '1' }, { display: '1085', value: '2' }],
+            value: formik.values.employeeCode,
+            error: formik.touched.employeeCode && formik.errors.employeeCode,
+            // list: [{ display: '1088', value: '1' }, { display: '1085', value: '2' }],
             required: true
         },
         {
             type: "date",
-            name: 'effectiveDate',
-            label: 'Effective Date',
+            name:'effectiveDate',
+            label:'Effective Date',
             value: formik.values.effectiveDate,
-            error: formik.touched.effectiveDate && formik.errors.effectiveDate,
-            required: true
+            error: formik.touched.effectiveDate && formik.errors.effectiveDate,   
+            required:true
         },
         {
             type: "select",
-            name: 'reasonOfChangeEmployeeCode',
-            label: 'Reason Of Code Change',
-            value: formik.values.reasonOfChangeEmployeeCode,
-            error: formik.touched.reasonOfChangeEmployeeCode && formik.errors.reasonOfChangeEmployeeCode,
-            list:[{ display: 'Correction of Errors', value: '1' }, { display: 'System Upgrade or Integration', value: '2' }],
-            required: true
+            name:'reason',
+            label:'Reason Of Employee Code Change',
+            value: formik.values.reason,
+            error: formik.touched.reason && formik.errors.reason,  
+            list: [
+                { display: 'Promotion', value: 'promotion' },
+                { display: 'Correction', value: 'correction' },
+                { display: 'Other', value: 'other' },
+            ],
         },
         {
             type: "textarea",
-            name: 'detail',
-            label: 'Details',
+            name:'detail',
+            label:'Details',
             value: formik.values.detail,
-            error: formik.touched.detail && formik.errors.detail,
+            error: formik.touched.detail && formik.errors.detail,  
             containerClass: 'col-span-2',
-            required: true
         },
     ];
 

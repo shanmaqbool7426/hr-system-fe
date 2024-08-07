@@ -2,21 +2,38 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from '@/util/toast';
 // import { changeCode } from '@/store/actions/employee-change-request.actions';
-import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { useState } from 'react';
 import ChangeCodeForm from '@/components/forms/employees/changeRequest/ChangeCode';
+import { FetchEmployees } from '@/store/actions/employee.actions';
+import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
 
 export default function EmployeeCodePage() {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const { employees_list } = useSelector(state => state.employee);
 	const changeIdRef = useRef(null);
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const {change_request_list, employees_list} = useSelector(state => state.employee)
+	const { customfield_list } = useSelector(state => state.customfield)
+	const currentDesignationRef = useRef(null)
+	const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+	useEffect(() => {
+		if (employees_list.length === 0)
+			dispatch(FetchEmployees())
+		dispatch(FetchChangeRequests())
+	}, [dispatch])
+
 	const formik = useFormik({
 		initialValues: {
 			employee: "",
@@ -53,11 +70,6 @@ export default function EmployeeCodePage() {
 			}
 		}
 	});
-	const [sortCol, setSortCol] = useState(null)
-	const [sortDir, setSortDir] = useState(null)
-	const [page, setPage] = useState(1)
-	const [change, setChange] = useState(false)
-	const [perPage, setPerPage] = useState(10)
 	const pagination = {
 		totalRecords: 5,
 		showPerPage: true,
@@ -74,35 +86,18 @@ export default function EmployeeCodePage() {
 		{ title: t("Reason Of Employee Id Change"), col: "ReasonOfEmployeeIdChange", },
 		{ title: t("Details"), col: "Details", },
 	]
-	const rows = [
-		{
-		
-			Employee: 'Admin',
-			CurrentId: '4656',
-			NewEmployeeCode: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfEmployeeIdChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentId: '4656',
-			NewEmployeeCode: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfEmployeeIdChange: 'Correction of Errors',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentId: '4656',
-			NewEmployeeCode: '8888',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfEmployeeIdChange: 'Correction of Errors',
-			Details: '-',
-		},
-	]
+	
+	const rows = change_request_list
+	.filter(request => request.type === 'employeeCode')
+	.map(request => ({
+		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
+		CurrentId: request.employee?.employeeCode || "---", 
+		NewEmployeeCode: request?.employeeCode, 
+		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
+		ReasonOfEmployeeIdChange: request.reason,
+		Details: request.detail || '-', 
+	}));
+	
 	return (
 		<section className="flex flex-col grow">
 			{/* {is_loading && <PageLoader/>} */}

@@ -5,61 +5,67 @@ import { useDispatch, useSelector } from "react-redux";
 import Toast from "@/util/toast";
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
+import {  ChangeSalary, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { uploader } from '@/util/helpers';
 
 export default function ChangeSalaryForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { customfield_list } = useSelector(state => state.customfield)
     const { employees_list } = useSelector((state) => state.employee)
+    const { is_loading } = useSelector((state) => state.employee);
+    const [currentSalary, setCurrentSalary] = useState("");
+
     useEffect(() => {
         if (employees_list.length === 0)
             dispatch(FetchEmployees())
     }, [dispatch])
-    const { is_loading } = useSelector((state) => state.employee);
 
     const formik = useFormik({
-		employee: "",
 		initialValues: {
-			currentSalary: "",
-			newSalary: "",
+            employee: "",
+			salary: "",
 			effectiveDate: "",
-			reasonOfChangeSalary: "",
+			reason: "",
 			detail: "",
-			fileSalary: "",
+			attachment: null,
 		},
 		validationSchema: Yup.object().shape({
-			employee: Yup.string().required(t('formik.employeeRequired')),
-			currentSalary: Yup.string().required(t('formik.currentSalaryRequired')),
-			newSalary: Yup.string().required(t('formik.newSalaryRequired')),
+            employee: Yup.string().required(t('formik.employeeRequired')),
+			salary: Yup.number().required(t('New Salary is Required')),
 			effectiveDate: Yup.string().required(t('formik.effectiveDateRequired')),
-			reasonOfChangeSalary: Yup.string().required(t('formik.reasonOfChangeSalaryRequired')),
-			detail: Yup.string(),
-			fileSalary: Yup.string(),
+			reason: Yup.string().required(t('formik.reasonOfDesignationChangeRequired')),
 		}),
-		onSubmit: async (values) => {
+        onSubmit: async (values) => {
 			if (values.attachment) {
 				await uploader(values.attachment, (url) => {
-					values.attachment = url;
-					dispatch(ChangeDepartment(values, () => {
-						formik.resetForm();
-						Toast.success(t("Salery change request saved successfully"));
-					}));
-				});
+					values.attachment = url
+					dispatch(ChangeSalary(values, () => {
+						formik.resetForm()
+                        onCompleted();
+					}))
+				})
 			} else {
-				dispatch(ChangeDesignation(values, () => {
-					formik.resetForm();
-					Toast.success(t("Request not proceed"));
-				}));
+				dispatch(ChangeSalary(values, () => {
+					formik.resetForm()
+                    onCompleted();
+				}))
 			}
-
 		}
 	});
     const onCompleted = () => {
-        Toast.success(object ? t("Employee updated successfully") : t("Employee created successfully"));
+        Toast.success(object ? t("Salary Change Request Updated Successfully") : t("Salary Change Request Created Successfully"));
+        dispatch(FetchChangeRequests())
         onClose();
     };
+
+    useEffect(() => {
+        const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
+        if (selectedEmployee) {
+            setCurrentSalary(selectedEmployee.salary || ""); 
+        }
+    }, [formik.values.employee, employees_list]);
 
     const formElements = [
         {
@@ -75,44 +81,47 @@ export default function ChangeSalaryForm({ onClose, object }) {
         },
         {
             type: "text",
-            name: "currentEmployeeSalary",
             label: t('Current Salary'),
-            placeholder: t("Enter Current Salary"),
+            placeholder: t("Enter Salary"),
+            value: currentSalary,
+            readOnly: true, 
+            className:"cursor-not-allowed"
         },
         {
-            type: "select",
-            name: 'newEmployeeSalary',
+            type: "text",
+            name: 'salary',
             label: 'New Salary',
-            value: formik.values.newEmployeeSalary,
-            error: formik.touched.newEmployeeSalary && formik.errors.newEmployeeSalary,
-            list: [{ display: '20000', value: '1' }, { display: '350000', value: '2' }],
+            value: formik.values.salary,
+            error: formik.touched.salary && formik.errors.salary,
             required: true
         },
         {
             type: "date",
-            name: 'effectiveDate',
-            label: 'Effective Date',
+            name:'effectiveDate',
+            label:'Effective Date',
             value: formik.values.effectiveDate,
-            error: formik.touched.effectiveDate && formik.errors.effectiveDate,
-            required: true
+            error: formik.touched.effectiveDate && formik.errors.effectiveDate,   
+            required:true
         },
         {
             type: "select",
-            name: 'reasonOfChangeSalary',
-            label: 'Reason Of Salary Change',
-            value: formik.values.reasonOfChangeSalary,
-            error: formik.touched.reasonOfChangeSalary && formik.errors.reasonOfChangeSalary,
-            list: [{ display: 'Performance-Based Increase', value: '1' }, { display: 'Market Adjustment', value: '2' }],
-            required: true
+            name:'reason',
+            label:'Reason Of Salary Change',
+            value: formik.values.reason,
+            error: formik.touched.reason && formik.errors.reason,  
+            list: [
+                { display: 'Promotion', value: 'promotion' },
+                { display: 'Correction', value: 'correction' },
+                { display: 'Other', value: 'other' },
+            ],
         },
         {
             type: "textarea",
-            name: 'detail',
-            label: 'Details',
+            name:'detail',
+            label:'Details',
             value: formik.values.detail,
-            error: formik.touched.detail && formik.errors.detail,
+            error: formik.touched.detail && formik.errors.detail,  
             containerClass: 'col-span-2',
-            required: true
         },
     ];
 

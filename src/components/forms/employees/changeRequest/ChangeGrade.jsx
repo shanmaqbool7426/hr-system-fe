@@ -5,60 +5,70 @@ import { useDispatch, useSelector } from "react-redux";
 import Toast from "@/util/toast";
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
+import {  ChangeGrade, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { uploader } from '@/util/helpers';
 
 export default function ChangeGradeForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { customfield_list } = useSelector(state => state.customfield)
     const { employees_list } = useSelector((state) => state.employee)
+	const { customfield_list } = useSelector(state => state.customfield)
+    const { is_loading } = useSelector((state) => state.employee);
+    const [currentGrade, setCurrentGrade] = useState("");
+
     useEffect(() => {
         if (employees_list.length === 0)
             dispatch(FetchEmployees())
     }, [dispatch])
-    const { is_loading } = useSelector((state) => state.employee);
 
-	const formik = useFormik({
+    const formik = useFormik({
 		initialValues: {
-			employee: "",
-			currentGrade: "",
-			newGrade: "",
+            employee: "",
+			grade: "",
 			effectiveDate: "",
-			reasonOfGradeChange: "",
+			reason: "",
 			detail: "",
-			fileGrade: "",
+			attachment: null,
 		},
 		validationSchema: Yup.object().shape({
-			employee: Yup.string().required(t('formik.employeeRequired')),
-			currentGrade: Yup.string().required(t('formik.currentGradeRequired')),
-			newGrade: Yup.string().required(t('formik.newGradeRequired')),
+            employee: Yup.string().required(t('formik.employeeRequired')),
+			grade: Yup.string().required(t('New Grade is Required')),
 			effectiveDate: Yup.string().required(t('formik.effectiveDateRequired')),
-			reasonOfGradeChange: Yup.string().required(t('formik.reasonOfGradeChangeRequired')),
-			detail: Yup.string(),
-			fileGrade: Yup.string(),
+			reason: Yup.string().required(t('formik.reasonOfDesignationChangeRequired')),
 		}),
-		onSubmit: async (values) => {
+        onSubmit: async (values) => {
 			if (values.attachment) {
 				await uploader(values.attachment, (url) => {
-					values.attachment = url;
-					dispatch(ChangeDepartment(values, () => {
-						formik.resetForm();
-						Toast.success(t("Grade change request saved successfully"));
-					}));
-				});
+					values.attachment = url
+					dispatch(ChangeGrade(values, () => {
+						formik.resetForm()
+                        onCompleted();
+					}))
+				})
 			} else {
-				dispatch(ChangeDesignation(values, () => {
-					formik.resetForm();
-					Toast.success(t("Request not proceed"));
-				}));
+				dispatch(ChangeGrade(values, () => {
+					formik.resetForm()
+                    onCompleted();
+				}))
 			}
 		}
 	});
     const onCompleted = () => {
-        Toast.success(object ? t("Employee updated successfully") : t("Employee created successfully"));
+        Toast.success(object ? t("Grade Change Request Updated Successfully") : t("Grade Change Request Created Successfully"));
+        dispatch(FetchChangeRequests())
         onClose();
     };
+
+    useEffect(() => {
+        const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
+        if (selectedEmployee) {
+            const grade = customfield_list.find(field => field._id === selectedEmployee.grade?._id);
+            setCurrentGrade(grade ? grade.name : ""); 
+        }
+    }, [formik.values.employee, employees_list, customfield_list]);
+
 
     const formElements = [
         {
@@ -74,44 +84,50 @@ export default function ChangeGradeForm({ onClose, object }) {
         },
         {
             type: "text",
-            name: "currentGrade",
             label: t('Current Grade'),
-            placeholder: t("Enter Current Grade"),
+            placeholder: t("Enter Grade"),
+            value: currentGrade,
+            readOnly: true, 
+            className:"cursor-not-allowed"
         },
         {
             type: "select",
-            name: 'newGrade',
+            name: 'grade',
             label: 'New Grade',
-            value: formik.values.newGrade,
-            error: formik.touched.newGrade && formik.errors.newGrade,
-            list: [{ display: 'A', value: '1' }, { display: 'B', value: '2' }],
+            value: formik.values.grade,
+            error: formik.touched.grade && formik.errors.grade,
+            list:customfield_list.filter(item => item.type === 'grade').map(item => {
+                return { display: item.name, value: item._id }
+            }),
             required: true
         },
         {
             type: "date",
-            name: 'effectiveDate',
-            label: 'Effective Date',
+            name:'effectiveDate',
+            label:'Effective Date',
             value: formik.values.effectiveDate,
-            error: formik.touched.effectiveDate && formik.errors.effectiveDate,
-            required: true
+            error: formik.touched.effectiveDate && formik.errors.effectiveDate,   
+            required:true
         },
         {
             type: "select",
-            name: 'reasonOfGradeChange',
-            label: 'Reason Of Grade Change',
-            value: formik.values.reasonOfGradeChange,
-            error: formik.touched.reasonOfGradeChange && formik.errors.reasonOfGradeChange,
-            list: [{ display: 'Promotion', value: '1' }, { display: 'Reorganization', value: '2' }],
-            required: true
+            name:'reason',
+            label:'Reason Of Grade Change',
+            value: formik.values.reason,
+            error: formik.touched.reason && formik.errors.reason,  
+            list: [
+                { display: 'Promotion', value: 'promotion' },
+                { display: 'Correction', value: 'correction' },
+                { display: 'Other', value: 'other' },
+            ],
         },
         {
             type: "textarea",
-            name: 'detail',
-            label: 'Details',
+            name:'detail',
+            label:'Details',
             value: formik.values.detail,
-            error: formik.touched.detail && formik.errors.detail,
+            error: formik.touched.detail && formik.errors.detail,  
             containerClass: 'col-span-2',
-            required: true
         },
     ];
 

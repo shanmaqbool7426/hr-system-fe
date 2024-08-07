@@ -18,12 +18,13 @@ export default function EmployeeProfile({ employeeId }) {
   const { customfield_list } = useSelector(state => state.customfield);
   const {  departments_list } = useSelector(state => state.department);
   const { is_loading, employee_details , employees_list} = useSelector((state) => state.employee)
+  
   useEffect(()=>{
-    dispatch(FetchDepartments())
-    dispatch(FetchEmployees())
     if (employeeId) {
       dispatch(FetchEmployeeDetails(employeeId));
     }
+    dispatch(FetchEmployees())
+    dispatch(FetchDepartments())
   }, [dispatch , employeeId])
   const formik = useFormik({
     initialValues: {
@@ -35,8 +36,8 @@ export default function EmployeeProfile({ employeeId }) {
       contact: employee_details?.contact || "",
       dateOfBirth: employee_details?.dateOfBirth || "",
       address: employee_details?.address || "",
-      designation: employee_details?.designation._id || "",
-      lineManager: employee_details?.lineManager._id || "",
+      designation: employee_details?.designation?._id || "",
+      lineManager: employee_details?.lineManager?._id || "",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t('formik.firstNameRequired')),

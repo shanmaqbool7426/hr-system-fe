@@ -6,6 +6,7 @@ export const employeeSlice = createSlice({
         is_loading: false,
         employees_list: [],
         employee_details: null,
+        change_request_list:[],
     },
     reducers: {
         setLoading(state, action) {
@@ -13,6 +14,9 @@ export const employeeSlice = createSlice({
         },
         setEmployeesList(state, action) {
             state.employees_list = action.payload.list
+        },
+        setChangeRequestList(state, action) {
+            state.change_request_list = action.payload.list
         },
         setEmployee(state, action) {
             let index = state.employees_list.findIndex((item) => item._id === action.payload._id)
@@ -55,12 +59,39 @@ export const employeeSlice = createSlice({
         removeJobExperience(state, action) {
             state.employee_details.jobExperiences = state.employee_details.jobExperiences.filter(item => item._id !== action.payload)
         },
+        setDocument(state, action) {
+            let index = state.employee_details.documents.findIndex(item => item._id === action.payload._id)
+            state.employee_details.documents[index] = action.payload
+        },
+        pushDocument(state, action) {
+            if (!state.employee_details.documents) {
+                state.employee_details.documents = []
+            }
+            state.employee_details.documents.push(action.payload)
+        }, 
+        removeDocument(state, action) {
+            state.employee_details.documents = state.employee_details.documents.filter(item => item._id !== action.payload)
+        },
+        setWarning(state, action) {
+            let index = state.employee_details.warnings.findIndex(item => item._id === action.payload._id)
+            state.employee_details.warnings[index] = action.payload
+        },
+        pushWarning(state, action) {
+            if (!state.employee_details.warnings) {
+                state.employee_details.warnings = []
+            }
+            state.employee_details.warnings.push(action.payload)
+        }, 
+        removeWarning(state, action) {
+            state.employee_details.warnings = state.employee_details.warnings.filter(item => item._id !== action.payload)
+        },
     },
 });
 
 export const {
     setLoading,
     setEmployeesList,
+    setChangeRequestList,
     setEmployee,
     removeEmployee,
     pushEmployee,
@@ -71,6 +102,10 @@ export const {
     setJobExperience,
     pushJobExperience,
     removeJobExperience,
+    setDocument,
+    pushDocument,
+    removeDocument,
+    setWarning,pushWarning,removeWarning
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import Toast from '@/util/toast';
-import { ChangeLineManager } from '@/store/actions/employee-change-request.actions';
-import { Button, CheckBox, Datepicker, SearchSelect, Table, Textarea } from '@/components/elements';
+import { ChangeLineManager, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import ChangeLineManagerForm from '@/components/forms/employees/changeRequest/ChangeLineManger';
 
@@ -15,14 +15,21 @@ const user = ls?.get('auth_user', { decrypt: true })
 
 export default function LineManagerPage() {
 	const { t } = useTranslation();
-	const { } = useSelector(state => state.employee)
-	const { customfield_list } = useSelector(state => state.customfield)
-	const { employees_list } = useSelector((state) => state.employee)
-	const ChangeLineManagerRef = useRef(null)
 	const dispatch = useDispatch()
+	const { } = useSelector(state => state.employee)
+	const [sortCol, setSortCol] = useState(null)
+	const [sortDir, setSortDir] = useState(null)
+	const [page, setPage] = useState(1)
+	const [change, setChange] = useState(false)
+	const [perPage, setPerPage] = useState(10)
+	const { customfield_list } = useSelector(state => state.customfield)
+	const { employees_list ,change_request_list} = useSelector((state) => state.employee)
+	const ChangeLineManagerRef = useRef(null)
+
 	useEffect(() => {
 		if (employees_list.length === 0)
 			dispatch(FetchEmployees())
+		dispatch(FetchChangeRequests())
 	}, [dispatch])
 	const formik = useFormik({
 		initialValues: {
@@ -60,11 +67,7 @@ export default function LineManagerPage() {
 			}
 		}
 	});
-	const [sortCol, setSortCol] = useState(null)
-	const [sortDir, setSortDir] = useState(null)
-	const [page, setPage] = useState(1)
-	const [change, setChange] = useState(false)
-	const [perPage, setPerPage] = useState(10)
+	
 	const pagination = {
 		totalRecords: 5,
 		showPerPage: true,
@@ -81,35 +84,17 @@ export default function LineManagerPage() {
 		{ title: t("Reason Of Line Manager Change"), col: "ReasonOfLineManagerChange", },
 		{ title: t("Details"), col: "Details", },
 	]
-	const rows = [
-		{
-		
-			Employee: 'Admin',
-			CurrentLineManager: 'John',
-			NewLineManager: 'Josef',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfLineManagerChange: 'Promotion',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentLineManager: 'John',
-			NewLineManager: 'Josef',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfLineManagerChange: 'Promotion',
-			Details: '-',
-		},
-		{
-		
-			Employee: 'Admin',
-			CurrentLineManager: 'John',
-			NewLineManager: 'Josef',
-			EffectiveDate: '12 Jun 2025',
-			ReasonOfLineManagerChange: 'Promotion',
-			Details: '-',
-		},
-	]
+	const rows = change_request_list
+	.filter(request => request.type === 'lineManager')
+	.map(request => ({
+		Employee: `${request?.employee?.firstName} ${request?.employee?.lastName}`, 
+		CurrentLineManager:   request?.employee?.lineManager?._id|| "---", 
+		NewLineManager: request?.lineManager?.firstName, 
+		EffectiveDate:  <DisplayDate date={request.effectiveDate}/>  , 
+		ReasonOfLineManagerChange: request.reason,
+		Details: request.detail || '-', 
+	}));
+
 	return (
 		<section className="flex flex-col grow">
 			{/* {is_loading && <PageLoader/>} */}
