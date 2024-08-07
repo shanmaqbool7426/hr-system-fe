@@ -1,7 +1,6 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import StatusSelect from '@/components/elements/SelectStatus'
-import ApplyOvertimeForm from '@/components/forms/overTime/create'
-import ViewAdvanceSalaryForm from '@/components/forms/payRoll/advanceSalary/view'
+import ApplyOvertimeForm from '@/components/forms/overTime/create' 
 import FilterArea from '@/components/includes/FilterArea'
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from '@/components/svg'
 import Toast from '@/util/toast'
