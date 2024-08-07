@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 const data = [
     { name: '01 Apr', uv: 4000, pv: 2400, amt: 2400 },
@@ -35,20 +35,25 @@ const data = [
 ];
 
 const COLORS = ['#8C62FF', '#8C62FF', '#8C62FF', '#8C62FF', '#FFD023', '#0BA259', '#55C790', "#E03137", "#243C7A", "#8C62FF"];
-
+const formatTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}:${mins < 10 ? '0' : ''}${mins}`;
+};
 export const AttendanceChart = () => {
     const colorData = [
-        { label: 'Present', color: "bg-themePurple" },
+        { label: 'Present', color: "bg-themeSuccessDark" },
+        { label: 'Absent', color: "bg-themeDanger" },
         { label: 'Late', color: "bg-themeSecondary" },
+        { label: 'Leave', color: "bg-themePurple" },
+        { label: 'Ghazzatted Holiday', color: "bg-themeGrayscale" },
+        { label: 'Holiday', color: "bg-themeGrayscale" },
         { label: 'Early', color: "bg-themePrimary" },
         { label: 'Half Day', color: "bg-themeSuccessLight" },
         { label: 'Quarter Days', color: "bg-themeGrayscale500" },
         { label: 'Short Day', color: "bg-lightOrange" },
-        { label: 'Absent', color: "bg-themeDanger" },
         { label: 'Absent For Short Time', color: "bg-themePrimary" },
-        { label: 'Leave', color: "bg-themeSuccessDark" },
         { label: 'Missing', color: "bg-themeGrayscale300" },
-        { label: 'Off', color: "bg-themeGrayscale" },
     ]
     return (
         <Fragment>
@@ -56,8 +61,14 @@ export const AttendanceChart = () => {
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart width={"100%"} data={data}>
                         <CartesianGrid horizontal={false} vertical={false} />
-                        <XAxis dataKey="name"  axisLine={false} tickLine={false} className='text-[8px]'/>
-                        <Bar radius={4} dataKey="uv" fill="#8884d8" barSize={20}> {data.map((entry, index) => ( <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} /> ))}</Bar>
+                        <YAxis
+                            axisLine={false}
+                            tickLine={false}
+                            className='text-xs'
+                            tickFormatter={formatTime}  // Use the formatter here
+                        />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} className='text-[8px]' />
+                        <Bar radius={4} dataKey="uv" fill="#8884d8" barSize={20}> {data.map((entry, index) => (<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />))}</Bar>
                     </BarChart>
                 </ResponsiveContainer>
             </div>

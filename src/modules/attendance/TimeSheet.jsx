@@ -1,9 +1,9 @@
 import { Button } from '@/components/elements'
-import { CheckOutIcon, TakeBreakIcon } from '@/components/svg'
+import { CheckOutIcon, LocationIcon, TakeBreakIcon } from '@/components/svg'
 import React, { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export const TimeSheet = ({className}) => {
+export const TimeSheet = ({ className }) => {
     const { t } = useTranslation()
     const [isCheckedIn, setIsCheckedIn] = useState(false)
     const [onBreak, setOnBreak] = useState(false)
@@ -81,7 +81,7 @@ export const TimeSheet = ({className}) => {
             </div>
             <div className='col-span-2 sm:col-span-1 flex flex-col gap-2 sm:text-right'>
                 <span className='text-themeGrayscale600 '>{t("Current Shift")}</span>
-                <time className='font-semibold' dateTime="09:00 AM - 06:00 PM">{t("09:00 AM - 06:00 PM")}</time>
+                <time className='font-semibold' dateTime="09:00 AM - 06:00 PM">{t("09:00 AM - 06:00 PM")}</time> 
             </div>
             <div className='bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between'>
                 <div className='flex flex-col gap-1'>
@@ -90,7 +90,7 @@ export const TimeSheet = ({className}) => {
                 </div>
                 <div className='flex flex-col gap-1'>
                     <span className='text-themeGrayscale600'>{t("Work Mode")}</span>
-                    <span className='font-semibold text-themeGrayscale900'>{t("Onsite")}</span>
+                    <span className='font-semibold text-themeGrayscale900 flex items-center gap-1'><LocationIcon /> {t("Onsite")}</span>
                 </div>
             </div>
             <div className='col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 mx-auto flex justify-center items-center'>

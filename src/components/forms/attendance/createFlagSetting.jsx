@@ -8,6 +8,8 @@ import {
   CreateShiftFlag,
   UpdateShiftFlag,
 } from "@/store/actions/shift-flag.actions";
+import { SketchPicker } from "react-color";
+import { useState } from "react";
 
 export default function CreateFlagForm({ onClose, object }) {
   const { t } = useTranslation();
@@ -39,7 +41,13 @@ export default function CreateFlagForm({ onClose, object }) {
         : dispatch(CreateShiftFlag(values, onCompleted));
     },
   });
+  const [color, setColor] = useState('#fff');
+  const [colorinput, setColorInput] = useState(true);
 
+  const handleChangeComplete = (color) => {
+    setColor(color.hex);
+    setColorInput(false)
+  };
   const formElements = [
     {
       type: "text",
@@ -60,6 +68,40 @@ export default function CreateFlagForm({ onClose, object }) {
       required: true,
       value: formik.values.deduction,
     },
+    {
+      type: "select",
+      name: "flagColor",
+      label: t("Flag Color"),
+      placeholder: t("Flag Color"),
+      list: [
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeSuccess"></span> Present</div>,
+          value: "Present"
+        },
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeDanger"></span> Absent</div>,
+          value: "Absent"
+        },
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeSecondary"></span> Late</div>,
+          value: "Late"
+        },
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themePurple"></span> Leave</div>,
+          value: "Leave"
+        },
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeGrayscale"></span> Ghazzatted Holiday</div>,
+          value: "Ghazzatted Holiday"
+        },
+        {
+          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeGrayscale"></span> Holiday</div>,
+          value: "Holiday"
+        },
+      ],
+      required: true,
+      value: formik.values.flagColor,
+    },
   ];
 
   return (
@@ -69,6 +111,20 @@ export default function CreateFlagForm({ onClose, object }) {
       formik={formik}
       onClose={onClose}
       is_loading={is_loading}
-    />
+    >
+      <div className="zt-formGroup">
+        <label htmlFor="color">{t("Flag Color")}</label>
+        <div className="zt-themeInput h-full" onClick={() => { setColorInput(!colorinput) }}>
+          <div style={{ backgroundColor: color }} className={`bg-${color} h-5 w-5 rounded`}></div>
+        </div>
+        {colorinput &&
+          <SketchPicker
+            color={color}
+            onChangeComplete={handleChangeComplete}
+          />
+        }
+      </div>
+    </BaseForm>
+
   );
 }

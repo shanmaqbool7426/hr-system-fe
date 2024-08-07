@@ -198,22 +198,29 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-      { name: t("Payroll Setup"), href: "/payroll" },
-      { name: t("Salary Setup"), href: "/payroll/salary-setup" },
+
       { name: t("Run Payroll"), href: "/payroll/run-payroll" },
+      { name: t("Payroll Approval"), href: "/payroll/approval" },
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
-      { name: t("Payroll Approval"), href: "/payroll/approval" },
       { name: t("Final Settlement"), href: "/payroll/final-settlement" },
       { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
       { name: t("Overtime Request"), href: "/payroll/overtime" },
       { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
+      { name: t("Leave Encashment Request"), href: "/payroll/leave-encashment" },
+      { name: t("Leave Encashment Slips"), href: "/payroll/leave-encashment-slips" },
       { name: t("Commission Request"), href: "/payroll/commission" },
       { name: t("Advance Salary Request"), href: "/payroll/advance-salary" },
       { name: t("Loan Request"), href: "/payroll/loan" },
       { name: t("Loan Adjustment Request"), href: "/payroll/loan-adjustment" },
       { name: t("PF Withdrawal Request"), href: "/payroll/pf-withdrawal" },
-      { name: t("Payroll Setting"), href: "/payroll/setting" },
+      {
+        name: t("Payroll Setting"), href: "/payroll/setting",
+        innerSubMenu: [
+          { name: t("Payroll Setup"), href: "/payroll" },
+          { name: t("Salary Setup"), href: "/payroll/salary-setup" },
+        ]
+      },
     ],
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
