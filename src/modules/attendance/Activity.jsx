@@ -1,27 +1,77 @@
 import { ClockIcon } from '@/components/svg'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { todaysAttendance } from "@/store/actions/attendance.actions"
+import { useDispatch, useSelector } from 'react-redux'
 
 export const Activity = () => {
     const { t } = useTranslation()
+    const dispatch = useDispatch();
+    const { is_loading, user, todayAttendance } = useSelector((state) => state.attendance)
+    console.log(todayAttendance?.checkInAt, "attendance")
+    const formatTime = (duration) => {
+        // const hours = Math.floor(duration / 1000 / 60 / 60)
+        // const minutes = Math.floor((duration / 1000 / 60) % 60)
+        const date = new Date(duration); 
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        console.log(duration, hours, minutes, "attendances")
+
+        return `${hours}.${minutes < 10 ? '0' : ''}${minutes} hrs`
+    }
+
+    useEffect(() => {
+        dispatch(todaysAttendance(user))
+    }, [])
+
+    const data = [
+        {
+            text: "Check In at",
+            time: "9:00Am",
+        },
+        {
+            text: "Check Out at",
+            time: "10:00Am",
+            btnText: "Break"
+        },
+        {
+            text: "Check In at",
+            time: "11:00Am",
+        },
+        {
+            text: "Check Out at",
+            time: "12:00Am",
+            btnText: "Break"
+        },
+        {
+            text: "Check In at",
+            time: "01:00Am",
+        },
+    ]
 
     return (
         <div className='zt-card col-span-3 xl:col-span-1'>
             <h2 className='mb-4 font-bold text-xl'>{t("Today Activity")}</h2>
-
-            <ul className='zt-activityLogs'>
-                {/*
-                <div className='bg-themeGrayscale300 w-1 relative flex flex-col gap-12 items-center'>
-                    {[0, 1, 2, 3, 4, 5].map((ele, i) => (
-                        <span key={i} className='h-4 w-4 rounded-full border-themePurple bg-white border-3'></span>
-                    ))}
-                </div>
-                <div>
-                </div>
-                */}
-                <li>
+            <ul className='zt-activityLogs '>
+                {data.map((ele, i) => (
+                    <li key={i}>
+                        <span className='flex flex-col gap-1'>
+                            <span>{formatTime(todayAttendance?.checkInAt) ? formatTime(todayAttendance?.checkInAt) : "9:00 AM"}</span>
+                            <span className='flex gap-1 items-center'>
+                                <ClockIcon />
+                                <time dateTime='09.00 AM' className='text-sm font-semibold'>{ele.time}</time>
+                            </span>
+                        </span>
+                        {
+                            ele.btnText &&
+                            <span className='zt-tag zt-tag-normal'>{ele.btnText}</span>
+                        }
+                    </li>
+                ))}
+                {/* <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch In at")}</span>
+                        <span>{t("Check In at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
@@ -30,7 +80,7 @@ export const Activity = () => {
                 </li>
                 <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch Out at")}</span>
+                        <span>{t("Check Out at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
@@ -40,7 +90,7 @@ export const Activity = () => {
                 </li>
                 <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch In at")}</span>
+                        <span>{t("Check In at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
@@ -49,7 +99,7 @@ export const Activity = () => {
                 </li>
                 <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch Out at")}</span>
+                        <span>{t("Check Out at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
@@ -59,7 +109,7 @@ export const Activity = () => {
                 </li>
                 <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch In at")}</span>
+                        <span>{t("Check In at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
@@ -68,14 +118,14 @@ export const Activity = () => {
                 </li>
                 <li>
                     <span className='flex flex-col gap-1'>
-                        <span>{t("Punch Out at")}</span>
+                        <span>{t("Check Out at")}</span>
                         <span className='flex gap-1 items-center'>
                             <ClockIcon />
                             <time dateTime='09.00 AM' className='text-sm font-semibold'>{t("09.00 AM")}</time>
                         </span>
                     </span>
                     <span className='zt-tag zt-tag-normal'>{t("Shift End")}</span>
-                </li>
+                </li> */}
             </ul>
         </div>
     )

@@ -242,7 +242,7 @@
   }
 }
 .zt-activityLogs {
-  @apply flex flex-col gap-4 items-start relative text-bmd text-themeGrayscale600 before:top-2 before:left-2 before:w-1 before:h-[calc(100%_-_12%)] before:absolute before:rounded-full before:bg-themeGrayscale300;
+  @apply flex flex-col h-[386px] overflow-y-scroll gap-4 items-start relative text-bmd text-themeGrayscale600 before:top-2 before:left-2 before:w-1 before:h-[calc(100%_-_12%)] before:absolute before:rounded-full before:bg-themeGrayscale300;
   li {
     @apply flex items-start gap-3 relative pl-6 before:top-[2px] before:left-[2px] before:w-4 before:h-4 before:absolute before:rounded-full before:bg-white before:border-4 before:border-themePurple;
     time { @apply text-themeGrayscale }

@@ -1,5 +1,4 @@
-import { useTranslation } from "next-i18next";
-import ls from 'localstorage-slim';
+import { useTranslation } from "next-i18next"; 
 // import { Button } from "@/components/elements";
 
 export default function PayrollApprovalPage() {

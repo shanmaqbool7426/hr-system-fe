@@ -2,9 +2,11 @@ import { Button } from '@/components/elements'
 import { CheckOutIcon, LocationIcon, TakeBreakIcon } from '@/components/svg'
 import React, { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-
+import {TimSheetAction} from "@/store/actions/attendance.actions"
+import { useDispatch , useSelector} from 'react-redux'
 export const TimeSheet = ({ className }) => {
     const { t } = useTranslation()
+    const dispatch = useDispatch()
     const [isCheckedIn, setIsCheckedIn] = useState(false)
     const [onBreak, setOnBreak] = useState(false)
     const [checkInTime, setCheckInTime] = useState(null)
@@ -14,7 +16,7 @@ export const TimeSheet = ({ className }) => {
     const [hasCheckedOut, setHasCheckedOut] = useState(false)
     const intervalRef = useRef(null)
     const breakStartTimeRef = useRef(null)
-
+    const { is_loading, user } = useSelector((state) => state.attendance) 
     useEffect(() => {
         if (isCheckedIn && !onBreak) {
             const interval = setInterval(() => {
@@ -38,6 +40,7 @@ export const TimeSheet = ({ className }) => {
     const handleCheckIn = () => {
         setIsCheckedIn(true)
         setCheckInTime(new Date())
+        dispatch(TimSheetAction(user))
     }
 
     const handleCheckOut = () => {
@@ -85,7 +88,7 @@ export const TimeSheet = ({ className }) => {
             </div>
             <div className='bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between'>
                 <div className='flex flex-col gap-1'>
-                    <span className='text-themeGrayscale600'>{t("Punch In at")}</span>
+                    <span className='text-themeGrayscale600'>{t("Check In at")}</span>
                     <span className='font-semibold text-themeGrayscale900'>{checkInTime ? checkInTime.toLocaleTimeString() : t("Not checked in")}</span>
                 </div>
                 <div className='flex flex-col gap-1'>
