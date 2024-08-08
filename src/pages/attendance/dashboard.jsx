@@ -9,7 +9,7 @@ import { Staticts } from '@/modules/attendance/Staticts'
 import { TimeSheet } from '@/modules/attendance/TimeSheet'
 import { AttendanceChart } from '@/modules/dashboard/AttendanceChart'
 import { AttendanceSummaryStatistic } from '@/modules/dashboard/AttendanceSummaryStatistic'
-import { FetchAttendance } from '@/store/actions/attendance.actions'
+import { FetchAttendance } from '@/store/actions/attendance.actions' 
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,7 +27,8 @@ export default function Dashboard() {
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const { attendance_list } = useSelector(state => state.attendance)
+  const { attendance_list } = useSelector(state => state.attendance) 
+  
   const [filters, setFilters] = useState({
     employee: "",
     fromDate: null,
@@ -78,7 +79,7 @@ export default function Dashboard() {
   ]
 
   useEffect(() => {
-    dispatch(FetchAttendance())
+    dispatch(FetchAttendance()) 
   }, [dispatch])
 
   const filtered_attendandance_data = (attendance_list || [])
