@@ -3,7 +3,7 @@ import { CloudUpload, CloseCross } from '../svg';
 import Toast from '@/util/toast';
 import { useTranslation } from 'react-i18next';
 
-const FileUpload = ({ label, id, onChange, className, max, accept, ...props }) => {
+const FileUpload = ({ label, id, onChange, className, max, accept,uploadIcon, ...props }) => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const { t } = useTranslation()
 	const handleFileChange = (event) => {
@@ -50,7 +50,7 @@ const FileUpload = ({ label, id, onChange, className, max, accept, ...props }) =
 	return (
 		<label className={`zt-fileUpload ${className}`} htmlFor={id}>
 			<span className='zt-fileUploadText'>{selectedFile ? selectedFile.name : label}</span>
-			{!selectedFile && <span className='zt-fileUploadIcon'><CloudUpload /></span>}
+			{!selectedFile && <span className='zt-fileUploadIcon'>{uploadIcon?uploadIcon:<CloudUpload />}</span>}
 			{selectedFile && <span className='zt-fileUploadIcon' onClick={(event) => {
 				event.preventDefault()
 				setSelectedFile(null)
