@@ -68,45 +68,18 @@ export default function CreateFlagForm({ onClose, object }) {
       required: true,
       value: formik.values.deduction,
     },
-    {
-      type: "select",
-      name: "flagColor",
-      label: t("Flag Color"),
-      placeholder: t("Flag Color"),
-      list: [
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeSuccess"></span> Present</div>,
-          value: "Present"
-        },
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeDanger"></span> Absent</div>,
-          value: "Absent"
-        },
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeSecondary"></span> Late</div>,
-          value: "Late"
-        },
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themePurple"></span> Leave</div>,
-          value: "Leave"
-        },
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeGrayscale"></span> Ghazzatted Holiday</div>,
-          value: "Ghazzatted Holiday"
-        },
-        {
-          display: <div className='flex gap-2'> <span className="h-5 w-5 rounded bg-themeGrayscale"></span> Holiday</div>,
-          value: "Holiday"
-        },
-      ],
-      required: true,
-      value: formik.values.flagColor,
-    },
   ];
-
+  const assignedColor = [
+    { text: "Present", bg: "bg-themeSuccess" },
+    { text: "Absent", bg: "bg-themeDanger" },
+    { text: "Late", bg: "bg-themeSecondary" },
+    { text: "Leave", bg: "bg-themePurple" },
+    { text: "Ghazzatted Holiday", bg: "bg-themeGrayscale" },
+    { text: "Holiday", bg: "bg-themeGrayscale" },
+  ]
   return (
     <BaseForm
-      title={object ? `Edit Shift Flag` : `Create Shift Flag`}
+      title={object ? `Edit Attendance Flag` : `Create Attendance Flag`}
       formElements={formElements}
       formik={formik}
       onClose={onClose}
@@ -114,7 +87,7 @@ export default function CreateFlagForm({ onClose, object }) {
     >
       <div className="zt-formGroup">
         <label htmlFor="color">{t("Flag Color")}</label>
-        <div className="zt-themeInput h-full" onClick={() => { setColorInput(!colorinput) }}>
+        <div className="zt-themeInput h-" onClick={() => { setColorInput(!colorinput) }}>
           <div style={{ backgroundColor: color }} className={`bg-${color} h-5 w-5 rounded`}></div>
         </div>
         {colorinput &&
@@ -123,6 +96,12 @@ export default function CreateFlagForm({ onClose, object }) {
             onChangeComplete={handleChangeComplete}
           />
         }
+      </div>
+      <div className="flex flex-col gap-3">
+        <span className="text-left font-bold">{t("Already Assigned Colours")}</span>
+        {assignedColor.map((ele, i) => (
+          <div key={i} className='flex gap-2 items-center'> <span className={`h-5 w-5 rounded ${ele.bg}`}></span>{ele.text}</div>
+        ))}
       </div>
     </BaseForm>
 

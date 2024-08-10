@@ -1,15 +1,16 @@
+import { CheckBox } from '@/components/elements'
 import ChangeAppStatusForm from '@/components/forms/remoteWork/change-app-status'
-import { ThreeDotsVertical } from '@/components/svg' 
+import { ThreeDotsVertical } from '@/components/svg'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const AppsState = () => {
     const { t } = useTranslation()
     const [create, setCreate] = useState(false)
-    const mainData=[
-        {status:"Productive apps - 5h 21m",color:"themeSuccess"},
-        {status:"Unproductive apps - 43m",color:"themeDanger"},
-        {status:"Neutral apps - 1h 59m",color:"themeGrayscale500"},
+    const mainData = [
+        { status: "Productive Apps", time: "(5h 10Min)", color: "themePurple" },
+        { status: "Unproductive Apps", time: "(5h 10Min)", color: "themeDanger" },
+        { status: "Neutral Apps", time: "(5h 10Min)", color: "themeBlue" },
     ]
     const AppData = [
         { name: "Meeting with John", time: "55m" },
@@ -34,36 +35,37 @@ const AppsState = () => {
         { name: "Terminal", time: "55m" },
     ]
     return (
-        <>
-        {
-            mainData.map((ele,i)=>(
-                <div key={i} className='shadow bg-themeGrayscale50 rounded-lg'>
-                    <h2 className={`text-h4 rounded-t-lg bg-${ele.color} text-white py-3 px-4`}>{ele.status}</h2>
-                    <div className=' grid divide-x-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-                        {AppData.map((ele, i) => (
-                            <div key={i} className='flex apps__state px-4 py-1 justify-between items-center'>
-                                <div className='flex gap-2 items-center'>
-                                    <p className='mb-0'> {ele.name}</p>
+        <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-6'>
+            {
+                mainData.map((ele, i) => (
+                    <div key={i} className={`border-4 !border-${ele.color} rounded-lg overflow-hidden`}>
+                        <div className={`flex gap-3 bg-${ele.color} text-white p-6 items-end`}>
+                            <h2 className={`text-h4 text-white mb-0`}>{ele.status}</h2>
+                            <span>{ele.time}</span>
+                        </div>
+                        <div className=''>
+                            {AppData.map((ele, i) => (
+                                <div key={i} className='flex apps__state px-4 py-1 justify-between items-center'>
+                                    <CheckBox labelClass='text-base' id={ele.name} label={ele.name} />
+                                    <div className='flex'>
+                                        <time className='time' datetime="7m">{ele.time}</time>
+                                        <button onClick={() => { setCreate(true) }} className='hidden action_btn'>
+                                            <ThreeDotsVertical />
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className='flex'>
-                                    <time className='time' datetime="7m">{ele.time}</time>
-                                    <button onClick={() => { setCreate(true) }} className='hidden action_btn'>
-                                        <ThreeDotsVertical />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>    
-            ))
-        }
-           
+                ))
+            }
+
             {create &&
                 <ChangeAppStatusForm
                     onClose={() => { setCreate(false) }}
                 />
             }
-        </>
+        </div>
     )
 }
 

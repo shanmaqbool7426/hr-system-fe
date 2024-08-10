@@ -1,8 +1,9 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import StatusSelect from '@/components/elements/SelectStatus'
-import ApplyLeaveEncashmentForm from '@/components/forms/payRoll/leaveEncashement/create'
+import AllowanceApprovalForm from '@/components/forms/payRoll/allowance/approve'
+import ApplyAllowanceForm from '@/components/forms/payRoll/allowance/create'
 import FilterArea from '@/components/includes/FilterArea'
-import { Edit, EyeOn, ThreeDotsVertical, Trash } from '@/components/svg'
+import { EyeOn, SuccessTick, ThreeDotsVertical, WarningIcon } from '@/components/svg'
 import Toast from '@/util/toast'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -16,7 +17,7 @@ export default function AllowancePage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const [create, setcreate] = useState(false)
-	const [view, setView] = useState(false)
+	const [approve, setApprove] = useState(false)
 	const { customfield_list } = useSelector(state => state.customfield)
 	const [filters, setFilters] = useState({
 		search: "",
@@ -145,15 +146,15 @@ export default function AllowancePage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 							<span><EyeOn /></span>
 							<span>{t("View")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
-						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><Edit /></span>
-							<span>{t("Edit")}</span>
+						<a onClick={() => { setApprove(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><SuccessTick /></span>
+							<span>{t("Approve")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
@@ -162,8 +163,8 @@ export default function AllowancePage() {
 								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><Trash /></span>
-							<span>{t("Delete")}</span>
+							<span><WarningIcon /></span>
+							<span>{t("Reject")}</span>
 						</a>
 					</li>
 				</ul>
@@ -197,15 +198,15 @@ export default function AllowancePage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 							<span><EyeOn /></span>
 							<span>{t("View")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
-						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><Edit /></span>
-							<span>{t("Edit")}</span>
+						<a onClick={() => { setApprove(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><SuccessTick /></span>
+							<span>{t("Approve")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
@@ -214,8 +215,8 @@ export default function AllowancePage() {
 								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><Trash /></span>
-							<span>{t("Delete")}</span>
+							<span><WarningIcon /></span>
+							<span>{t("Reject")}</span>
 						</a>
 					</li>
 				</ul>
@@ -249,15 +250,15 @@ export default function AllowancePage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 							<span><EyeOn /></span>
 							<span>{t("View")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
-						<a onClick={() => { setcreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><Edit /></span>
-							<span>{t("Edit")}</span>
+						<a onClick={() => { setApprove(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><SuccessTick /></span>
+							<span>{t("Approve")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
@@ -266,8 +267,8 @@ export default function AllowancePage() {
 								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><Trash /></span>
-							<span>{t("Delete")}</span>
+							<span><WarningIcon /></span>
+							<span>{t("Reject")}</span>
 						</a>
 					</li>
 				</ul>
@@ -306,7 +307,8 @@ export default function AllowancePage() {
 					className={'zt-employeeTable zt-payrollTable'}
 				/>
 			</div>
-			{create && <ApplyLeaveEncashmentForm onClose={() => { setcreate(false) }} />}
+			{create && <ApplyAllowanceForm onClose={() => { setcreate(false) }} />}
+			{approve && <AllowanceApprovalForm onClose={() => { setApprove(false) }} />}
 		</section>
 	)
 }
