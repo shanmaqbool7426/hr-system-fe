@@ -1,44 +1,88 @@
-import { CheckBox, Input, SearchSelect, ToggleCheck } from "@/components/elements";
+import { Button, CheckBox, Input, SearchSelect, Select, ToggleCheck } from "@/components/elements";
 import { useTranslation } from "next-i18next";
+import { useState } from "react";
 
 export default function RemoteProfile({ gridCols, colSpan, parentClass }) {
     const { t } = useTranslation()
+    const [checkedApps, setCheckedApps] = useState({});
+
+    const handleCheckboxChange = (appName) => {
+        setCheckedApps(prevState => ({
+            ...prevState,
+            [appName]: !prevState[appName]
+        }));
+    };
+
+    const isAnyCheckboxChecked = (apps) => {
+        // return apps.some(app => checkedApps[app.name]);
+    };
+    const NewsApps = [
+        { name: "Email", },
+        { name: "Work Apps", },
+        { name: "Communication", },
+        { name: "Social Media", },
+        { name: "Entertainment", },
+        { name: "News", },
+        { name: "Undefined", },
+    ];
     return (
         <section className={` flex flex-col gap-4`}>
-            <div className={`zt-card !bg-themeGrayscale100 grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
+            <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
                 <h2 className={`text-h4 mb-0 ${colSpan ? colSpan : "col-span-3"}  text-left`}>{t("Screenshots")}</h2>
-                <div className="flex gap-6 items-center">
+                <div className="flex gap-6 items-center justify-between">
                     <span>{t("Enable screen capture")}</span>
                     <ToggleCheck id={'product'} />
                 </div>
-                <SearchSelect label={'Screenshot interval'} list={[{ display: "5 min", value: "5 min" }, { display: "10 min", value: "10 min" }, { display: "15 min", value: "15 min" }, { display: "30 min", value: "30 min" }]} />
-                <SearchSelect label={'Remote Manager'} list={[{ display: "John", value: "John" }, { display: "Simo", value: "Simo" }, { display: "Alexa", value: "Alexa" }]} />
-                <div className="flex gap-6 items-center">
+                <SearchSelect containerClass={'!gap-1'} label={'Screenshot interval'} list={[{ display: "5 min", value: "5 min" }, { display: "10 min", value: "10 min" }, { display: "15 min", value: "15 min" }, { display: "30 min", value: "30 min" }]} />
+                <SearchSelect containerClass={'!gap-1'} label={'Remote Manager'} list={[{ display: "John", value: "John" }, { display: "Simo", value: "Simo" }, { display: "Alexa", value: "Alexa" }]} />
+                <div className="flex gap-6 items-center justify-between">
                     <span>{t("Blur screenshot capture")}</span>
                     <ToggleCheck id={'capture'} />
                 </div>
-                <Input label={'Screenshot capture count'} placeholder='03' />
-                <SearchSelect label={'Screenshot resolution quality'} list={[{ display: "640x640", value: "640x640" }, { display: "1024x1024", value: "1024x1024" }]} />
+                <Input containerClass={'!gap-1'} label={'Screenshot capture count'} placeholder='03' />
+                <SearchSelect containerClass={'!gap-1'} label={'Screenshot resolution quality'} list={[{ display: "640x640", value: "640x640" }, { display: "1024x1024", value: "1024x1024" }]} />
             </div>
-            <div className={`zt-card !bg-themeGrayscale100 grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
+            <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
                 <h2 className={`text-h4 mb-0 ${colSpan ? colSpan : "col-span-3"}  text-left`}>{t("Tracking")}</h2>
-                <div className="flex gap-6 items-center">
+                <div className="flex gap-6 justify-between items-center">
                     <span>{t("Meeting time tracking")}</span>
                     <ToggleCheck id={'tracking'} />
                 </div>
-                <div className="flex gap-6 items-center">
+                <div className="flex gap-6 items-center justify-between">
                     <span>{t("Offline time")}</span>
                     <ToggleCheck id={'offline'} />
                 </div>
-                <div className="flex gap-6 items-center">
+                <div className="flex gap-6 items-center justify-between">
                     <span>{t("Allow overtime")}</span>
                     <ToggleCheck id={'fullDay'} />
                 </div>
-                <SearchSelect label={'Idle time tracking'} list={[{ display: "5 min", value: "5 min" }, { display: "10 min", value: "10 min" }, { display: "15 min", value: "15 min" }, { display: "30 min", value: "30 min" }]} />
-                <SearchSelect label={'Default application productivity'} list={[{ display: "Unproductive", value: "Unproductive" }, { display: "Neutral", value: "Neutral" }, { display: "Productive", value: "Productive" }]} />
-                <SearchSelect label={'Track week days'} list={[{ display: "Enable", value: "Enable" }, { display: "Disable", value: "Disable" }]} />
+                <SearchSelect containerClass={'!gap-1'} label={'Idle time tracking'} list={[{ display: "3 min", value: "3 min" }, { display: "5 min", value: "5 min" }, { display: "10 min", value: "10 min" }, { display: "15 min", value: "15 min" }, { display: "30 min", value: "30 min" }]} />
+                <SearchSelect containerClass={'!gap-1'} label={'Default application productivity'} list={[{ display: "Unproductive", value: "Unproductive" }, { display: "Neutral", value: "Neutral" }, { display: "Productive", value: "Productive" }]} />
+                <SearchSelect containerClass={'!gap-1'} label={'Track weekend days'} list={[{ display: "Enable", value: "Enable" }, { display: "Disable", value: "Disable" }]} />
             </div>
-            <div className={`zt-card !bg-themeGrayscale100 grid ${gridCols ? gridCols : " grid-cols-4"} gap-10`}>
+            <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
+                <h2 className={`text-h4 mb-0 ${colSpan ? colSpan : "col-span-3"}  text-left`}>{t("Categories")}</h2>
+                {isAnyCheckboxChecked("COMMUNICATION") && (
+                    <div className='flex items-end gap-4 p-6'>
+                        <Select label='Change status' options={['Email', 'Social Media', 'WORK Apps', 'Entertainment', 'News', 'Undefined']} />
+                        <Button className={'btn btn-success'}>{t("Confirm")}</Button>
+                    </div>
+                )}
+                <div className={`pt-4 ${colSpan ? colSpan : "col-span-4"} !grid ${gridCols ? gridCols : " grid-cols-4"} gap-4`}>
+                    {NewsApps.map((app, j) => (
+                        <div key={j} className='flex py-1 justify-between'>
+                            <CheckBox
+                                name={app.name}
+                                id={app.name}
+                                label={app.name}
+                                checked={checkedApps[app.name] || false}
+                                onChange={() => handleCheckboxChange(app.name)}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-4"} gap-10`}>
                 <h2 className={`text-h4 mb-0  ${colSpan ? colSpan : "col-span-4"} text-left`}>{t("Other")}</h2>
                 <div className="flex gap-6 justify-between">
                     <span>{t("Hide Offline Times section")}</span>
@@ -79,10 +123,6 @@ export default function RemoteProfile({ gridCols, colSpan, parentClass }) {
                 <div className="flex gap-6 justify-between">
                     <span>{t("Disable mobile time sync")}</span>
                     <ToggleCheck id={'mobileSync'} />
-                </div>
-                <div className="flex gap-6 justify-between">
-                    <span>{t("Enable meeting time tracking")}</span>
-                    <ToggleCheck id={'meetingtracking'} />
                 </div>
             </div>
         </section>

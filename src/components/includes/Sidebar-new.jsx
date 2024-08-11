@@ -227,17 +227,13 @@ export default function Sidebar() {
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
       { name: t("Screenshot"), href: "/remote-work/screenshot" },
-      {
-        name: t("Setting"), href: "/remote-work/setting",
-        innerSubMenu: [
-          // { name: t('Profile'), href: "/remote-work/setting/profile" },
-          { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
-          { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
-          { name: t('Collective'), href: "/remote-work/setting/collective" },
-          { name: t('Apps'), href: "/remote-work/setting/apps" },
-          { name: t('Category'), href: "/remote-work/setting/category" },
-        ]
-      },
+ 
+      { name: t('Remote Employees'), href: "/remote-work/remote-employees" },
+      { name: t('Remote Teams'), href: "/remote-work/teams" },
+      { name: t('Collective'), href: "/remote-work/collective" },
+      { name: t('Apps'), href: "/remote-work/apps" },
+      { name: t('Category'), href: "/remote-work/category" },
+
     ],
     report: [
       {
