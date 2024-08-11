@@ -211,6 +211,7 @@ export default function Sidebar() {
       { name: t("Leave Encashment Slips"), href: "/payroll/leave-encashment-slips" },
       { name: t("Commission Request"), href: "/payroll/commission" },
       { name: t("Advance Salary Request"), href: "/payroll/advance-salary" },
+      { name: t("Bonus Request"), href: "/payroll/bonus-request" },
       { name: t("Loan Request"), href: "/payroll/loan" },
       { name: t("Loan Adjustment Request"), href: "/payroll/loan-adjustment" },
       { name: t("PF Withdrawal Request"), href: "/payroll/pf-withdrawal" },
@@ -232,7 +233,7 @@ export default function Sidebar() {
           // { name: t('Profile'), href: "/remote-work/setting/profile" },
           { name: t('Remote Employees'), href: "/remote-work/setting/remote-employees" },
           { name: t('Remote Teams'), href: "/remote-work/setting/teams" },
-          { name: t('Account'), href: "/remote-work/setting/account" },
+          { name: t('Collective'), href: "/remote-work/setting/collective" },
           { name: t('Apps'), href: "/remote-work/setting/apps" },
           { name: t('Category'), href: "/remote-work/setting/category" },
         ]

@@ -236,7 +236,14 @@ module.exports = {
       themePurple: '#8c62ff',
       darkPurple:"#7239EA",
       darkestPurple:"#171717",
-      bordeaux:"#7D3050"
+      bordeaux:"#7D3050",
+      pinkFlamingo:"#EE67F1",
+      themeYellow:"#FFC52F",
+      deepSkyBlue:"#00ADEE", 
+      LightSlateBlue:"#818CF8",
+      RoyalHeath:"#A64D79",
+      BrinkPink:"#FB7185",
+      Viridian:"#32876A",
     }),
     columns: {
       auto: 'auto',

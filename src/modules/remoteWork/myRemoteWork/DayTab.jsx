@@ -8,7 +8,7 @@ const DayTab = () => {
     { text: "Arrival Time ",time:"9:00AM",stats:"Last Update July,25 2024, 5:40pm",icon:<ArivalIcon/>, bg:"bg-themeBlue" },
     { text: "Left Time ",time:"6:00PM",stats:"Last Update July,25 2024, 5:40pm",icon:<LeftTimeIcon/>, bg:"bg-themeOrange" },
     { text: "Productive Time ",time:"6 hr",stats:"Last Update July,25 2024, 5:40pm",icon:<ProductiveTimeIcon/>, bg:"bg-themeSuccess" },
-    { text: "Total Remote Time ",time:"6 hr",stats:"Last Update July,25 2024, 5:40pm",icon:<RemoteTimeIcon/>, bg:"bg-themePurple" },
+    { text: "Total Remote Time ",time:"6 hr",stats:"Last Update July,25 2024, 5:40pm",icon:<RemoteTimeIcon/>, bg:"bg-RoyalHeath" },
 
   ]
   return (

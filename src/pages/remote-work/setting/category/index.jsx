@@ -1,5 +1,5 @@
 import { Datepicker, Tabs } from "@/components/elements";
-import { ChevronLeft, ChevronRight } from "@/components/svg"; 
+import { ChevronLeft, ChevronRight } from "@/components/svg";
 import CategoryTypes from "@/modules/remoteWork/setting/category/CategoryType";
 import { Tab } from "@headlessui/react";
 import { useTranslation } from "next-i18next";

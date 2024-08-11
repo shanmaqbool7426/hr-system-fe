@@ -7,9 +7,9 @@ import { CreateProject, UpdateProject } from "@/store/actions/project.actions";
 import BaseForm from '../../BaseForm';
 import { Button, Table, Textarea } from '@/components/elements';
 import Image from 'next/image';
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { Download } from '@/components/svg';
-export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
+export default function LoanApprovalForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
@@ -46,20 +46,6 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
         Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
-    const months = [
-        { display: 'January', value: "January" },
-        { display: 'February', value: "February" },
-        { display: 'March', value: "March" },
-        { display: 'April', value: "April" },
-        { display: 'May', value: "May" },
-        { display: 'June', value: "June" },
-        { display: 'July', value: "July" },
-        { display: 'August', value: "August" },
-        { display: 'September', value: "September" },
-        { display: 'October', value: "October" },
-        { display: 'November', value: "November" },
-        { display: 'December', value: "December" },
-    ]
     const formElements = [
         {
             type: "text",
@@ -106,24 +92,20 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
 
     ];
     const detaileHeadings = [
-        { title: t("Date"), col: "Date" },
-        { title: t("Type"), col: "Type" },
-        { title: t("Category"), col: "Category" },
-        { title: t("Amount"), col: "Amount" },
-        { title: t("Attachment"), col: "Attachment" },
+        { title: t("Repayment Start Date"), col: "RepaymentStartDate" },
+        { title: t("Monthly Repayment Amount"), col: "MonthlyRepaymentAmount" },
+        { title: t("Include Loan Amount in Payslip"), col: "IncludeLoanAmountPayslip" }, 
     ];
-    const detailRows = [
-        {
-            Date: '23 May 2024',
-            Type: "Others",
-            Category: "Withholding Tax",
-            Amount: "$100",
-            Attachment: <Button className={'btn btn-light-primary !p-2'}><Download /></Button>,
+    const detaileRows = [
+        { 
+            RepaymentStartDate: "23 May 2024",
+            MonthlyRepaymentAmount: "$30",
+            IncludeLoanAmountPayslip: "yes", 
         },
 
     ];
     return (
-        <BaseForm title={t('Tax Adjustment Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+        <BaseForm title={t('Loan Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
             <div className='col-span-2'>
                 <Table
                     headings={headings}
@@ -138,10 +120,10 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
                     setPage={setPage}
                     className={"zt-employeeTable zt-payrollTable"}
                 />
-                <h3 className='text-h4 text-left'>{t("Tax Adjustment Details")}</h3>
+                <h3 className='text-h4 text-left'>{t("Loan Details")}</h3>
                 <Table
                     headings={detaileHeadings}
-                    rows={detailRows}
+                    rows={detaileRows}
                     sortCol={sortCol}
                     setSortCol={setSortCol}
                     sortDir={sortDir}
@@ -152,7 +134,7 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
                     setPage={setPage}
                     className={"zt-employeeTable zt-payrollTable"}
                 />
-                <Textarea label={'Description'} disabled={true} placeholder='Remining tax is adjusted as per FBR document attached' />
+                <Textarea label={'Description'} disabled={true} placeholder='PF Loan' />
             </div>
         </BaseForm>
     )
