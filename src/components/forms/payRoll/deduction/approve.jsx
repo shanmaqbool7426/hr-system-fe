@@ -9,7 +9,7 @@ import { Button, Table, Textarea } from '@/components/elements';
 import Image from 'next/image';
 import { useState } from 'react'; 
 import { Download } from '@/components/svg';
-export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
+export default function DeductionApprovalForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
@@ -123,8 +123,9 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
 
     ];
     return (
-        <BaseForm title={t('Tax Adjustment Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+        <BaseForm title={t('Deduction Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
             <div className='col-span-2'>
+
                 <Table
                     headings={headings}
                     rows={rows}
@@ -137,22 +138,10 @@ export default function TaxAdjustmentApprovalForm({ onClose, object, }) {
                     page={page}
                     setPage={setPage}
                     className={"zt-employeeTable zt-payrollTable"}
-                />
-                <h3 className='text-h4 text-left'>{t("Tax Adjustment Details")}</h3>
-                <Table
-                    headings={detaileHeadings}
-                    rows={detailRows}
-                    sortCol={sortCol}
-                    setSortCol={setSortCol}
-                    sortDir={sortDir}
-                    setSortDir={setSortDir}
-                    perPage={perPage}
-                    setPerPage={setPerPage}
-                    page={page}
-                    setPage={setPage}
-                    className={"zt-employeeTable zt-payrollTable"}
-                />
-                <Textarea label={'Description'} disabled={true} placeholder='Remining tax is adjusted as per FBR document attached' />
+                /> 
+                <h3 className='text-h4 text-left'>{t("Deduction Details")}</h3>
+
+                <Textarea label={'Description'} disabled={true} placeholder='Subsidize Lunch Facility' />
             </div>
         </BaseForm>
     )

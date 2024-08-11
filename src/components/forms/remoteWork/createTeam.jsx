@@ -6,6 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 import { CheckBox, SearchSelect } from '@/components/elements';
+import RemoteProfile from '@/modules/employee/remoteWorkCards';
 
 export default function CreateRemoteTeamForm({ onClose, object }) {
     const { t } = useTranslation()
@@ -39,7 +40,9 @@ export default function CreateRemoteTeamForm({ onClose, object }) {
 
     return (
         <BaseForm title={object ? t(`Edit Team`) : t(`Add Team`)} formik={formik} onClose={onClose} is_loading={false} >
-            <div className='zt-card !bg-themeGrayscale100 grid grid-cols-2 col-span-2 gap-4'>
+            <div className='col-span-2'>
+
+                {/* <div className='zt-card !bg-themeGrayscale100 grid grid-cols-2 col-span-2 gap-4'>
                 <h2 className='text-h4 mb-0 col-span-2 text-left'>{t("Screenshots")}</h2>
                 <CheckBox id={'product'} label={'Enable screen capture'} />
                 <CheckBox id={'blur'} label={'Blur screen capture'} />
@@ -58,7 +61,10 @@ export default function CreateRemoteTeamForm({ onClose, object }) {
                 <CheckBox id={'product'} label={'Hide Offline Times section'} />
                 <CheckBox id={'product'} label={'Hide Screenshots'} />
                 <CheckBox id={'product'} label={'Disable Log Out / Quit'} />
-           </div>
+           </div> */}
+                <RemoteProfile parentClass='parentClass' gridCols='grid-cols-2' colSpan='col-span-2'/>
+            </div>
+
         </BaseForm>
     )
 }

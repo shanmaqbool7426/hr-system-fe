@@ -1,25 +1,20 @@
 import { Button, DropDown, Table } from "@/components/elements";
 import StatusSelect from "@/components/elements/SelectStatus";
-import BonusForm from "@/components/forms/payRoll/bonus/create";
-import LoanApprovalForm from "@/components/forms/payRoll/loan/approve";
-import LoanRequestForm from "@/components/forms/payRoll/loan/create";
-import ReimbursementRequestForm from "@/components/forms/payRoll/reimbursement/create";
+import BonusForm from "@/components/forms/payRoll/bonus/create"; 
 import FilterArea from "@/components/includes/FilterArea";
-import { CrossClose, Edit, EyeOn, SuccessTick, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
-import Toast from "@/util/toast";
+import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function LoanRequestPage() {
+export default function BonusPage() {
 	const { t } = useTranslation()
 	const [sortCol, setSortCol] = useState(null)
 	const [sortDir, setSortDir] = useState(null)
 	const [page, setPage] = useState(1)
-	const [perPage, setPerPage] = useState(10)
-	const [create, setCreate] = useState(false)
-	const [approve, setApprove] = useState(false)
+	const [perPage, setPerPage] = useState(10) 
+	const [bonus, setBonus] = useState(false)  
 	const { customfield_list } = useSelector(state => state.customfield)
 	const [filters, setFilters] = useState({
 		search: "",
@@ -106,15 +101,19 @@ export default function LoanRequestPage() {
 	const headings = [
 		{ title: t("Employee"), col: "Employee" },
 		{ title: t("Employee Details"), col: "EmployeeDetails" },
-		{ title: t("Title"), col: "Title", },
-		{ title: t("Loan Details"), col: "LoanDetails" },
+		{ title: t("Bonus Details"), col: "BonusDetails", }, 
+		{ title: t("Title"), col: "Title", }, 
+		{ title: t("Date"), col: "Date", }, 
 		{ title: t("Status"), col: "Status" },
+		{ title: t("Amount"), col: "Amount" },
+		{ title: t("Percentage"), col: "Percentage", },
 		{ title: t("Modified On"), col: "ModifiedOn" },
 		{ title: t("Action"), col: "action" }
 	]
 	const options = [
 		{ value: 'success', label: 'Approved', className: 'zt-tag-success' },
 		{ value: 'danger', label: 'Canceled', className: 'zt-tag-danger' },
+		{ value: 'purple', label: 'Pending', className: 'zt-tag-purple' },
 	];
 
 	const item = { status: 'success' };
@@ -132,11 +131,14 @@ export default function LoanRequestPage() {
 				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
 				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
 			</div>,
-			LoanDetails: <div className='flex gap-4 justify-center'>
-				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Amount')}</span> <span>{t('Loan Type')}</span></div>
-				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('$300')}</span> <span>{t('PF Loan')}</span></div>
+			BonusDetails: <div className='flex gap-4 justify-center'>
+				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Type')}</span></div>
+				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Annual')}</span></div>
 			</div>,
-			Title: "Loan against PF",
+			Title:"Annual",
+            Date:"20 May 2024",            
+            Amount:"$100",            
+            Percentage:"100%", 
 			Status: <StatusSelect item={item} options={options} />,
 			ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
 				<span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -144,35 +146,19 @@ export default function LoanRequestPage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><EyeOn /></span>
-							<span>{t("View")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => setApprove(true)} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><SuccessTick /></span>
-							<span>{t("Approve")}</span>
+						<a onClick={() => { setBonus(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><Edit /></span>
+							<span>{t("Edit")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
 						<a onClick={() => {
 							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
+								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><CrossClose /></span>
-							<span>{t("Cancel")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => {
-							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
-							}, t)
-						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><WarningIcon /></span>
-							<span>{t("Cleared")}</span>
+							<span><Trash /></span>
+							<span>{t("Delete")}</span>
 						</a>
 					</li>
 				</ul>
@@ -191,11 +177,14 @@ export default function LoanRequestPage() {
 				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
 				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
 			</div>,
-			LoanDetails: <div className='flex gap-4 justify-center'>
-				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Amount')}</span> <span>{t('Loan Type')}</span></div>
-				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('$300')}</span> <span>{t('PF Loan')}</span></div>
+			BonusDetails: <div className='flex gap-4 justify-center'>
+				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Type')}</span></div>
+				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Annual')}</span></div>
 			</div>,
-			Title: "Loan against PF",
+			Title:"Annual",
+            Date:"20 May 2024",            
+            Amount:"$100",            
+            Percentage:"100%", 
 			Status: <StatusSelect item={item} options={options} />,
 			ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
 				<span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -203,35 +192,19 @@ export default function LoanRequestPage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><EyeOn /></span>
-							<span>{t("View")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => setApprove(true)} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><SuccessTick /></span>
-							<span>{t("Approve")}</span>
+						<a onClick={() => { setBonus(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><Edit /></span>
+							<span>{t("Edit")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
 						<a onClick={() => {
 							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
+								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><CrossClose /></span>
-							<span>{t("Cancel")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => {
-							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
-							}, t)
-						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><WarningIcon /></span>
-							<span>{t("Cleared")}</span>
+							<span><Trash /></span>
+							<span>{t("Delete")}</span>
 						</a>
 					</li>
 				</ul>
@@ -250,11 +223,14 @@ export default function LoanRequestPage() {
 				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
 				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
 			</div>,
-			LoanDetails: <div className='flex gap-4 justify-center'>
-				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Amount')}</span> <span>{t('Loan Type')}</span></div>
-				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('$300')}</span> <span>{t('PF Loan')}</span></div>
+			BonusDetails: <div className='flex gap-4 justify-center'>
+				<div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Type')}</span></div>
+				<div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Annual')}</span></div>
 			</div>,
-			Title: "Loan against PF",
+			Title:"Annual",
+            Date:"20 May 2024",            
+            Amount:"$100",            
+            Percentage:"100%", 
 			Status: <StatusSelect item={item} options={options} />,
 			ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
 				<span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
@@ -262,35 +238,19 @@ export default function LoanRequestPage() {
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
 					<li className="!p-0">
-						<a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><EyeOn /></span>
-							<span>{t("View")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => setApprove(true)} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-							<span><SuccessTick /></span>
-							<span>{t("Approve")}</span>
+						<a onClick={() => { setBonus(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+							<span><Edit /></span>
+							<span>{t("Edit")}</span>
 						</a>
 					</li>
 					<li className="!p-0">
 						<a onClick={() => {
 							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
+								Toast.success(t("Asset Type deleted successfully"))
 							}, t)
 						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><CrossClose /></span>
-							<span>{t("Cancel")}</span>
-						</a>
-					</li>
-					<li className="!p-0">
-						<a onClick={() => {
-							Toast.confirmDelete(() => {
-								Toast.success(t("Loan Cancel successfully"))
-							}, t)
-						}} className={'no-underline flex items-center gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-							<span><WarningIcon /></span>
-							<span>{t("Cleared")}</span>
+							<span><Trash /></span>
+							<span>{t("Delete")}</span>
 						</a>
 					</li>
 				</ul>
@@ -302,10 +262,11 @@ export default function LoanRequestPage() {
 			{/* {is_loading && <PageLoader/>} */}
 			<div className="flex justify-between pb-6">
 				<div className="flex flex-col">
-					<h1 className="text-h4 mb-0">{t("Loan Request")}</h1>
+					<h1 className="text-h4 mb-0">{t("Bonus Request")}</h1> 
 				</div>
 				<div className="flex items-start gap-2">
-					<Button onClick={() => { setCreate(true) }} className={"btn btn-primary"}>{t("Apply For Loan Request")}</Button>
+					<Button className={"btn btn-dark-outline"}>{t("Upload Excel")}</Button>
+					<Button onClick={()=>{setBonus(true)}} className={"btn btn-primary"}>{t("Apply For Bonus")}</Button>
 				</div>
 			</div>
 
@@ -330,8 +291,7 @@ export default function LoanRequestPage() {
 					className={'zt-employeeTable zt-payrollTable'}
 				/>
 			</div>
-			{create && <LoanRequestForm onClose={() => setCreate(false)} />}
-			{approve && <LoanApprovalForm onClose={() => setApprove(false)} />}
+			{bonus && <BonusForm onClose={() => setBonus(false)} />} 
 
 		</section>
 	)

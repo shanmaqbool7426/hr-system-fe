@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
 import Radio from '@/components/elements/Radio';
 import { SearchSelect } from '@/components/elements';
 
@@ -54,7 +53,29 @@ export default function ChangeAppStatusForm({ onClose, object }) {
                     name={"radioStatus"}
                     label={'Neutral'}
                 />
-                <span className='col-span-3 text-start'>{t("Without team")}</span>
+                <span className='col-span-3 text-start'>{t("Selected Employees")}</span>
+                <Radio
+                    variant={'success'}
+                    id="Productive"
+                    name={"radioStatus"}
+                    label={'Productive'}
+                />
+                <Radio
+                    variant={'danger'}
+                    id="Unproductive"
+                    name={"radioStatus"}
+                    label={'Unproductive'}
+                />
+                <Radio
+                    variant={'danger'}
+                    id="Neutral"
+                    name={"radioStatus"}
+                    label={'Neutral'}
+                />
+                <SearchSelect containerClass='col-span-3'
+                    list={[{ display: 'John', value: 'John' }, { display: 'Mink', value: 'Mink' },]}
+                />
+                <span className='col-span-3 text-start'>{t("Remote team")}</span>
                 <Radio
                     variant={'success'}
                     id="Productive"
