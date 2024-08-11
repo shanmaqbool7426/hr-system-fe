@@ -4,7 +4,7 @@ import { ThreeDotsVertical } from '@/components/svg';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const AppsState = () => {
+const AppsState = ({ action }) => {
     const { t } = useTranslation();
     const [create, setCreate] = useState(false);
 
@@ -14,9 +14,9 @@ const AppsState = () => {
     const [checkedNeutralApps, setCheckedNeutralApps] = useState({});
 
     const mainData = [
-        { status: "Productive Apps", time: "(5h 10Min)", color: "themeSuccess" },
-        { status: "Unproductive Apps", time: "(5h 10Min)", color: "themeDanger" },
-        { status: "Neutral Apps", time: "(5h 10Min)", color: "LightSlateBlue" },
+        { status: "Productive Apps", time: "(5h 10Min)", color: "bg-themeSuccess" },
+        { status: "Unproductive Apps", time: "(5h 10Min)", color: "bg-themeDanger" },
+        { status: "Neutral Apps", time: "(5h 10Min)", color: "bg-LightSlateBlue" },
     ];
 
     const productiveAppsData = [
@@ -71,21 +71,50 @@ const AppsState = () => {
         }
     };
 
+    // Functions to handle select all for each category
+    const handleSelectAll = (categoryName) => {
+        if (categoryName === "Productive Apps") {
+            const allChecked = productiveAppsData.reduce((acc, app) => {
+                acc[app.name] = true;
+                return acc;
+            }, {});
+            setCheckedProductiveApps(allChecked);
+        } else if (categoryName === "Unproductive Apps") {
+            const allChecked = unproductiveAppsData.reduce((acc, app) => {
+                acc[app.name] = true;
+                return acc;
+            }, {});
+            setCheckedUnproductiveApps(allChecked);
+        } else if (categoryName === "Neutral Apps") {
+            const allChecked = neutralAppsData.reduce((acc, app) => {
+                acc[app.name] = true;
+                return acc;
+            }, {});
+            setCheckedNeutralApps(allChecked);
+        }
+    };
+
     const renderAppData = (appData, checkedApps, category) => (
         appData.map((app, j) => (
             <div key={j} className='flex apps__state px-4 py-1 justify-between items-center'>
-                <CheckBox
-                    labelClass='text-base'
-                    id={app.name}
-                    label={app.name}
-                    checked={checkedApps[app.name] || false}
-                    onChange={() => handleCheckboxChange(app.name, category)}
-                />
+                {
+                    action ?
+                        <CheckBox
+                            labelClass='text-base'
+                            id={app.name}
+                            label={app.name}
+                            checked={checkedApps[app.name] || false}
+                            onChange={() => handleCheckboxChange(app.name, category)}
+                        /> :
+                        <p className='mb-0'>{app.name}</p>
+                }
                 <div className='flex'>
                     <time className='time' dateTime="7m">{app.time}</time>
-                    <button onClick={() => { setCreate(true) }} className='hidden action_btn'>
-                        <ThreeDotsVertical />
-                    </button>
+                    {action &&
+                        <button onClick={() => { setCreate(true) }} className='hidden action_btn'>
+                            <ThreeDotsVertical />
+                        </button>
+                    }
                 </div>
             </div>
         ))
@@ -94,10 +123,15 @@ const AppsState = () => {
     return (
         <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-6 '>
             {mainData.map((ele, i) => (
-                <div key={i} className={`border-4 !border-${ele.color} rounded-lg overflow-hidden`}>
-                    <div className={`flex gap-3 bg-${ele.color} text-white p-6 items-end`}>
-                        <h2 className={`text-h4 text-white mb-0`}>{ele.status}</h2>
-                        <span>{ele.time}</span>
+                <div key={i} className={`border-4 rounded-lg overflow-hidden`}>
+                    <div className={`flex gap-3 ${ele.color} text-white p-6 justify-between`}>
+                        <div className='flex gap-3 items-end'>
+                            <h2 className={`text-h4 text-white mb-0`}>{ele.status}</h2>
+                            <span>{ele.time}</span>
+                        </div>
+                        {action &&
+                            <button className='uppercase font-bold' onClick={() => handleSelectAll(ele.status)}>{t("Select All")}</button>
+                        }
                     </div>
                     <div className='overflow-y-scroll h-96'>
                         {isAnyCheckboxChecked(ele.status) && (
@@ -112,7 +146,6 @@ const AppsState = () => {
                             {ele.status === "Neutral Apps" && renderAppData(neutralAppsData, checkedNeutralApps, ele.status)}
                         </div>
                     </div>
-
                 </div>
             ))}
             {create && <ChangeAppStatusForm onClose={() => { setCreate(false) }} />}

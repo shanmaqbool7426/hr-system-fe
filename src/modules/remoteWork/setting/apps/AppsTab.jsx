@@ -15,22 +15,22 @@ const AppsTab = () => {
             >
                 <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0`}>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                     <Tab.Panel className={'zt-themeTabPanel'}>
-                        <AppsState />
+                        <AppsState action={true}/>
                     </Tab.Panel>
                 </Tab.Panels>
             </Tabs>
