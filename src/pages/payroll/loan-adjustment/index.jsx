@@ -1,6 +1,8 @@
 import { Button, DropDown, Table } from "@/components/elements";
 import StatusSelect from "@/components/elements/SelectStatus";
 import BonusForm from "@/components/forms/payRoll/bonus/create";
+import LoanRAdjustmentequestForm from "@/components/forms/payRoll/loan/adjustment";
+import LoanAdjustmentApprovalForm from "@/components/forms/payRoll/loan/adjustmentApproval";
 import LoanApprovalForm from "@/components/forms/payRoll/loan/approve";
 import LoanRequestForm from "@/components/forms/payRoll/loan/create";
 import ReimbursementRequestForm from "@/components/forms/payRoll/reimbursement/create";
@@ -313,8 +315,8 @@ export default function LoanAdjustmentPage() {
 					className={'zt-employeeTable zt-payrollTable'}
 				/>
 			</div>
-			{create && <LoanRequestForm onClose={() => setCreate(false)} />}
-			{approve && <LoanApprovalForm onClose={() => setApprove(false)} />}
+			{create && <LoanRAdjustmentequestForm onClose={() => setCreate(false)} />}
+			{approve && <LoanAdjustmentApprovalForm onClose={() => setApprove(false)} />}
 
 		</section>
 	)

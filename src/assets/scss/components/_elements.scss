@@ -34,7 +34,7 @@
   @apply flex flex-col gap-3 md:gap-6;
   .zt-themeTabNav {
     ul {
-      @apply flex gap-3 md:gap-8 overflow-x-auto;
+      @apply flex gap-3 overflow-x-auto;
       li { @apply focus-within:outline-none }
     }
     button {

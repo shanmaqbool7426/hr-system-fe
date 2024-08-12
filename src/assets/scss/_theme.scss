@@ -260,6 +260,8 @@
 .zt-employeeProfile::before{content: ""; @apply bg-bordeaux w-20 h-5 absolute bottom-0 right-0 z-10}
 .zt-employeeProfile::after{content: ""; @apply bg-bordeaux w-20 h-5 absolute top-0 left-0 z-10}
 .custom__grid{ grid-template-columns: repeat(auto-fit, minmax(216px, 1fr) ) }
+.zt-remote__grid{ grid-template-columns: repeat(auto-fit, minmax(310px, 1fr) ) }
+.zt-remote__type__grid{ grid-template-columns: repeat(auto-fit, minmax(370px, 1fr) ) }
 .zt-remoteStats__grid{ grid-template-columns: repeat(auto-fit, minmax(330px, 1fr) ) }
 
 ::-webkit-scrollbar {

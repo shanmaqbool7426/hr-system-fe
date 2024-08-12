@@ -7,8 +7,8 @@ import { CreateProject, UpdateProject } from "@/store/actions/project.actions";
 import BaseForm from '../../BaseForm';
 import { Table, Textarea } from '@/components/elements';
 import Image from 'next/image';
-import { useState } from 'react'; 
-export default function LoanApprovalForm({ onClose, object, }) {
+import { useState } from 'react';
+export default function LoanAdjustmentApprovalForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
@@ -90,21 +90,8 @@ export default function LoanApprovalForm({ onClose, object, }) {
         },
 
     ];
-    const detaileHeadings = [
-        { title: t("Repayment Start Date"), col: "RepaymentStartDate" },
-        { title: t("Monthly Repayment Amount"), col: "MonthlyRepaymentAmount" },
-        { title: t("Include Loan Amount in Payslip"), col: "IncludeLoanAmountPayslip" }, 
-    ];
-    const detaileRows = [
-        { 
-            RepaymentStartDate: "23 May 2024",
-            MonthlyRepaymentAmount: "$30",
-            IncludeLoanAmountPayslip: "yes", 
-        },
-
-    ];
     return (
-        <BaseForm title={t('Loan Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+        <BaseForm title={t('Loan Adjustment Approval Routing')} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
             <div className='col-span-2'>
                 <Table
                     headings={headings}
@@ -119,21 +106,9 @@ export default function LoanApprovalForm({ onClose, object, }) {
                     setPage={setPage}
                     className={"zt-employeeTable zt-payrollTable"}
                 />
-                <h3 className='text-h4 text-left'>{t("Loan Details")}</h3>
-                <Table
-                    headings={detaileHeadings}
-                    rows={detaileRows}
-                    sortCol={sortCol}
-                    setSortCol={setSortCol}
-                    sortDir={sortDir}
-                    setSortDir={setSortDir}
-                    perPage={perPage}
-                    setPerPage={setPerPage}
-                    page={page}
-                    setPage={setPage}
-                    className={"zt-employeeTable zt-payrollTable"}
-                />
-                <Textarea label={'Description'} disabled={true} placeholder='PF Loan' />
+                <h3 className='text-h4 text-left'>{t("Loan Adjustment Details")}</h3>
+
+                <Textarea label={'Description'} disabled={true} placeholder='PF Loan Adjustment' />
             </div>
         </BaseForm>
     )

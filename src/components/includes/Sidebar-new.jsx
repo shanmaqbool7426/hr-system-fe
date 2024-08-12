@@ -202,8 +202,10 @@ export default function Sidebar() {
       { name: t("Run Payroll"), href: "/payroll/run-payroll" },
       { name: t("Payroll Approval"), href: "/payroll/approval" },
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
+      { name: t("Salary Changes"), href: "/payroll/salary-changes" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
       { name: t("Final Settlement"), href: "/payroll/final-settlement" },
+      { name: t("Fund Management"), href: "/payroll/fund-management" },
       { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
       { name: t("Overtime Request"), href: "/payroll/overtime" },
       { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
@@ -227,7 +229,7 @@ export default function Sidebar() {
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
       { name: t("Screenshot"), href: "/remote-work/screenshot" },
- 
+
       { name: t('Remote Employees'), href: "/remote-work/remote-employees" },
       { name: t('Remote Teams'), href: "/remote-work/teams" },
       { name: t('Collective'), href: "/remote-work/collective" },
@@ -372,8 +374,8 @@ export default function Sidebar() {
 
       {selected &&
         MiniBar.findIndex((item) => item.href === selected) !== -1 && (
-          // <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute md:static ml-[74px] md:ml-0 z-10">
-          <div className="p-4 w-64 h-full overflow-y-scroll bg-white">
+          <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute lg:static ml-[74px] lg:ml-0 z-10">
+            {/* <div className="p-4 w-64 h-full overflow-y-scroll bg-white"> */}
             <h4>{MiniBar.find((item) => item.href === selected)?.name}</h4>
             <ul className="flex flex-col gap-3">
               {Navigation[selected].map((item, index) => (
