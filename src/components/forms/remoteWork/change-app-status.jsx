@@ -37,20 +37,20 @@ export default function ChangeAppStatusForm({ onClose, object }) {
                 <span className='col-span-3 text-start'>{t("All employees")}</span>
                 <Radio
                     variant={'success'}
-                    id="Productive"
-                    name={"radioStatus"}
+                    id="productiveEmployees"
+                    name={"employees"}
                     label={'Productive'}
                 />
                 <Radio
                     variant={'danger'}
-                    id="Unproductive"
-                    name={"radioStatus"}
+                    id="unproductiveEmployees"
+                    name={"employees"}
                     label={'Unproductive'}
                 />
                 <Radio
                     variant={'danger'}
-                    id="Neutral"
-                    name={"radioStatus"}
+                    id="neutralEmployees"
+                    name={"employees"}
                     label={'Neutral'}
                 />
                 <span className='col-span-3 text-start'>{t("Selected Employees")}</span>
@@ -78,24 +78,24 @@ export default function ChangeAppStatusForm({ onClose, object }) {
                 <span className='col-span-3 text-start'>{t("Remote team")}</span>
                 <Radio
                     variant={'success'}
-                    id="Productive"
-                    name={"radioStatus"}
+                    id="productiveRemote"
+                    name={"Remote"}
                     label={'Productive'}
                 />
                 <Radio
                     variant={'danger'}
-                    id="Unproductive"
-                    name={"radioStatus"}
+                    id="unproductiveRemote"
+                    name={"Remote"}
                     label={'Unproductive'}
                 />
                 <Radio
                     variant={'danger'}
-                    id="Neutral"
-                    name={"radioStatus"}
+                    id="neutralRemote"
+                    name={"Remote"}
                     label={'Neutral'}
                 />
                 <SearchSelect containerClass='col-span-3'
-                    list={[{ display: 'Email', value: 'Email' }, { display: 'Socail Medai', value: 'Socail Medai' }, { display: 'Office Apps', value: 'Office Apps' }, { display: 'Entertainment', value: 'Entertainment' }, { display: 'News', value: 'News' }, { display: 'Undefined', value: 'Undefined' },]}
+                    list={[{ display: 'Frontend', value: 'Frontend' }, { display: 'Laravel', value: 'Laravel' }]}
                 />
             </div>
         </BaseForm>

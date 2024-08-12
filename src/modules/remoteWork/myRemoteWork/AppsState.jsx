@@ -121,7 +121,7 @@ const AppsState = ({ action }) => {
     );
 
     return (
-        <div className='grid lg:grid-cols-2 xl:grid-cols-3 gap-6 '>
+        <div className='grid zt-remote__type__grid gap-6 '>
             {mainData.map((ele, i) => (
                 <div key={i} className={`border-4 rounded-lg overflow-hidden`}>
                     <div className={`flex gap-3 ${ele.color} text-white p-6 justify-between`}>
@@ -133,7 +133,7 @@ const AppsState = ({ action }) => {
                             <button className='uppercase font-bold' onClick={() => handleSelectAll(ele.status)}>{t("Select All")}</button>
                         }
                     </div>
-                    <div className='overflow-y-scroll h-96'>
+                    <div className='overflow-y-scroll max-h-96'>
                         {isAnyCheckboxChecked(ele.status) && (
                             <div className='flex items-end gap-4 p-4'>
                                 <Select label='Change status' options={['Productive Apps', 'Unproductive Apps', 'Neutral Apps']} />

@@ -17,7 +17,7 @@ export default function Accounts() {
                     <p className="mb-0">{t("Changing the setting here will affect all remote employee settings, including those for remote teams.")}</p>
                 </div>
             </div>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
                 <div className="zt-employeeCard gap-6">
                     <div className="flex gap-6 items-center">
                         <span>{t("Aplicable on all remote employees")}</span>

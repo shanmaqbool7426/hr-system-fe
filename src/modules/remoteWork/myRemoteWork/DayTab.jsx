@@ -1,5 +1,4 @@
-import React from 'react'
-import ActivityStats from './ActivityStats'
+import React from 'react' 
 import AppsState from './AppsState'
 import { ArivalIcon, LeftTimeIcon, ProductiveTimeIcon, RemoteTimeIcon } from '@/components/svg'
 
@@ -13,7 +12,7 @@ const DayTab = () => {
   ]
   return (
     <div className='zt-card grow flex flex-col gap-6'>
-      <div className='custom__grid grid gap-6'>
+      <div className='zt-remote__grid grid gap-6'>
         {activityData.map((ele,i)=>(
           <div className={`${ele.bg} rounded-lg text-white`} key={i}>
             <div className='flex items-center gap-3 px-5 pt-5 mb-10'>
@@ -24,8 +23,7 @@ const DayTab = () => {
             <p className='text-sm px-5 pb-1 mb-4 border-white border-b'>{ele.stats}</p>
           </div>
         ))}
-      </div>
-      {/* <ActivityStats /> */}
+      </div> 
       <AppsState />
     </div>
   )
