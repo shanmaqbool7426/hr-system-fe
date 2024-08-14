@@ -16,10 +16,12 @@ import {
   RemoteWork,
   Report,
 } from "../svg";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
   const router = useRouter()
   const route = router.asPath?.split('/')
+  const { auth_user } = useSelector(state => state.auth)
   const { t } = useTranslation()
   const [selected, setSelected] = useState(route[1] || "")
   const [subMenu, setSubMenu] = useState(route.slice(0, 3).join('/'))
@@ -198,7 +200,6 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-
       { name: t("Run Payroll"), href: "/payroll/run-payroll" },
       { name: t("Payroll Approval"), href: "/payroll/approval" },
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
@@ -222,9 +223,9 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Payroll Setup"), href: "/payroll" },
           { name: t("Salary Setup"), href: "/payroll/salary-setup" },
-        ]
+        ].sort((a, b) => a.name.localeCompare(b.name))
       },
-    ],
+    ].sort((a, b) => a.name.localeCompare(b.name)),
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
@@ -333,7 +334,7 @@ export default function Sidebar() {
       <div className="border-r border-gray-50 flex flex-col py-4">
         <nav id="zt-sidebarNav" className="zt-customScrollbar grow">
           <ul className="flex flex-col items-center">
-            {MiniBar.map((item, index) => (
+            {MiniBar.filter((item) => auth_user?.role?.rights === 'admin' || item.href === '/dashboard' || item.href === 'operations').map((item, index) => (
               <li key={index} className={`px-5 py-3`}>
                 {item?.page ?
                   <div className="relative group">

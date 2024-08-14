@@ -169,7 +169,7 @@
   ul li,
   p {
     @apply flex items-center gap-1;
-    span { @apply text-themeGrayscale600 min-w-32 shrink-0 }
+    span { @apply text-themeGrayscale600   shrink-0 }
   }
   a, time, strong, address { @apply font-semibold grow no-underline not-italic }
 }

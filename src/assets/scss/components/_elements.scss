@@ -43,6 +43,13 @@
     }
   }
 }
+.zt-remoteTabs { 
+  .zt-themeTabNav {
+    ul {
+      @apply absolute right-0 top-0; 
+    }  
+  }
+}
 .zt-themeTabsV1 {
   @apply flex flex-col gap-6;
   .zt-themeTabNav1 {

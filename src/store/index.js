@@ -16,7 +16,7 @@ import taskboard from "./slices/taskboard.slice";
 import task from "./slices/task.slice"
 import taskraiseissue from "./slices/task-raise-issue.slice"
 import job from "./slices/job.slice"
-
+import shiftplan from "./slices/shiftplan.slice"
 
 
 export default configureStore({
@@ -37,7 +37,8 @@ export default configureStore({
     task,
     taskboard,
     taskraiseissue,
-    job
+    job,
+    shiftplan
    
   },
 });
