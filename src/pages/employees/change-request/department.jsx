@@ -9,9 +9,7 @@ import Toast from '@/util/toast';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
 import { Button, Datepicker, SearchSelect, Textarea , Table, CheckBox, DisplayDate} from '@/components/elements';
-import FileUpload from '@/components/elements/FileUpload';
-import ChangeDepartementForm from '@/components/forms/employees/changeRequest/ChangeDepartement'; 
-import { FetchDepartments } from '@/store/actions/department.actions';
+import ChangeDepartementForm from '@/components/forms/employees/changeRequest/ChangeDepartement';  
 import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
 const user = ls?.get('auth_user', { decrypt: true })

@@ -138,6 +138,15 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             }))
         },
         {
+            type: "select",
+            name: "shiftPlan",
+            label: t('Shift Plan'),
+            value: formik.values.shiftPlan,
+            placeholder: t("Work Schedule"),
+            required: true,
+            list: [{display:"Morning",value:"Morning"},{display:"Evening",value:"Evening"},{display:"Night",value:"Night"}]
+        },
+        {
             type: "tel",
             name: "contact",
             label: t('Contact Number'),

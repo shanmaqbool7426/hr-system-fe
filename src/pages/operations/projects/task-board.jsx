@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 
-export default function ProjectsModule() {
+export default function TaskBoards() {
   const { t } = useTranslation()
   const [board, setBoard] = useState(false)
   const [sortCol, setSortCol] = useState(null)

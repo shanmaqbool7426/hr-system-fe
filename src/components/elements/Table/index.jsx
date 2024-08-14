@@ -63,7 +63,7 @@ export default function Table({
             <table className={`zt-themeTable ${className}`}>
                 <thead>
                     <tr className='rounded-lg bg-themeGrayscale100'>
-                        <th>
+                        <th className='flex gap-2'>
                             <CheckBox
                                 size={'sm'}
                                 variant={'dark'}
@@ -72,8 +72,7 @@ export default function Table({
                                 checked={selectAll}
                                 onChange={handleSelectAll}
                             />
-                        </th>
-                        <th><span>{t("Sr#")}</span></th>
+                            <span>{t("Sr#")}</span></th>
                         {headings?.map((value, index) => (
                             <th key={index} className='select-none px-2 py-5'>
                                 <div className="flex items-center justify-center whitespace-nowrap">
@@ -105,7 +104,7 @@ export default function Table({
                         {rows?.map((item, index1) => (
                             <React.Fragment key={index1}>
                                 <tr>
-                                    <td>
+                                    <td className='flex gap-2'>
                                         <CheckBox
                                             size={'sm'}
                                             variant={'dark'}
@@ -114,8 +113,8 @@ export default function Table({
                                             checked={selectedRows.includes(index1)}
                                             onChange={() => handleRowSelect(index1)}
                                         />
+                                        {(page -1) * perPage + index1 + 1}
                                     </td>
-                                    <td>{index1 + 1}</td>
                                     {headings.map((value, index2) => (
                                         <td className={value?.className} key={index2}>
                                             {value.col === 'view' ? (
