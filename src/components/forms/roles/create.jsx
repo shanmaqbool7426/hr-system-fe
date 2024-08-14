@@ -14,7 +14,8 @@ export default function CreateRoleForm({ onClose, role }) {
     const formik = useFormik({
         initialValues: {
             name: role?.name || "",
-            description: role?.description || ""
+            description: role?.description || "",
+            rights: role?.rights || {}
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('formik.nameRequired')),
@@ -48,16 +49,30 @@ export default function CreateRoleForm({ onClose, role }) {
     const formTitle = role ? t("Update employee role") : t("Create employee roles")
 
     return (
-        <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-            <div className="flex flex-col gap-2 w-full mt-4">
-                <h2 className="text-h5 text-left">{t('Rights')}</h2>
-                <div className=""><CheckBox size={'sm'} label={t('Employees')} /> </div>
-                <hr />
-                <div className="flex gap-x-6">
-                    <CheckBox size={'sm'} label={t("Add")} />
-                    <CheckBox size={'sm'} label={t("Edit")} />
-                    <CheckBox size={'sm'} label={t("Change status")} />
-                    <CheckBox size={'sm'} label={t("View")} />
+        <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+            <div className="flex flex-col w-full gap-4 col-span-2">
+                <h2 className="text-h4 mb-2 text-left">{t('Rights')}</h2>
+                <div>
+                    <div><CheckBox size={'sm'} label={t('Projects')} /> </div>
+                    <div className="flex py-2 gap-x-6">
+                        <CheckBox size={'sm'} label={t("View")} />
+                        <CheckBox size={'sm'} label={t("Manage")} />
+                    </div>
+                </div>
+                <div>
+                    <div><CheckBox size={'sm'} label={t('Taskboards')} /> </div>
+                    <div className="flex py-2 gap-x-6">
+                        <CheckBox size={'sm'} label={t("View")} />
+                        <CheckBox size={'sm'} label={t("Manage")} />
+                    </div>
+                </div>
+                <div>
+                    <div><CheckBox size={'sm'} label={t('Tasks')} /> </div>
+                    <div className="flex py-2 gap-x-6">
+                        <CheckBox size={'sm'} label={t("View")} />
+                        <CheckBox size={'sm'} label={t("Employee")} />
+                        <CheckBox size={'sm'} label={t("Manage")} />
+                    </div>
                 </div>
             </div>
         </BaseForm>
