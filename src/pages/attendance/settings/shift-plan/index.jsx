@@ -5,7 +5,7 @@ import CreateAttendanceForm from "@/components/forms/attendance/create";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import Toast from "@/util/toast";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchShiftplan  , DeleteShiftplan} from "@/store/actions/shiftplan.action";
+import { fetchShiftplan, DeleteShiftplan } from "@/store/actions/shiftplan.action";
 export default function AttendanceSettingShiftPlanPage() {
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
@@ -15,6 +15,9 @@ export default function AttendanceSettingShiftPlanPage() {
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
+  const [editDetail , setEditDetails] = useState("");
+  console.log(editDetail , "setEditId");
+  
   const headings = [
     { title: t("Shift Title"), col: "shiftTitle" },
     { title: t("Start Time"), col: "startTime" },
@@ -24,8 +27,7 @@ export default function AttendanceSettingShiftPlanPage() {
     { title: t("Break Countable"), col: "BreakCountable" },
     { title: t("Action"), col: "action" },
   ];
-  const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan);
-  console.log(is_loading, shiftplandata, "checking");
+  const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan); 
 
   useEffect(() => {
     dispatch(fetchShiftplan());
@@ -33,11 +35,11 @@ export default function AttendanceSettingShiftPlanPage() {
 
   const rows = shiftplandata?.list?.map((item) => ({
     shiftTitle: item?.shiftName,
-    Break: item?.breakEnabled === false ? "No" : "Yes",
-    BreakCountable: item?.breakEnabled === false ? "No" : "Yes",
-    startTime: item?.startTime ? item?.startTime :  "09:00 AM",
+    Break: item?.break === false ? "No" : "Yes",
+    BreakCountable: item?.breakCountable === false ? "No" : "Yes",
+    startTime: item?.startTime ? item?.startTime : "09:00 AM",
     endTime: item?.endTime ? item?.endTime : "07:00 PM",
-    shiftEnd: item?.shiftEndsNextDay === false ? "No" : "Yes",
+    shiftEnd: item?.shiftEndNextDay === false ? "No" : "Yes",
     action: (
       <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -45,6 +47,7 @@ export default function AttendanceSettingShiftPlanPage() {
             <a
               onClick={() => {
                 setEdit(true);
+                setEditDetails(item)
               }}
               className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark"}
             >
@@ -58,9 +61,12 @@ export default function AttendanceSettingShiftPlanPage() {
             <a
               onClick={() => {
                 Toast.confirmDelete(() => {
-                  dispatch(DeleteShiftplan(item._id, () => {
-                  Toast.success(t("Shift plan deleted successfully"));
-                  }))
+                  dispatch(
+                    DeleteShiftplan(item._id, () => {
+                      Toast.success(t("Shift plan deleted successfully"));
+                      dispatch(fetchShiftplan());
+                    })
+                  );
                 }, t);
               }}
               className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"}
@@ -75,7 +81,6 @@ export default function AttendanceSettingShiftPlanPage() {
       </DropDown>
     ),
   }));
-  
 
   return (
     <section className="flex flex-col grow relative">
@@ -116,7 +121,7 @@ export default function AttendanceSettingShiftPlanPage() {
             onClose={() => {
               setEdit(false);
             }}
-            object={true}
+            object={editDetail} 
           />
         )}
       </div>

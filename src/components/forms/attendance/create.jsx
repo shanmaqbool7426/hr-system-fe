@@ -8,8 +8,8 @@ import { useDispatch } from "react-redux";
 import { Button, SearchSelect, Select, Table, ToggleCheck } from "@/components/elements";
 import { useState } from "react";
 import { Plus, Trash } from "@/components/svg";
-import { CreateShiftplan } from "@/store/actions/shiftplan.action";
-export default function CreateAttendanceForm({ onClose, object }) {
+import { CreateShiftplan , UpdateShiftPlane } from "@/store/actions/shiftplan.action";
+export default function CreateAttendanceForm({ onClose, object}) { 
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
@@ -19,7 +19,7 @@ export default function CreateAttendanceForm({ onClose, object }) {
   const formik = useFormik({
     initialValues: {
       shiftName: object?.shiftName || "",
-      reqiuredHours: object?.reqiuredHours || "",
+      reqiuredHours: object?.workingHours || "",
       startTime: object?.startTime || "",
       endTime: object?.endTime || "",
       minStartTime: object?.minStartTime || "",
@@ -29,6 +29,9 @@ export default function CreateAttendanceForm({ onClose, object }) {
       breakEndTime: object?.breakEndTime || "", 
       radioStatus: object?.radioStatus || "flexibleSchedule",
       scheduleType: object?.scheduleType || [],
+      break: object?.break || false,
+      breakCountable:object?.breakCountable || false , 
+      shiftEndNextDay:object?.shiftEndNextDay || false
     },
     validationSchema: Yup.object().shape({
       shiftName: Yup.string().required(t("shift Name is required.")),
@@ -53,19 +56,31 @@ export default function CreateAttendanceForm({ onClose, object }) {
         is: "flexibleSchedule",
         then: () => Yup.string().required(t("Max Start Time is required.")),
         otherwise: () => Yup.string(),
+      }),  
+      breakStartTime: Yup.string().when("break", {
+        is: true,
+        then: () => Yup.string().required(t("Break Start Time is required.")),
+        otherwise: () => Yup.string(),
       }), 
-      breakStartTime: Yup.string().required(t("Break Start Time is required.")),
-      breakEndTime: Yup.string().required(t("Break End Time is required.")),
+      breakEndTime: Yup.string().when("break", {
+        is: true,
+        then: () => Yup.string().required(t("Break End Time is required.")),
+        otherwise: () => Yup.string(),
+      }),  
     }),
     onSubmit: async (values) => {
-      dispatch(CreateShiftplan(values));
-      Toast.success('Shift created Plan successfully'); 
-      onClose();
+      if (object) {
+        const id = object?._id
+        dispatch(UpdateShiftPlane(id , values));
+        console.log(id , values , "editabale")
+        Toast.success('Shift Plan Updated successfully'); 
+      } else {
+        dispatch(CreateShiftplan(values));
+        Toast.success('Shift Plan created successfully'); 
+      }
+      onClose(); 
     },
-  }); 
-  console.log(formik.values , "checkingstatus");
-  
-
+  });    
   // const onCompleted = () => {
   //   Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`)); 
   //   onClose();
