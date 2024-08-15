@@ -22,7 +22,7 @@ export const Requests = () => {
             </div>
             <div className='grid sm:grid-cols-2 gap-6'>
                 {['Annual Leaves', "Sick Leaves", "Casual Leaves", "Compensatory Leaves"].map((ele, i) => (
-                    <div key={i} className="p-4 flex flex-col md:flex-row justify-between gap-4 md:items-center bg-themeGrayscale50 rounded-lg">
+                    <div key={i} className="p-4 flex flex-col md:flex-row justify-between gap-4 md:items-center bg-themeGrayscale50 dark:bg-dark-3 rounded-lg">
                         <div className="shri">
                             <h3 className="text-xl font-semibold mb-4">{ele}</h3>
                             <div className="flex gap-2 mb-3 items-center ">
