@@ -2,106 +2,108 @@ import { Button } from "@/components/elements";
 import { CheckOutIcon, LocationIcon, TakeBreakIcon } from "@/components/svg";
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { TimSheetAction, startBreak, todaysAttendance, endBreak, checkOut } from "@/store/actions/attendance.actions";
+import {
+  CheckIn,
+  startBreak,
+  todaysAttendance,
+  endBreak,
+  checkOut,
+  getBreaks,
+} from "@/store/actions/attendance.actions";
 import { useDispatch, useSelector } from "react-redux";
 export const TimeSheet = ({ className }) => {
-  const { user, todayAttendance, breakTimeStart, checkOutAttendance, getBreaksByAttendance } = useSelector(
-    (state) => state.attendance
-  );
-
+  const { todayAttendance, getBreaksByAttendance, getLastBreak } = useSelector((state) => state.attendance);
   // Function to calculate total break time
   function calculateTotalBreakTime(breaks) {
     let totalMillis = 0;
     for (const breakEntry of breaks) {
-      const start = new Date(breakEntry.startAt);
-      const end = new Date(breakEntry.endAt);
-      const durationMillis = end - start;
-      totalMillis += durationMillis;
+      if (breakEntry.startAt && breakEntry.endAt) {
+        const start = new Date(breakEntry.startAt);
+        const end = new Date(breakEntry.endAt);
+        const durationMillis = end - start;
+        totalMillis += durationMillis;
+      }
     }
+
     const totalMinutes = Math.floor(totalMillis / (1000 * 60));
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
 
     return `${hours > 0 ? hours + " hrs " : ""}${minutes} mins`;
   }
-  let totalBreakTime = calculateTotalBreakTime(getBreaksByAttendance);
 
+  let totalBreakTime = calculateTotalBreakTime(getBreaksByAttendance);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const [isCheckedIn, setIsCheckedIn] = useState(
+    todayAttendance ? (todayAttendance?.checkOutAt ? false : true) : false
+  );
   const [onBreak, setOnBreak] = useState(false);
   const [checkInTime, setCheckInTime] = useState(null);
   const [checkIntimes, setCheckInTimes] = useState(null);
   const [breakTime, setBreakTime] = useState(0);
   const [overtime, setOvertime] = useState(0);
-  const [workedHours, setWorkedHours] = useState(0);
+  const [workedHours, setWorkedHours] = useState("00:00:00");
   const [hasCheckedOut, setHasCheckedOut] = useState(todayAttendance?.checkOutAt ? true : false);
-  console.log(hasCheckedOut, todayAttendance?.checkOutAt, "===>checking");
-
-  const intervalRef = useRef(null);
-  const breakStartTimeRef = useRef(null);
   useEffect(() => {
-    if (isCheckedIn && !onBreak) {
-      const interval = setInterval(() => {
+    dispatch(todaysAttendance());
+  }, [dispatch]);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (isCheckedIn && !onBreak) {
         const now = new Date();
         const endOfShift = new Date();
         endOfShift.setHours(18, 0, 0, 0);
-        // for the todayattendance time gtting
         const checkIn = new Date(todayAttendance?.checkInAt);
         const workedMillis = now - checkIn;
         const hours = Math.floor(workedMillis / (1000 * 60 * 60));
         const minutes = Math.floor((workedMillis / (1000 * 60)) % 60);
+
         const formatTime = (hours, minutes) => {
           const formattedHours = hours < 10 ? `0${hours}` : hours;
           const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
           return `${formattedHours}:${formattedMinutes} hrs`;
         };
+
         setWorkedHours(formatTime(hours, minutes));
 
         if (now > endOfShift) {
           const overtimeMillis = now - endOfShift;
           setOvertime(overtimeMillis);
         }
-      }, 1000);
-      intervalRef.current = interval;
-      return () => clearInterval(interval);
-    }
-  }, [isCheckedIn, onBreak, checkInTime, breakTime]);
-  const handleCheckIn = () => {
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [isCheckedIn, onBreak, todayAttendance?.checkInAt, dispatch]);
+  const handleCheckIn = async () => {
     setIsCheckedIn(true);
-    dispatch(TimSheetAction(user));
-    dispatch(todaysAttendance(user));
+    await dispatch(CheckIn());
+    await dispatch(todaysAttendance());
   };
-  const handleCheckOut = (id) => {
-    // if (todayAttendance?.checkOutAt) {
-    //     setIsCheckedIn(false)
-    //     setOnBreak(false)
-    //     setCheckInTime(null)
-    //     setBreakTime(0)
-    //     setOvertime(0)
-    //     setWorkedHours(0)
-    //     setHasCheckedOut(true)
-    //     setCheckInTimes(null)
-    // } else {
-    dispatch(checkOut(id));
+  
+
+  const handleCheckOut = async (id) => {
+    await dispatch(checkOut(id));
     setIsCheckedIn(false);
     setOnBreak(false);
     setCheckInTime(null);
-    setBreakTime(0);
-    setOvertime(0);
-    setWorkedHours(0);
+    // setBreakTime("00:00:00");
+    // setOvertime("00:00:00");
+    // setWorkedHours("00:00:00");
     setHasCheckedOut(true);
     setCheckInTimes(null);
-    // }
+    await dispatch(todaysAttendance());
   };
-  const handleTakeBreak = (id) => {
+  const handleTakeBreak = async (id) => {
     setOnBreak(true);
-    dispatch(startBreak(user, id));
+    await dispatch(startBreak(id));
+    await dispatch(getBreaks(todayAttendance?._id));
   };
 
-  const handleBreakOff = (id) => {
+  const handleBreakOff = async (id) => {
     setOnBreak(false);
-    dispatch(endBreak(id));
+    await dispatch(endBreak(id));
+    await dispatch(getBreaks(todayAttendance?._id));
   };
 
   const formatTime = (duration) => {
@@ -109,19 +111,10 @@ export const TimeSheet = ({ className }) => {
     const minutes = Math.floor((duration / 1000 / 60) % 60);
     return `${hours}.${minutes < 10 ? "0" : ""}${minutes} hrs`;
   };
-
   const getFormattedDate = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date().toLocaleDateString("en-US", options);
   };
-  // const formatTimes = (duration) => {
-  //     const date = new Date(duration);
-  //     const hours = date.getUTCHours();
-  //     const minutes = date.getUTCMinutes();
-  //     const seconds = date.getUTCSeconds()
-  //     return `${hours}.${minutes < 10 ? '0' : ''}${minutes}.${seconds} hrs`
-  // }
-  console.log(todayAttendance, "todayAttendance");
   function formatTimes(dateString) {
     const date = new Date(dateString);
     const options = {
@@ -132,10 +125,11 @@ export const TimeSheet = ({ className }) => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   }
   useEffect(() => {
-    setCheckInTimes(todayAttendance?.checkInAt ? formatTimes(todayAttendance?.checkInAt) : null);
     setIsCheckedIn(todayAttendance ? (todayAttendance?.checkOutAt ? false : true) : false);
-  }, [todayAttendance, checkOutAttendance?._id]);
-
+    if (todayAttendance) {
+      dispatch(getBreaks(todayAttendance._id))
+    }
+  }, [dispatch]); 
   return (
     <div className={`${className} zt-card grid grid-cols-2 gap-4`}>
       <div className="col-span-2 sm:col-span-1 flex flex-col text-left">
@@ -154,7 +148,7 @@ export const TimeSheet = ({ className }) => {
         <div className="flex flex-col gap-1">
           <span className="text-themeGrayscale600">{t("Check In at")}</span>
           <span className="font-semibold text-themeGrayscale900">
-            {checkIntimes ? checkIntimes : t("Not checked in")}
+            {todayAttendance?.checkInAt ? formatTimes(todayAttendance?.checkInAt) : t("Not checked in")}
           </span>
         </div>
         <div className="flex flex-col gap-1">
@@ -179,11 +173,10 @@ export const TimeSheet = ({ className }) => {
           >
             Check In
           </Button>
-          {/* <Button onClick={handleCheckIn} variant={'primary'} className={'flex w-full items-center whitespace-nowrap'} disabled={hasCheckedOut}>Check In</Button> */}
         </>
       ) : (
         <>
-          {!onBreak ? (
+          {!getLastBreak || getLastBreak?.endAt ? (
             <Button
               onClick={() => handleTakeBreak(todayAttendance?._id)}
               variant={"orange"}
@@ -193,7 +186,7 @@ export const TimeSheet = ({ className }) => {
             </Button>
           ) : (
             <Button
-              onClick={() => handleBreakOff(breakTimeStart?._id)}
+              onClick={() => handleBreakOff(getLastBreak?._id)}
               variant={"orange"}
               className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
             >
@@ -212,8 +205,8 @@ export const TimeSheet = ({ className }) => {
       </Button>
       <div className="w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1">
         <span>{t("Break")}</span>
-        <time className="font-bold" dateTime={totalBreakTime}>
-          {totalBreakTime}
+        <time className="font-bold" dateTime={getBreaksByAttendance[0]?.endAt ? totalBreakTime : "00:00:00"}>
+          {getBreaksByAttendance[0]?.endAt ? totalBreakTime : "00:00:00"}
         </time>
       </div>
       <div className="w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1">

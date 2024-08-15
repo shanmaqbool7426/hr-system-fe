@@ -11,6 +11,7 @@ export const attendanceSlice = createSlice({
         breakTimeStart: "",
         checkOutAttendance: "",
         getBreaksByAttendance: [], 
+        getLastBreak : ""
     },
     reducers: {
         setLoading(state, action) {
@@ -33,7 +34,10 @@ export const attendanceSlice = createSlice({
         },
         setGetBreaksByAttendance(state, actions) {
             state.getBreaksByAttendance = actions.payload 
-        },  
+        },
+        setLastBreak(state, actions) {
+            state.getLastBreak = actions.payload
+        }  
     },
 });
 
@@ -46,6 +50,7 @@ export const {
     setBreakTimeStart,
     setCheckoutAttendance,
     setGetBreaksByAttendance, 
+    setLastBreak
 } = attendanceSlice.actions;
 
 
