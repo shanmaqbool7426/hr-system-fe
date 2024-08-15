@@ -174,18 +174,58 @@ export default function Restriction() {
 									containerClass={'zt-formGroupV2'}
 									className={' gap-4'}
 									type={'text'}
-									name={'fatherName'}
-									label={t('Father Name')}
-									placeholder={t('Father Name')}
-									value={formik.values.fatherName}
+									name={'employeeDetails'}
+									label={t('Employee Details')}
+									placeholder={t('Employee Details')}
+									value={formik.values.employeeDetails}
 									formik={formik}
 									required
 								/>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Geo Location")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'goe'} name="goeLocation"
+											checked={formik.values.goeLocation}
+											onChange={(event) => {
+												formik.setFieldValue('goeLocation', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.goeLocation ? "" : "cursor-not-allowed"}`} disabled={formik.values.goeLocation ? false : true} placeholder='Latitude, Longitude' />
+										<Input containerClass={'w-full'} className={`${formik.values.goeLocation ? "" : "cursor-not-allowed"}`} disabled={formik.values.goeLocation ? false : true} placeholder='Latitude, Longitude' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Mobile IMEI")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'mobileIMEI'} name="mobileIMEI"
+											checked={formik.values.mobileIMEI}
+											onChange={(event) => {
+												formik.setFieldValue('mobileIMEI', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.mobileIMEI ? "" : "cursor-not-allowed"}`} disabled={formik.values.mobileIMEI ? false : true} placeholder='Mobile IMEI' />
+										<Input containerClass={'w-full'} className={`${formik.values.mobileIMEI ? "" : "cursor-not-allowed"}`} disabled={formik.values.mobileIMEI ? false : true} placeholder='Mobile IMEI' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("IP Restriction")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'ipRestriction'} name="ipRestriction"
+											checked={formik.values.ipRestriction}
+											onChange={(event) => {
+												formik.setFieldValue('ipRestriction', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.ipRestriction ? "" : "cursor-not-allowed"}`} disabled={formik.values.ipRestriction ? false : true} placeholder='IP Restriction' />
+										<Input containerClass={'w-full'} className={`${formik.values.ipRestriction ? "" : "cursor-not-allowed"}`} disabled={formik.values.ipRestriction ? false : true} placeholder='IP Restriction' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Face Restriction")}</label>
+									<div className='flex grow'>
+										<ToggleCheck id={'faceRestriction'} />
+									</div>
+								</div>
 								<div className="zt-btns !p-0 !pt-4 justify-end">
-									<Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
-									/>
-									<Button type="submit" value={t("Save")} variant={'dark'} className={'min-w-40'}
-									/>
+									<Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'} />
+									<Button type="submit" value={t("Save")} variant={'dark'} className={'min-w-40'} />
 								</div>
 							</fieldset>
 						</form>
@@ -251,7 +291,8 @@ export default function Restriction() {
 								<span>{t("Face Restriction")}</span>
 								<div className='flex w-full'>
 									<ToggleCheck id={'faceRestriction'} />
-								</div></li>
+								</div>
+							</li>
 						</ul>
 					}
 
@@ -273,18 +314,58 @@ export default function Restriction() {
 									containerClass={'zt-formGroupV2'}
 									className={' gap-4'}
 									type={'text'}
-									name={'fatherName'}
-									label={t('Father Name')}
-									placeholder={t('Father Name')}
-									value={formik.values.fatherName}
+									name={'employeeDetails'}
+									label={t('Employee Details')}
+									placeholder={t('Employee Details')}
+									value={formik.values.employeeDetails}
 									formik={formik}
 									required
 								/>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Geo Location")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'goe'} name="goeLocation"
+											checked={formik.values.goeLocation}
+											onChange={(event) => {
+												formik.setFieldValue('goeLocation', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.goeLocation ? "" : "cursor-not-allowed"}`} disabled={formik.values.goeLocation ? false : true} placeholder='Latitude, Longitude' />
+										<Input containerClass={'w-full'} className={`${formik.values.goeLocation ? "" : "cursor-not-allowed"}`} disabled={formik.values.goeLocation ? false : true} placeholder='Latitude, Longitude' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Mobile IMEI")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'mobileIMEI'} name="mobileIMEI"
+											checked={formik.values.mobileIMEI}
+											onChange={(event) => {
+												formik.setFieldValue('mobileIMEI', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.mobileIMEI ? "" : "cursor-not-allowed"}`} disabled={formik.values.mobileIMEI ? false : true} placeholder='Mobile IMEI' />
+										<Input containerClass={'w-full'} className={`${formik.values.mobileIMEI ? "" : "cursor-not-allowed"}`} disabled={formik.values.mobileIMEI ? false : true} placeholder='Mobile IMEI' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("IP Restriction")}</label>
+									<div className='flex items-center gap-1 grow'>
+										<ToggleCheck id={'ipRestriction'} name="ipRestriction"
+											checked={formik.values.ipRestriction}
+											onChange={(event) => {
+												formik.setFieldValue('ipRestriction', event.target.checked)
+											}} />
+										<Input containerClass={'w-full'} className={`${formik.values.ipRestriction ? "" : "cursor-not-allowed"}`} disabled={formik.values.ipRestriction ? false : true} placeholder='IP Restriction' />
+										<Input containerClass={'w-full'} className={`${formik.values.ipRestriction ? "" : "cursor-not-allowed"}`} disabled={formik.values.ipRestriction ? false : true} placeholder='IP Restriction' />
+									</div>
+								</div>
+								<div className='flex items-center'>
+									<label className='w-1/3'>{t("Face Restriction")}</label>
+									<div className='flex grow'>
+										<ToggleCheck id={'faceRestriction'} />
+									</div>
+								</div>
 								<div className="zt-btns !p-0 !pt-4 justify-end">
-									<Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'}
-									/>
-									<Button type="submit" value={t("Save")} variant={'dark'} className={'min-w-40'}
-									/>
+									<Button type="button" value={t("Cancel")} variant={'dark-outline'} className={'min-w-40'} />
+									<Button type="submit" value={t("Save")} variant={'dark'} className={'min-w-40'} />
 								</div>
 							</fieldset>
 						</form>

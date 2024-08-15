@@ -1,11 +1,14 @@
 import { MultiSelect } from '@/components/elements'
+import CreatScheduleForm from '@/components/forms/dashboard/create'; 
+import ViewScheduleForm from '@/components/forms/dashboard/view';
 import { Plus } from '@/components/svg';
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 
-export const UpcomingSchedule = ({ title, options,className }) => {
+export const UpcomingSchedule = ({ title, options, className }) => {
     const { t } = useTranslation()
-
+    const [create, setCreate] = useState(false)
+    const [view, setView] = useState(false)
     const [leaveType, setLeaveType] = useState([]);
 
     const leaves = ['mportant Tasks', 'Daily Tasks', 'Interviews', 'Internal Meetings', 'Client Meetings', 'General'];
@@ -13,7 +16,7 @@ export const UpcomingSchedule = ({ title, options,className }) => {
         <aside className={`${className} zt-scheduleSidebar`}>
             <div className='flex justify-between items-center'>
                 <h2 className="text-base font-bold mb-0">{title}</h2>
-                <button className="p-2 rounded-full bg-themeGrayscale50"><Plus className='h-4 w-4 text-themePurple' /></button>
+                <button onClick={() => { setCreate(true) }} className="p-2 rounded-full bg-themeGrayscale50"><Plus className='h-4 w-4 text-themePurple' /></button>
             </div>
             {options &&
                 <MultiSelect containerClass='w-full'
@@ -27,7 +30,7 @@ export const UpcomingSchedule = ({ title, options,className }) => {
                 <div className="flex flex-col gap-4" key={i}>
                     <span className="text-sm font-bold text-themeGrayscale500">{ele}</span>
                     <div className="flex flex-col gap-2">
-                        <div className="rounded flex items-center bg-themePrimary100">
+                        <div onClick={() => { setView(true) }} className="rounded cursor-pointer flex items-center bg-themePrimary100">
                             <span className="p-2 text-darkPurple text-bmd font-bold border-r border-themePrimary">3:00</span>
                             <div className="px-2 py-1 font-medium text-bsm">
                                 <p className=" text-themePrimary mb-1 leading-3"><span className="text-darkPurple">Mini Soman;</span> Mean stack</p>
@@ -65,6 +68,8 @@ export const UpcomingSchedule = ({ title, options,className }) => {
                     </div>
                 </div>
             ))}
+            {create && <CreatScheduleForm onClose={()=>{setCreate(false)}}/>}
+            {view && <ViewScheduleForm onClose={()=>{setView(false)}}/>}
         </aside>
     )
 }

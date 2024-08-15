@@ -2,7 +2,7 @@ import { Button, DropDown, Table } from '@/components/elements'
 import StatusSelect from '@/components/elements/SelectStatus'
 import ApplyLeaveEncashmentForm from '@/components/forms/payRoll/leaveEncashement/create'
 import FilterArea from '@/components/includes/FilterArea'
-import { Edit, EyeOn, ThreeDotsVertical, Trash } from '@/components/svg'
+import { Edit, EyeOn, SuccessTick, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import Toast from '@/util/toast'
 import Image from 'next/image'
 import React, { useState } from 'react'
@@ -103,12 +103,11 @@ export default function LeaveEncashementPage() {
     const headings = [
         { title: t("Employee"), col: "Employee" },
         { title: t("Employee Details"), col: "EmployeeDetails" },
-        { title: t("Leave Encashment Date"), col: "Date", },
-        { title: t("Status"), col: "Status" },
-        { title: t("Total Encashment"), col: "TotalEncashment", },
+        { title: t("Encashment Days"), col: "EncashmentDays", },
         { title: t("Leave Details"), col: "LeaveDetails" },
-        { title: t("Approvals"), col: "Approvals", },
+        { title: t("Amount"), col: "Amount", },
         { title: t("Modified On"), col: "ModifiedOn" },
+        { title: t("Status"), col: "Status" },
         { title: t("Action"), col: "action" }
     ]
     const options = [
@@ -132,11 +131,12 @@ export default function LeaveEncashementPage() {
                 <div className='flex flex-col items-start gap-1 text-themeGrayscale500'><span>{t('Station')}</span> <span>{t('Departement')}</span></div>
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
-            LeaveDetails: "-",
-            Date: '23 May 2024',
-            Status: <StatusSelect item={item} options={options} />,
-            Approvals: "-",
-            TotalEncashment: "10",
+            LeaveDetails: <div className='flex gap-4 justify-center'>
+                <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Annual')}</span> <span>{t('Casual')}</span></div>
+            </div>,
+            Amount: '$23',
+            Status: <span className='zt-tag zt-tag-purple'>{t('Pending')}</span>,
+            EncashmentDays: "10",
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
@@ -144,8 +144,14 @@ export default function LeaveEncashementPage() {
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
                         <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("View")}</span>
+                            <span><SuccessTick /></span>
+                            <span>{t("Approve")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><WarningIcon /></span>
+                            <span>{t("Reject")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
@@ -181,11 +187,9 @@ export default function LeaveEncashementPage() {
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             LeaveDetails: "-",
-            Date: '23 May 2024',
-            Status: <StatusSelect item={item} options={options} />,
-
-            Approvals: "-",
-            TotalEncashment: "10",
+            Amount: '$23',
+            Status: <span className='zt-tag zt-tag-success'>{t('Approve')}</span>,
+            EncashmentDays: "10",
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
@@ -193,8 +197,14 @@ export default function LeaveEncashementPage() {
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
                         <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("View")}</span>
+                            <span><SuccessTick /></span>
+                            <span>{t("Approve")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><WarningIcon /></span>
+                            <span>{t("Reject")}</span>
                         </a>
                     </li>
                     <li className="!p-0">
@@ -230,11 +240,9 @@ export default function LeaveEncashementPage() {
                 <div className='flex flex-col gap-1 text-themeGrayscale'><span>{t('Canda')}</span> <span>{t('Design')}</span></div>
             </div>,
             LeaveDetails: "-",
-            Date: '23 May 2024',
-            Status: <StatusSelect item={item} options={options} />,
-
-            Approvals: "-",
-            TotalEncashment: "10",
+            Amount: '$23',
+            Status: <span className='zt-tag zt-tag-danger'>{t('Reject')}</span>,
+            EncashmentDays: "10",
             ModifiedOn: <div className="flex justify-center"><div className="flex flex-col items-start"><span>22 March2024<span className="text-themeGrayscale500"> 7:00PM</span></span>
                 <span className="text-themeGrayscale500">By <span className="text-[#7239EA]">Jhon Carter</span></span>
             </div></div>,
@@ -242,8 +250,14 @@ export default function LeaveEncashementPage() {
                 <ul className="zt-themeDropDownList zt-sm gap-4 w-[123px]">
                     <li className="!p-0">
                         <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("View")}</span>
+                            <span><SuccessTick /></span>
+                            <span>{t("Approve")}</span>
+                        </a>
+                    </li>
+                    <li className="!p-0">
+                        <a onClick={() => { setView(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                            <span><WarningIcon /></span>
+                            <span>{t("Reject")}</span>
                         </a>
                     </li>
                     <li className="!p-0">

@@ -9,7 +9,7 @@ export const EmployeePayslip = () => {
             <h2 className="font-bold text-lg mb-4">{t("Employee Payslip")}</h2>
             <hr className="bg-themeGrayscale200 mb-4" />
             <div className="flex flex-col gap-2">
-                {["June", "May", "April", "March", "February", "January"].map((ele, i) => (
+                {["June", "May", "April", "March", "February" ].map((ele, i) => (
                     <div key={i} className="bg-themeGrayscale50 rounded p-3 flex justify-between">
                         <div className="flex flex-col">
                             <h3 className="text-xs mb-0 font-semibold">{ele}</h3>

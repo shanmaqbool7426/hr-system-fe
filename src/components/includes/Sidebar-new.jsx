@@ -201,31 +201,30 @@ export default function Sidebar() {
     ],
     payroll: [
       { name: t("Run Payroll"), href: "/payroll/run-payroll" },
-      { name: t("Payroll Approval"), href: "/payroll/approval" },
-      { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
-      { name: t("Salary Changes"), href: "/payroll/salary-changes" },
+      { name: t("Advance Salary Request"), href: "/payroll/advance-salary" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
+      { name: t("Bonus Request"), href: "/payroll/bonus-request" },
+      { name: t("Commission Request"), href: "/payroll/commission" },
       { name: t("Final Settlement"), href: "/payroll/final-settlement" },
       { name: t("Fund Management"), href: "/payroll/fund-management" },
-      { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
-      { name: t("Overtime Request"), href: "/payroll/overtime" },
-      { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
-      { name: t("Leave Encashment Request"), href: "/payroll/leave-encashment" },
-      { name: t("Leave Encashment Slips"), href: "/payroll/leave-encashment-slips" },
-      { name: t("Commission Request"), href: "/payroll/commission" },
-      { name: t("Advance Salary Request"), href: "/payroll/advance-salary" },
-      { name: t("Bonus Request"), href: "/payroll/bonus-request" },
+      { name: t("Leave Encashment Request"), href: "/payroll/leave-encashment" }, 
       { name: t("Loan Request"), href: "/payroll/loan" },
-      { name: t("Loan Adjustment Request"), href: "/payroll/loan-adjustment" },
+      { name: t("Overtime Request"), href: "/payroll/overtime" }, 
       { name: t("PF Withdrawal Request"), href: "/payroll/pf-withdrawal" },
+      { name: t("Reimbursement Request"), href: "/payroll/reimbursement" },
+      { name: t("Salary Changes"), href: "/payroll/salary-changes" },
+      { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
+      { name: t("Tax Adjustment Request"), href: "/payroll/tax-adjustment" },
+      { name: t("Loan Adjustment Request"), href: "/payroll/loan-adjustment" },
       {
-        name: t("Payroll Setting"), href: "/payroll/setting",
+        name: t("Setting"), href: "/payroll/setting",
         innerSubMenu: [
-          { name: t("Payroll Setup"), href: "/payroll" },
           { name: t("Salary Setup"), href: "/payroll/salary-setup" },
-        ].sort((a, b) => a.name.localeCompare(b.name))
+          { name: t("Payroll Setup"), href: "/payroll" },
+          { name: t("Payroll Setting"), href: "/payroll/setting" },
+        ] 
       },
-    ].sort((a, b) => a.name.localeCompare(b.name)),
+    ],
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
@@ -375,7 +374,7 @@ export default function Sidebar() {
 
       {selected &&
         MiniBar.findIndex((item) => item.href === selected) !== -1 && (
-          <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute lg:static ml-[74px] lg:ml-0 z-10">
+          <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute lg:static ml-[74px] lg:ml-0">
             {/* <div className="p-4 w-64 h-full overflow-y-scroll bg-white"> */}
             <h4>{MiniBar.find((item) => item.href === selected)?.name}</h4>
             <ul className="flex flex-col gap-3">
