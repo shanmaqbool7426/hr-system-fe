@@ -28,7 +28,7 @@
 }
 
 .zt-sidebar-link {
-  @apply no-underline text-themePrimary cursor-pointer hover:text-themePurple;
+  @apply no-underline cursor-pointer text-themePrimary hover:text-themePurple dark:text-white dark:hover:text-themePurple;
   &.zt-active { @apply text-themePurple}
 }
 .zt-menuIcon { @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary dark:text-white}
@@ -101,7 +101,7 @@
 /* Main Style start here */
 .zt-main {
   @apply grow dark:bg-dark-3;
-  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 dark:border-dark-6 overflow-y-auto }
+  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 dark:border-dark-5 overflow-y-auto }
 }
 /* Main Style end here */
 

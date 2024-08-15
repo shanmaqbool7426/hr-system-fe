@@ -17,10 +17,12 @@ import {
   RemoteWork,
   Report,
 } from "../svg";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
   const router = useRouter()
   const route = router.asPath?.split('/')
+  const { auth_user } = useSelector(state => state.auth)
   const { t } = useTranslation()
   const [selected, setSelected] = useState(route[1] || "")
   const [subMenu, setSubMenu] = useState(route.slice(0, 3).join('/'))
@@ -199,7 +201,6 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-
       { name: t("Run Payroll"), href: "/payroll/run-payroll" },
       { name: t("Payroll Approval"), href: "/payroll/approval" },
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
@@ -223,9 +224,9 @@ export default function Sidebar() {
         innerSubMenu: [
           { name: t("Payroll Setup"), href: "/payroll" },
           { name: t("Salary Setup"), href: "/payroll/salary-setup" },
-        ]
+        ].sort((a, b) => a.name.localeCompare(b.name))
       },
-    ],
+    ].sort((a, b) => a.name.localeCompare(b.name)),
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
@@ -334,7 +335,7 @@ export default function Sidebar() {
       <div className="flex flex-col py-4">
         <nav id="zt-sidebarNav" className="zt-customScrollbar grow">
           <ul className="flex flex-col items-center">
-            {MiniBar.map((item, index) => (
+            {MiniBar.filter((item) => auth_user?.role?.rights === 'admin' || item.href === '/dashboard' || item.href === 'operations').map((item, index) => (
               <li key={index} className={`px-5 py-3`}>
                 {item?.page ?
                   <div className="relative group">
@@ -375,8 +376,7 @@ export default function Sidebar() {
 
       {selected &&
         MiniBar.findIndex((item) => item.href === selected) !== -1 && (
-          <div className="p-4 w-64 h-full overflow-y-scroll bg-white absolute lg:static ml-[74px] lg:ml-0 z-10">
-            {/* <div className="p-4 w-64 h-full overflow-y-scroll bg-white"> */}
+          <div className="p-4 w-64 h-full overflow-y-scroll border-l dark:border-l-dark-5 bg-white dark:bg-dark-4 absolute lg:static ml-[74px] lg:ml-0 z-10">
             <h4>{MiniBar.find((item) => item.href === selected)?.name}</h4>
             <ul className="flex flex-col gap-3">
               {Navigation[selected].map((item, index) => (
@@ -397,7 +397,6 @@ export default function Sidebar() {
                         }}
                       >
                         {item.name}
-
                         <ChevronDown className={`transition-all w-5 h-5 ${subMenu === item.href ? " rotate-90": ""}`}/>
                       </a>
                     ) : (
