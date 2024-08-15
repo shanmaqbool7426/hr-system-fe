@@ -19,20 +19,11 @@ export const Activity = () => {
         return new Intl.DateTimeFormat('en-US', options).format(date);
     } 
     useEffect(() => {
-       dispatch(todaysAttendance(user))
-       dispatch(getBreaks(todayAttendance?._id))  
-    }, [todayAttendance?._id])
-    // useEffect(() => { 
-    //     dispatch(todaysAttendance(user));
-    //     dispatch(getBreaks(todayAttendance?._id)); 
-    //     const timeoutId = setTimeout(() => {
-    //       dispatch(todaysAttendance(user));
-    //       dispatch(getBreaks(todayAttendance?._id));
-    //     }, 2000); 
-    //     return () => clearTimeout(timeoutId);
-    //   }, [user, todayAttendance?._id]);
-
-
+       if(todayAttendance._id){
+           dispatch(todaysAttendance(user))
+           dispatch(getBreaks(todayAttendance?._id))  
+       }
+    }, [todayAttendance?._id])   
     return (
         <div className='zt-card col-span-3 xl:col-span-1'>
             {/* <button onClick={()=>{dispatch(getBreaks(todayAttendance?._id))}}>dc</button> */}

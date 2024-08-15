@@ -1,4 +1,4 @@
-import { Datepicker, DropDown, Table, Tabs } from "@/components/elements";
+import { Datepicker, DropDown, SearchSelect, Table, Tabs } from "@/components/elements";
 import ChangeRemoteTeamForm from "@/components/forms/remoteWork/ChangeTeam";
 import CreateRemoteTeamForm from "@/components/forms/remoteWork/createTeam";
 import { ChevronLeft, ChevronRight, Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -193,63 +193,21 @@ export default function MyRemoteWork() {
                 </div>
             </div>
             <div className="relative flex flex-col gap-4 grow">
-                <div className="absolute xl:top-0 top-16 xl:right-0 flex items-center gap-6">
+                <div className=" absolute xl:top-0 top-16 xl:right-[310px] flex items-center gap-6">
+                    <SearchSelect placeholder={'Select Employee'} list={[{ display: "John", value: "John" }, { display: "Mink", value: "Mink" }]} />
+                    <SearchSelect placeholder={'Select Team'} list={[{ display: "React", value: "React" }, { display: "MERN", value: "MERN" }]} />
                     <Datepicker
                         containerClass={'w-max'}
                         name={'completionDate'}
                         value={''}
                     />
-                    <button><ChevronLeft /></button>
-                    <button><ChevronRight /></button>
                 </div>
                 <Tabs
-                    containerClasses={'zt-themeTabsV2 grow !gap-20 xl:!gap-4'}
+                    containerClasses={'zt-themeTabsV2 zt-remoteTabs grow !gap-20 xl:!gap-4 mt-16'}
                     tabNavClasses={'zt-themeTabNav'}
-                    tabs={['Employee', 'Remote Team', "Day", "Week", "Month"]}
+                    tabs={["Day", "Week", "Month"]}
                 >
                     <Tab.Panels className={`zt-themeTabPanels zt-employeeTabsPanel !bg-transparent !p-0`}>
-                        <Tab.Panel className={'zt-themeTabPanel'}>
-                            <div className="zt-card grow">
-                                {/* <FilterArea title={t("Remote Employees")}
-                                    elements={filterElements}
-                                    filters={filters}
-                                    setFilters={setFilters}
-                                /> */}
-                                <Table
-                                    headings={employeeHeadings}
-                                    rows={employeeRows}
-                                    sortCol={sortCol}
-                                    setSortCol={setSortCol}
-                                    sortDir={sortDir}
-                                    pagination={pagination}
-                                    setSortDir={setSortDir}
-                                    perPage={perPage}
-                                    setPerPage={setPerPage}
-                                    page={page}
-                                    setPage={setPage}
-                                    className={'zt-employeeTable zt-attendanceRequestsTable'}
-                                />
-                            </div>
-                            {changeTeam && <ChangeRemoteTeamForm onClose={() => setChangeTeam(false)} />}
-                        </Tab.Panel>
-                        <Tab.Panel className={'zt-themeTabPanel'}>
-                            <div className="zt-card grow">
-                                <Table
-                                    headings={headings}
-                                    rows={rows}
-                                    sortCol={sortCol}
-                                    setSortCol={setSortCol}
-                                    sortDir={sortDir}
-                                    pagination={pagination}
-                                    setSortDir={setSortDir}
-                                    perPage={perPage}
-                                    setPerPage={setPerPage}
-                                    page={page}
-                                    setPage={setPage}
-                                    className={'zt-employeeTable zt-attendanceRequestsTable'}
-                                />
-                            </div>
-                        </Tab.Panel>
                         <Tab.Panel className={'zt-themeTabPanel'}>
                             <DayTab />
                         </Tab.Panel>
