@@ -78,10 +78,7 @@ export default function ManageAssetTypesPage() {
         </div>
       </div>
 
-      <div className=" zt-card grow">
-
-     
-
+      <div className=" zt-card grow">     
         <Table
           headings={headings}
           rows={rows}

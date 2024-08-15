@@ -17,6 +17,7 @@ export default function SearchSelect({
   label,
   placeholder,
   error,
+  comboClass,
   ...props
 }) {
   const [selectedItem, setSelectedItem] = useState(value);
@@ -103,7 +104,7 @@ export default function SearchSelect({
                     <Combobox.Option
                       key={index}
                       value={item.value}
-                      className={"hover:text-white"}
+                      className={`hover:text-white ${comboClass}`}
                     >
                       {({ selected, active }) => (
                         <>

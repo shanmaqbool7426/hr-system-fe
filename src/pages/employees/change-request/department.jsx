@@ -3,12 +3,10 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import ls from 'localstorage-slim';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { ChangeDepartment } from '@/store/actions/employee-change-request.actions';
-import Toast from '@/util/toast';
+import { useDispatch, useSelector } from 'react-redux'; 
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { uploader } from '@/util/helpers';
-import { Button, Datepicker, SearchSelect, Textarea , Table, CheckBox, DisplayDate} from '@/components/elements';
+import { Button,  Table, DisplayDate} from '@/components/elements';
 import ChangeDepartementForm from '@/components/forms/employees/changeRequest/ChangeDepartement';  
 import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 
@@ -22,8 +20,7 @@ export default function DepartmentPage() {
 	const [page, setPage] = useState(1)
 	const [change, setChange] = useState(false)
 	const [perPage, setPerPage] = useState(10)
-	const {change_request_list, employees_list } = useSelector(state => state.employee)
-	const { customfield_list } = useSelector(state => state.customfield)
+	const {change_request_list, employees_list } = useSelector(state => state.employee) 
 
 	useEffect(() => {
 		if (employees_list.length === 0)
