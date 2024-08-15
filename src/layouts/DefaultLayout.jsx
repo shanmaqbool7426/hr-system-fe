@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import ls from 'localstorage-slim'
 
 import Header from "@/components/includes/Header"
-import Sidebar from "@/components/includes/Sidebar-new"
+import Sidebar from "@/components/includes/Sidebar"
 import { useDispatch } from "react-redux"
 import { FetchCustomfields } from "@/store/actions/customfield.actions"
 

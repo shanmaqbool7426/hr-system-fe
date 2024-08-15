@@ -35,7 +35,7 @@ export default function FilterArea({ children, elements, title, filters, setFilt
     }
 
     return (
-        <form className="flex flex-col gap-4 mb-6 pb-6 border-b border-themeGrayscale300" onSubmit={submitHandler}>
+        <form className="flex flex-col gap-4 mb-6 pb-6 border-b border-themeGrayscale300 dark:border-dark-5" onSubmit={submitHandler}>
             <div className="flex justify-between items-center">
                 <h2 className="mb-0 text-h5">{title}</h2>
                 <div className="flex gap-2">

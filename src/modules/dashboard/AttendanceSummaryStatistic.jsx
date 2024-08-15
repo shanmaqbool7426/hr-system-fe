@@ -1,6 +1,5 @@
 import React from 'react'
 
-const COLORS = ['#8C62FF', '#8C62FF', '#8C62FF', '#8C62FF', '#FFD023', '#0BA259', '#55C790', "#E03137", "#243C7A", "#8C62FF"];
 
 export const AttendanceSummaryStatistic = () => {
   return (

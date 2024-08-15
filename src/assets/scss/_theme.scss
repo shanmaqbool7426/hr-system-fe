@@ -10,7 +10,7 @@
     a { @apply block }
   }
 }
-.zt-topBar { @apply w-full bg-white dark:text-themeGrayscale300 dark:bg-gray-900 py-3 pr-8 flex justify-between items-center }
+.zt-topBar { @apply w-full bg-white dark:text-themeGrayscale300 dark:bg-dark-4 py-3 pr-8 flex justify-between items-center }
 .zt-topNavigation {
   @apply flex flex-col;
   > ul {
@@ -23,11 +23,15 @@
 /* Header Style end here */
 
 /* Sidebar Style start here */
+.zt-aside {
+  @apply flex bg-white max-h-screen dark:bg-dark-4;
+}
+
 .zt-sidebar-link {
   @apply no-underline text-themePrimary cursor-pointer hover:text-themePurple;
   &.zt-active { @apply text-themePurple}
 }
-
+.zt-menuIcon { @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary dark:text-white}
 
 .btn-helpDesk { @apply text-sm text-center no-underline bg-themeOrange rounded-full p-2 shadow-2xl shadow-themeOrange }
 .zt-sidebar {
@@ -36,7 +40,7 @@
   /*
   .zt-menuText { @apply invisible opacity-0 transition-all duration-300 relative left-20 whitespace-nowrap }
   */
-  .zt-menuIcon { @apply w-full max-w-[55px] flex justify-center shrink-0 }
+  
   /*
   &:hover {
     a { @apply flex-row }
@@ -96,8 +100,8 @@
 
 /* Main Style start here */
 .zt-main {
-  @apply grow dark:bg-gray-800;
-  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 overflow-y-auto }
+  @apply grow dark:bg-dark-3;
+  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 dark:border-dark-6 overflow-y-auto }
 }
 /* Main Style end here */
 
@@ -233,7 +237,7 @@
 }
 
 
-.zt-card { @apply rounded-lg bg-white p-3 sm:p-6 }
+.zt-card { @apply rounded-lg bg-white dark:bg-dark-4 dark:text-white p-3 sm:p-6 }
 .zt-announcementsTabs,
 .zt-myRequestsTabs {
   .zt-themeTabNav {

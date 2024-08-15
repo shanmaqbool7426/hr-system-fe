@@ -189,7 +189,15 @@ module.exports = {
       fuchsia: colors.fuchsia,
       pink: colors.pink,
       rose: colors.rose,
-
+    
+      "dark-1": "#526176",
+      "dark-2": "#434f61",
+      "dark-3": "#343d4b",
+      "dark-4": "#252c36",
+      "dark-5": "#222831",
+      "dark-6": "#161a20",
+      "dark-7": "#07090b",
+    
       themePrimary: "#243c7a",
       themePrimary400: "#8ea2d1",
       themePrimary300: "#a6b5d9",
