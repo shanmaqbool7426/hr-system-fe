@@ -1,8 +1,8 @@
 import {
-  Button, 
-  Table, 
+  Button,
+  Table,
   DropDown,
-  Profile, 
+  Profile,
 } from "@/components/elements";
 import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
@@ -10,22 +10,22 @@ import {
   BlockIcon,
   Edit,
   EyeOff,
-  EyeOn, 
-  ThreeDotsVertical, 
+  EyeOn,
+  ThreeDotsVertical,
 } from "@/components/svg";
 import {
-  FetchEmployees, 
+  FetchEmployees,
 } from "@/store/actions/employee.actions";
-import PageLoader from "@/components/elements/PageLoader"; 
+import PageLoader from "@/components/elements/PageLoader";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import ReHireForm from "@/components/forms/employees/reHire";
 
 export default function EmployeesListPage() {
   const { t } = useTranslation();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const { is_loading, employees_list } = useSelector((state) => state.employee);
   const { customfield_list } = useSelector((state) => state.customfield);
   const [sortCol, setSortCol] = useState(null);
@@ -42,10 +42,10 @@ export default function EmployeesListPage() {
     status: null,
   });
 
-    useEffect(()=>{
-      dispatch(FetchEmployees())
-    },[dispatch])
-    
+  useEffect(() => {
+    dispatch(FetchEmployees())
+  }, [dispatch])
+
   const filterElements = [
     {
       type: "search",
@@ -77,7 +77,7 @@ export default function EmployeesListPage() {
   ];
 
   const headings = [
-    
+
     { title: t("Employee Name"), col: "firstName", sort: true },
     { title: t("Designation"), col: "designation", sort: false },
     { title: t("Project"), col: "project", sort: false },
@@ -112,15 +112,18 @@ export default function EmployeesListPage() {
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
-  const rows = paginatedData?.map((item,i) => {
-    return { 
+  const rows = paginatedData?.map((item, i) => {
+    return {
       firstName: (
         <Link
           href={`/employees/details/${item._id}`}
           className="flex gap-2 items-center no-underline"
         >
           <Profile image={item?.avatar} name={item.firstName} />
-          <span className="hover:underline">{`${item.firstName} ${item.lastName}`}</span>
+          <div>
+            <div>{`${item.firstName} ${item.lastName}`}</div>
+            <div>{`${item.employeeCode}`}</div>
+          </div>
         </Link>
       ),
       designation: item?.designation?.name || "------",

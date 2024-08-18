@@ -34,19 +34,19 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             webAttendance: employee?.webAttendance || false,
         },
         validationSchema: Yup.object().shape({
-            firstName: Yup.string().required(t('formik.firstNameRequired')),
-            lastName: Yup.string().required(t('formik.lastNameRequired')),
-            fatherName: Yup.string().required(t('formik.fatherNameRequired')),
-            fatherCnic: Yup.string().required(t('formik.fatherCnicRequired')),
-            employeeCode: Yup.string().required(t('formik.employeeCodeRequired')),
-            contact: Yup.string().required(t('formik.contactRequired')),
-            cnic: Yup.string().required(t('formik.cnicRequired')),
-            designation: Yup.string().required(t('formik.designationRequired')),
-            dateOfBirth: Yup.string().required(t('formik.dateOfBirthRequired')),
-            joiningDate: Yup.date().required(t('formik.joiningDateRequired')),
-            email: Yup.string().email('formik.invalidEmail').required(t('formik.emailRequired')),
-            status: Yup.string().required(t('formik.employeeStatusRequired')),
-            lineManager: Yup.string().required(t('formik.lineManagerRequired')),
+            firstName: Yup.string().required(t('First name is required')),
+            lastName: Yup.string().required(t('Last name is required')),
+            fatherName: Yup.string().required(t('Father name is required')),
+            fatherCnic: Yup.string().required(t('Father CNIC is required')).matches(/^\d{13}$/, 'Please enter a valid CNIC'),
+            employeeCode: Yup.string().required(t('Employee Code is required')),
+            contact: Yup.string().required(t('Contact is required')),
+            cnic: Yup.string().required(t('CNIC is required')).matches(/^\d{13}$/, 'Please enter a valid CNIC'),
+            designation: Yup.string().required(t('Designation is required')),
+            dateOfBirth: Yup.string().required(t('Date of birth is required')),
+            joiningDate: Yup.date().required(t('Joining date is required')),
+            email: Yup.string().email('Email is not valid').required(t('Email is required')),
+            status: Yup.string().required(t('Employee status is required')),
+            lineManager: Yup.string(),
         }),
         onSubmit: async (values) => {
             return employee ? dispatch(UpdateEmployee(employee._id, values, onCompleted)) : dispatch(CreateEmployee(values, onCompleted));
@@ -90,10 +90,13 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             required: true, value: formik.values.email,
         },
         {
-            type: "text",
+            type: "number",
             name: "cnic",
             label: t('Employee CNIC'),
             placeholder: t("Enter employee cnic"),
+            step: "0",
+            minLength: 13,
+            maxLength: 13,
             required: true, value: formik.values.cnic,
         },
         {
@@ -112,10 +115,13 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             required: true, value: formik.values.fatherName,
         },
         {
-            type: "text",
+            type: "number",
             name: "fatherCnic",
             label: t('Father CNIC'),
             placeholder: t("Enter father cnic"),
+            step: "0",
+            minLength: 13,
+            maxLength: 13,
             required: true, value: formik.values.fatherCnic,
         },
         {
@@ -144,7 +150,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             value: formik.values.shiftPlan,
             placeholder: t("Work Schedule"),
             required: true,
-            list: [{display:"Morning",value:"Morning"},{display:"Evening",value:"Evening"},{display:"Night",value:"Night"}]
+            list: [{ display: "Morning", value: "Morning" }, { display: "Evening", value: "Evening" }, { display: "Night", value: "Night" }]
         },
         {
             type: "tel",
@@ -161,7 +167,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
             value: formik.values.role,
             list: []
         },
-        
+
         {
             type: "select",
             name: "designation",

@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, InputErrorInfo } from "../svg";
-export default function Input({ name, formik, className, containerClass, type, label,disabled, ...props }) {
+export default function Input({ name, formik, className, containerClass, type, label, disabled, ...props }) {
     const [showPassword, setShowPassword] = useState(false);
-
+    const changeHandler = (event) => {
+        if (type === "number") {
+            event.preventDefault()
+            event.target.value = event.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+        }
+        if(props.onChange) props.onChange(event) 
+        else formik?.handleChange(event) 
+    }
     return (
         <div className={`zt-formGroup ${containerClass}`}>
             {label && <label className="dark:text-themeGrayscale300" htmlFor={props?.id}>
@@ -35,8 +42,8 @@ export default function Input({ name, formik, className, containerClass, type, l
                     onBlur={formik?.handleBlur}
                     onInput={formik?.handleBlur}
                     className={`zt-themeInput ${formik?.touched[name] && formik?.errors[name] ? " zt-error" : ""}${className}`}
-                    type={type}
-                    onChange={(e) => { props.onChange ? props.onChange(e) : formik?.handleChange(e) }}
+                    type={type !== "number" ? type : "text"}
+                    onChange={changeHandler}
                     {...props}
                 />
             )}
