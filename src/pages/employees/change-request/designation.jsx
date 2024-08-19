@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {  FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { FetchEmployees } from '@/store/actions/employee.actions';
-import ChangeDesignationForm from '@/components/forms/employees/changeRequest/ChangeDesignation';
+import ChangeDesignationForm from '@/components/forms/employees/change-request/ChangeDesignation';
 import { FetchCustomfields } from '@/store/actions/customfield.actions';
 
 export default function DesignationPage() {

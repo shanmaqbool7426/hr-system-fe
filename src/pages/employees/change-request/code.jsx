@@ -9,7 +9,7 @@ import Toast from '@/util/toast';
 import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { useState } from 'react';
-import ChangeCodeForm from '@/components/forms/employees/changeRequest/ChangeCode';
+import ChangeCodeForm from '@/components/forms/employees/change-request/ChangeCode';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 

@@ -9,7 +9,7 @@ import Toast from '@/util/toast';
 import { ChangeGrade, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
-import ChangeGradeForm from '@/components/forms/employees/changeRequest/ChangeGrade';
+import ChangeGradeForm from '@/components/forms/employees/change-request/ChangeGrade';
 
 const user = ls?.get('auth_user', { decrypt: true });
 

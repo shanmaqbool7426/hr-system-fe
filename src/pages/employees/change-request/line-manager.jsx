@@ -9,7 +9,7 @@ import Toast from '@/util/toast';
 import { ChangeLineManager, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
-import ChangeLineManagerForm from '@/components/forms/employees/changeRequest/ChangeLineManger';
+import ChangeLineManagerForm from '@/components/forms/employees/change-request/ChangeLineManger';
 
 const user = ls?.get('auth_user', { decrypt: true })
 
