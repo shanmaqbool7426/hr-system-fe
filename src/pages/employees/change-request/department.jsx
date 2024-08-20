@@ -31,6 +31,7 @@ export default function DepartmentPage() {
 		{ title: t("Effective Date"), col: "effectiveDate" },
 		{ title: t("Reason"), col: "reason", },
 		{ title: t("Details"), col: "detail", },
+		{ title: t("Attachment"), col: "attachment", },
 	]
 	const filteredrows = change_request_list
 		.filter(request => request.type === 'department')
@@ -55,6 +56,7 @@ export default function DepartmentPage() {
 		effectiveDate: <DisplayDate date={request.effectiveDate} />,
 		reason: request.reason,
 		detail: request.detail || '----',
+		attachment: request.attachment ? <a target="_blank" download={request.attachment.split('/').at(-1)} href={request.attachment} className="cursor-pointer"><Download/></a>: '----'
 	}));
 	return (
 		<section className="flex flex-col grow">

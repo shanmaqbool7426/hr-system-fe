@@ -2,25 +2,27 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { ChangeDesignation } from '@/store/actions/employee-change-request.actions';
 import Toast from "@/util/toast";
 import BaseForm from '../../BaseForm';
 import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
 import Storage from '@/util/storage';
-import { ChangeDepartment, } from '@/store/actions/employee-change-request.actions';
 
-export default function ChangeDepartementForm({ onClose, object }) {
+
+export default function ChangeDesignationForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { is_loading } = useSelector((state) => state.employee);
-    const { departments_list } = useSelector(state => state.department);
+    const { auth_user } = useSelector(state => state.auth)
+    const { customfield_list } = useSelector(state => state.customfield)
     const { employees_list } = useSelector((state) => state.employee)
+    const { is_loading } = useSelector((state) => state.employee);
 
     const formik = useFormik({
         initialValues: {
             employee: "",
             currentValue: "",
-            department: "",
+            designation: "",
             effectiveDate: "",
             reason: "",
             detail: "",
@@ -28,7 +30,7 @@ export default function ChangeDepartementForm({ onClose, object }) {
         },
         validationSchema: Yup.object().shape({
             employee: Yup.string().required(t('Employee is required')),
-            department: Yup.string().required(t('Department is required')),
+            designation: Yup.string().required(t('Designation is required')),
             effectiveDate: Yup.string().required(t('Effective date is required')),
             reason: Yup.string().required(t('Reason is required')),
         }),
@@ -36,20 +38,21 @@ export default function ChangeDepartementForm({ onClose, object }) {
             if (values.attachment) {
                 const { url } = await Storage.upload(values.attachment, auth_user.company._id)
                 values.attachment = url
-            }
-            dispatch(ChangeDepartment(values, () => {
+            }            
+            dispatch(ChangeDesignation(values, () => {
                 onCompleted();
             }))
         }
     });
     const onCompleted = () => {
-        Toast.success(t("Change department request created successfully"));
+        Toast.success(t("Change designation request created successfully"));
         onClose();
     };
     useEffect(() => {
         const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
-        formik.setFieldValue('currentValue', selectedEmployee?.department?.name)
+        formik.setFieldValue('currentValue', selectedEmployee?.designation?.name)
     }, [formik.values.employee, employees_list]);
+
 
     const formElements = [
         {
@@ -65,37 +68,36 @@ export default function ChangeDepartementForm({ onClose, object }) {
         },
         {
             type: "text",
-            label: t('Current Department'),
-            placeholder: t("Current Department"),
+            label: t('Current Designation'),
+            placeholder: t("Current Designation"),
             value: formik.values.currentValue,
             readOnly: true,
             className: "cursor-not-allowed"
         },
         {
             type: "select",
-            name: 'department',
-            label: 'New Department',
-            value: formik.values.department,
-            error: formik.touched.department && formik.errors.department,
-            list: departments_list?.map((item) => ({
-                value: item?._id,
-                display: item.name,
-            })),
+            name: 'designation',
+            label: 'New Designation',
+            value: formik.values.designation,
+            error: formik.touched.designation && formik.errors.designation,
+            list: customfield_list.filter(item => item.type === 'designation').map(item => {
+                return { display: item.name, value: item._id }
+            }),
             required: true
         },
         {
             type: "date",
             name: 'effectiveDate',
             label: 'Effective Date',
-            minDate: new Date,
             value: formik.values.effectiveDate,
             error: formik.touched.effectiveDate && formik.errors.effectiveDate,
+            minDate: new Date,
             required: true
         },
         {
             type: "select",
             name: 'reason',
-            label: 'Reason Of Department Change',
+            label: 'Reason Of Designation Change',
             value: formik.values.reason,
             error: formik.touched.reason && formik.errors.reason,
             list: [
@@ -115,8 +117,9 @@ export default function ChangeDepartementForm({ onClose, object }) {
         },
     ];
 
+
     return (
-        <BaseForm title={object ? "Change Department" : "Change Department"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
+        <BaseForm title={object ? "Change Designaion" : "Change Designaion"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
             <FileUpload
                 id={'attachment'}
                 name={'attachment'}

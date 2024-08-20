@@ -43,38 +43,38 @@ export default function Table({
     };
 
     const handleSelectAll = () => {
-        
+
     };
 
     const handleRowSelect = (index) => {
-        
+
     };
 
     return (
         <div className='overflow-auto w-full'>
-            <table className={`zt-themeTable ${className}`}>
+            <table className={`zt-table ${className}`}>
                 <thead>
-                    <tr className='rounded-lg bg-themeGrayscale100'>
-                        <th className='flex gap-2'>
+                    <tr>
+                        <th className='flex gap-2 items-center'>
                             {checkbox && <CheckBox
                                 size={'sm'}
                                 variant={'dark'}
                                 id="checkboxSelectAll"
                                 name={"checkboxSelectAll"}
-                                checked={selectAll}
+                                checked={rows.length === selected.length}
                                 onChange={handleSelectAll}
                             />}
-                            <span>{t("Sr#")}</span></th>
+                            <span>{t("Sr")}</span>
+                        </th>
                         {headings?.map((value, index) => (
-                            <th key={index} className='select-none px-2 py-5'>
+                            <th key={index}>
                                 <div className="flex items-center justify-center whitespace-nowrap">
-                                    {value.sort ?
-                                        <span className='cursor-pointer' onClick={() => sortHandler(value)}>
-                                            {sortCol !== value.col && <SortEmpty />}
-                                            {sortCol === value.col && sortDir === 'asc' && <SortAsc />}
-                                            {sortCol === value.col && sortDir === 'desc' && <SortDesc />}
-                                        </span>
-                                        : <span>{value.title}</span>}
+                                    <span>{value.title}</span>
+                                    {value.sort && <span className='cursor-pointer' onClick={() => sortHandler(value)}>
+                                        {sortCol !== value.col && <SortEmpty />}
+                                        {sortCol === value.col && sortDir === 'asc' && <SortAsc />}
+                                        {sortCol === value.col && sortDir === 'desc' && <SortDesc />}
+                                    </span>}
                                 </div>
                             </th>
                         ))}
@@ -91,7 +91,7 @@ export default function Table({
                                             variant={'dark'}
                                             id={`checkboxRow${index1}`}
                                             name={`checkboxRow${index1}`}
-                                            checked={selectedRows.includes(index1)}
+                                            checked={selected.includes(item._id)}
                                             onChange={() => handleRowSelect(index1)}
                                         />}
                                         {(page - 1) * perPage + index1 + 1}

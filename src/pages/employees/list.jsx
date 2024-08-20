@@ -77,7 +77,6 @@ export default function EmployeesListPage() {
   ];
 
   const headings = [
-
     { title: t("Employee Name"), col: "firstName", sort: true },
     { title: t("Designation"), col: "designation", sort: false },
     { title: t("Project"), col: "project", sort: false },

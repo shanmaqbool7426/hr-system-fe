@@ -17,7 +17,7 @@ export default function Profil({ name, lastName, image, width, height, nameClass
                     />
 
                 </figure > :
-                <div className={`flex items-center capitalize justify-center bg-gray-300 dark:bg-gray-700 rounded-full ${nameClass}`}>
+                <div className={`flex items-center capitalize justify-center bg-gray-300 dark:bg-gray-700 dark:text-white rounded-full ${nameClass}`}>
                     {name && name[0]}{lastName && lastName[0]}
                 </div>
         }

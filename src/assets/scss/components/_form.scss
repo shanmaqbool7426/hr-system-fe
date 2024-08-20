@@ -25,7 +25,7 @@ label sup { @apply top-0 }
 
 
 /* Theme CheckBox Styling Start here */
-.zt-themeCheckBox {
+.zt-check-box {
   @apply relative flex justify-start;
   input {
     @apply absolute top-0 left-0 invisible opacity-0;

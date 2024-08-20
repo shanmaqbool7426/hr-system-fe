@@ -6,7 +6,7 @@ export const employeeSlice = createSlice({
         is_loading: false,
         employees_list: [],
         employee_details: null,
-        change_request_list:[],
+        change_request_list: [],
     },
     reducers: {
         setLoading(state, action) {
@@ -27,6 +27,9 @@ export const employeeSlice = createSlice({
         setEmployeeDetails(state, action) {
             state.employee_details = action.payload
         },
+        pushChangeRequest(state, action) {
+            state.change_request_list.push(action.payload)
+        },
         removeEmployee(state, action) {
             state.employees_list = state.employees_list.filter((item) => item._id !== action.payload)
         },
@@ -42,7 +45,7 @@ export const employeeSlice = createSlice({
                 state.employee_details.academicsHistory = []
             }
             state.employee_details.academicsHistory.push(action.payload)
-        }, 
+        },
         removeAcademic(state, action) {
             state.employee_details.academicsHistory = state.employee_details.academicsHistory.filter(item => item._id !== action.payload)
         },
@@ -68,7 +71,7 @@ export const employeeSlice = createSlice({
                 state.employee_details.documents = []
             }
             state.employee_details.documents.push(action.payload)
-        }, 
+        },
         removeDocument(state, action) {
             state.employee_details.documents = state.employee_details.documents.filter(item => item._id !== action.payload)
         },
@@ -81,7 +84,7 @@ export const employeeSlice = createSlice({
                 state.employee_details.warnings = []
             }
             state.employee_details.warnings.push(action.payload)
-        }, 
+        },
         removeWarning(state, action) {
             state.employee_details.warnings = state.employee_details.warnings.filter(item => item._id !== action.payload)
         },
@@ -105,7 +108,10 @@ export const {
     setDocument,
     pushDocument,
     removeDocument,
-    setWarning,pushWarning,removeWarning
+    setWarning,
+    pushWarning,
+    removeWarning,
+    pushChangeRequest
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
