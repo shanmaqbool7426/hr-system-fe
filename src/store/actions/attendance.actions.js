@@ -1,5 +1,5 @@
 import axios from "@/util/axios";
-import { setLoading, setAttendanceList ,setTodayAttendance ,setBreakTimeStart ,setCheckoutAttendance,setGetBreaksByAttendance} from "../slices/attendance.slice";
+import { setLoading, setAttendanceList ,setTodayAttendance ,setBreakTimeStart, setLastBreak ,setCheckoutAttendance,setGetBreaksByAttendance} from "../slices/attendance.slice";
 
 export const FetchAttendance = (payload) => async (dispatch) => {
   try {
@@ -15,10 +15,10 @@ export const FetchAttendance = (payload) => async (dispatch) => {
   }
 };
 
-export const TimSheetAction = (payload) => async (dispatch) => {
+export const CheckIn = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));  
-    const data = await axios.post('/attendance/check-in',payload);  
+    const data = await axios.post('/attendance/check-in');  
     return true;
   } catch (err) {
     console.log("Error", err);
@@ -26,10 +26,10 @@ export const TimSheetAction = (payload) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-export const todaysAttendance = (payload) => async (dispatch) => {
+export const todaysAttendance = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));  
-    const data = await axios.post('/attendance/todays-attendance',payload);    
+    const data = await axios.post('/attendance/todays-attendance');    
     dispatch(setTodayAttendance(data?.attendace));  
     return true;
   } catch (err) {
@@ -38,11 +38,11 @@ export const todaysAttendance = (payload) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
-export const startBreak = (payload , id) => async (dispatch) => {
+export const startBreak = (id) => async (dispatch) => {
   try {
     dispatch(setLoading(true));  
-    const data = await axios.post(`/attendance/start-break/${id}`,payload);   
-    dispatch(setBreakTimeStart(data?.attendance_break))
+    const data = await axios.post(`/attendance/start-break/${id}`);   
+    dispatch(setBreakTimeStart(data?.attendance_break)) 
     return true;
   } catch (err) {
     console.log("Error", err);
@@ -79,11 +79,12 @@ export const checkOut = (id) => async (dispatch) => {
 };
 export const getBreaks = (id) => async (dispatch) => {
   try {
-    dispatch(setLoading(true));   
-    
-    const data = await axios.get(`/attendance/get-breaks/${id}`);  
-      
+    dispatch(setLoading(true));    
+    const data = await axios.get(`/attendance/get-breaks/${id}`);   
     dispatch(setGetBreaksByAttendance(data?.attendance))
+    const breaksArray = data?.attendance || [];
+    const lastBreak = breaksArray.length > 0 ? breaksArray.at(-1) : null;
+    dispatch(setLastBreak(lastBreak)) 
     return true;
   } catch (err) {
     console.log("Error", err);

@@ -6,7 +6,10 @@ import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import Toast from "@/util/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShiftplan, DeleteShiftplan } from "@/store/actions/shiftplan.action";
+// import PageLoader from "@/components/elements/PageLoader";
+
 export default function AttendanceSettingShiftPlanPage() {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
@@ -14,10 +17,7 @@ export default function AttendanceSettingShiftPlanPage() {
   const [perPage, setPerPage] = useState(10);
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
-  const dispatch = useDispatch();
-  const [editDetail , setEditDetails] = useState("");
-  console.log(editDetail , "setEditId");
-  
+  const [editDetail, setEditDetails] = useState("");  
   const headings = [
     { title: t("Shift Title"), col: "shiftTitle" },
     { title: t("Start Time"), col: "startTime" },
@@ -27,18 +27,23 @@ export default function AttendanceSettingShiftPlanPage() {
     { title: t("Break Countable"), col: "BreakCountable" },
     { title: t("Action"), col: "action" },
   ];
-  const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan); 
-
+  const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan);
   useEffect(() => {
-    dispatch(fetchShiftplan());
-  }, [0]);
-
+    dispatch(fetchShiftplan()); 
+  }, [dispatch]);
+  const handleDelete = async(id) => { 
+   await Toast.confirmDelete(() => {
+      dispatch(DeleteShiftplan(id))
+      Toast.success(t("Shift plan deleted successfully"));  
+      dispatch(fetchShiftplan()) 
+    }, t);
+  };
   const rows = shiftplandata?.list?.map((item) => ({
     shiftTitle: item?.shiftName,
     Break: item?.break === false ? "No" : "Yes",
     BreakCountable: item?.breakCountable === false ? "No" : "Yes",
-    startTime: item?.startTime ? item?.startTime : "09:00 AM",
-    endTime: item?.endTime ? item?.endTime : "07:00 PM",
+    startTime: item?.startTime ? item?.startTime : "00:00",
+    endTime: item?.endTime ? item?.endTime : "23:59",
     shiftEnd: item?.shiftEndNextDay === false ? "No" : "Yes",
     action: (
       <DropDown icon={<ThreeDotsVertical />}>
@@ -47,7 +52,7 @@ export default function AttendanceSettingShiftPlanPage() {
             <a
               onClick={() => {
                 setEdit(true);
-                setEditDetails(item)
+                setEditDetails(item);
               }}
               className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark"}
             >
@@ -60,14 +65,7 @@ export default function AttendanceSettingShiftPlanPage() {
           <li className="!p-0">
             <a
               onClick={() => {
-                Toast.confirmDelete(() => {
-                  dispatch(
-                    DeleteShiftplan(item._id, () => {
-                      Toast.success(t("Shift plan deleted successfully"));
-                      dispatch(fetchShiftplan());
-                    })
-                  );
-                }, t);
+                handleDelete(item._id);
               }}
               className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"}
             >
@@ -94,6 +92,7 @@ export default function AttendanceSettingShiftPlanPage() {
         <div className="flex justify-between pb-6">
           <h2 className="text-h4 mb-0">{t("Shift Plan")}</h2>
         </div>
+        {/* {is_loading && <PageLoader />} */}
         <Table
           headings={headings}
           rows={rows}
@@ -113,6 +112,7 @@ export default function AttendanceSettingShiftPlanPage() {
             onClose={() => {
               setAdd(false);
             }}
+            is_loading={is_loading}
           />
         )}
 
@@ -121,7 +121,8 @@ export default function AttendanceSettingShiftPlanPage() {
             onClose={() => {
               setEdit(false);
             }}
-            object={editDetail} 
+            object={editDetail}
+            is_loading={is_loading}
           />
         )}
       </div>

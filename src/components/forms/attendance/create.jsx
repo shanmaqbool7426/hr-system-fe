@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import Toast from "@/util/toast";
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions";
 import { useDispatch } from "react-redux";
-import { Button, SearchSelect, Select, Table, ToggleCheck } from "@/components/elements";
+import { Button, Input, SearchSelect, Select, Table, ToggleCheck } from "@/components/elements";
 import { useState } from "react";
 import { Plus, Trash } from "@/components/svg";
-import { CreateShiftplan , UpdateShiftPlane } from "@/store/actions/shiftplan.action";
-export default function CreateAttendanceForm({ onClose, object}) { 
+import { CreateShiftplan, UpdateShiftPlane  , fetchShiftplan} from "@/store/actions/shiftplan.action";
+export default function CreateAttendanceForm({ onClose, object , is_loading }) {
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
@@ -19,23 +19,23 @@ export default function CreateAttendanceForm({ onClose, object}) {
   const formik = useFormik({
     initialValues: {
       shiftName: object?.shiftName || "",
-      reqiuredHours: object?.workingHours || "",
+      shiftCode: object?.shiftCode || "",
       startTime: object?.startTime || "",
       endTime: object?.endTime || "",
       minStartTime: object?.minStartTime || "",
       maxStartTime: object?.maxStartTime || "",
       maxEndTime: object?.maxEndTime || "",
       breakStartTime: object?.breakStartTime || "",
-      breakEndTime: object?.breakEndTime || "", 
+      breakEndTime: object?.breakEndTime || "",
       radioStatus: object?.radioStatus || "flexibleSchedule",
       scheduleType: object?.scheduleType || [],
       break: object?.break || false,
-      breakCountable:object?.breakCountable || false , 
-      shiftEndNextDay:object?.shiftEndNextDay || false
+      breakCountable: object?.breakCountable || false,
+      shiftEndNextDay: object?.shiftEndNextDay || false,
     },
     validationSchema: Yup.object().shape({
-      shiftName: Yup.string().required(t("shift Name is required.")),
-      reqiuredHours: Yup.string().required(t("Required working hours/ Day is required.")),
+      shiftName: Yup.string().required(t("Shift Name is required.")),
+      shiftCode: Yup.string().required(t("Shift Code is required.")),
       startTime: Yup.string().when("radioStatus", {
         is: "clockBased",
         then: () => Yup.string().required(t("Start Time is required.")),
@@ -46,7 +46,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
         then: () => Yup.string().required(t("End Time is required.")),
         otherwise: () => Yup.string(),
       }),
-      minStartTime: Yup.string().required(t("Min Start Time is required.")), 
+      minStartTime: Yup.string().required(t("Min Start Time is required.")),
       maxEndTime: Yup.string().when("radioStatus", {
         is: "clockBased",
         then: () => Yup.string().required(t("Max End Time is required.")),
@@ -56,39 +56,42 @@ export default function CreateAttendanceForm({ onClose, object}) {
         is: "flexibleSchedule",
         then: () => Yup.string().required(t("Max Start Time is required.")),
         otherwise: () => Yup.string(),
-      }),  
+      }),
       breakStartTime: Yup.string().when("break", {
         is: true,
         then: () => Yup.string().required(t("Break Start Time is required.")),
         otherwise: () => Yup.string(),
-      }), 
+      }),
       breakEndTime: Yup.string().when("break", {
         is: true,
         then: () => Yup.string().required(t("Break End Time is required.")),
         otherwise: () => Yup.string(),
-      }),  
+      }),
     }),
     onSubmit: async (values) => {
       if (object) {
-        const id = object?._id
-        dispatch(UpdateShiftPlane(id , values));
-        console.log(id , values , "editabale")
-        Toast.success('Shift Plan Updated successfully'); 
+        const id = object?._id;
+       await dispatch(UpdateShiftPlane(id, values));
+       await dispatch(fetchShiftplan());
+        Toast.success("Shift Plan Updated successfully");
       } else {
-        dispatch(CreateShiftplan(values));
-        Toast.success('Shift Plan created successfully'); 
+       await dispatch(CreateShiftplan(values));
+       await dispatch(fetchShiftplan())
+        Toast.success("Shift Plan created successfully");
       }
-      onClose(); 
+      onClose();
     },
-  });    
+  }); 
+  
   // const onCompleted = () => {
-  //   Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`)); 
+  //   Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`));
   //   onClose();
   // };
   const handleToggleChange = (day) => {
-    const scheduleType = formik.values.scheduleType;
+    const scheduleType = [...formik.values.scheduleType]; // Create a shallow copy
     const radioType = formik.values.radioStatus;
     const index = scheduleType.findIndex((item) => item.day === day);
+    
     if (index > -1) {
       scheduleType.splice(index, 1);
     } else {
@@ -98,44 +101,49 @@ export default function CreateAttendanceForm({ onClose, object}) {
         scheduleType.push({ day, hours: "" });
       }
     }
-    formik.setFieldValue("scheduleType", [...scheduleType]);
-  };
+    formik.setFieldValue("scheduleType", scheduleType); // Update with the new array
+  }; 
 
   const handleHoursChange = (day, hours) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) {
-      scheduleType[index].hours = hours;
-    }
-    formik.setFieldValue("scheduleType", [...scheduleType]);
+    if (index > -1) { 
+      const updatedItem = { ...scheduleType[index], hours }; 
+      const updatedScheduleType = [
+          ...scheduleType.slice(0, index),
+          updatedItem,
+          ...scheduleType.slice(index + 1)
+      ]; 
+      formik.setFieldValue("scheduleType", updatedScheduleType);
+  } 
   };
 
   const handleFromChange = (day, from) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) {
-      scheduleType[index].from = from;
-    }
-    formik.setFieldValue("scheduleType", [...scheduleType]);
+    if (index > -1) { 
+      const updatedItem = { ...scheduleType[index], from }; 
+      const updatedScheduleType = [
+          ...scheduleType.slice(0, index),
+          updatedItem,
+          ...scheduleType.slice(index + 1)
+      ]; 
+      formik.setFieldValue("scheduleType", updatedScheduleType);
+  } 
   };
   const handleToChange = (day, to) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) {
-      scheduleType[index].to = to;
-    }
-    formik.setFieldValue("scheduleType", [...scheduleType]);
-  };
-  const selectList = [
-    { display: "9:00:00 PM", value: "9:00:00 PM" },
-    { display: "8:00:00 PM", value: "8:00:00 PM" },
-    { display: "6:00:00 PM", value: "6:00:00 PM" },
-  ];
-  const flexibleselectList = [
-    { display: "9:00:00", value: "9:00:00" },
-    { display: "8:00:00", value: "8:00:00" },
-    { display: "6:00:00", value: "6:00:00" },
-  ];
+    if (index > -1) { 
+      const updatedItem = { ...scheduleType[index], to }; 
+      const updatedScheduleType = [
+          ...scheduleType.slice(0, index),
+          updatedItem,
+          ...scheduleType.slice(index + 1)
+      ]; 
+      formik.setFieldValue("scheduleType", updatedScheduleType);
+  } 
+  };  
   const headings = [
     { title: t("Working Day"), col: "workingDay" },
     { title: t("From"), col: "From" },
@@ -156,20 +164,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "monday")?.from} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "monday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("monday", value)}
+          onChange={(value) => handleFromChange("monday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "monday")?.to} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "monday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("monday", value)}
+          onChange={(value) => handleToChange("monday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")} 
           required
         />
       ),
@@ -188,20 +198,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.from} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("tuesday", value)}
+          onChange={(value) => handleFromChange("tuesday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}  
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.to} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("tuesday", value)}
+          onChange={(value) => handleToChange("tuesday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}   
           required
         />
       ),
@@ -220,21 +232,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.from} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("wednesday", value)} 
+          onChange={(value) => handleFromChange("wednesday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}    
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.to} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("wednesday", value)}
-
+          onChange={(value) => handleToChange("wednesday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}     
           required
         />
       ),
@@ -253,20 +266,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
-          value={formik.values.scheduleType.find((item) => item.day === "thursday")?.from} 
+        <Input
+          type="time"
+          value={formik.values.scheduleType.find((item) => item.day === "thursday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("thursday", value)} 
+          onChange={(value) => handleFromChange("thursday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}    
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "thursday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("thursday", value)} 
+          onChange={(value) => handleToChange("thursday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}     
           required
         />
       ),
@@ -285,20 +300,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "friday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("friday", value)} 
+          onChange={(value) => handleFromChange("friday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}  
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "friday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("friday", value)} 
+          onChange={(value) => handleToChange("friday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}   
           required
         />
       ),
@@ -317,20 +334,22 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "saturday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("saturday", value)} 
+          onChange={(value) => handleFromChange("saturday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")}
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "saturday")?.to}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("saturday", value)} 
+          onChange={(value) => handleToChange("saturday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")} 
           required
         />
       ),
@@ -349,25 +368,27 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       From: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "sunday")?.from}
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleFromChange("sunday", value)} 
+          onChange={(value) => handleFromChange("sunday", value.target.value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")} 
           required
         />
       ),
       To: (
-        <SearchSelect
-          list={selectList}
+        <Input
+          type="time"
           value={formik.values.scheduleType.find((item) => item.day === "sunday")?.to}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}  
           placeholder={"9:00:00 PM"}
-          onChange={(value) => handleToChange("sunday", value)} 
+          onChange={(value) => handleToChange("sunday", value.target.value)}
           required
         />
       ),
     },
-  ];  
+  ];
   const flexibleHeadings = [
     { title: t("Working Day"), col: "workingDay" },
     { title: t("Working Hours"), col: "workingHours" },
@@ -387,11 +408,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
+        <Input 
+          type="number"
           value={formik.values.scheduleType.find((item) => item.day === "monday")?.hours}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("monday", value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
+          placeholder={"Monday Hours"}
+          onChange={(value) => handleHoursChange("monday", value.target.value)}
           required
         />
       ),
@@ -410,11 +432,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
-          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.hours || "9:00:00"}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("tuesday", value)}
+        <Input 
+          type="number"
+          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.hours}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")} 
+          placeholder={"Tuesday Hours"}
+          onChange={(value) => handleHoursChange("tuesday", value.target.value)}
           required
         />
       ),
@@ -433,11 +456,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
-          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.hours || "9:00:00"}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("wednesday", value)}
+        <Input 
+          type="number"
+          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.hours}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")} 
+          placeholder={"Wednesday Hours"}
+          onChange={(value) => handleHoursChange("wednesday", value.target.value)}
           required
         />
       ),
@@ -456,11 +480,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
+        <Input 
+          type="number"
           value={formik.values.scheduleType.find((item) => item.day === "thursday")?.hours}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("thursday", value)}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")} 
+          placeholder={"Thursday Hours"}
+          onChange={(value) => handleHoursChange("thursday", value.target.value)}
           required
         />
       ),
@@ -479,11 +504,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
-          value={formik.values.scheduleType.find((item) => item.day === "friday")?.hours || "9:00:00"}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("friday", value)}
+        <Input 
+          type="number"
+          value={formik.values.scheduleType.find((item) => item.day === "friday")?.hours}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")} 
+          placeholder={"Frinday Hours"}
+          onChange={(value) => handleHoursChange("friday", value.target.value)}
           required
         />
       ),
@@ -495,18 +521,19 @@ export default function CreateAttendanceForm({ onClose, object}) {
             id="Saturday"
             variant={"themePrimary"}
             disabled={false}
-            onChange={() => handleToggleChange("Saturday")}
-            checked={formik.values.scheduleType.some((item) => item.day === "Saturday")}
+            onChange={() => handleToggleChange("saturday")}
+            checked={formik.values.scheduleType.some((item) => item.day === "saturday")}
           />
           <span>{t("Saturday")}</span>
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
-          value={formik.values.scheduleType.find((item) => item.day === "Saturday")?.hours || "9:00:00"}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("Saturday", value)}
+        <Input 
+          type="number"
+          value={formik.values.scheduleType.find((item) => item.day === "saturday")?.hours}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")} 
+          placeholder={"Saturday Hours"}
+          onChange={(value) => handleHoursChange("saturday", value.target.value)}
           required
         />
       ),
@@ -525,11 +552,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
         </div>
       ),
       workingHours: (
-        <SearchSelect
-          list={flexibleselectList}
-          value={formik.values.scheduleType.find((item) => item.day === "sunday")?.hours || "9:00:00"}
-          placeholder={"9:00:00"}
-          onChange={(value) => handleHoursChange("sunday", value)}
+        <Input 
+          type="number"
+          value={formik.values.scheduleType.find((item) => item.day === "sunday")?.hours}
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")} 
+          placeholder={"Sunday Hours"}
+          onChange={(value) => handleHoursChange("sunday", value.target.value)}
           required
         />
       ),
@@ -694,12 +722,12 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.shiftName,
     },
     {
-      type: "text",
-      name: "reqiuredHours",
-      label: t("Required working hours/ Day"),
-      placeholder: t("Required working hours/ Day"),
+      type: "number",
+      name: "shiftCode",
+      label: t("Shift Code"),
+      placeholder: t("Shift Code"),
       required: true,
-      value: formik.values.reqiuredHours,
+      value: formik.values.shiftCode,
     },
     {
       type: "radio",
@@ -719,7 +747,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.clockBased,
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "text" : "hidden",
+      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
       name: "startTime",
       label: t("Start Time"),
       placeholder: t("Start Time"),
@@ -727,7 +755,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.startTime,
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "text" : "hidden",
+      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
       name: "endTime",
       label: t("End Time"),
       placeholder: t("End Time"),
@@ -735,7 +763,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.endTime,
     },
     {
-      type: "text",
+      type: "time",
       name: "minStartTime",
       label: t("Min Start Time"),
       placeholder: t("Min Start Time"),
@@ -743,7 +771,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.minStartTime,
     },
     {
-      type: formik.values.radioStatus === "flexibleSchedule" ? "text" : "hidden",
+      type: formik.values.radioStatus === "flexibleSchedule" ? "time" : "hidden",
       name: "maxStartTime",
       label: t("Max Start Time"),
       placeholder: t("Max Start Time"),
@@ -751,7 +779,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.maxStartTime,
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "text" : "hidden",
+      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
       name: "maxEndTime",
       label: t("Max End Time"),
       placeholder: t("Max End Time"),
@@ -781,7 +809,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       checked: formik.values.breakCountable,
     },
     {
-      type: formik.values.break ? "text" : "hidden",
+      type: formik.values.break ? "time" : "hidden",
       name: "breakStartTime",
       label: t("Break Start Time"),
       placeholder: t("Break Start Time"),
@@ -789,7 +817,7 @@ export default function CreateAttendanceForm({ onClose, object}) {
       value: formik.values.breakStartTime,
     },
     {
-      type: formik.values.break ? "text" : "hidden",
+      type: formik.values.break ? "time" : "hidden",
       name: "breakEndTime",
       label: t("Break End Time"),
       placeholder: t("Break End Time"),
@@ -803,7 +831,8 @@ export default function CreateAttendanceForm({ onClose, object}) {
       formElements={formElements}
       formik={formik}
       onClose={onClose}
-      is_loading={false}
+      is_loading={is_loading}
+      buttonText={object}
     >
       {formik.values.radioStatus === "clockBased" ? (
         <div className="py-6 col-span-2">

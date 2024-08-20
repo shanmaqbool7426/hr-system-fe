@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export const Activity = () => {
     const { t } = useTranslation()
     const dispatch = useDispatch();
-    const { is_loading, user, todayAttendance, getBreaksByAttendance } = useSelector((state) => state.attendance)
+    const { is_loading, todayAttendance, getBreaksByAttendance } = useSelector((state) => state.attendance) ;
     function formatTime(dateString) {
         const date = new Date(dateString);
         const options = {
@@ -19,14 +19,12 @@ export const Activity = () => {
         return new Intl.DateTimeFormat('en-US', options).format(date);
     } 
     useEffect(() => {
-       if(todayAttendance._id){
-           dispatch(todaysAttendance(user))
-           dispatch(getBreaks(todayAttendance?._id))  
+       if(todayAttendance?._id){
+           dispatch(getBreaks(todayAttendance?._id))
        }
-    }, [todayAttendance?._id])   
+    }, [0])   
     return (
-        <div className='zt-card col-span-3 xl:col-span-1'>
-            {/* <button onClick={()=>{dispatch(getBreaks(todayAttendance?._id))}}>dc</button> */}
+        <div className='zt-card col-span-3 xl:col-span-1'> 
             <h2 className='mb-4 font-bold text-xl'>{t("Today Activity")}</h2>
             <ul className='zt-activityLogs '>
                 <li>
