@@ -154,12 +154,12 @@ export const OnGoingProjects = () => {
   ];
 
   return (
-    <div className='bg-white rounded-lg p-6 '>
+    <div className='zt-card'>
       <div className='flex justify-between mb-4'>
         <h2 className='text-xl font-bold mb-0'>{t("On Going Projects")}</h2>
         <div className='flex gap-4'>
-          <button onClick={handlePrevSlide} className='rounded-full bg-themeGrayscale50 h-10 w-10 flex justify-center items-center'><ChevronLeft /></button>
-          <button onClick={handleNextSlide} className='rounded-full bg-themeGrayscale50 h-10 w-10 flex justify-center items-center rotate-180'><ChevronLeft /></button>
+          <button onClick={handlePrevSlide} className='rounded-full dark:bg-gray-700 bg-themeGrayscale50 h-10 w-10 flex justify-center items-center'><ChevronLeft /></button>
+          <button onClick={handleNextSlide} className='rounded-full dark:bg-gray-700 bg-themeGrayscale50 h-10 w-10 flex justify-center items-center rotate-180'><ChevronLeft /></button>
         </div>
       </div>
       <div className='max-w-[300px] md:max-w-[500px] xl:max-w-[1024px] xl:min-w-[1024px]'>
@@ -173,7 +173,7 @@ export const OnGoingProjects = () => {
               slidesPerView: 2,
             },
             1024: {
-              slidesPerView: 3,
+              slidesPerView: 2,
             }, 
           }}
           loop={true}
@@ -183,20 +183,20 @@ export const OnGoingProjects = () => {
         >
           {[0, 1, 2, 3, 4].map((ele, i) => (
             <SwiperSlide key={i}>
-              <div className='border bg-white border-themeGrayscale200 rounded-lg p-6'>
+              <div className='border dark:border-gray-700 border-themeGrayscale200 zt-card'>
                 <div className='flex justify-between pb-4'>
                   <h3 className='text-lg font-bold mb-0'>{t("Office Management")}</h3>
-                  <span className='zt-tag-danger zt-tag '>{t("Deadline: 10 May 2024")}</span>
+                  <span className='zt-tag-danger zt-tag'>{t("Deadline: 10 May 2024")}</span>
                 </div>
-                <hr className='text-themeGrayscale200 mb-4' />
-                <p className='mb-4 text-sm text-themeGrayscale600'>{t("Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...")}</p>
-                <div className='bg-themeGrayscale50 text-sm p-4 grid grid-cols-2 rounded-lg mb-4'>
+                <hr className='text-themeGrayscale200 dark:border-gray-700 mb-4' />
+                <p className='mb-4 text-sm text-themeGrayscale600 dark:text-white'>{t("Lorem Ipsum is simply dummy text of the printing and typesetting industry. When an unknown printer took a galley of type and scrambled it...")}</p>
+                <div className='bg-themeGrayscale50 dark:bg-gray-700 text-sm p-4 grid grid-cols-2 rounded-lg mb-4'>
                   <div className='flex flex-col gap-1'>
-                    <span className='text-themeGrayscale600'>{t("Total Task")}</span>
+                    <span className='text-themeGrayscale600 dark:text-white'>{t("Total Task")}</span>
                     <span className='font-semibold'>{t("20")}</span>
                   </div>
                   <div className='flex flex-col gap-1'>
-                    <span className='text-themeGrayscale600'>{t("Total Completed")}</span>
+                    <span className='text-themeGrayscale600 dark:text-white'>{t("Total Completed")}</span>
                     <span className='font-semibold'>{t("20")}</span>
                   </div>
                 </div>

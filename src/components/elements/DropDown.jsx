@@ -1,7 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import { ThreeDots } from '../svg'
-import Button from './Button'
+import { Fragment } from 'react' 
 import { useTranslation } from 'react-i18next'
 
 export default function DropDown({ children, title, icon, items, size }) {

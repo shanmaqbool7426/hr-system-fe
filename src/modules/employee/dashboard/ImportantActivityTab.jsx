@@ -40,18 +40,18 @@ export const ImportantActivityTab = () => {
     return (
         <div className='flex flex-col gap-2 2xl:h-[calc(100dvh_-_294px)] zt-hideScrollbar 2xl:overflow-y-scroll'>
             {data.map((ele, i) => (
-                <div key={i} className='p-4 rounded-lg bg-themeGrayscale50 flex gap-2 items-center'>
+                <div key={i} className='p-4 rounded-lg bg-themeGrayscale50 dark:bg-gray-700 flex gap-2 items-center'>
                     {ele.avatar ?
                         <figure className='shrink-0'>
                             <Image src={ele.avatar} height={48} width={48} alt='Avarat' className='rounded-full' />
                         </figure> :
-                        <span className='h-12 w-12 rounded-full flex justify-center items-center font-semibold text-lg bg-themeLightBlue text-themeBlue uppercase'>
+                        <span className='h-12 w-12 rounded-full flex justify-center items-center font-semibold text-lg dark:bg-white bg-themeLightBlue text-themeBlue uppercase'>
                             hr
                         </span>
                     }
                     <div className='flex flex-col text-sm gap-2'>
                         <span className='font-semibold w-4/5 truncate'>{ele.msg}</span>
-                        <span className='text-themeGrayscale600'>{ele.time}</span>
+                        <span className='text-themeGrayscale600 dark:text-white'>{ele.time}</span>
                     </div>
                 </div>
             ))}

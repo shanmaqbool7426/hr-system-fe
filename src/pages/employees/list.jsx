@@ -116,7 +116,7 @@ export default function EmployeesListPage() {
       firstName: (
         <Link
           href={`/employees/details/${item._id}`}
-          className="flex gap-2 items-center no-underline"
+          className="flex gap-2 items-center no-underline dark:text-white"
         >
           <Profile image={item?.avatar} name={item.firstName} />
           <div>
@@ -216,7 +216,7 @@ export default function EmployeesListPage() {
       <div className="flex justify-between items-center pb-6">
         <div className="">
           <h1 className="text-h4 mb-0">{t("Manage Employee")}</h1>
-          <p className="mb-0">{t("Manage your employee")}</p>
+          <p className="mb-0 dark:text-white">{t("Manage your employee")}</p>
         </div>
         <div className="flex items-start gap-2">
           {/* <Button className={"btn btn-dark-outline"}>{t("Export")}</Button> */}
@@ -230,7 +230,7 @@ export default function EmployeesListPage() {
         </div>
       </div>
 
-      <div className=" zt-card grow">
+      <div className="zt-card grow">
         <FilterArea
           title={t("Employees")}
           elements={filterElements}

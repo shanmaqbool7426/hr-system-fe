@@ -51,7 +51,7 @@ export default function Table({
     };
 
     return (
-        <div className='overflow-auto w-full'>
+        <div className='w-full'>
             <table className={`zt-table ${className}`}>
                 <thead>
                     <tr>
