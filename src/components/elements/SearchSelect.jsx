@@ -86,7 +86,7 @@ export default function SearchSelect({
                   </button>
                 )}
                 <Combobox.Button className="zt-btnDownArrow">
-                  <ChevronDown aria-hidden="true" />
+                  <ChevronDown className={'dark:text-white'} aria-hidden="true" />
                 </Combobox.Button>
               </div>
             )}

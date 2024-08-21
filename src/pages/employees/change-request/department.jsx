@@ -6,6 +6,7 @@ import { Button, Table, DisplayDate } from '@/components/elements';
 import ChangeDepartementForm from '@/components/forms/employees/change-request/departement';
 import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { FetchDepartments } from '@/store/actions/department.actions';
+import { Download } from "@/components/svg";
 
 export default function DepartmentPage() {
 	const { t } = useTranslation();

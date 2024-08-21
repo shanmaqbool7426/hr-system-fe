@@ -30,15 +30,15 @@
 html, body { @apply flex min-h-screen font-sans text-themeGrayscale text-base scroll-smooth }
 body { @apply grow  }
 #__next { @apply grow flex flex-col overflow-hidden }
-h1, h2, h3, h4, h5, h6 { @apply font-bold leading-[1.2] mb-6 text-themeGrayscale dark:text-themeGrayscale300 }
+h1, h2, h3, h4, h5, h6 { @apply font-bold  leading-[1.2] mb-6 text-themeGrayscale dark:text-themeGrayscale300 }
 h1 { font-size: var(--h1); }
 h2 { font-size: var(--h2); }
 h3 { font-size: var(--h3); }
 h4 { font-size: var(--h4); }
 h5 { font-size: var(--h5); }
 h6 { font-size: var(--h6); }
-p { @apply mb-4}
-a { @apply text-themePrimary underline font-bold hover:no-underline }
+p { @apply mb-4 dark:text-themeGrayscale300} 
+a { @apply text-themePrimary dark:text-themeGrayscale300 underline font-bold hover:no-underline }
 
 
 .iconList {

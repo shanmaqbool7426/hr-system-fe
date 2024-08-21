@@ -94,8 +94,8 @@
 /* Sidebar Style end here */
 
 /* Side Panel Style Start here */
-.zt-backDropSidePanel { @apply fixed top-0 right-0 z-30 w-full h-full bg-gray-900/30 flex flex-col items-end }
-.zt-sidePanel { @apply flex flex-col grow gap-6 py-6 max-w-4xl w-full relative border rounded-l-lg bg-white /* dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700 */ }
+.zt-backDropSidePanel { @apply fixed top-0 right-0 z-30 w-full h-full bg-gray-900/30  flex flex-col items-end }
+.zt-sidePanel { @apply flex flex-col grow gap-6 py-6 max-w-4xl w-full relative border rounded-l-lg bg-white dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700 }
 /* Side Panel Style end here */
 
 /* Main Style start here */
@@ -228,7 +228,7 @@
 .recharts-default-legend{@apply flex justify-between}
 
 .zt-scheduleSidebar { @apply overflow-y-scroll zt-hideScrollbar bg-white dark:bg-dark-4 rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)] }
-.zt-activitySidebar { @apply bg-white rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)] }
+.zt-activitySidebar { @apply bg-white dark:bg-dark-4 dark:text-white rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)] }
 
 .zt-attendanceStatisticCard {
   @apply flex rounded-lg bg-white shadow-md gap-6 p-4 items-center justify-between;
