@@ -14,13 +14,12 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   const { is_loading, employees_list } = useSelector((state) => state.employee);
   const { customfield_list } = useSelector((state) => state.customfield);
   const { auth_user } = useSelector((state) => state.auth);
-  const {shiftplandata} = useSelector((state) => state.shiftplan);
-  console.log(shiftplandata.list , "thisoneisnew");
-  
+  const { shiftplandata } = useSelector((state) => state.shiftplan);
+
   useEffect(() => {
     dispatch(fetchShiftplan())
   }, [0])
-  
+
   const formik = useFormik({
     initialValues: {
       firstName: employee?.firstName || "",
@@ -40,24 +39,22 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       lineManager: employee?.lineManager._id || "",
       mobileAttendance: employee?.mobileAttendance || false,
       webAttendance: employee?.webAttendance || false,
-      shiftPlan: employee?.shiftPlan || ""
+      shiftplan: employee?.shiftplan || ""
     },
     validationSchema: Yup.object().shape({
-      firstName: Yup.string().required(t("formik.firstNameRequired")),
-      lastName: Yup.string().required(t("formik.lastNameRequired")),
-      fatherName: Yup.string().required(t("formik.fatherNameRequired")),
-      fatherCnic: Yup.string().required(t("formik.fatherCnicRequired")),
-      employeeCode: Yup.string().required(t("formik.employeeCodeRequired")),
-      contact: Yup.string().required(t("formik.contactRequired")),
-      cnic: Yup.string().required(t("formik.cnicRequired")),
-      designation: Yup.string().required(t("formik.designationRequired")),
-      dateOfBirth: Yup.string().required(t("formik.dateOfBirthRequired")),
-      joiningDate: Yup.date().required(t("formik.joiningDateRequired")),
-      email: Yup.string().email("formik.invalidEmail").required(t("formik.emailRequired")),
-      status: Yup.string().required(t("formik.employeeStatusRequired")),
-      lineManager: Yup.string().required(t("formik.lineManagerRequired")),
-      shiftPlan: Yup.string().required(t("formik.shiftPlanRequired")),
-
+      firstName: Yup.string().required(t("First name is required")),
+      lastName: Yup.string().required(t("Last name is required")),
+      fatherName: Yup.string().required(t("Father name is required")),
+      fatherCnic: Yup.string().required(t("Father CNIC is required")),
+      employeeCode: Yup.string().required(t("Employee code is required")),
+      contact: Yup.string().required(t("Contact number is required")),
+      cnic: Yup.string().required(t("CNIC is required")),
+      designation: Yup.string().required(t("Designation is required")),
+      dateOfBirth: Yup.string().required(t("Date of birth is required")),
+      joiningDate: Yup.date().required(t("Joining date is required")),
+      email: Yup.string().email("formik.invalidEmail").required(t("Email is required")),
+      status: Yup.string().required(t("Status is required")),
+      // shiftplan: Yup.string().required(t("Shift plan is required")),
     }),
     onSubmit: async (values) => {
       return employee
@@ -65,7 +62,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
         : dispatch(CreateEmployee(values, onCompleted));
     },
   });
-  console.log(formik.values , "values")
+  console.log(formik.values, "values")
   const onCompleted = () => {
     Toast.success(employee ? t("Employee updated successfully") : t("Employee created successfully"));
     onClose();
@@ -193,13 +190,23 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       name: "lineManager",
       label: t("Line Manager"),
       value: formik.values.lineManager,
-      required: true,
       list: employees_list
         .filter((item) => item._id !== employee?._id)
         .map((item) => ({
           value: item._id,
           display: item.firstName + " " + item.lastName,
         })),
+    },
+    {
+      type: "select",
+      name: "shiftPlan",
+      label: t("Shift Plan"),
+      value: formik.values.shiftPlan,
+      required: true,
+      list: shiftplandata.list?.map((item) => ({
+        value: item?._id,
+        display: item?.shiftName,
+      })),
     },
     {
       type: "switch",
@@ -229,19 +236,8 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       value: formik.values.password,
       autocomplete: "new-password",
     },
-    {
-      type: "select",
-      name: "shiftPlan",
-      label: t("Shift Plan"),
-      value: formik.values.shiftPlan,
-      required: true,
-      list: shiftplandata.list?.map((item) => ({
-          value: item?._id,
-          display: item?.shiftName,
-        })),
-    },
   ];
-  
+
   const formTitle = employee ? t("Update employee") : t("Create employee");
 
   return (
