@@ -6,7 +6,7 @@ export default function DetailPanel({ children }) {
 
     return (
         <div className="zt-backDropSidePanel">
-            <div className="zt-sidePanel relative">
+            <div className="zt-sidePanel relative px-4">
             {children}
             </div>
         </div>

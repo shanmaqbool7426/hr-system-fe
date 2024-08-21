@@ -1,6 +1,6 @@
-import { Button, CheckBox, DropDown, Table } from "@/components/elements";
+import { Button, CheckBox, DetailPanel, DropDown, Table } from "@/components/elements";
 import CreateGazetedLeaveForm from "@/components/forms/leaves/create-gazetted-leave";
-import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import { ChevronLeft, Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 import { useEffect, useState } from "react";
 import Toast from "@/util/toast";
 import { useTranslation } from "next-i18next";
@@ -19,6 +19,7 @@ export default function LeaveGazettedHolidaysPage() {
   const dispatch = useDispatch();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
+  const [view, setView] = useState(null);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [create, setCreate] = useState(false);
@@ -36,7 +37,7 @@ export default function LeaveGazettedHolidaysPage() {
   }, [dispatch]);
 
   const headings = [
-   
+
     { title: t("Holiday Name"), col: "name", sort: true },
     { title: t("From Date"), col: "fromDate" },
     { title: t("To Date"), col: "toDate" },
@@ -69,11 +70,11 @@ export default function LeaveGazettedHolidaysPage() {
   ];
 
   let filteredRows = holiday_list?.filter((item) => {
-      return (
-        filters.search.length === 0 ||
-        item.title.toLowerCase().includes(filters.search.toLowerCase())
-      );
-    })
+    return (
+      filters.search.length === 0 ||
+      item.title.toLowerCase().includes(filters.search.toLowerCase())
+    );
+  })
     .sort((a, b) => {
       if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
       else return b[sortCol]?.localeCompare(a[sortCol]);
@@ -82,7 +83,7 @@ export default function LeaveGazettedHolidaysPage() {
   const indexOfLastItem = page * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
-  const rows = paginatedData?.map((item, i) => ({
+  const rows = paginatedData?.map((item) => ({
     name: item?.title,
     fromDate: <div><DisplayDate date={item.fromDate} /> ({moment(item.fromDate).format('dddd')})</div>,
     toDate: <div><DisplayDate date={item.toDate} /> ({moment(item.toDate).format('dddd')})</div>,
@@ -91,7 +92,7 @@ export default function LeaveGazettedHolidaysPage() {
         <ul className="zt-themeDropDownList zt-sm gap-1">
           <li className="!p-0">
             <a
-              onClick={() => setView(true)}
+              onClick={() => setView(item)}
               className={
                 "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary"
               }
@@ -190,6 +191,79 @@ export default function LeaveGazettedHolidaysPage() {
           object={editHoliday}
         />
       )}
+      {view && <DetailPanel>
+        <h4 className="flex gap-4"> <ChevronLeft className={"cursor-pointer"} onClick={() => setView(null)} /> {t("Gazetted Holiday Details")}</h4>
+        <table className="zt-table">
+          <tbody className="text-left">
+            <tr>
+              <th>{t("Title")}</th>
+              <td colSpan={3}>{view.title}</td>
+            </tr>
+            <tr>
+              <th>{t("From Date")}</th>
+              <td><DisplayDate date={view.fromDate} /></td>
+              <th>{t("To Date")}</th>
+              <td><DisplayDate date={view.toDate} /></td>
+            </tr>
+            <tr>
+              <th>{t("Countries")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.countries.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+              <th>{t("Provinces")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.provinces.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>{t("Cities")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.cities.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+              <th>{t("Areas")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.areas.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>{t("Stations")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.stations.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+              <th>{t("Grades")}</th>
+              <td>
+                <div className="flex gap-2">
+                  {view.grades.map(item => <span key={item._id}>{item.name}</span>)}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>{t("Description")}</th>
+              <td colSpan={3}>
+                {view.description}
+              </td>
+            </tr>
+            {view?.exemptedEmployees?.length > 0 &&  <tr>
+              <th>{t("Exempted Employees")}</th>
+              <td colSpan={3}>
+                <div className="flex gap-2">
+                  {view.exemptedEmployees.map(item => <span key={item._id}>{item.firstName} {item.lastName}</span>)}
+                </div>
+              </td>
+            </tr>}
+          </tbody>
+        </table>
+      </DetailPanel>}
     </section>
   );
 }
