@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { RadialBarChart, RadialBar, PolarAngleAxis } from 'recharts';
-export const RadialChart = ({circleSize,fillColor , circularValue,textSize ,className}) => {
+export const RadialChart = ({ circleSize, fillColor, circularValue, textSize, className }) => {
     const circulardata = [
         { name: 'L1', value: 4 }
-    ]; 
+    ];
     return (
         <div className={`${className}`}>
             <RadialBarChart
@@ -35,8 +35,9 @@ export const RadialChart = ({circleSize,fillColor , circularValue,textSize ,clas
                     y={circleSize / 2}
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="progress-label"
-                    fontSize={textSize?textSize:15}  
+                    className="progress-label dark:!text-white"
+                    fontSize={textSize ? textSize : 15}
+                    // fill={'white'} 
                 >
                     {circulardata[0].value}{circularValue}
                 </text>

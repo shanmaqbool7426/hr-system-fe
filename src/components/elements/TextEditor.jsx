@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { InputErrorInfo } from "../svg";
 import dynamic from 'next/dynamic';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
-export default function TextEditor({ id, label, error, containerClass, className,content,readOnly, ...props }) {
- 
+export default function TextEditor({ id, label, error, containerClass, className, content, readOnly, ...props }) {
+
 
   return (
     <>

@@ -97,7 +97,7 @@
 }
 
 .zt-themeTabPanels {
-  @apply flex flex-col p-4 bg-white grow
+  @apply flex flex-col p-4 bg-white dark:bg-transparent grow
 }
 
 .zt-themeTabPanel {
@@ -145,7 +145,7 @@
     @apply bg-themePrimary border-themePrimary text-white;
 
     &:disabled {
-      @apply bg-themePrimary100 border-themePrimary100 text-themePrimary300
+      @apply bg-themePrimary100 border-themePrimary100 text-themePrimary300 dark:bg-gray-500 dark:border-gray-700
     }
   }
 
@@ -442,11 +442,6 @@
       &:first-child {
         @apply text-left
       }
-
-      &:nth-child(2) {
-        @apply text-left
-      }
-
       &:last-child {
         @apply text-right flex justify-end
       }
@@ -478,10 +473,7 @@
             @apply justify-start
           }
         }
-  
-        &:nth-child(2) {
-          @apply text-left
-        }
+   
   
         &:last-child {
           @apply pr-4;
@@ -612,27 +604,27 @@
   }
 
   &.zt-tag-dark {
-    @apply bg-themeGrayscale/15 text-themeGrayscale
+    @apply bg-themeGrayscale/15 text-themeGrayscale dark:bg-themeGrayscale dark:text-white
   }
 
   &.zt-tag-secondary {
-    @apply bg-themeSecondary/15 text-themeSecondary
+    @apply bg-themeSecondary/15 text-themeSecondary dark:bg-themeSecondary dark:text-white
   }
 
   &.zt-tag-success {
-    @apply bg-themeSuccess/15 text-themeSuccess
+    @apply bg-themeSuccess/15 text-themeSuccess dark:bg-themeSuccess dark:text-white
   }
 
   &.zt-tag-danger {
-    @apply bg-themeDanger/15 text-themeDanger dark:bg-themeDangerLight
+    @apply bg-themeDanger/15 text-themeDanger dark:bg-themeDanger dark:text-white
   }
 
   &.zt-tag-purple {
-    @apply bg-themePurple/15 text-themePurple
+    @apply bg-themePurple/15 text-themePurple dark:bg-themePurple dark:text-white
   }
 
   &.zt-tag-warning {
-    @apply bg-themeOrange/15 text-themeOrange
+    @apply bg-themeOrange/15 text-themeOrange dark:bg-themeOrange dark:text-white
   }
 }
 

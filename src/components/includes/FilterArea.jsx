@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Button, SearchInput, Datepicker, SearchSelect, MultiSelect, Input, CheckBox } from "../elements";
-import { Filter, Edit, } from "../svg";
+import { Filter } from "../svg";
 import { useState } from "react";
 import { capitalize } from "@/util/helpers";
 
@@ -35,7 +35,7 @@ export default function FilterArea({ children, elements, title, filters, setFilt
     }
 
     return (
-        <form className="flex flex-col gap-4 mb-6 pb-6 border-b border-themeGrayscale300 dark:border-dark-5" onSubmit={submitHandler}>
+        <form className="flex flex-col gap-4 mb-6 pb-6 border-b border-themeGrayscale300 dark:border-gray-700" onSubmit={submitHandler}>
             <div className="flex justify-between items-center">
                 <h2 className="mb-0 text-h5">{title}</h2>
                 <div className="flex gap-2">
@@ -50,7 +50,7 @@ export default function FilterArea({ children, elements, title, filters, setFilt
             </div>
 
             {open && <>
-                <hr />
+                <hr className="border-themeGrayscale300 dark:border-gray-700"/>
                 <div className="grid xl:grid-cols-6 grid-cols-4 gap-4">
                     {elements?.map((element, index) => {
                         switch (element.type) {
