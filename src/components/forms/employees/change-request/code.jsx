@@ -8,64 +8,50 @@ import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
 import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
-import { uploader } from '@/util/helpers';
 import { ChangeEmployeeCode, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
+import { setLoading } from '@/store/slices/employee.slice';
 
-export default function ChangeCodeForm({ onClose, object }) {
+export default function ChangeEmployeeCodeForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { employees_list } = useSelector((state) => state.employee)
     const { is_loading } = useSelector((state) => state.employee);
     const { auth_user } = useSelector(state => state.auth);
-    const [currentCode, setCurrentCode] = useState("");
-
-    useEffect(() => {
-        if (employees_list.length === 0)
-            dispatch(FetchEmployees())
-    }, [dispatch])
 
     const formik = useFormik({
-		initialValues: {
+        initialValues: {
             employee: "",
-			employeeCode: "",
-			effectiveDate: "",
-			reason: "",
-			detail: "",
-			attachment: null,
-		},
-		validationSchema: Yup.object().shape({
-            employee: Yup.string().required(t('formik.employeeRequired')),
-			employeeCode: Yup.string().required(t('New Employee Code is Required')),
-			effectiveDate: Yup.string().required(t('formik.effectiveDateRequired')),
-			reason: Yup.string().required(t('formik.reasonOfDesignationChangeRequired')),
-		}),
+            currentValue: "",
+            employeeCode: "",
+            effectiveDate: "",
+            reason: "",
+            detail: "",
+            attachment: null,
+        },
+        validationSchema: Yup.object().shape({
+            employee: Yup.string().required(t('Employee is required')),
+            employeeCode: Yup.string().required(t('Employee code is required')),
+            effectiveDate: Yup.string().required(t('Effective date is required')),
+            reason: Yup.string().required(t('Reason is required')),
+        }),
         onSubmit: async (values) => {
-			if (values.attachment) {
-                let {url} = await Storage.upload(values.attachment, auth_user?.company?._id )
+            dispatch(setLoading(true))
+            if (values.attachment) {
+                const { url } = await Storage.upload(values.attachment, auth_user.company._id)
                 values.attachment = url
-					dispatch(ChangeEmployeeCode(values, () => {
-						formik.resetForm()
-                        onCompleted();
-					}))
-			} else {
-				dispatch(ChangeEmployeeCode(values, () => {
-					formik.resetForm()
-                    onCompleted();
-				}))
-			}
-		}
-	});
+            }
+            dispatch(ChangeEmployeeCode(values, () => {
+                onCompleted();
+            }))
+        }
+    });
     const onCompleted = () => {
-        Toast.success(object ? t("Employee Code Change Request Updated Successfully") : t("Employee Code Change Request Created Successfully"));
-        dispatch(FetchChangeRequests())
+        Toast.success(t("Change employee code request created successfully"));
         onClose();
     };
-
     useEffect(() => {
         const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
-        if (selectedEmployee) {
-            setCurrentCode(selectedEmployee.employeeCode || ""); 
-        }
+        formik.setFieldValue('currentValue', selectedEmployee?.employeeCode)
     }, [formik.values.employee, employees_list]);
 
     const formElements = [
@@ -82,36 +68,35 @@ export default function ChangeCodeForm({ onClose, object }) {
         },
         {
             type: "text",
-            name: "currentEmployeeCode",
             label: t('Current Code'),
-            placeholder: t("Enter Current Code"),
-            value: currentCode,
-            readOnly: true, 
-            className:"cursor-not-allowed"
+            placeholder: t("Current Employee Code"),
+            value: formik.values.currentValue,
+            readOnly: true,
+            className: "cursor-not-allowed"
         },
         {
             type: "text",
             name: 'employeeCode',
-            label: 'New Code',
+            label: 'New Employee Code',
             value: formik.values.employeeCode,
             error: formik.touched.employeeCode && formik.errors.employeeCode,
-            // list: [{ display: '1088', value: '1' }, { display: '1085', value: '2' }],
             required: true
         },
         {
             type: "date",
-            name:'effectiveDate',
-            label:'Effective Date',
+            name: 'effectiveDate',
+            label: 'Effective Date',
             value: formik.values.effectiveDate,
-            error: formik.touched.effectiveDate && formik.errors.effectiveDate,   
-            required:true
+            error: formik.touched.effectiveDate && formik.errors.effectiveDate,
+            minDate: new Date,
+            required: true
         },
         {
             type: "select",
-            name:'reason',
-            label:'Reason Of Employee Code Change',
+            name: 'reason',
+            label: 'Reason Of Employee Code Change',
             value: formik.values.reason,
-            error: formik.touched.reason && formik.errors.reason,  
+            error: formik.touched.reason && formik.errors.reason,
             list: [
                 { display: 'Promotion', value: 'promotion' },
                 { display: 'Correction', value: 'correction' },
@@ -120,18 +105,17 @@ export default function ChangeCodeForm({ onClose, object }) {
         },
         {
             type: "textarea",
-            name:'detail',
-            label:'Details',
+            name: 'detail',
+            label: 'Details',
             value: formik.values.detail,
-            error: formik.touched.detail && formik.errors.detail,  
+            error: formik.touched.detail && formik.errors.detail,
             containerClass: 'col-span-2',
         },
     ];
 
 
     return (
-        <BaseForm title={object ? "Change Code" : "Change Code"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-            {/* <div className='col-span-2'> */}
+        <BaseForm title={t("Change Employee Code")} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
             <FileUpload
                 id={'attachment'}
                 name={'attachment'}
@@ -141,7 +125,6 @@ export default function ChangeCodeForm({ onClose, object }) {
                     formik.setFieldValue('attachment', file)
                 }}
             />
-            {/* </div> */}
         </BaseForm>
     );
 }

@@ -30,7 +30,7 @@ export default function DepartmentPage() {
 		{ title: t("Current Department"), col: "currentValue" },
 		{ title: t("New Department"), col: "department", },
 		{ title: t("Effective Date"), col: "effectiveDate" },
-		{ title: t("Reason"), col: "reason", },
+		{ title: t("Reason To Change"), col: "reason", },
 		{ title: t("Details"), col: "detail", },
 		{ title: t("Attachment"), col: "attachment", },
 	]

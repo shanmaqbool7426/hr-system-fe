@@ -3,68 +3,53 @@ import { useFormik } from 'formik';
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "@/util/toast";
-import { FetchEmployees } from '@/store/actions/employee.actions';
 import BaseForm from '../../BaseForm';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
-import {  ChangeSalary, FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
-import { uploader } from '@/util/helpers';
+import { ChangeSalary } from '@/store/actions/employee-change-request.actions';
+import { setLoading } from '@/store/slices/employee.slice';
 
 export default function ChangeSalaryForm({ onClose, object }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const { auth_user } = useSelector(state => state.auth)
     const { employees_list } = useSelector((state) => state.employee)
     const { is_loading } = useSelector((state) => state.employee);
-    const [currentSalary, setCurrentSalary] = useState("");
-
-    useEffect(() => {
-        if (employees_list.length === 0)
-            dispatch(FetchEmployees())
-    }, [dispatch])
 
     const formik = useFormik({
-		initialValues: {
+        initialValues: {
             employee: "",
-			salary: "",
-			effectiveDate: "",
-			reason: "",
-			detail: "",
-			attachment: null,
-		},
-		validationSchema: Yup.object().shape({
-            employee: Yup.string().required(t('formik.employeeRequired')),
-			salary: Yup.number().required(t('New Salary is Required')),
-			effectiveDate: Yup.string().required(t('formik.effectiveDateRequired')),
-			reason: Yup.string().required(t('formik.reasonOfDesignationChangeRequired')),
-		}),
+            currentValue: "",
+            salary: "",
+            effectiveDate: "",
+            reason: "",
+            detail: "",
+            attachment: null,
+        },
+        validationSchema: Yup.object().shape({
+            employee: Yup.string().required(t('Employee is required')),
+            salary: Yup.string().required(t('Salary is required')),
+            effectiveDate: Yup.string().required(t('Effective date is required')),
+            reason: Yup.string().required(t('Reason is required')),
+        }),
         onSubmit: async (values) => {
-			if (values.attachment) {
-				await uploader(values.attachment, (url) => {
-					values.attachment = url
-					dispatch(ChangeSalary(values, () => {
-						formik.resetForm()
-                        onCompleted();
-					}))
-				})
-			} else {
-				dispatch(ChangeSalary(values, () => {
-					formik.resetForm()
-                    onCompleted();
-				}))
-			}
-		}
-	});
+            dispatch(setLoading(true))
+            if (values.attachment) {
+                const { url } = await Storage.upload(values.attachment, auth_user.company._id)
+                values.attachment = url
+            }
+            dispatch(ChangeSalary(values, () => {
+                onCompleted();
+            }))
+        }
+    });
     const onCompleted = () => {
-        Toast.success(object ? t("Salary Change Request Updated Successfully") : t("Salary Change Request Created Successfully"));
-        dispatch(FetchChangeRequests())
+        Toast.success(t("Change salary request created successfully"));
         onClose();
     };
-
     useEffect(() => {
         const selectedEmployee = employees_list.find(emp => emp._id === formik.values.employee);
-        if (selectedEmployee) {
-            setCurrentSalary(selectedEmployee.salary || ""); 
-        }
+        formik.setFieldValue('currentValue', selectedEmployee?.salary)
     }, [formik.values.employee, employees_list]);
 
     const formElements = [
@@ -82,13 +67,13 @@ export default function ChangeSalaryForm({ onClose, object }) {
         {
             type: "text",
             label: t('Current Salary'),
-            placeholder: t("Enter Salary"),
-            value: currentSalary,
-            readOnly: true, 
-            className:"cursor-not-allowed"
+            placeholder: t("Current Salary"),
+            value: formik.values.currentValue,
+            readOnly: true,
+            className: "cursor-not-allowed"
         },
         {
-            type: "text",
+            type: "number",
             name: 'salary',
             label: 'New Salary',
             value: formik.values.salary,
@@ -97,18 +82,19 @@ export default function ChangeSalaryForm({ onClose, object }) {
         },
         {
             type: "date",
-            name:'effectiveDate',
-            label:'Effective Date',
+            name: 'effectiveDate',
+            label: 'Effective Date',
             value: formik.values.effectiveDate,
-            error: formik.touched.effectiveDate && formik.errors.effectiveDate,   
-            required:true
+            error: formik.touched.effectiveDate && formik.errors.effectiveDate,
+            minDate: new Date,
+            required: true
         },
         {
             type: "select",
-            name:'reason',
-            label:'Reason Of Salary Change',
+            name: 'reason',
+            label: 'Reason Of Salary Change',
             value: formik.values.reason,
-            error: formik.touched.reason && formik.errors.reason,  
+            error: formik.touched.reason && formik.errors.reason,
             list: [
                 { display: 'Promotion', value: 'promotion' },
                 { display: 'Correction', value: 'correction' },
@@ -117,18 +103,17 @@ export default function ChangeSalaryForm({ onClose, object }) {
         },
         {
             type: "textarea",
-            name:'detail',
-            label:'Details',
+            name: 'detail',
+            label: 'Details',
             value: formik.values.detail,
-            error: formik.touched.detail && formik.errors.detail,  
+            error: formik.touched.detail && formik.errors.detail,
             containerClass: 'col-span-2',
         },
     ];
 
 
     return (
-        <BaseForm title={object ? "Change Salary" : "Change Salary"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-            {/* <div className='col-span-2'> */}
+        <BaseForm title={t("Change Salary")} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >            
             <FileUpload
                 id={'attachment'}
                 name={'attachment'}
@@ -138,7 +123,6 @@ export default function ChangeSalaryForm({ onClose, object }) {
                     formik.setFieldValue('attachment', file)
                 }}
             />
-            {/* </div> */}
         </BaseForm>
     );
 }

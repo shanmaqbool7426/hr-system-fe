@@ -1,12 +1,11 @@
 import { useTranslation } from "next-i18next";
-import { Button, CheckBox, Datepicker, DisplayDate, SearchSelect, Table, Textarea } from '@/components/elements';
-import { useEffect, useRef, useState } from 'react';
+import { Button, DisplayDate, Table } from '@/components/elements';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchChangeRequests } from '@/store/actions/employee-change-request.actions';
 import { FetchEmployees } from '@/store/actions/employee.actions';
 import ChangeDesignationForm from '@/components/forms/employees/change-request/designation';
 import { Download } from "@/components/svg";
-import Link from "next/link";
 
 export default function ChangeDesignationPage() {
 	const { t } = useTranslation()
@@ -46,7 +45,7 @@ export default function ChangeDesignationPage() {
 		{ title: t("Current Designation"), col: "currentValue" },
 		{ title: t("New Designation"), col: "designation", },
 		{ title: t("Effective Date"), col: "effectiveDate" },
-		{ title: t("Reason Of Designation Change"), col: "reason", },
+		{ title: t("Reason To Change"), col: "reason", },
 		{ title: t("Details"), col: "detail", },
 		{ title: t("Attachment"), col: "attachment", },
 	]
@@ -57,7 +56,7 @@ export default function ChangeDesignationPage() {
 		effectiveDate: <DisplayDate date={request.effectiveDate} />,
 		reason: request.reason,
 		detail: request.detail || '----',
-		attachment: request.attachment ? <a target="_blank" download={request.attachment.split('/').at(-1)} href={request.attachment} className="cursor-pointer"><Download/></a>: '----'
+		attachment: request.attachment ? <a target="_blank" download={request.attachment.split('/').at(-1)} href={request.attachment} className="cursor-pointer"><Download /></a> : '----'
 	}));
 
 

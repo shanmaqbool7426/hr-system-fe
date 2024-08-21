@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import FileUpload from '@/components/elements/FileUpload';
 import Storage from '@/util/storage';
 import { ChangeDepartment, } from '@/store/actions/employee-change-request.actions';
+import { setLoading } from '@/store/slices/employee.slice';
 
 export default function ChangeDepartementForm({ onClose, object }) {
     const { t } = useTranslation();
@@ -33,6 +34,7 @@ export default function ChangeDepartementForm({ onClose, object }) {
             reason: Yup.string().required(t('Reason is required')),
         }),
         onSubmit: async (values) => {
+            dispatch(setLoading(true))
             if (values.attachment) {
                 const { url } = await Storage.upload(values.attachment, auth_user.company._id)
                 values.attachment = url
