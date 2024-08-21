@@ -45,9 +45,13 @@ export default function ViewScheduleForm({ onClose, object, }) {
                     <Input disabled={true} name={'fromDate'} value={'02/03/2024'} className={'cursor-not-allowed'} containerClass={'w-full'} type='text' />
                     <Input disabled={true} name={'fromTime'} value={'11:41 PM'} className={'cursor-not-allowed'} containerClass={'w-full'} type='text' />
                 </div>
-                <ToggleCheck name='repeatEvent'
-                    checked={true}
-                    id={'repeatEvent'} className={'!gap-6 font-bold !flex-row'} label={'Repeat Event'} />
+                <div className='flex gap-4 items-center'>
+
+                    <ToggleCheck name='repeatEvent'
+                        checked={true}
+                        id={'repeatEvent'} className={'!gap-6 font-bold !flex-row'} label={'Repeat Event'} />
+                    <Input disabled={true} type={'text'} name={'repeatDay'} value={'Important Tasks'} className={'w-max cursor-not-allowed'} placeholder='Important Tasks' />
+                </div>
                 <div className='flex flex-col gap-2'>
                     <p className='mb-0 text-left font-bold text-2xl'>{t('Custom Repeat')}</p>
                     <div className='flex gap-4'>

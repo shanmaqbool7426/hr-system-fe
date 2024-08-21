@@ -17,29 +17,26 @@ export default function ManageJobsPage() {
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
 	const headings = [
-		
+
 		{ title: t("Job Title"), col: "JobTitle", /* sort: true */ },
 		{ title: t("Departments"), col: "departments", /* sort: true */ },
 		{ title: t("Start Date"), col: "StartDate", /* sort: true */ },
 		{ title: t("Expire Date"), col: "ExpireDate" },
+		{ title: t("Applicant"), col: "Applicant" },
 		{ title: t("Job Types"), col: "JobTypes" },
 		{ title: t("Status"), col: "Status" },
-		{ title: t("Applicant"), col: "Applicant" },
 		{ title: t("Action"), col: "action" }
 	]
 
 	const rows = [
 		{
-			
 			JobTitle: 'Manager',
 			departments: 'Outdoors',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-success !rounded-lg">{t("Full Time")}</span>,
 			Status: <span className="zt-tag zt-tag-danger !rounded-lg">{t("Close")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">
@@ -64,16 +61,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
-			
+
 			JobTitle: 'Orchestrator',
 			departments: 'Tools',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-danger !rounded-lg">{t("Part Time")}</span>,
 			Status: <span className="zt-tag zt-tag-success !rounded-lg">{t("Open")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">
@@ -98,16 +93,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
-			
+
 			JobTitle: 'Developer',
 			departments: 'Home',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-warning !rounded-lg">{t("Contract")}</span>,
 			Status: <span className="zt-tag zt-tag-success !rounded-lg">{t("Open")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">
@@ -132,16 +125,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
-			
+
 			JobTitle: 'Manager',
 			departments: 'Outdoors',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-success !rounded-lg">{t("Full Time")}</span>,
 			Status: <span className="zt-tag zt-tag-danger !rounded-lg">{t("Close")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">
@@ -166,16 +157,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
-			
+
 			JobTitle: 'Orchestrator',
 			departments: 'Tools',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-danger !rounded-lg">{t("Part Time")}</span>,
 			Status: <span className="zt-tag zt-tag-success !rounded-lg">{t("Open")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">
@@ -200,16 +189,14 @@ export default function ManageJobsPage() {
 			</DropDown>
 		},
 		{
-			
+
 			JobTitle: 'Developer',
 			departments: 'Home',
 			StartDate: '12 May 2024',
 			ExpireDate: '12 May 2024',
 			JobTypes: <span className="zt-tag zt-tag-warning !rounded-lg">{t("Contract")}</span>,
 			Status: <span className="zt-tag zt-tag-success !rounded-lg">{t("Open")}</span>,
-			Applicant: <Button type="button" variant={'purple'} className={'!py-1 !px-4'}>
-				{t('3 Candidates')}
-			</Button>,
+			Applicant: '3',
 			action: <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
 					<li className="!p-0">

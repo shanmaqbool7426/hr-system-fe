@@ -111,7 +111,7 @@ export default function CreateQuotationForm({ onClose, object }) {
             <div className='flex flex-col gap-6 col-span-2'>
                 <div>
                     <label className='text-sm font-medium mb-1 block text-start'>Upload File</label>
-                    <div className='rounded-lg flex items-center border border-themeGrayscale300'>
+                    <div className='rounded-lg flex items-center border border-themeGrayscale300 dark:border-gray-700'>
                         <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
                         <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
                         <span className='ps-2 text-sm'>{fileName}</span>

@@ -158,8 +158,8 @@ export default function CreateLeaveRequestForm({ onClose, request }) {
     return (
         <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
             <div className='col-span-2'>
-                <label className='text-sm font-medium mb-4 block text-start'>Upload Attachment</label>
-                <div className='rounded-lg flex relative items-center border border-themeGrayscale300'>
+                <label className='text-sm font-medium mb-4 block text-start dark:text-white'>Upload Attachment</label>
+                <div className='rounded-lg flex relative items-center border border-themeGrayscale300 dark:border-gray-700'>
                     <label htmlFor="upload" className='zt-uploadLabel'>Upload Attachment</label>
                     <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
                     <span className='ps-2 text-sm'>{fileName}</span>

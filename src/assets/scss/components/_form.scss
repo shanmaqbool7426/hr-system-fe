@@ -12,7 +12,7 @@ label sup { @apply top-0 }
 .zt-formGroupV2 {
   label { @apply w-1/3 shrink-0 text-themeGrayscale600 }
 }
-.zt-themeInput { @apply border border-themeGrayscale border-opacity-30 w-full py-3 px-4 rounded-lg text-sm focus:border-themePrimary placeholder:text-themeGrayscale600 dark:placeholder:text-white disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 disabled:text-themeGrayscale disabled:placeholder:text-themeGrayscale dark:bg-gray-700 dark:text-white;
+.zt-themeInput { @apply border border-themeGrayscale border-opacity-30 w-full py-3 px-4 rounded-lg text-sm focus:border-themePrimary placeholder:text-themeGrayscale600 dark:placeholder:text-white disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 dark:disabled:border-gray-500 disabled:text-themeGrayscale disabled:placeholder:text-themeGrayscale dark:bg-gray-700 dark:text-white;
   .zt-formGroupV2 & { @apply rounded-none p-0 border-x-0 border-t-0 border-themeGrayscale300 }
 }
 .zt-formGroupV2 {
@@ -118,7 +118,7 @@ label sup { @apply top-0 }
         }
         .zt-toggleInactive { @apply hidden }
         div {
-          @apply bg-themePrimary;
+          @apply bg-themePrimary dark:bg-themePrimary;
           &.zt-themePurple { @apply bg-themePurple }
           &.zt-themeGrayscale { @apply bg-themeGrayscale }
           &.zt-themeSecondary { @apply bg-themeSecondary }
@@ -133,7 +133,7 @@ label sup { @apply top-0 }
     }
     + label {
       @apply relative flex cursor-pointer select-none items-center gap-4;
-      > div { @apply bg-themeGrayscale400 block w-14 h-8 rounded-full transition }
+      > div { @apply bg-themeGrayscale400 dark:bg-gray-700 block w-14 h-8 rounded-full transition }
     }
     ~ label {
       .zt-toggleDot { @apply absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition; }

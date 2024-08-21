@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateProject, UpdateProject } from "@/store/actions/project.actions";
-import { Button, Input, SearchSelect, TextEditor, ToggleCheck } from '@/components/elements';
+import { Button, Datepicker, Input, SearchSelect, TextEditor, ToggleCheck } from '@/components/elements';
 import { useState } from 'react';
 import Radio from '@/components/elements/Radio';
 import { Employees, HamburgerMenu, LocationIcon, NotificationBell } from '@/components/svg';
@@ -15,6 +15,7 @@ export default function CreatScheduleForm({ onClose, object, }) {
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
     const [selectedDays, setSelectedDays] = useState([]);
+    const [leaveType, setLeaveType] = useState([]);
 
     const daysOfWeek = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
 
@@ -53,25 +54,34 @@ export default function CreatScheduleForm({ onClose, object, }) {
         Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
-    console.log(formik.values);
+    const leaves = ['Important Tasks', 'Daily Tasks', 'Interviews', 'Internal Meetings', 'Client Meetings', 'General'];
 
     return (
         <BaseForm formik={formik} onClose={onClose} is_loading={is_loading}>
             <div className='flex flex-col gap-6 col-span-2'>
-                <Input placeholder='Add Title' className='!text-2xl !border-r-0 !border-l-0 !border-t-0 !rounded-none' />
+                <Input placeholder='Add Title' className='!text-2xl dark:bg-transparent !border-r-0 !border-l-0 !border-t-0 !rounded-none' />
                 <div className='flex gap-6'>
-                    <Input formik={formik} name={'fromDate'} value={formik.values.fromDate} containerClass={'w-full'} type='date' />
+                    <Datepicker formik={formik} name={'fromDate'} value={formik.values.fromDate} containerClass={'w-full'} type='date' />
                     <Input formik={formik} name={'fromTime'} value={formik.values.fromTime} containerClass={'w-full'} type='time' />
                     <span className='font-bold mt-3'>{t("To")}</span>
-                    <Input formik={formik} name={'toDate'} value={formik.values.toDate} containerClass={'w-full'} type='date' />
+                    <Datepicker formik={formik} name={'toDate'} value={formik.values.toDate} containerClass={'w-full'} type='date' />
                     <Input formik={formik} name={'toTime'} value={formik.values.toTime} containerClass={'w-full'} type='time' />
                 </div>
-                <ToggleCheck name='repeatEvent'
-                    checked={formik.values.repeatEvent}
-                    onChange={(event) => {
-                        formik.setFieldValue('repeatEvent', event.target.checked)
-                    }}
-                    id={'repeatEvent'} className={'!gap-6 font-bold !flex-row'} label={'Repeat Event'} />
+                <div className='flex gap-4 items-center'>
+                    <ToggleCheck name='repeatEvent'
+                        checked={formik.values.repeatEvent}
+                        onChange={(event) => {
+                            formik.setFieldValue('repeatEvent', event.target.checked)
+                        }}
+                        id={'repeatEvent'} className={'!gap-6 font-bold !flex-row shrink-0'} label={'Repeat Event'} />
+                    <SearchSelect containerClass='w-full'
+                        list={leaves.map((leave) => ({ value: leave, display: leave }))}
+                        value={leaveType}
+                        onChange={(selected) => setLeaveType(selected)}
+                        placeholder="Important Tasks"
+                    />
+                </div>
+
                 {formik.values.repeatEvent &&
                     <div className='flex flex-col gap-2'>
                         <p className='mb-0 text-left font-bold text-2xl'>{t('Custom Repeat')}</p>
@@ -95,7 +105,7 @@ export default function CreatScheduleForm({ onClose, object, }) {
                                     />
                                     <label
                                         htmlFor={day}
-                                        className={`cursor-pointer h-10 w-10 flex justify-center items-center border rounded-full transition transform ${selectedDays.includes(day) ? 'bg-themePrimary text-white' : 'bg-gray-200'
+                                        className={`cursor-pointer h-10 w-10 flex justify-center items-center border dark:border-gray-500 rounded-full transition transform ${selectedDays.includes(day) ? 'bg-themePrimary text-white' : 'bg-gray-200 dark:bg-gray-700 dark:text-white'
                                             }`}
                                     >
                                         {day}
@@ -107,7 +117,7 @@ export default function CreatScheduleForm({ onClose, object, }) {
                         <Radio id='neverEnd' label={'Never'} name={'end'} />
                         <div className='flex'>
                             <Radio className='w-40' id='endOn' label={'On'} name={'end'} />
-                            <Input formik={formik} name={'endOn'} value={formik.values.endOn} type={'date'} />
+                            <Datepicker formik={formik} name={'endOn'} value={formik.values.endOn} type={'date'} />
                         </div>
                         <div className='flex'>
                             <Radio className='w-40' id='endAfter' label={'After'} name={'end'} />
@@ -118,7 +128,7 @@ export default function CreatScheduleForm({ onClose, object, }) {
                         </div>
                     </div>
                 }
-                <p className='text-xl font-bold text-themePurple border-b border-themeGrayscale500 text-left'>{t("Event Details")}</p>
+                <p className='text-xl font-bold text-themePurple dark:border-gray-700 border-b border-themeGrayscale500 text-left'>{t("Event Details")}</p>
                 <div className='flex gap-4 pl-9'>
                     <Button className={'btn btn-purple'}>{t("Meeting url")}</Button>
                     <Input containerClass={'grow'} placeholder='https://googlemeet.com/xyz-abc' />
@@ -138,7 +148,7 @@ export default function CreatScheduleForm({ onClose, object, }) {
                         { display: "John", value: "John" },
                         { display: "Mink", value: "Mink" },
                     ]} placeholder='Participent' />
-                    <span className='bg-themeGrayscale300 py-3 px-4 rounded-lg text-sm grow text-left p-4 '>{t("John is not available on meeting schedule please change time")}</span>
+                    <span className='bg-themeGrayscale300 dark:bg-gray-700 py-3 px-4 rounded-lg text-sm grow text-left p-4 '>{t("John is not available on meeting schedule please change time")}</span>
                 </div>
                 <div className='flex gap-4'>
                     <span><HamburgerMenu className={'h-5 w-5 mt-3'} /></span>

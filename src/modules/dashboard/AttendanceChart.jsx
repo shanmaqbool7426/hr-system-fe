@@ -73,7 +73,7 @@ export const AttendanceChart = () => {
                 </ResponsiveContainer>
             </div>
 
-            <div className="flex justify-between text-xs text-themeGrayscale600 px-4">
+            <div className="flex justify-between text-xs text-themeGrayscale600 dark:text-white px-4">
                 {colorData.map((ele, i) => (
                     <div key={i} className="flex gap-1 items-center">
                         <span className={`h-3 w-3 rounded ${ele.color}`}></span>

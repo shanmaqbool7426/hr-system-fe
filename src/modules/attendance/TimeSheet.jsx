@@ -134,31 +134,31 @@ export const TimeSheet = ({ className }) => {
     <div className={`${className} zt-card grid grid-cols-2 gap-4`}>
       <div className="col-span-2 sm:col-span-1 flex flex-col text-left">
         <h2 className="text-xl font-bold mb-0">{t("TimeSheet")}</h2>
-        <time dateTime={new Date().toISOString()} className="text-themeGrayscale600 text-sm block">
+        <time dateTime={new Date().toISOString()} className="text-themeGrayscale600 dark:text-white text-sm block">
           {t(getFormattedDate())}
         </time>
       </div>
       <div className="col-span-2 sm:col-span-1 flex flex-col gap-2 sm:text-right">
-        <span className="text-themeGrayscale600 ">{t("Current Shift")}</span>
+        <span className="text-themeGrayscale600 dark:text-white">{t("Current Shift")}</span>
         <time className="font-semibold" dateTime="09:00 AM - 06:00 PM">
           {t("09:00 AM - 06:00 PM")}
         </time>
       </div>
-      <div className="bg-themeGrayscale50 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between">
+      <div className="bg-themeGrayscale50 dark:bg-gray-700 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between">
         <div className="flex flex-col gap-1">
-          <span className="text-themeGrayscale600">{t("Check In at")}</span>
-          <span className="font-semibold text-themeGrayscale900">
+          <span className="text-themeGrayscale600 dark:text-white">{t("Check In at")}</span>
+          <span className="font-semibold text-themeGrayscale900 dark:text-white">
             {todayAttendance?.checkInAt ? formatTimes(todayAttendance?.checkInAt) : t("Not checked in")}
           </span>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="text-themeGrayscale600">{t("Work Mode")}</span>
-          <span className="font-semibold text-themeGrayscale900 flex items-center gap-1">
+          <span className="text-themeGrayscale600 dark:text-white">{t("Work Mode")}</span>
+          <span className="font-semibold text-themeGrayscale900 dark:text-white flex items-center gap-1">
             <LocationIcon /> {t("Onsite")}
           </span>
         </div>
       </div>
-      <div className="col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 mx-auto flex justify-center items-center">
+      <div className="col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 dark:bg-gray-700 mx-auto flex justify-center items-center">
         <time className="text-xs font-bold" dateTime={workedHours}>
           {workedHours}
         </time>
@@ -203,13 +203,13 @@ export const TimeSheet = ({ className }) => {
       >
         Check Out <CheckOutIcon className={"shrink-0"} />
       </Button>
-      <div className="w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1">
+      <div className="w-full bg-themeGrayscale50 dark:bg-gray-700 p-4 rounded-lg flex flex-col text-center gap-1">
         <span>{t("Break")}</span>
         <time className="font-bold" dateTime={getBreaksByAttendance[0]?.endAt ? totalBreakTime : "00:00:00"}>
           {getBreaksByAttendance[0]?.endAt ? totalBreakTime : "00:00:00"}
         </time>
       </div>
-      <div className="w-full bg-themeGrayscale50 p-4 rounded-lg flex flex-col text-center gap-1">
+      <div className="w-full bg-themeGrayscale50 dark:bg-gray-700 p-4 rounded-lg flex flex-col text-center gap-1">
         <span>{t("Overtime")}</span>
         <time className="font-bold block" dateTime={formatTime(overtime)}>
           {t(formatTime(overtime))}

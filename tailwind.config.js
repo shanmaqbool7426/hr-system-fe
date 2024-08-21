@@ -239,6 +239,7 @@ module.exports = {
       themeDangerDark: '#c02337',
 
       themeOrange: '#fe964a',
+      themeOrangeLight: '#FFF2CC',
       lightOrange:"#F16E16",
       themeBlue: '#2f78ee',
       themeLightBlue: '#2F78EE1A',

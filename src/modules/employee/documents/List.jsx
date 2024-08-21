@@ -1,11 +1,11 @@
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
-import { Button, CheckBox, DisplayDate, DropDown, SearchSelect, Table } from '@/components/elements';
+import { Button, DisplayDate, DropDown, SearchSelect, Table } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
 import { uploader } from '@/util/helpers';
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { CloseCross, CrossClose, Download, Edit, EyeOn, Plus, ThreeDotsVertical, Trash } from '@/components/svg';
+import { CloseCross, Download, Edit, EyeOn, Plus, ThreeDotsVertical, Trash } from '@/components/svg';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Toast from '@/util/toast';

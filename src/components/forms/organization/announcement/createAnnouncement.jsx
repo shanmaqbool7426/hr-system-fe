@@ -201,7 +201,7 @@ export default function CreateAnnouncementForm({ onClose, object }) {
         <BaseForm title={object ? 'Edit Announcement' : "Add Announcement"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
             <div className='col-span-2'>
                 <label className='text-sm font-medium mb-1 block text-start'>Upload File</label>
-                <div className='rounded-lg flex items-center border border-themeGrayscale300'>
+                <div className='rounded-lg flex items-center border border-themeGrayscale300 dark:border-gray-700'>
                     <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
                     <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
                     <span className='ps-2 text-sm'>{fileName}</span>

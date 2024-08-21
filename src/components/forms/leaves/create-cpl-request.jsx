@@ -107,8 +107,8 @@ export default function CreateCPLLeaveForm({ onClose, object }) {
     return (
         <BaseForm title={object ? 'Compensatory Leave Request' : "Compensatory Leave Request"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
             <div className="col-span-2">
-                <label className='text-sm font-medium mb-4 block text-start'>Upload Attachment</label>
-                <div className='rounded-lg flex items-center border border-themeGrayscale300'>
+                <label className='text-sm font-medium mb-4 block text-start dark:text-white'>Upload Attachment</label>
+                <div className='rounded-lg flex items-center border border-themeGrayscale300 dark:border-gray-700'>
                     <label htmlFor="upload" className='zt-uploadLabel'>Upload Attachment</label>
                     <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
                     <span className='ps-2 text-sm'>{fileName}</span>

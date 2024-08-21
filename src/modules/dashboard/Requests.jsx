@@ -27,15 +27,15 @@ export const Requests = () => {
                             <h3 className="text-xl font-semibold mb-4">{ele}</h3>
                             <div className="flex gap-2 mb-3 items-center ">
                                 <span className="h-6 w-6 rounded bg-themePurple/50"></span>
-                                <span className="text-themeGrayscale600 leading-3">{t("Total 10")}</span>
+                                <span className="text-themeGrayscale600 leading-3 dark:text-white">{t("Total 10")}</span>
                             </div>
                             <div className="flex gap-2 mb-3 items-center">
                                 <span className="h-6 w-6 rounded bg-themePurple"></span>
-                                <span className="text-themeGrayscale600 leading-3">{t("Used - 4")}</span>
+                                <span className="text-themeGrayscale600 leading-3 dark:text-white">{t("Used - 4")}</span>
                             </div>
                             <div className="flex gap-2 items-center">
                                 <span className="h-6 w-6 rounded bg-primary shrink-0"></span>
-                                <span className="text-themeGrayscale600">{t("Remaining - 3")}</span>
+                                <span className="text-themeGrayscale600 dark:text-white">{t("Remaining - 3")}</span>
                             </div>
                         </div>
                         <RadialChart textSize='20' circleSize={140} fillColor='#8C62FF' circularValue={'/10'} />

@@ -94,8 +94,8 @@ export default function CandidateFieldForm({ onClose, object }) {
             className='sm:grid-cols-3'
         >
             <div className='col-span-3'>
-                <label className='text-sm font-medium mb-4 block text-start'>Upload File</label>
-                <div className='rounded-lg flex relative items-center border border-themeGrayscale300'>
+                <label className='text-sm font-medium mb-4 block text-start dark:text-white'>Upload File</label>
+                <div className='rounded-lg flex relative items-center border border-themeGrayscale300 dark:border-gray-700'>
                     <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
                     <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
                     <span className='ps-2 text-sm'>{fileName}</span>
