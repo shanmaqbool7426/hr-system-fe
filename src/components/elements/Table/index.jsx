@@ -61,7 +61,7 @@ export default function Table({
                                 variant={'dark'}
                                 id="checkboxSelectAll"
                                 name={"checkboxSelectAll"}
-                                checked={rows.length === selected.length}
+                                checked={rows.length && rows.length === selected.length}
                                 onChange={handleSelectAll}
                             />}
                             <span>{t("Sr")}</span>
