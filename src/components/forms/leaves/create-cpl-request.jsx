@@ -7,21 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { CreateLeavePolicy, UpdateLeavePolicy } from "@/store/actions/leave-policy.actions"
 import Toast from "@/util/toast";
 import { useState } from "react";
+import ImageUpload from "@/components/elements/ImadeUploader";
 
 export default function CreateCPLLeaveForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { customfield_list } = useSelector(state => state.customfield)
-    const [fileName, setFileName] = useState('No file chosen');
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFileName(file.name);
-        } else {
-            setFileName('No file chosen');
-        }
-    };
+   
     const formik = useFormik({
         initialValues: {
             employee: object?.employee?._id || "",
@@ -107,12 +98,7 @@ export default function CreateCPLLeaveForm({ onClose, object }) {
     return (
         <BaseForm title={object ? 'Compensatory Leave Request' : "Compensatory Leave Request"} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} >
             <div className="col-span-2">
-                <label className='text-sm font-medium mb-4 block text-start dark:text-white'>Upload Attachment</label>
-                <div className='rounded-lg flex items-center border border-themeGrayscale300 dark:border-gray-700'>
-                    <label htmlFor="upload" className='zt-uploadLabel'>Upload Attachment</label>
-                    <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
-                    <span className='ps-2 text-sm'>{fileName}</span>
-                </div>
+                <ImageUpload />
             </div>
         </BaseForm>
     )

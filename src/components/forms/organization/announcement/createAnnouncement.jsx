@@ -4,31 +4,14 @@ import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateEmployee, UpdateEmployee } from "@/store/actions/employee.actions"
 import Toast from "@/util/toast";
-import BaseForm from '../../BaseForm';
-import { useState } from 'react';
+import BaseForm from '../../BaseForm'; 
+import ImageUpload from '@/components/elements/ImadeUploader';
 
 export default function CreateAnnouncementForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector((state) => state.employee)
-    const [fileName, setFileName] = useState(null);
-
-    const handleFileChange = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFileName(file.name);
-            try {
-                let fileURL = await Storage.upload(file, auth_user?.company?._id, (url) => {
-                    formik.setFieldValue('fileURL', url);
-                });
-                console.log('fileUrl', fileURL)
-            } catch (error) {
-                console.error("File upload failed", error);
-            }
-        } else {
-            setFileName('No file chosen');
-        }
-    };
+   
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",
@@ -200,12 +183,7 @@ export default function CreateAnnouncementForm({ onClose, object }) {
     return (
         <BaseForm title={object ? 'Edit Announcement' : "Add Announcement"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
             <div className='col-span-2'>
-                <label className='text-sm font-medium mb-1 block text-start'>Upload File</label>
-                <div className='rounded-lg flex items-center border border-themeGrayscale300 dark:border-gray-700'>
-                    <label htmlFor="upload" className='zt-uploadLabel'>Choose File</label>
-                    <input type="file" id="upload" className='hidden' onChange={handleFileChange} />
-                    <span className='ps-2 text-sm'>{fileName}</span>
-                </div>
+				<ImageUpload /> 
             </div>
         </BaseForm>
     )
