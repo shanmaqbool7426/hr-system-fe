@@ -16,7 +16,6 @@ export default function App({ Component, pageProps }) {
             i18n = result
             setReady(true)
         })
-
     }, [])
     const Layout = Component.layout || DefaultLayout;
 

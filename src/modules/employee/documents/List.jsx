@@ -2,7 +2,6 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 import { Button, DisplayDate, DropDown, SearchSelect, Table } from '@/components/elements';
 import FileUpload from '@/components/elements/FileUpload';
-import { uploader } from '@/util/helpers';
 import { FetchEmployees } from "@/store/actions/employee.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { CloseCross, Download, Edit, EyeOn, Plus, ThreeDotsVertical, Trash } from '@/components/svg';
@@ -10,7 +9,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Toast from '@/util/toast';
 import { CreateDocument, DeleteDocument } from '@/store/actions/employee-document.actions';
-
+import Storage from '@/util/storage';
 export default function DocumentList() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
@@ -18,6 +17,7 @@ export default function DocumentList() {
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(null);
     const { employee_details } = useSelector((state) => state.employee);
+    const { auth_user } = useSelector((state) => state.auth);
     const [sortDir, setSortDir] = useState(null);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
@@ -34,16 +34,16 @@ export default function DocumentList() {
     const editHandler = (item) => {
         setEdit({ ...item });
         setAdd(true);
-      };
+    };
     const deleteHandler = (item) => {
         Toast.confirmDelete(() => {
-          dispatch(
-            DeleteDocument(item._id, () => {
-              Toast.success(t("Document deleted successfully"));
-            })
-          );
+            dispatch(
+                DeleteDocument(item._id, () => {
+                    Toast.success(t("Document deleted successfully"));
+                })
+            );
         }, t);
-      };
+    };
 
     const headings = [
         { title: t("Document Type"), col: "documentType", sort: true },
@@ -57,9 +57,9 @@ export default function DocumentList() {
         documentType: item?.documentType?.name,
         attachment: item?.attachment,
         download: <Button type="button" variant={'light-primary'} className={'!p-2'}>
-        <Download className={'h-4 w-4'} />
-    </Button>,
-        uploadedDate:  <DisplayDate  date={item?.uploadedDate}/> ,
+            <Download className={'h-4 w-4'} />
+        </Button>,
+        uploadedDate: <DisplayDate date={item?.uploadedDate} />,
         action: <DropDown icon={<ThreeDotsVertical />}>
             <ul className="zt-themeDropDownList zt-sm gap-4">
                 <li className="!p-0">
@@ -74,8 +74,8 @@ export default function DocumentList() {
                 </li>
                 <li className="!p-0">
                     <a onClick={() => {
-                            deleteHandler(item);
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                        deleteHandler(item);
+                    }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
                         <span className='flex gap-2'><Trash /> {t("Delete")}</span>
                     </a>
                 </li>
@@ -103,22 +103,23 @@ export default function DocumentList() {
         onSubmit: async (values) => {
             if (!employee_details?._id) {
                 return Toast.error("User ID is missing");
-              }
-              if (values.attachment) {
-                await uploader(values.attachment, (url) => {
-                  const valuesToSubmit = {
-                    ...values,
-                    attachment: url,
-                    documentPath: url,
-                    user: employee_details._id 
-                  };
-                  dispatch(CreateDocument(valuesToSubmit, () => {
-                    Toast.success("Document added successfully");
-                    formik.resetForm();
-                    setAdd(false);
-                  }));
-                });
-              }
+            }
+            if (values.attachment) {
+
+                const { url } = await Storage.upload(values.attachment, auth_user.company._id)
+                values.attachment = url
+                dispatch(CreateDocument(
+                    {
+                        ...values,
+                        documentPath: url,
+                        user: employee_details._id
+                    },
+                    () => {
+                        Toast.success("Document added successfully");
+                        formik.resetForm();
+                        setAdd(false);
+                    }));
+            }
         },
         enableReinitialize: true
     });
@@ -152,11 +153,11 @@ export default function DocumentList() {
                 <Table
                     headings={headings}
                     rows={add ? [...rows, {
-                        documentType: <SearchSelect 
+                        documentType: <SearchSelect
                             list={customfield_list.filter(item => item.type === 'document_type').map(item => {
                                 return { display: item.name, value: item._id }
                             })}
-                            required={true} 
+                            required={true}
                             name='documentType'
                             value={formik.values.documentType}
                             onChange={value => {
@@ -177,7 +178,7 @@ export default function DocumentList() {
                                 formik.setFieldValue('attachment', file);
                                 setNewDocument({
                                     ...newDocument,
-                                    documentPath: file.name, 
+                                    documentPath: file.name,
                                     uploadedDate: new Date().toLocaleDateString()
                                 });
                                 formik.setFieldValue('documentPath', file.name);

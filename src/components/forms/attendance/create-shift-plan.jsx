@@ -8,27 +8,27 @@ import { useDispatch } from 'react-redux';
 
 export default function CreateShiftPlanForm({ onClose, object }) {
     const { t } = useTranslation()
-    const { t:tv } = useTranslation("validation")
+    const { t: tv } = useTranslation("validation")
 
-const dispatch = useDispatch();
-const formik = useFormik({
-    initialValues: {
-        Shift: object?.Shift || "",
-        Employee: object?.Employee || "",
-    }, 
-    validationSchema: Yup.object().shape({
-        Shift: Yup.string().required(tv('Shift is required')),
-        Employee: Yup.string().required(tv('Employee is required'))
+    const dispatch = useDispatch();
+    const formik = useFormik({
+        initialValues: {
+            Shift: object?.Shift || "",
+            Employee: object?.Employee || "",
+        },
+        validationSchema: Yup.object().shape({
+            Shift: Yup.string().required(tv('Shift is required')),
+            Employee: Yup.string().required(tv('Employee is required'))
 
-    }),
-    onSubmit: async (values) => {
-        return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted));
-    }
-});
-const onCompleted = () => {
-    Toast.success(object ? tv(`New shift added successfully`) : tv(`New shift created successfully`));
-    onClose();
-};
+        }),
+        onSubmit: async (values) => {
+            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted));
+        }
+    });
+    const onCompleted = () => {
+        Toast.success(object ? tv(`New shift added successfully`) : tv(`New shift created successfully`));
+        onClose();
+    };
     const formElements = [
         {
             type: "select",
@@ -38,7 +38,7 @@ const onCompleted = () => {
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
-            containerClass:"col-span-2"
+            containerClass: "col-span-2"
         },
         {
             type: "select",
@@ -48,7 +48,7 @@ const onCompleted = () => {
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
-            containerClass:"col-span-2"
+            containerClass: "col-span-2"
         },
         {
             type: "select",
@@ -58,7 +58,7 @@ const onCompleted = () => {
             list: ["Yes", "No"],
             required: true,
             value: formik.values.name,
-            containerClass:"col-span-2"
+            containerClass: "col-span-2"
         },
     ]
     return (

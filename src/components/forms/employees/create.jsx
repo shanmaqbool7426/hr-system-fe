@@ -16,9 +16,9 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   const { auth_user } = useSelector((state) => state.auth);
   const { shiftplandata } = useSelector((state) => state.shiftplan);
 
-  useEffect(() => {
-    dispatch(fetchShiftplan())
-  }, [0])
+  // useEffect(() => {
+  //   dispatch(fetchShiftplan())
+  // }, [dispatch])
 
   const formik = useFormik({
     initialValues: {
