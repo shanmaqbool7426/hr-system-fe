@@ -32,11 +32,12 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       email: employee?.email || "",
       contact: employee?.contact || "",
       joiningDate: employee?.joiningDate || new Date(),
+      workMode: employee?.workMode || "onsite",
       password: "",
       canLogin: true,
-      status: employee?.status._id || "",
-      designation: employee?.designation._id || "",
-      lineManager: employee?.lineManager._id || "",
+      status: employee?.status?._id || "",
+      designation: employee?.designation?._id || "",
+      lineManager: employee?.lineManager?._id || "",
       mobileAttendance: employee?.mobileAttendance || false,
       webAttendance: employee?.webAttendance || false,
       shiftplan: employee?.shiftplan || ""
@@ -54,6 +55,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       joiningDate: Yup.date().required(t("Joining date is required")),
       email: Yup.string().email("formik.invalidEmail").required(t("Email is required")),
       status: Yup.string().required(t("Status is required")),
+      workMode: Yup.string().required(t("Work Mode is required")),
       // shiftplan: Yup.string().required(t("Shift plan is required")),
     }),
     onSubmit: async (values) => {
@@ -86,7 +88,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       value: formik.values.lastName,
     },
     {
-      type: "text",
+      type: employee ? "hidden" : "text",
       name: "employeeCode",
       label: t("Employee ID"),
       placeholder: t("Enter employee id"),
@@ -142,6 +144,18 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       maxDate: new Date(),
       required: true,
       value: formik.values.joiningDate,
+    },
+    {
+      type: "select",
+      name: "workMode",
+      label: t("Work Mode"),
+      required: true,
+      value: formik.values.workMode,
+      list: [
+        { display: "Onsite", value: "onsite" },
+        { display: "Remote", value: "remote" },
+        { display: "Hybrid", value: "hybrid" },
+      ]
     },
     {
       type: "select",

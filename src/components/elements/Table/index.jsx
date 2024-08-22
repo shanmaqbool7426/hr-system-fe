@@ -51,7 +51,7 @@ export default function Table({
     };
 
     return (
-        <div className='w-full'>
+        <div className='w-full overflow-x-auto'>
             <table className={`zt-table ${className}`}>
                 <thead>
                     <tr>
@@ -61,7 +61,7 @@ export default function Table({
                                 variant={'dark'}
                                 id="checkboxSelectAll"
                                 name={"checkboxSelectAll"}
-                                checked={rows.length && rows.length === selected.length}
+                                checked={rows?.length && rows?.length === selected?.length}
                                 onChange={handleSelectAll}
                             />}
                             <span>{t("Sr")}</span>

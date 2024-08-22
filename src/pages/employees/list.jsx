@@ -78,12 +78,12 @@ export default function EmployeesListPage() {
 
   const headings = [
     { title: t("Employee Name"), col: "firstName", sort: true },
-    { title: t("Designation"), col: "designation", sort: false },
-    { title: t("Project"), col: "project", sort: false },
-    { title: t("Department"), col: "department", sort: false },
-    { title: t("Line Manager"), col: "lineManager", sort: false },
+    { title: t("Designation"), col: "designation" },
+    { title: t("Project"), col: "project" },
+    { title: t("Department"), col: "department" },
+    { title: t("Line Manager"), col: "lineManager" },
     { title: t("Employee Status"), col: "status", sort: true },
-    { title: t("Work Mode"), col: "workMode", sort: false },
+    { title: t("Work Mode"), col: "workMode" },
     { title: t("Action"), col: "action" },
   ];
 
@@ -119,9 +119,9 @@ export default function EmployeesListPage() {
           className="flex gap-2 items-center no-underline dark:text-white"
         >
           <Profile image={item?.avatar} name={item.firstName} />
-          <div>
+          <div className="text-left">
             <div>{`${item.firstName} ${item.lastName}`}</div>
-            <div>{`${item.employeeCode}`}</div>
+            <div className="text-xs">{`${item.employeeCode}`}</div>
           </div>
         </Link>
       ),
@@ -132,7 +132,7 @@ export default function EmployeesListPage() {
         ? `${item?.lineManager?.firstName} ${item?.lineManager?.lastName}`
         : "------",
       status: item?.status?.name || "------",
-      workMode: item?.workMode?.name || "------",
+      workMode: <span className="capitalize">{item?.workMode || "------"}</span>,
       action: (
         <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">

@@ -163,7 +163,7 @@ export default function CreateLeaveForm({ onClose, leave }) {
     },
   ];
 
-  const formTitle = leave ? t("Update Leave Policy") : t("Create Leave Policy");
+  const formTitle = leave ? t("Update Leave Type") : t("Create Leave Type");
 
   return (
     <BaseForm

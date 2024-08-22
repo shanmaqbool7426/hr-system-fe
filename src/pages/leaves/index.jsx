@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { Button, DropDown, Table } from "@/components/elements"; 
 import { useEffect, useState } from "react";
-import CreateLeaveForm from "@/components/forms/leaves/create";
+import CreateLeaveForm from "@/components/forms/leaves/create-leave-type";
 import { useDispatch, useSelector } from "react-redux";
 import { DeletePolicy, FetchLeavePolicies } from "@/store/actions/leave-policy.actions";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";

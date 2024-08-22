@@ -122,7 +122,7 @@ export default function Sidebar() {
       {
         name: t("Leave Setting"), href: "/leaves/settings",
         innerSubMenu: [
-          { name: t("Leave Policies"), href: "/leaves" },
+          { name: t("Leave Type"), href: "/leaves" },
           // { name: t('Leave Type Settings'), href: "/leaves/settings/type-setting" },
           { name: t('Employee Leave Quota'), href: "/leaves/settings/employee-leave-quota" },
           { name: t('General Leave Settings'), href: "/leaves/settings/general-setting" },

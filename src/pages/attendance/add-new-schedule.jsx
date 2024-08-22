@@ -1,5 +1,5 @@
 import { Button } from '@/components/elements'
-import AddNewShiftForm from '@/components/forms/attendance/addNewShift'
+import AddNewShiftForm from '@/components/forms/attendance/create-shift-plan'
 import FilterArea from '@/components/includes/FilterArea'
 import { CloseCross, InputErrorInfo, Trash } from '@/components/svg'
 import React, { useState } from 'react'

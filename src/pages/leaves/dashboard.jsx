@@ -4,7 +4,7 @@ import { Button } from "@/components/elements";
 import { Leaves } from "@/modules/leaves/dashboard/Leaves";
 import { MyRequests } from "@/modules/dashboard/MyRequests";
 import { PublicHolidays } from "@/modules/leaves/dashboard/PublicHolidays";
-import CreatLeaveRequestForm from "@/components/forms/leaves/creat-leave-request";
+import CreatLeaveRequestForm from "@/components/forms/leaves/create-leave-request";
 import { TeamUnavailability } from "@/modules/leaves/dashboard/TeamUnavailability";
 import CreateCPLLeaveForm from "@/components/forms/leaves/create-cpl-request";
 

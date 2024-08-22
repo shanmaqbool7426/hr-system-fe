@@ -192,12 +192,12 @@ export default function LeaveGazettedHolidaysPage() {
         />
       )}
       {view && <DetailPanel>
-        <h4 className="flex gap-4"> <ChevronLeft className={"cursor-pointer"} onClick={() => setView(null)} /> {t("Gazetted Holiday Details")}</h4>
+        <h4 className="flex gap-4 sticky top-0"> <ChevronLeft className={"cursor-pointer"} onClick={() => setView(null)} /> {t("Gazetted Holiday Details")}</h4>
         <table className="zt-table">
           <tbody className="text-left">
             <tr>
               <th>{t("Title")}</th>
-              <td colSpan={3}>{view.title}</td>
+              <td>{view.title}</td><td></td><td></td>
             </tr>
             <tr>
               <th>{t("From Date")}</th>
@@ -249,7 +249,7 @@ export default function LeaveGazettedHolidaysPage() {
             </tr>
             <tr>
               <th>{t("Description")}</th>
-              <td colSpan={3}>
+              <td colSpan={3} className="!text-left">
                 {view.description}
               </td>
             </tr>

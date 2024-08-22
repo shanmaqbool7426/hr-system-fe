@@ -1,6 +1,6 @@
 import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import ChangeShiftForm from '@/components/forms/attendance/ChangeShift'
-import CreatLeaveRequestForm from '@/components/forms/leaves/creat-leave-request'
+import CreatLeaveRequestForm from '@/components/forms/leaves/create-leave-request'
 import FilterArea from '@/components/includes/FilterArea'
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'

@@ -8,7 +8,7 @@ import Toast from "@/util/toast";
 import { useEffect, useState } from "react";
 import { FetchLeavePolicies } from "@/store/actions/leave-policy.actions";
 
-export default function CreatLeaveRequestForm({ onClose, object }) {
+export default function CreateLeaveRequestForm({ onClose, object }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const [leaveDays, setLeaveDays] = useState(0)

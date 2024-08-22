@@ -6,7 +6,7 @@ import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux';
 
-export default function AddNewShiftForm({ onClose, object }) {
+export default function CreateShiftPlanForm({ onClose, object }) {
     const { t } = useTranslation()
     const { t:tv } = useTranslation("validation")
 
