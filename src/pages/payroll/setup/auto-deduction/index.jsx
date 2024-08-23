@@ -51,11 +51,43 @@ export default function AutoDeductionPage() {
                     setFilters={setFilters}
                 />
                 <h2 className="text-lg font-bold">{t("Auto Deduction Rule's For Attendance Flags")}</h2>
-                <div className="grid grid-cols-3 gap-6 mb-6">
+
+                <div className="grid sm:grid-cols-3 gap-6 mb-6">
                     <SearchSelect label={'Apply Auto Deduction(s)'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
                     <SearchSelect label={'Deduction Rule'} placeholder={'Count Wise'} list={[{ display: "Count Wise", value: "Count Wise" }]} />
                     <SearchSelect label={'Apply Auto OverTime'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
                 </div>
+                <h2 className="text-lg font-bold">{t("Auto Deductions for Absence")}</h2>
+                <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                    <SearchSelect label={'Apply Auto Deduction for Absence'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Count For Absence Deduction'} placeholder={'1'} list={[{ display: "1", value: "1" }, { display: "2", value: "2" }]} />
+                    <SearchSelect label={'Exempted Absent Days'} placeholder={'0'} list={[{ display: "0", value: "0" }, { display: "2", value: "2" }]} />
+                    <SearchSelect label={'Show Employees W.R.T Absent Deduction In Absent Report'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Apply Deduction For Missing Attendance'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Is Penalty Applied on Missing Attendence'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Sandwich Days'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Count For Missing Deduction'} placeholder={'1'} list={[{ display: "1", value: "1" }, { display: "2", value: "2" }]} />
+                    <SearchSelect label={'Check Leave Deduction(s) Rule First'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Club Days'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                </div>
+                <h2 className="text-lg font-bold">{t("Auto Deductions For Short Time")}</h2>
+                <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                    <SearchSelect label={'Apply Auto Deduction For Short Time'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                </div>
+                <h2 className="text-lg font-bold">{t("Auto Deductions For Pre Joining Date")}</h2>
+                <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                    <SearchSelect label={'Apply Auto Deduction For Pre Joining Date'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Calculate For Deduction Or Allowance?'} placeholder={'Dedication'} list={[{ display: "Dedication", value: "Dedication" }]} />
+                    <SearchSelect label={'Calculate For Holidays?'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Calculate For Gazzetted Holidays?'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+               </div>
+               <h2 className="text-lg font-bold">{t("Auto Deductions For Post Leaving Date")}</h2>
+                <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                    <SearchSelect label={'Apply Auto Deduction For Post Leaving Date'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Calculate For Deduction Or Allowance?'} placeholder={'Dedication'} list={[{ display: "Dedication", value: "Dedication" }]} />
+                    <SearchSelect label={'Calculate For Holidays?'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Calculate For Gazzetted Holidays?'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+               </div>
             </div>
             {payrollSetup && <PayrollSetupForm onClose={() => setPayrollSetup(false)} />}
         </section>

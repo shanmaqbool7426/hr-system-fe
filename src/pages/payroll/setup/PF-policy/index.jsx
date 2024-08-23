@@ -50,11 +50,17 @@ export default function PFPolicyPage() {
                     filters={filters}
                     setFilters={setFilters}
                 />
-                <h2 className="text-lg font-bold">{t("Final Settlement")}</h2>
-                <div className="grid grid-cols-3 gap-6 mb-6">
-                    <SearchSelect label={'Apply Auto Deduction(s)'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
-                    <SearchSelect label={'Deduction Rule'} placeholder={'Count Wise'} list={[{ display: "Count Wise", value: "Count Wise" }]} />
-                    <SearchSelect label={'Apply Auto OverTime'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                <h2 className="text-lg font-bold">{t("Provident Fund")}</h2>
+                <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                    <SearchSelect label={'Implement PF Policy Automatically'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Apply Arrears'} placeholder={'Count Wise'} list={[{ display: "Count Wise", value: "Count Wise" }]} />
+                    <SearchSelect label={'Pro Rata'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Policy Applicable from'} placeholder={'Joining  Date'} list={[{ display: "Joining  Date", value: "Joining  Date" }]} />
+                    <SearchSelect label={'Provident Fund Type'} placeholder={'Percentage Of Basic Salary'} list={[{ display: "Percentage Of Basic Salary", value: "Percentage Of Basic Salary" }]} />
+                    <SearchSelect label={'Employee Share'} placeholder={'6%'} list={[{ display: "6%", value: "6%" }]} />
+                    <SearchSelect label={"Employer's Share"} placeholder={'6%'} list={[{ display: "6%", value: "6%" }]} />
+                    <SearchSelect label={'Include in Tax'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
+                    <SearchSelect label={'Calculate From Salary Change Date'} placeholder={'Yes'} list={[{ display: "Yes", value: "Yes" }, { display: "No", value: "No" }]} />
                 </div>
             </div>
             {payrollSetup && <PayrollSetupForm onClose={() => setPayrollSetup(false)} />}
