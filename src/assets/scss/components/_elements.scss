@@ -57,7 +57,7 @@
     }
 
     button {
-      @apply whitespace-nowrap inline-flex justify-center items-center rounded-full border border-white dark:bg-gray-700 dark:border-gray-500 dark:text-white bg-white text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
+      @apply  whitespace-nowrap inline-flex justify-center items-center rounded-full border border-themeGrayscale300 dark:bg-gray-700 dark:border-gray-500 dark:text-white bg-themeGrayscale50 text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
 
       &.zt-activeTab {
         @apply border-themePurple bg-themePurple text-white;
