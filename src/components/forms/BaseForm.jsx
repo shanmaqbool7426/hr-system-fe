@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker } from "../elements"
 import { useTranslation } from "react-i18next"
 import Radio from "../elements/Radio"
 import { useSelector } from 'react-redux';
@@ -17,16 +17,24 @@ export default function BaseForm({ children, formElements, onClose, title, formi
     return (
         <div className="zt-backDropSidePanel">
             <div className="zt-sidePanel relative">
-                {/* <button className="btn-backOrClose btn bg-white !border-white !rounded-full !py-5 absolute top-28 right-[calc(100%_+_2rem)]" onClick={close}><ChevronLeft /></button> */}
                 {title && <h3 className="mb-0 px-6">{title || ""}</h3>}
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
                     <fieldset className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_185px)]">
                         <div className={`grid sm:grid-cols-2 gap-x-6 gap-y-4 ${className}`}>
                             {formElements?.map((element, index) => {
                                 switch (element.type) {
-
                                     case 'date':
                                         return <Datepicker key={index} {...element}
+                                            error={formik.touched[element.name] && formik.errors[element.name]}
+                                            onBlur={() => {
+                                                formik.setFieldTouched(element.name, true)
+                                            }}
+                                            onChange={(value) => {
+                                                formik.setFieldValue(element.name, value)
+                                            }}
+                                        />
+                                    case 'time':
+                                        return <Timepicker key={index} {...element}
                                             error={formik.touched[element.name] && formik.errors[element.name]}
                                             onBlur={() => {
                                                 formik.setFieldTouched(element.name, true)

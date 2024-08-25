@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
-import CreateAttendanceForm from "@/components/forms/attendance/create";
+import CreateShiftPlan from "@/components/forms/attendance/create-shift-plan";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import Toast from "@/util/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShiftplan, DeleteShiftplan } from "@/store/actions/shiftplan.action";
-// import PageLoader from "@/components/elements/PageLoader";
 
 export default function AttendanceSettingShiftPlanPage() {
   const dispatch = useDispatch();
@@ -108,7 +107,7 @@ export default function AttendanceSettingShiftPlanPage() {
         />
 
         {add && (
-          <CreateAttendanceForm
+          <CreateShiftPlan
             onClose={() => {
               setAdd(false);
             }}
@@ -117,7 +116,7 @@ export default function AttendanceSettingShiftPlanPage() {
         )}
 
         {edit && (
-          <CreateAttendanceForm
+          <CreateShiftPlan
             onClose={() => {
               setEdit(false);
             }}

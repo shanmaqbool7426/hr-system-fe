@@ -1,5 +1,4 @@
 import '@/styles.scss'
-
 import Head from "next/head"
 import DefaultLayout from "@/layouts/DefaultLayout"
 import { I18nextProvider } from "react-i18next"

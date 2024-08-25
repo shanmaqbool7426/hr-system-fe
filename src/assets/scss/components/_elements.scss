@@ -757,3 +757,29 @@
   }
 }
 .recharts-cartesian-axis-tick-value{@apply dark:fill-white}
+
+
+.react-timekeeper {
+  @apply bg-white dark:bg-dark-5 absolute inset-0 z-10 w-56 h-80 shadow-none border dark:border-dark-4 rounded-xl overflow-hidden !important;
+  .react-timekeeper__top-bar {
+    @apply p-2 flex w-full text-center bg-white dark:bg-dark-5 shadow-none !important;
+    &>*, &>*>* {
+      @apply text-2xl w-full;
+    } 
+  }
+  .react-timekeeper__clock {
+    @apply bg-white dark:bg-dark-3
+  }
+  .react-timekeeper__tb-hour--active, .react-timekeeper__tb-minute--active {
+    @apply text-themePrimary dark:text-white
+  }
+  .react-timekeeper__clock-wrapper {
+    @apply bg-white dark:bg-dark-5 p-0 h-56 w-56 mb-1;
+  }
+  .react-timekeeper__done-button {
+    @apply border-0 bg-themePrimary text-white py-2 text-lg;
+  }
+  .react-timekeeper__clock-hand, .react-timekeeper__clock-hand > * {
+    @apply fill-themePrimary !important;
+  }
+}

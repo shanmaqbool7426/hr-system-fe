@@ -1,5 +1,10 @@
-
 :root {
+  /*CLOCK STYLE*/
+  --hand-line-color: #222831;
+  --hand-circle-center: #222831;
+  --hand-circle-outer: #222831;
+  --hand-minute-circle: #222831;
+
   /* Step 0: 32px → 48px */
   --h1: clamp(2rem, 0.8571rem + 2.381vi, 3rem);
   /* Step 0: 28px → 40px */
@@ -23,27 +28,61 @@
 @tailwind components;
 @tailwind utilities;
 
-// @import '@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker';
-// @import 'react-calendar/dist/Calendar';
-// @import 'react-clock/dist/Clock';
+html,
+body {
+  @apply flex min-h-screen font-sans text-themeGrayscale text-base scroll-smooth
+}
 
-html, body { @apply flex min-h-screen font-sans text-themeGrayscale text-base scroll-smooth }
-body { @apply grow  }
-#__next { @apply grow flex flex-col overflow-hidden }
-h1, h2, h3, h4, h5, h6 { @apply font-bold  leading-[1.2] mb-6 text-themeGrayscale dark:text-themeGrayscale300 }
-h1 { font-size: var(--h1); }
-h2 { font-size: var(--h2); }
-h3 { font-size: var(--h3); }
-h4 { font-size: var(--h4); }
-h5 { font-size: var(--h5); }
-h6 { font-size: var(--h6); }
-p { @apply mb-4 dark:text-themeGrayscale300} 
-a { @apply text-themePrimary dark:text-themeGrayscale300 underline font-bold hover:no-underline }
+body {
+  @apply grow
+}
+
+#__next {
+  @apply grow flex flex-col overflow-hidden
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold leading-[1.2] mb-6 text-themeGrayscale dark:text-themeGrayscale300
+}
+
+h1 {
+  font-size: var(--h1);
+}
+
+h2 {
+  font-size: var(--h2);
+}
+
+h3 {
+  font-size: var(--h3);
+}
+
+h4 {
+  font-size: var(--h4);
+}
+
+h5 {
+  font-size: var(--h5);
+}
+
+h6 {
+  font-size: var(--h6);
+}
+
+p {
+  @apply mb-4 dark:text-themeGrayscale300
+}
+
+a {
+  @apply text-themePrimary dark:text-themeGrayscale300 underline font-bold hover:no-underline
+}
 
 
 .iconList {
   li {
-    svg { @apply w-full h-auto }
+    svg {
+      @apply w-full h-auto
+    }
   }
 }
 
@@ -53,4 +92,43 @@ a { @apply text-themePrimary dark:text-themeGrayscale300 underline font-bold hov
 @import "assets/scss/theme";
 
 
+.swal2-container {
+  @apply absolute inset-0 w-full h-full flex items-center backdrop-blur-sm;
+}
 
+.swal2-popup.swal2-modal {
+  @apply absolute inset-0
+}
+
+.swal2-popup {
+  @apply bg-white dark:bg-gray-700 rounded-lg p-4;
+
+}
+
+.swal2-title {
+  @apply text-lg p-0 mb-5;
+}
+
+.swal2-actions {
+  @apply flex-nowrap m-0 gap-4
+}
+
+.swal2-styled {
+  @apply bg-gray-600 border m-0 w-full px-4 py-2;
+}
+
+.swal2-confirm {
+  @apply bg-themeDangerDark text-white;
+}
+
+.swal2-deny {
+  @apply bg-themeGrayscale200 dark:bg-themeGrayscale500 border-2 border-dark-7 text-gray-900;
+}
+
+.swal2-toast {
+  @apply dark:bg-dark-3 !important;
+
+  .swal2-icon {
+    @apply dark:bg-dark-3 !important;
+  }
+}
