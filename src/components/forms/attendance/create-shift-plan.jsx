@@ -8,7 +8,7 @@ import { Button, Input, SearchSelect, Select, Table, ToggleCheck } from "@/compo
 import { useState } from "react";
 import { Plus, Trash } from "@/components/svg";
 import { CreateShiftplan, UpdateShiftPlane  , fetchShiftplan} from "@/store/actions/shiftplan.action";
-export default function CreateAttendanceForm({ onClose, object , is_loading }) {
+export default function CreateShiftplanForm({ onClose, object , is_loading }) {
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
