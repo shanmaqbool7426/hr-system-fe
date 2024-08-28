@@ -1,8 +1,10 @@
 import axiosInstance from "./axios";
 
 export function capitalize(value) {
-  if (value)
+  if (value) {
+    value = value.replace("_", " ")
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
   return ""
 }
 

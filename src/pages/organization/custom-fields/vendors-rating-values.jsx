@@ -20,11 +20,12 @@ export default function VendorRatingValuesPage() {
     const { customfield_list } = useSelector(state => state.customfield)
     const headings = [
         { title: t("Name"), col: "name", sort: true },
+        { title: t("Category"), col: "category", sort: true },
         { title: t("Modified On"), col: "updatedAt", sort: true },
         { title: t("Action"), col: "action" },
     ]
 
-    const rows = customfield_list.filter(item => item.type === 'group')
+    const rows = customfield_list.filter(item => item.type === 'vendor_rating')
         .sort((a, b) => {
             if (sortDir === 'asc')
                 return a[sortCol]?.localeCompare(b[sortCol])
@@ -34,6 +35,7 @@ export default function VendorRatingValuesPage() {
         .map(item => {
             return {
                 name: item.name,
+                category: item.category,
                 updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
                 action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
                     <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -88,7 +90,8 @@ export default function VendorRatingValuesPage() {
             </div>
             {create && <CreateCustomFieldForm
                 title={t('Vendor Rating Values')}
-                type={'group'}
+                type={'vendor_rating'}
+                vendor_rating={true}
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

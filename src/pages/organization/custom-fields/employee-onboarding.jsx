@@ -15,43 +15,50 @@ export default function ManageEmployeeOnboardingPage () {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [create, setCreate] = useState(false)
- 
   const [edit, setEdit] = useState(false)
+  const { customfield_list } = useSelector(state => state.customfield)
  
   const headings = [
-    { title: t("Task Name"), col: "taskname", sort: true },
+    { title: t("Task"), col: "name", sort: true },
     { title: t("Modified On"), col: "updatedAt", sort: true },
     { title: t("Action"), col: "action" },
-  ]
+]
 
-  const rows = [
-    {
-        taskname: 'Educational documents',
-        updatedAt: <DisplayDate date={'25 May 2024'} time={true} />,
-        action:  <DropDown icon={<ThreeDotsVertical />}>
-          <ul className="zt-themeDropDownList zt-sm gap-4">
-            <li className="!p-0">
-              <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                <span><Edit /></span>
-                <span>{t("Edit")}</span>
-              </a>
-            </li>
-            <li className="!p-0">
-              <a onClick={() => {
-                Toast.confirmDelete(() => {
-                  dispatch(DeleteCustomfield(item._id, () => {
-                    Toast.success(t("Exit Type deleted successfully"))
-                  }))
-                }, t)
-              }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
-                <span><Trash /></span>
-                <span>{t("Delete")}</span>
-              </a>
-            </li>
-          </ul>
-        </DropDown>,
-    }
-  ]
+  const rows = customfield_list.filter(item => item.type === 'onboarding_task')
+  .sort((a, b) => {
+      if (sortDir === 'asc')
+          return a[sortCol]?.localeCompare(b[sortCol])
+      else
+          return b[sortCol]?.localeCompare(a[sortCol])
+  })
+  .map(item => {
+      return {
+          name: item.name,
+          updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
+          action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
+              <ul className="zt-themeDropDownList zt-sm gap-4">
+                  <li className="!p-0">
+                      <a onClick={() => { setEdit(item); setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                          <span><Edit /></span>
+                          <span>{t("Edit")}</span>
+                      </a>
+                  </li>
+                  <li className="!p-0">
+                      <a onClick={() => {
+                          Toast.confirmDelete(() => {
+                              dispatch(DeleteCustomfield(item._id, () => {
+                                  Toast.success(t("Employee Group deleted successfully"))
+                              }))
+                          }, t)
+                      }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
+                          <span><Trash /></span>
+                          <span>{t("Delete")}</span>
+                      </a>
+                  </li>
+              </ul>
+          </DropDown>,
+      }
+  })
 
   return (
     <>
@@ -83,7 +90,7 @@ export default function ManageEmployeeOnboardingPage () {
       </div>
       {create && <CreateCustomFieldForm
         title={t('Employee Onboarding Tasks')}
-        type={'exit_type'}
+        type={'onboarding_task'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}
       />}

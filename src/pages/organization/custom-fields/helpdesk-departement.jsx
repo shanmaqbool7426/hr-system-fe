@@ -24,7 +24,7 @@ export default function HelpDeskDepartementPage() {
         { title: t("Action"), col: "action" },
     ]
 
-    const rows = customfield_list.filter(item => item.type === 'group')
+    const rows = customfield_list.filter(item => item.type === 'helpdesh_department')
         .sort((a, b) => {
             if (sortDir === 'asc')
                 return a[sortCol]?.localeCompare(b[sortCol])
@@ -47,7 +47,7 @@ export default function HelpDeskDepartementPage() {
                             <a onClick={() => {
                                 Toast.confirmDelete(() => {
                                     dispatch(DeleteCustomfield(item._id, () => {
-                                        Toast.success(t("Employee Group deleted successfully"))
+                                        Toast.success(t("Helpdesk department deleted successfully"))
                                     }))
                                 }, t)
                             }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
@@ -88,7 +88,7 @@ export default function HelpDeskDepartementPage() {
             </div>
             {create && <CreateCustomFieldForm
                 title={t('Helpdesk Departement')}
-                type={'group'}
+                type={'helpdesh_department'}
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

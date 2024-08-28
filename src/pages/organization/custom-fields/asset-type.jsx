@@ -95,7 +95,7 @@ export default function ManageAssetTypesPage() {
       </div>
 
       {create && <CreateCustomFieldForm
-        title={edit ? t('Asset Type') : t('Asset Type')}
+        title={t('Asset Type')}
         type={'asset_type'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}
@@ -114,31 +114,26 @@ export default function ManageAssetTypesPage() {
             required: true,
             list: [
               {
-                display: <div className='flex gap-2'><LedIcon /> LED</div>,
+                display: <div className='flex gap-2'><LedIcon /> {t("LED")}</div>,
                 value: "Led"
               },
               {
-                display: <div className='flex gap-2'><HeadPhone /> Head Phone</div>,
+                display: <div className='flex gap-2'><HeadPhone /> {t("Head Phone")}</div>,
                 value: "HeadPhone"
               },
               {
-                display: <div className='flex gap-2'><HandFreeIcon /> Hand Free</div>,
+                display: <div className='flex gap-2'><HandFreeIcon /> {t("Hand Free")}</div>,
                 value: "HandFree"
               },
               {
-                display: <div className='flex gap-2'><KeyboardIcon /> Keyboard</div>,
+                display: <div className='flex gap-2'><KeyboardIcon /> {t("Keyboard")}</div>,
                 value: "Keyboard"
               },
               {
-                display: <div className='flex gap-2'><MobileIcon /> Mobile</div>,
+                display: <div className='flex gap-2'><MobileIcon /> {t("Mobile")}</div>,
                 value: "Mobile"
               },
             ]
-          },
-          {
-            type:'switch',
-            label:"Onboarding Asset",
-            id:"OnboardingAsset"
           }
         ]}
         dynamicFields={true}

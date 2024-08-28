@@ -1,6 +1,5 @@
 import { Button, DisplayDate, DropDown, Table } from '@/components/elements'
 import CreateCustomFieldForm from '@/components/forms/organization/custom-fields/create'
-import CreateHelpDeskForm from '@/components/forms/organization/custom-fields/createHelpDesk'
 import { Edit, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
@@ -15,18 +14,18 @@ export default function HelpDeskCategoriesPage() {
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [create, setCreate] = useState(false) 
+    const [create, setCreate] = useState(false)
     const [edit, setEdit] = useState(false)
 
     const { customfield_list } = useSelector(state => state.customfield)
     const headings = [
-        { title: t("Category"), col: "Category", sort: true },
-        { title: t("Sub-Category"), col: "SubCategory", sort: true },
+        { title: t("Category"), col: "name", sort: true },
+        { title: t("Parent"), col: "parent", sort: true },
         { title: t("Modified On"), col: "updatedAt", sort: true },
         { title: t("Action"), col: "action" },
     ]
 
-    const rows = customfield_list.filter(item => item.type === 'group')
+    const rows = customfield_list.filter(item => item.type === 'helpdesk_category')
         .sort((a, b) => {
             if (sortDir === 'asc')
                 return a[sortCol]?.localeCompare(b[sortCol])
@@ -35,8 +34,8 @@ export default function HelpDeskCategoriesPage() {
         })
         .map(item => {
             return {
-                Category: item.Category,
-                SubCategory: item.SubCategory,
+                name: item.name,
+                parent: item?.parent?.name || "------",
                 updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
                 action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
                     <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -89,8 +88,12 @@ export default function HelpDeskCategoriesPage() {
                     className={'zt-employeeTable zt-employeeGroupTable'}
                 />
             </div>
-            {create && <CreateHelpDeskForm 
-                onClose={() => { setCreate(false)  }} 
+            {create && <CreateCustomFieldForm
+                title={t('Helpdesk Category')}
+                type={'helpdesk_category'}
+                parent={true}
+                onClose={() => { setCreate(false); setEdit(null) }}
+                object={edit}
             />}
         </>
     )
