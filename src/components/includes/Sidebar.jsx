@@ -201,8 +201,7 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-      { name: t("Run Payroll"), href: "/payroll/run-payroll" },
-      { name: t("Payroll Approval"), href: "/payroll/approval" },
+      { name: t("Run Payroll"), href: "/payroll/run-payroll" }, 
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Salary Changes"), href: "/payroll/salary-changes" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
@@ -223,25 +222,19 @@ export default function Sidebar() {
         name: t("Payroll Setting"), href: "/payroll/setting",
         innerSubMenu: [ 
           { name: t("Salary Setup"), href: "/payroll/salary-setup" },
+          { name: t("Pay Schedule"), href: "/payroll/setting/pay-schedule" },
+          { name: t("Payroll Option"), href: "/payroll/setting/option" },
+          { name: t("Pay Slip Items"), href: "/payroll/setting/pay-slip-items" },
+          { name: t("Tax Rules"), href: "/payroll/setting/tax-rules" },
+          { name: t("Salary Setting"), href: "/payroll/setting/salary-setting" },
+          { name: t("Overtime"), href: "/payroll/setting/overtime" },
+          { name: t("Auto Deduction"), href: "/payroll/setting/auto-deduction" },
+          { name: t("Final Settlement"), href: "/payroll/setting/final-settlement" }, 
+          { name: t("PF Policy"), href: "/payroll/setting/PF-policy" }, 
+          { name: t("Currency"), href: "/payroll/setting/currency" }, 
         ].sort((a, b) => a.name.localeCompare(b.name))
-      },
-      {
-        name: t("Payroll Setup"), href: "/payroll/setup",
-        innerSubMenu: [
-          { name: t("Pay Schedule"), href: "/payroll/setup/pay-schedule" },
-          { name: t("Payroll Option"), href: "/payroll/setup/option" },
-          { name: t("Pay Slip Items"), href: "/payroll/setup/pay-slip-items" },
-          { name: t("Tax Rules"), href: "/payroll/setup/tax-rules" },
-          { name: t("Salary Setting"), href: "/payroll/setup/salary-setting" },
-          { name: t("Overtime"), href: "/payroll/setup/overtime" },
-          { name: t("Auto Deduction"), href: "/payroll/setup/auto-deduction" },
-          { name: t("Final Settlement"), href: "/payroll/setup/final-settlement" },
-          { name: t("VPS Policy"), href: "/payroll/setup/VPS-policy" },
-          { name: t("PF Policy"), href: "/payroll/setup/PF-policy" }, 
-          { name: t("Currency"), href: "/payroll/setup/currency" }, 
-        ].sort((a, b) => a.name.localeCompare(b.name))
-      },
-    ].sort((a, b) => a.name.localeCompare(b.name)),
+      }, 
+    ],
     remoteWork: [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },

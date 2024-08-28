@@ -27,19 +27,21 @@ export default function CreateMealMenuForm({ onClose, object }) {
     }
     return (
         <BaseForm title={object ? t(`Edit Meal Menu`) : t(`Add Menu`)} formik={formik} onClose={onClose} is_loading={false}>
-            <div className='col-span-2 grid gap-x-2 gap-y-4 grid-cols-7'>
-                <div className='flex gap-4 col-span-7'>
-                    <p>{t("Can employee avail meal for specific day?")}</p>
+            <div className='col-span-2 grid gap-x-2 gap-y-4 grid-cols-7 items-center'>
+                <div className='flex gap-4 col-span-4'>
+                    <p className='mb-0'>{t("Can employee avail meal for specific day?")}</p>
                     <ToggleCheck id='emloyee' />
                 </div>
+                <Input containerClass='col-span-3' label={'Company Subsidy'} />
+
                 <div className='flex gap-4 items-center col-span-7'>
-                <ToggleCheck id='week' />
+                    <ToggleCheck id='week' />
                     <p className='mb-0'>{t("Employee could not change choice before")}</p>
                     <Input containerClass='col-span-1 w-20' placeholder='02' />
                     <p className='mb-0'>{t("days of starting week.")}</p>
                 </div>
                 <div className='flex gap-4 items-center col-span-7'>
-                <ToggleCheck id='month' />
+                    <ToggleCheck id='month' />
                     <p className='mb-0'>{t("Employee could not change choice before")}</p>
                     <Input containerClass='col-span-1 w-20' placeholder='05' />
                     <p className='mb-0'>{t("days of starting month.")}</p>
