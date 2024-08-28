@@ -14,7 +14,6 @@ export default function RunPayrollPage() {
 	const [sortDir, setSortDir] = useState(null)
 	const [page, setPage] = useState(1)
 	const [perPage, setPerPage] = useState(10)
-	const [create, setcreate] = useState(false)
 	const [send, setSend] = useState(false)
 	const { customfield_list } = useSelector(state => state.customfield)
 	const [filters, setFilters] = useState({
@@ -92,6 +91,13 @@ export default function RunPayrollPage() {
 		{
 			type: "select",
 			placeholder: "Payslip Period",
+			name: "payslipPeriod",
+			value: filters.status,
+			list: [{ display: "Monthly", value: "Monthly" }]
+		},
+		{
+			type: "select",
+			placeholder: "Select Payroll",
 			name: "payslipPeriod",
 			value: filters.status,
 			list: [{ display: "Monthly", value: "Monthly" }]
@@ -214,7 +220,7 @@ export default function RunPayrollPage() {
 				<h1 className="text-h4 mb-0">{t("Run Payroll")}</h1>
 				<div className="flex items-start gap-2">
 					<Button onClick={() => setSend(true)} className={"btn btn-dark-outline"}>{t("Send Payroll Email")}</Button>
-					<Button onClick={() => { setcreate(true) }} className={"btn btn-primary"}>{t("Run Payroll")}</Button>
+					<Button className={"btn btn-primary"}>{t("Run Payroll")}</Button>
 				</div>
 			</div>
 			<div className="zt-card grow">

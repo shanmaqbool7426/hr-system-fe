@@ -201,8 +201,7 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-      { name: t("Run Payroll"), href: "/payroll/run-payroll" },
-      { name: t("Payroll Approval"), href: "/payroll/approval" },
+      { name: t("Run Payroll"), href: "/payroll/run-payroll" }, 
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Salary Changes"), href: "/payroll/salary-changes" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
@@ -230,8 +229,7 @@ export default function Sidebar() {
           { name: t("Salary Setting"), href: "/payroll/setting/salary-setting" },
           { name: t("Overtime"), href: "/payroll/setting/overtime" },
           { name: t("Auto Deduction"), href: "/payroll/setting/auto-deduction" },
-          { name: t("Final Settlement"), href: "/payroll/setting/final-settlement" },
-          { name: t("VPS Policy"), href: "/payroll/setting/VPS-policy" },
+          { name: t("Final Settlement"), href: "/payroll/setting/final-settlement" }, 
           { name: t("PF Policy"), href: "/payroll/setting/PF-policy" }, 
           { name: t("Currency"), href: "/payroll/setting/currency" }, 
         ].sort((a, b) => a.name.localeCompare(b.name))

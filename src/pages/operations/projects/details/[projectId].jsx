@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FetchProjectDetails, UpdateProject } from '@/store/actions/project.actions'
 import DisplayDate from "@/components/elements/DisplayDate";
 import { useFormik } from 'formik';
-import moment from 'moment';
-import PageLoader from '@/components/elements/PageLoader'
+import moment from 'moment'; 
 import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
