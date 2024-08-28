@@ -9,6 +9,7 @@ export default function EmployeeAvailingPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const headings = [
+        { title: t("Employee"), col: 'Employee' },
         { title: t("Date"), col: 'Date' },
         { title: t("Day"), col: 'Day' },
         { title: t("Lunch Menu"), col: "LunchMenu" },
@@ -16,7 +17,12 @@ export default function EmployeeAvailingPage() {
         { title: t("Avail"), col: "Avail" },
     ]
     const rows = [{
-
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
+        </div>,
         Date: "01 April 2024",
         Day: "Monday",
         LunchMenu: "Chicken Biryani",
@@ -24,7 +30,12 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'Mon'} /></div>,
     },
     {
-
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
+        </div>,
         Date: "02 April 2024",
         Day: "Tuesday",
         LunchMenu: "Chicken Biryani",
@@ -32,7 +43,12 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'tue'} /></div>,
     },
     {
-
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
+        </div>,
         Date: "03 April 2024",
         Day: "Wednesday",
         LunchMenu: "Chicken Biryani",
@@ -40,12 +56,11 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'Wedneday'} /></div>,
     },
     {
-        sr: <div className="flex items-center">
-            <CheckBox
-                id={`4`}
-                size={'sm'}
-                variant={'dark'}
-            />
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
         </div>,
         SerailNo: '4',
         Date: "04 April 2024",
@@ -55,12 +70,11 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'Thrusday'} /></div>,
     },
     {
-        sr: <div className="flex items-center">
-            <CheckBox
-                id={`5`}
-                size={'sm'}
-                variant={'dark'}
-            />
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
         </div>,
         SerailNo: '5',
         Date: "05 April 2024",
@@ -70,12 +84,11 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'Friday'} /></div>,
     },
     {
-        sr: <div className="flex items-center">
-            <CheckBox
-                id={`6`}
-                size={'sm'}
-                variant={'dark'}
-            />
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
         </div>,
         SerailNo: '6',
         Date: "06 April 2024",
@@ -85,12 +98,11 @@ export default function EmployeeAvailingPage() {
         Avail: <div className='flex justify-end'><ToggleCheck id={'Satuarday'} /></div>,
     },
     {
-        sr: <div className="flex items-center">
-            <CheckBox
-                id={`7`}
-                size={'sm'}
-                variant={'dark'}
-            />
+        Employee: <div className="flex items-center justify-center gap-4 grow">
+            <div className={'flex flex-col gap-1 text-left'}>
+                <strong className={'text-themeGrayscale dark:text-white'}>{t('Kelli Lebsack')}</strong>
+                <span className={'text-themeGrayscale500 dark:text-white'}>{t('10202325')}</span>
+            </div>
         </div>,
         SerailNo: '7',
         Date: "07 April 2024",

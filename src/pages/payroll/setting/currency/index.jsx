@@ -1,8 +1,6 @@
-import { Button, Input, SearchSelect } from "@/components/elements";
-import ImageUpload from "@/components/elements/ImadeUploader";
+import { Button, Input, SearchSelect } from "@/components/elements"; 
 import PayrollSetupForm from "@/components/forms/payRoll/payrollSetup/create";
-import FilterArea from "@/components/includes/FilterArea";
-import { Minus, Plus } from "@/components/svg";
+import FilterArea from "@/components/includes/FilterArea"; 
 import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useSelector } from "react-redux";

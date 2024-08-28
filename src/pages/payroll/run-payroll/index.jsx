@@ -1,11 +1,8 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, Table } from '@/components/elements'
 import StatusSelect from '@/components/elements/SelectStatus'
-import AllowanceApprovalForm from '@/components/forms/payRoll/allowance/approve'
-import ApplyAllowanceForm from '@/components/forms/payRoll/allowance/create'
 import SendEmailForm from '@/components/forms/payRoll/runPayroll/sendEmail'
 import FilterArea from '@/components/includes/FilterArea'
-import { ChevronDown, EyeOn, SuccessTick, ThreeDotsVertical, WarningIcon } from '@/components/svg'
-import Toast from '@/util/toast'
+import { ChevronDown } from '@/components/svg'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +16,6 @@ export default function RunPayrollPage() {
 	const [perPage, setPerPage] = useState(10)
 	const [create, setcreate] = useState(false)
 	const [send, setSend] = useState(false)
-	const [approve, setApprove] = useState(false)
 	const { customfield_list } = useSelector(state => state.customfield)
 	const [filters, setFilters] = useState({
 		search: "",
@@ -114,6 +110,8 @@ export default function RunPayrollPage() {
 		{ title: t("Action"), col: "action" }
 	]
 	const options = [
+		{ value: 'primary', label: 'Save', className: 'zt-tag-primary' },
+		{ value: 'secondary', label: 'Disburse', className: 'zt-tag-secondary' },
 		{ value: 'success', label: 'Approved', className: 'zt-tag-success' },
 		{ value: 'danger', label: 'Rejected', className: 'zt-tag-danger' },
 		{ value: 'purple', label: 'Pending', className: 'zt-tag-purple' },
@@ -137,7 +135,7 @@ export default function RunPayrollPage() {
 			PayrollSetup: 'Management',
 			PayslipMonth: 'August 2024',
 			view: <button className='flex'>$1200 <ChevronDown /></button>,
-			discloureContent: <div className='grid custom__grid gap-4'>
+			discloureContent: <div className='grid custom__grid gap-8'>
 				<div className='flex  flex-col justify-between'>
 					<div className='flex flex-col gap-1'>
 						<span className='font-bold text-lg text-start'>{t("Earning")}</span>
