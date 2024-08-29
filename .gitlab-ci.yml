@@ -1,11 +1,21 @@
 stages:
   - deploy
+
 deploy_dev-fe:
   stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_TLS_CERTDIR: ""
   tags:
     - zaffre
   script:
     - cp .env.dev .env
+    - docker info
+    - if [ $(docker ps -aq -f name=devfe) ]; then docker rm -f devfe; fi
+    - if [ $(docker images -q myapp:dev) ]; then docker rmi -f myapp:dev; fi
     - docker build -t myapp:dev .
     - docker run -d --name devfe -p 3002:3000 myapp:dev
   only:
