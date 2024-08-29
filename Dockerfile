@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Step 6: Build the Next.js application
-RUN npm run build:dev
+RUN npm run build
 
 # Stage 2: Run the application using Node.js
 FROM node:20

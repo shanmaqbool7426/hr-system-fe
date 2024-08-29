@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start": "next start",
     "start:demo": "next start --port=3001",
     "start:dev": "next start --port=3002",
     "lint": "next lint"

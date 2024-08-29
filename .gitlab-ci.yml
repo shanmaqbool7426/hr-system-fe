@@ -6,8 +6,7 @@ deploy_dev-fe:
     - zaffre
   script:
     - cp .env.dev .env
-    - npm install -f
-    - npm run build
-    - pm2 restart devfe
+    - docker build -t myapp:dev .
+    - docker run -d --name devfe -p 3002:3000 myapp:dev
   only:
     - development
