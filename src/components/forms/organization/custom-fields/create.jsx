@@ -75,11 +75,11 @@ export default function CreateCustomFieldForm({ title, onClose, type, object, pa
 
     const getFields = () => new Array(fields).fill(null)
     return (
-        <BaseForm title={object ? `Edit ${title}` : `Create ${title}`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false}>
+        <BaseForm title={title} formElements={formElements} formik={formik} onClose={onClose} is_loading={false}>
             {dynamicFields &&
                 <div className='col-span-2 flex flex-col gap-4'>
                     <hr />
-                    <h6 className='text-left mb-0'>Additional Fields</h6>
+                    <h6 className='text-left mb-0'>{t("Additional Fields")}</h6>
                     {fields > 0 && getFields().map((item, index) => (
                         <div className='flex gap-4' key={index}>
                             <Input formik={formik} key={index} value={formik.values.fields[index]} containerClass={"w-full"} onChange={(event) => {
@@ -99,7 +99,7 @@ export default function CreateCustomFieldForm({ title, onClose, type, object, pa
                             </div>}
                         </div>
                     ))}
-                    <div className='flex'><Button variant={'primary'} type="button" value={'Add more'} onClick={() => {
+                    <div className='flex'><Button variant={'primary'} type="button" value={t('Add more')} onClick={() => {
                         let field_values = formik.values.fields
                         field_values.push("")
                         formik.setFieldValue('fields', field_values)

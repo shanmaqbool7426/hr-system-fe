@@ -21,6 +21,7 @@ export default function ManageAllowanceTitlePage() {
   const { customfield_list } = useSelector(state => state.customfield)
   const headings = [
     { title: t("Name"), col: "name", sort: true },
+    { title: t("Modified By"), col: "modifiedBy" },
     { title: t("Modified On"), col: "updatedAt", sort: true },
     { title: t("Action"), col: "action" },
   ]
@@ -36,6 +37,7 @@ export default function ManageAllowanceTitlePage() {
       return {
         name: item.name,
         updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
+        modifiedBy: item.modifiedBy ? <span>{item.modifiedBy?.firstName} {item.modifiedBy?.lastName}</span> : "-------",
         action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
@@ -73,10 +75,7 @@ export default function ManageAllowanceTitlePage() {
         </div>
       </div>
 
-      <div className=" zt-card grow">
-
-     
-
+      <div className="zt-card grow">
         <Table
           headings={headings}
           rows={rows}
@@ -92,7 +91,7 @@ export default function ManageAllowanceTitlePage() {
         />
       </div>
       {create && <CreateCustomFieldForm
-        title={edit ? t('Allowance') : t('Allowance')}
+        title={t('Allowance Title')}
         type={'allowance'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}

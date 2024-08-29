@@ -14,13 +14,12 @@ export default function ManageAreaPage() {
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
-  const [create, setCreate] = useState(false)
- 
+  const [create, setCreate] = useState(false) 
   const [edit, setEdit] = useState(false)
-
   const { customfield_list } = useSelector(state => state.customfield)
   const headings = [
     { title: t("Name"), col: "name", sort: true },
+    { title: t("Modified By"), col: "modifiedBy" },
     { title: t("Modified On"), col: "updatedAt", sort: true },
     { title: t("Action"), col: "action" },
   ]
@@ -35,6 +34,7 @@ export default function ManageAreaPage() {
     .map(item => {
       return {
         name: item.name,
+        modifiedBy: item.modifiedBy ? <span>{item.modifiedBy?.firstName} {item.modifiedBy?.lastName}</span> : "-------",
         updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
         action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -65,18 +65,15 @@ export default function ManageAreaPage() {
     <>
       <div className="flex justify-between items-center pb-6">
         <div className="">
-          <h1 className="text-h4 mb-0">{t("Areas")}</h1>
-          <p className="mb-0">{t("Manage your Areas")}</p>
+          <h1 className="text-h4 mb-0">{t("Area")}</h1>
+          <p className="mb-0">{t("Manage your areas")}</p>
         </div>
         <div className="flex items-start gap-2">
-          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Area")}</Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create Area")}</Button>
         </div>
       </div>
 
-      <div className=" zt-card grow">
-
-     
-
+      <div className="zt-card grow">
         <Table
           headings={headings}
           rows={rows}
@@ -92,7 +89,7 @@ export default function ManageAreaPage() {
         />
       </div>
       {create && <CreateCustomFieldForm
-        title={edit ? t('Area') : t('Area')}
+        title={t('Area')}
         type={'area'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}

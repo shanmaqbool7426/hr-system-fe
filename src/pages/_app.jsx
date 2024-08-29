@@ -5,16 +5,12 @@ import { I18nextProvider } from "react-i18next"
 import { Provider } from "react-redux"
 import store from "../store"
 import { useEffect, useState } from "react"
-import makei18n from "../util/i18n"
+import i18n from "../util/i18n"
 
 export default function App({ Component, pageProps }) {
     const [ready, setReady] = useState(false)
-    var i18n = null
     useEffect(() => {
-        makei18n.then((result) => {
-            i18n = result
-            setReady(true)
-        })
+        setReady(true)
     }, [])
     const Layout = Component.layout || DefaultLayout;
 

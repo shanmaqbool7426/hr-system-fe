@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
-export default function ManageAssetStatusPage () {
+export default function ManageAssetStatusPage() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [sortCol, setSortCol] = useState(null)
@@ -15,12 +15,13 @@ export default function ManageAssetStatusPage () {
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [create, setCreate] = useState(false)
- 
+
   const [edit, setEdit] = useState(false)
 
   const { customfield_list } = useSelector(state => state.customfield)
   const headings = [
     { title: t("Name"), col: "name", sort: true },
+    { title: t("Modified By"), col: "modifiedBy" },
     { title: t("Modified On"), col: "updatedAt", sort: true },
     { title: t("Action"), col: "action" },
   ]
@@ -35,6 +36,7 @@ export default function ManageAssetStatusPage () {
     .map(item => {
       return {
         name: item.name,
+        modifiedBy: item.modifiedBy ? <span>{item.modifiedBy?.firstName} {item.modifiedBy?.lastName}</span> : "-------",
         updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
         action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -48,7 +50,7 @@ export default function ManageAssetStatusPage () {
               <a onClick={() => {
                 Toast.confirmDelete(() => {
                   dispatch(DeleteCustomfield(item._id, () => {
-                    Toast.success(t("Asset Status deleted successfully"))
+                    Toast.success(t("Asset status deleted successfully"))
                   }))
                 }, t)
               }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark'}>
@@ -65,18 +67,15 @@ export default function ManageAssetStatusPage () {
     <>
       <div className="flex justify-between items-center pb-6">
         <div className="">
-          <h1 className="text-h4 mb-0">{t("Asset Status")}</h1>
-          <p className="mb-0">{t("Manage your Asset Status")}</p>
+          <h1 className="text-h4 mb-0">{t("Asset status")}</h1>
+          <p className="mb-0">{t("Manage your asset status")}</p>
         </div>
         <div className="flex items-start gap-2">
           <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Create Asset Status")}</Button>
         </div>
       </div>
 
-      <div className=" zt-card grow">
-
-     
-
+      <div className="zt-card grow">
         <Table
           headings={headings}
           rows={rows}
@@ -92,7 +91,7 @@ export default function ManageAssetStatusPage () {
         />
       </div>
       {create && <CreateCustomFieldForm
-        title={edit ? t('Asset Status') : t('Asset Status')}
+        title={t('Asset status')}
         type={'asset_status'}
         onClose={() => { setCreate(false); setEdit(null) }}
         object={edit}

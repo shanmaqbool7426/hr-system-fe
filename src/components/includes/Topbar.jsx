@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import { AlertRedDot, SearchIcon, NotificationBell, Gear, Users, Moon, Sun, ThreeDotsHorizontal } from "../svg"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import DropDown from "../elements/DropDown"
 import { Menu } from '@headlessui/react'
 import Button from '../elements/Button'
@@ -13,13 +13,13 @@ import { useEffect, useState } from "react"
 import ls from "localstorage-slim"
 
 const Topbar = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const router = useRouter()
   const { auth_user } = useSelector((state) => state.auth)
-
   const theme = ls.get('theme') ? ls.get('theme') : (window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light")
   const [darkMode, setDarkMode] = useState(theme === "dark");
+  const [locale, setLocale] = useState(ls.get('locale') || 'en')
   const signoutHandler = (event) => {
     ls.remove('auth_user')
     ls.remove('access_token')
@@ -35,6 +35,10 @@ const Topbar = () => {
       document.body.classList.remove("dark");
     }
   }, [darkMode])
+  useEffect(() => {
+    i18n.changeLanguage(locale)
+  }, [locale])
+
   const toggleDarkMode = () => {
     if (!darkMode) {
       document.body.classList.add("dark");
@@ -44,6 +48,11 @@ const Topbar = () => {
     ls.set('theme', !darkMode ? "dark" : "light");
     setDarkMode(!darkMode);
   };
+
+  const localeChangeHandler = (lang) => {
+    setLocale(lang)
+    ls.set('locale', lang)
+  }
   return (
     <div className="zt-topBar">
       <div className="flex items-center gap-8">
@@ -74,7 +83,7 @@ const Topbar = () => {
       <nav className="zt-topNavigation">
         <ul>
           <li>
-            <DropDown size={'zt-dropDownLG'} icon={<AlertRedDot />} items={[1, 2, 3, 4]}>
+            <DropDown size={'zt-dropDownLG'} icon={<AlertRedDot />}>
               <div className="zt-themeDropDownList zt-dropDownLG">
                 <div className='flex justify-between items-center'>
                   <strong className='text-h6'>{t('Notification')}</strong>
@@ -123,6 +132,14 @@ const Topbar = () => {
             </DropDown>
           </li>
           <li><span onClick={toggleDarkMode} className="cursor-pointer select-none">{!!darkMode ? <Moon /> : <Sun />}</span></li>
+          <li>
+            <DropDown title={locale}>
+              <ul className="zt-themeDropDownList !py-2 !px-6">
+                <li className="cursor-pointer !py-1" onClick={() => localeChangeHandler('en')}>English</li>
+                <li className="cursor-pointer !py-1" onClick={() => localeChangeHandler('ar')}>Arabic</li>
+              </ul>
+            </DropDown>
+          </li>
           <li>
             <DropDown size={'zt-lg'} icon={<Profile name={auth_user?.firstName} image={auth_user?.avatar} />}>
               <div className="z-50 absolute bg-white p-4 right-0 top-12 border rounded-lg zt-dropDownSM">
