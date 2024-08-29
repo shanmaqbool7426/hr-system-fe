@@ -20,8 +20,6 @@ export default function ForgotPasswordPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const { t:tv } = useTranslation("validation")
-
 
     const formik = useFormik({
         initialValues: {

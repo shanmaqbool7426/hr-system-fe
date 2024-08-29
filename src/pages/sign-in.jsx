@@ -10,7 +10,6 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "@/store/actions/auth.actions"
-// import CheckBox from "@/components/elements/checkbox";
 
 export default function SignInPage() {
 
@@ -18,7 +17,6 @@ export default function SignInPage() {
     const router = useRouter()
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const { t: tv } = useTranslation("validation")
 
     const formik = useFormik({
         initialValues: {
@@ -26,8 +24,8 @@ export default function SignInPage() {
             password: "",
         },
         validationSchema: Yup.object().shape({
-            email: Yup.string().email(tv('Enter valid email')).required(tv('Email is required')),
-            password: Yup.string().required(tv('Password is required')),
+            email: Yup.string().email(t('Enter valid email')).required(t('Email is required')),
+            password: Yup.string().required(t('Password is required')),
         }),
         onSubmit: async (values) => {
             dispatch(signIn(values))

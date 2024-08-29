@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 
 export default function AddRemoteWorkForm({onClose, object }) {
     const { t } = useTranslation()
-    const { t:tv } = useTranslation("validation")
 
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -20,11 +19,11 @@ export default function AddRemoteWorkForm({onClose, object }) {
             reason: object?.reason || "",
         },
         validationSchema: Yup.object().shape({
-            Employee: Yup.string().required(tv('Employee is required')),
-            attendanceDate: Yup.string().required(tv('Atendance date is required')),
-            startDate: Yup.string().required(tv('Start Date date is required')),
-            endDate: Yup.string().required(tv('End Date is required')),
-            reason: Yup.string().required(tv('Reason is required')),
+            Employee: Yup.string().required(t('Employee is required')),
+            attendanceDate: Yup.string().required(t('Atendance date is required')),
+            startDate: Yup.string().required(t('Start Date date is required')),
+            endDate: Yup.string().required(t('End Date is required')),
+            reason: Yup.string().required(t('Reason is required')),
 
         }),
         onSubmit: async (values) => {

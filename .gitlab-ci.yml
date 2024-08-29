@@ -6,7 +6,7 @@ deploy_dev-fe:
     - zaffre
   script:
     - cp .env.dev .env
-    - npm update -f
+    - npm install -f
     - npm run build
     - pm2 restart devfe
   only:

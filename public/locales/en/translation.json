@@ -1,11 +1,4 @@
 {
-    "errors": {
-        "notfound": "Resource not found"
-    },
-    "passwordUpdated": {
-        "title": "Done!",
-        "subTitle": "Your password updated successfully, Sign in to continue."
-    },
     "Enter valid email": "Enter valid email",
     "Email is required": "Email is required",
     "Password is required": "Password is required",

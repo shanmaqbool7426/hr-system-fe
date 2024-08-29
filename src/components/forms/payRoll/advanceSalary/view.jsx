@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 export default function ViewAdvanceSalaryForm({ onClose, object }) {
     const { t } = useTranslation()
-    const { t: tv } = useTranslation("validation")
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
@@ -28,13 +27,13 @@ export default function ViewAdvanceSalaryForm({ onClose, object }) {
             reason: object?.reason || ""
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(tv('Name is required')),
-            attendanceDate: Yup.string().required(tv("Attendance date is required")),
-            inDate: Yup.string().required(tv("InDate is required")),
-            InTime: Yup.string().required(tv("InTime is required")),
-            outDate: Yup.string().required(tv("outDate is required")),
-            OutTime: Yup.string().required(tv("OutTime is required")),
-            reason: Yup.string().required(tv("reason is required")),
+            name: Yup.string().required(t('Name is required')),
+            attendanceDate: Yup.string().required(t("Attendance date is required")),
+            inDate: Yup.string().required(t("InDate is required")),
+            InTime: Yup.string().required(t("InTime is required")),
+            outDate: Yup.string().required(t("outDate is required")),
+            OutTime: Yup.string().required(t("OutTime is required")),
+            reason: Yup.string().required(t("reason is required")),
         }),
         onSubmit: async (values) => {
 

@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 
 export default function AddTypeForm({ onClose, object }) {
     const { t } = useTranslation() 
-    const { t:tv } = useTranslation("validation") 
 
     const dispatch = useDispatch()
     
@@ -19,7 +18,7 @@ export default function AddTypeForm({ onClose, object }) {
             prefix: object?.prefix || "",
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(tv('Name is required')),
+            name: Yup.string().required(t('Name is required')),
       }),
         onSubmit: async (values) => {
 
