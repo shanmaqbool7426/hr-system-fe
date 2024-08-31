@@ -1,4 +1,4 @@
-import { Button, DisplayDate, DropDown, Input, Table } from '@/components/elements'
+import { Button, DropDown, ModifiedBy, Table } from '@/components/elements'
 import CreateCustomFieldForm from '@/components/forms/organization/custom-fields/create'
 import IconCompnent from '@/components/forms/organization/inventory/IconCompnent'
 import { CloseCross, Edit, HeadPhone, InputErrorInfo, ThreeDotsVertical, Trash, KeyboardIcon, MobileIcon, HandFreeIcon, LedIcon } from '@/components/svg'
@@ -23,7 +23,7 @@ export default function ManageAssetTypesPage() {
     { title: t("Name"), col: "name", sort: true },
     { title: t("Icon"), col: "icon", className: "flex justify-center" },
     { title: t("Prefix"), col: "prefix", sort: true },
-    { title: t("Modified On"), col: "updatedAt", sort: true },
+    { title: t("Modified On"), col: "updatedAt" },
     { title: t("Action"), col: "action" },
   ]
 
@@ -40,7 +40,7 @@ export default function ManageAssetTypesPage() {
         name: item.name,
         prefix: item.prefix,
         icon: <IconCompnent icon={item.icon} />,
-        updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
+        updatedAt: item.modifiedBy ? <ModifiedBy user={item.modifiedBy} date={item.updatedAt} /> : "-------",        
         action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">

@@ -16,4 +16,5 @@ export { default as Tabs } from "./Tabs"
 export { default as Textarea } from "./Textarea"
 export { default as TextEditor } from "./TextEditor"
 export { default as Timepicker } from "./Timepicker"
+export { default as ModifiedBy } from "./ModifiedBy"
 

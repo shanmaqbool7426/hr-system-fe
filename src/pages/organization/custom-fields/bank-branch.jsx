@@ -1,4 +1,4 @@
-import { Button, DisplayDate, DropDown, Table } from '@/components/elements'
+import { Button, DropDown, ModifiedBy, Table } from '@/components/elements'
 import CreateCustomFieldForm from '@/components/forms/organization/custom-fields/create'
 import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
@@ -21,7 +21,7 @@ export default function ManageBankBranchPage() {
   const { customfield_list } = useSelector(state => state.customfield)
   const headings = [
     { title: t("Name"), col: "name", sort: true },
-    { title: t("Modified On"), col: "updatedAt", sort: true },
+    { title: t("Modified On"), col: "updatedAt" },
     { title: t("Action"), col: "action" },
   ]
 
@@ -35,7 +35,7 @@ export default function ManageBankBranchPage() {
     .map(item => {
       return {
         name: item.name,
-        updatedAt: <DisplayDate date={item.updatedAt} time={true} />,
+        updatedAt: item.modifiedBy ? <ModifiedBy user={item.modifiedBy} date={item.updatedAt} /> : "-------",        
         action: item?.company && <DropDown icon={<ThreeDotsVertical />}>
           <ul className="zt-themeDropDownList zt-sm gap-4">
             <li className="!p-0">
