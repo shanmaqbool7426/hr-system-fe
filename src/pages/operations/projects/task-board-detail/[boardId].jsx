@@ -259,10 +259,10 @@ export default function TaskBoardDetailModule() {
         return {
             TaskId: item?.taskId,
             ProjectName: item?.project?.name,
-            TaskName: item?.name,
+            name: item?.name,
             Leader: <UserListView imgClass="h-[32px] w-[32px]" list={[item?.lead]} />,
             Assignee: <UserListView imgClass="h-[32px] w-[32px]" list={[item?.assignedTo]} />,
-            Priority: (
+            priority: (
                 check_rights(auth_user) ? <select
                     className={`zt-tag ${getPriorityClass(item.priority)}`}
                     value={item.priority}
@@ -279,7 +279,7 @@ export default function TaskBoardDetailModule() {
                     </option>
                 </select> : <span className={`zt-tag ${getPriorityClass(item.priority)}`}>{item.priority}</span>
             ),
-            Status: (
+            status: (
                 <select
                     className={`zt-tag ${getStatusClass(item.status)}`}
                     value={item.status}

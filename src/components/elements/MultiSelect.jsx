@@ -38,7 +38,7 @@ export default function MultiSelect({ id, containerClass, type, list, value, onC
         <div className={`zt-formGroup ${containerClass}`}>
             <Combobox value={selectedItem} onChange={changeHandler} multiple >
                 <>
-                    {label && <Combobox.Label htmlFor={props?.id}>
+                    {label && <Combobox.Label htmlFor={props?.id} className={"dark:text-white"}>
                         {label} {props?.required && <sup className="text-[1.25rem] text-themeDanger">*</sup>}
                     </Combobox.Label>}
 

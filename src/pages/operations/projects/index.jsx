@@ -97,16 +97,6 @@ export default function ProjectsPage() {
     }, t);
   };
 
-  const headings = [
-    { title: t("Project"), col: "name", sort: true },
-    { title: t("Project ID"), col: "ProjectID", sort: true },
-    { title: t("Client"), col: "Client", sort: true },
-    { title: t("Leader"), col: "Leader", sort: true },
-    { title: t("Team"), col: "Team", sort: true },
-    { title: t("Priority"), col: "Priority", sort: true },
-    { title: t("Status"), col: "Status", sort: true },
-    { title: t("Action"), col: "Action" },
-  ]
   const filterElements = [
     {
       type: "search",
@@ -153,6 +143,16 @@ export default function ProjectsPage() {
       }
     },
   ];
+  const headings = [
+    { title: t("Project"), col: "name", sort: true },
+    { title: t("Project ID"), col: "projectId", sort: true },
+    { title: t("Client"), col: "client", sort: true },
+    { title: t("Leader"), col: "Leader", sort: true },
+    { title: t("Team"), col: "Team", sort: true },
+    { title: t("Priority"), col: "priority", sort: true },
+    { title: t("Status"), col: "status", sort: true },
+    { title: t("Action"), col: "Action" },
+  ]
 
   let filteredRows = project_list?.filter((item) => {
     return (
@@ -172,12 +172,12 @@ export default function ProjectsPage() {
   const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
   const rows = paginatedData?.map((item, index) => ({
-    Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
-    ProjectID: item?.projectId,
-    Client: item?.client,
+    name: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
+    projectId: item?.projectId,
+    client: item?.client,
     Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads} />,
     Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
-    Priority: (
+    priority: (
       check_rights(auth_user) ?
         <select
           className={`zt-tag ${getPriorityClass(item.priority)}`}
@@ -196,7 +196,7 @@ export default function ProjectsPage() {
         </select>
         : <span className={`zt-tag ${getPriorityClass(item.priority)}`}>{item.priority}</span>
     ),
-    Status: (
+    status: (
       check_rights(auth_user) ?
         <select
           className={`zt-tag ${getStatusClass(item.status)}`}
@@ -279,7 +279,7 @@ export default function ProjectsPage() {
       <div className="flex justify-between pb-6">
         <h1 className="text-h4 mb-0">{t("Projects")}</h1>
         <div className='flex gap-6 items-center'>
-          <div className='rounded-full p-1 flex bg-themeGrayscale200'>
+          <div className='rounded-full p-1 flex bg-themeGrayscale200 dark:bg-dark-5'>
             <button onClick={() => setView('list')} className={`${view === "list" ? "bg-themePurple" : ""} rounded-full p-2`}><ListIcon className={`${view === "list" ? "text-white" : "text-themeGrayscale500"}`} /></button>
             <button onClick={() => setView('grid')} className={`${view === "grid" ? "bg-themePurple" : ""} rounded-full p-2`}><GridIcon className={`${view === "grid" ? "text-white" : "text-themeGrayscale500"}`} /></button>
           </div>

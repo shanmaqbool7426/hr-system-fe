@@ -53,8 +53,8 @@ axiosInstance.interceptors.response.use(
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh-token`, {}, {
                     headers: { "Accept": 'application/json', "Authorization": ls.get("refresh_token", { decrypt: true }) }
                 });
-                ls.set("access_token", response.data.data.access_token, { encrypt: true })
                 ls.set("refresh_token", response.data.data.refresh_token, { encrypt: true })
+                ls.set("access_token", response.data.data.access_token, { encrypt: true })
                 processQueue(null, response.data.data.access_token);
                 originalRequest.Authorization = response.data.data.access_token
                 return axiosInstance(originalRequest);

@@ -9,7 +9,6 @@ import {
     UpdateProject,
 } from "@/store/actions/project.actions";
 import moment from 'moment';
-import ImageUpload from '@/components/elements/ImadeUploader';
 
 
 export default function CreatProjectsForm({ onClose, object, }) {
@@ -98,13 +97,14 @@ export default function CreatProjectsForm({ onClose, object, }) {
             name: "endDate",
             label: t('End Date'),
             required: true,
+            minDate: formik.values.startDate,
             value: formik.values.endDate,
         },
         {
             type: "number",
             name: "payment",
             label: t('Payment'),
-            placeholder: t("$5000"),
+            placeholder: t("Payment"),
             required: false,
             value: formik.values.payment,
         },
@@ -167,11 +167,6 @@ export default function CreatProjectsForm({ onClose, object, }) {
         },
     ]
     return (
-        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
-            <div className='flex flex-col gap-6 col-span-2'>
-                <ImageUpload />
-            </div>
-
-        </BaseForm>
+        <BaseForm title={object ? "Edit project" : "Create project"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />            
     )
 }
