@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker, FileUpload } from "../elements"
 import { useTranslation } from "next-i18next"
 import Radio from "../elements/Radio"
 
@@ -30,16 +30,16 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                                 formik.setFieldValue(element.name, value)
                                             }}
                                         />
-                                    case 'time':
-                                        return <Timepicker key={index} {...element}
-                                            error={formik.touched[element.name] && formik.errors[element.name]}
-                                            onBlur={() => {
-                                                formik.setFieldTouched(element.name, true)
-                                            }}
-                                            onChange={(value) => {
-                                                formik.setFieldValue(element.name, value)
-                                            }}
-                                        />
+                                    // case 'time':
+                                    //     return <Timepicker key={index} {...element}
+                                    //         error={formik.touched[element.name] && formik.errors[element.name]}
+                                    //         onBlur={() => {
+                                    //             formik.setFieldTouched(element.name, true)
+                                    //         }}
+                                    //         onChange={(value) => {
+                                    //             formik.setFieldValue(element.name, value)
+                                    //         }}
+                                    //     />
                                     case 'button':
                                         return <Button className={element.btn} key={index} {...element} />
                                     case 'search':
@@ -119,6 +119,13 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             </div>);
                                     case 'hidden':
                                         return null;
+                                    case 'file':
+                                        return <FileUpload
+                                            onChange={(file) => {
+                                                formik.setFieldValue(element.name, file)
+                                            }}
+                                            {...element}
+                                        />
                                     default:
                                         return <Input formik={formik} {...element} key={index} />
                                 }

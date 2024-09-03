@@ -5,7 +5,7 @@ export const projectSlice = createSlice({
     initialState: {
         is_loading: false,
         project_list: [],
-        completed_project_list:[],
+        completed_project_list: [],
         project_detail: null,
         total_tasks: 0,
         completed_tasks: 0,
@@ -15,9 +15,9 @@ export const projectSlice = createSlice({
             state.is_loading = action.payload
         },
         setProjectList(state, action) {
-            state.project_list = action.payload.list; 
+            state.project_list = action.payload.list;
         },
-        setCompletedProjectList(state, action) { 
+        setCompletedProjectList(state, action) {
             state.completed_project_list = action.payload.list
         },
         setProject(state, action) {
@@ -40,8 +40,12 @@ export const projectSlice = createSlice({
         pushProject(state, action) {
             state.project_list.push(action.payload)
         },
-       
-        
+        pushAttachment(state, action) {
+            state.project_detail.attachments.push(action.payload)
+        },
+        removeAttachment(state, action) {
+            state.project_detail.attachments = state.project_detail.attachments.filter(item => item._id !== action.payload)
+        }
     },
 });
 
@@ -53,7 +57,8 @@ export const {
     removeProject,
     pushProject,
     setProjectDetails,
-    
+    pushAttachment,
+    removeAttachment
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -17,4 +17,5 @@ export { default as Textarea } from "./Textarea"
 export { default as TextEditor } from "./TextEditor"
 export { default as Timepicker } from "./Timepicker"
 export { default as ModifiedBy } from "./ModifiedBy"
-
+export { default as FileUpload } from "./FileUpload"
+export { default as DisplayFileSize } from "./DisplayFileSize"

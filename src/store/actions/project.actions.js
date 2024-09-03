@@ -1,6 +1,10 @@
 
 import axios from '@/util/axios';
-import { setLoading, setProjectList,setProject, removeProject, pushProject, setProjectDetails, setCompletedProjectList } from '../slices/project.slice'
+import {
+    setLoading, setProjectList, setProject, removeProject,
+    pushProject, setProjectDetails, setCompletedProjectList,
+    pushAttachment, removeAttachment
+} from '../slices/project.slice'
 
 export const FetchProject = (payload) => async (dispatch) => {
     try {
@@ -15,19 +19,18 @@ export const FetchProject = (payload) => async (dispatch) => {
     }
 };
 
-export const FetchCompletedProjects = ( payload) => async (dispatch) => {
+export const FetchCompletedProjects = (payload) => async (dispatch) => {
     try {
-      dispatch(setLoading(true));
-      const query = new URLSearchParams(payload).toString();
-      const data = await axios.get(`/projects/list-completed/?${query}`);
-      dispatch(setCompletedProjectList(data));
-      return true;
-    } catch (err) {
-      console.log("Error", err);
-    } finally {
-      dispatch(setLoading(false));
+        dispatch(setLoading(true));
+        const query = new URLSearchParams(payload).toString();
+        const data = await axios.get(`/projects/list-completed/?${query}`);
+        dispatch(setCompletedProjectList(data));
+        return true;
+    } catch (err) { console.log("Error", err); }
+    finally {
+        dispatch(setLoading(false));
     }
-  };
+};
 export const FetchProjectDetails = (id) => async (dispatch) => {
     try {
         dispatch(setLoading(true))
@@ -72,6 +75,32 @@ export const DeleteProject = (id, onSuccess = null) => async (dispatch) => {
         dispatch(setLoading(true))
         await axios.delete(`/projects/delete/${id}`)
         dispatch(removeProject(id))
+        onSuccess && onSuccess()
+        return true
+    } catch (err) { console.log("Error", err); }
+    finally {
+        dispatch(setLoading(false))
+    }
+};
+
+export const UploadAttachment = (payload, onSuccess = null) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const data = await axios.post(`/projects/attachments/create`, payload)
+        dispatch(pushAttachment(data.attachment))
+        onSuccess && onSuccess()
+        return true
+    } catch (err) { console.log("Error", err); }
+    finally {
+        dispatch(setLoading(false))
+    }
+};
+
+export const DeleteAttachment = (id, onSuccess = null) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        await axios.delete(`/projects/attachments/delete/${id}`)
+        dispatch(removeAttachment(id))
         onSuccess && onSuccess()
         return true
     } catch (err) { console.log("Error", err); }

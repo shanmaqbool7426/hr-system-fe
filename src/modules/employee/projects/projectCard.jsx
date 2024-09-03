@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from '../../../components/svg';
-import CreateProjectsForm from '@/components/forms/projects/createProjects'
+import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import ProgressBar from '../../../components/elements/ProgressBar';
 import UserListView from '../../../components/elements/UserListView';
 import { DropDown } from '@/components/elements';

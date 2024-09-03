@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
-import CreatProjectsForm from '@/components/forms/projects/createProjects'
+import CreatProjectsForm from '@/components/forms/projects/create-projects'
 import DiscussionForm from '@/components/forms/projects/discussion'
 import { useRouter } from 'next/router'
 import { FetchEmployees } from '@/store/actions/employee.actions'

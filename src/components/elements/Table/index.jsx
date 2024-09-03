@@ -13,7 +13,7 @@ export default function Table({
     setSortDir,
     perPage,
     setPerPage,
-    page,
+    page = 1,
     setPage,
     pagination,
     className,
@@ -94,7 +94,7 @@ export default function Table({
                                             checked={selected.includes(item._id)}
                                             onChange={() => handleRowSelect(index1)}
                                         />}
-                                        {(page - 1) * perPage + index1 + 1}
+                                        {perPage ? (page - 1) * perPage + index1 + 1 : index1 + 1}
                                     </td>
                                     {headings.map((value, index2) => (
                                         <td className={value?.className} key={index2}>
@@ -123,7 +123,7 @@ export default function Table({
                     </tbody>
                 )}
             </table>
-            {!rows?.length && <div className='w-full h-40 flex flex-grow justify-center items-center'>No data found</div>}
+            {!rows?.length && <div className='w-full h-40 flex flex-grow justify-center items-center'>{t("No data found")}</div>}
             {rows?.length > 0 && pagination && (
                 <Pagination
                     pagination={pagination}

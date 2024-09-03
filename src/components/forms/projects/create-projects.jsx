@@ -10,7 +10,6 @@ import {
 } from "@/store/actions/project.actions";
 import moment from 'moment';
 
-
 export default function CreatProjectsForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()

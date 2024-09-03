@@ -1,6 +1,6 @@
 import { Button, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
-import CreateProjectsForm from '@/components/forms/projects/createProjects'
+import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import FilterArea from '@/components/includes/FilterArea'
 import { EyeOn, GridIcon, ListIcon } from '@/components/svg'
 import ProjectCard from '@/modules/employee/projects/projectCard'

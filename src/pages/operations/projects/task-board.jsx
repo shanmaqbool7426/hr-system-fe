@@ -2,7 +2,7 @@ import { Button, CheckBox, DropDown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
 import DisplayDate from "@/components/elements/DisplayDate";
 import CreateBoardForm from '@/components/forms/projects/createBoard'
-import CreatProjectsForm from '@/components/forms/projects/createProjects'
+import CreatProjectsForm from '@/components/forms/projects/create-projects'
 import FilterArea from '@/components/includes/FilterArea'
 import { FetchTaskBoards } from '@/store/actions/taskboard.actions'
 import Image from 'next/image'

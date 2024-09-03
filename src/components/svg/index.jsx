@@ -755,8 +755,7 @@ function EmployeeIcon({ className, width, height, ...props }) {
 }
 function PdfIcon({ className, width, height, ...props }) {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="4" fill="#F8F8F8" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" {...props}>
       <path d="M29.6473 11.6708V31.1613C29.6473 31.6232 29.2704 32 28.8084 32H13.3428C12.8808 32 12.5039 31.6232 12.5039 31.1613V8.83869C12.5039 8.3768 12.8808 8 13.3428 8H25.9694L29.6473 11.6708Z" fill="#E03137" />
       <path d="M29.6468 11.6708V31.1613C29.6468 31.6232 29.2699 32 28.8079 32H27.6103C28.0723 32 28.4492 31.6232 28.4492 31.1613V11.6708L24.7773 8H25.975L29.6468 11.6708Z" fill="#E9EAEC" />
       <path d="M29.6467 11.6708H26.8077C26.3457 11.6708 25.9688 11.294 25.9688 10.8321V8L29.6467 11.6708Z" fill="#E9EAEC" />

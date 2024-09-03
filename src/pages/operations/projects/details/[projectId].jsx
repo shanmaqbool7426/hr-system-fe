@@ -1,16 +1,16 @@
 import { useTranslation } from 'react-i18next'
-import CreateProjectsForm from '@/components/forms/projects/createProjects'
+import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import * as Yup from 'yup';
-import { Button, DropDown, MultiSelect, Table } from '@/components/elements'
+import { Button, DisplayFileSize, DropDown, MultiSelect, Table } from '@/components/elements'
 import { ChevronLeft, Download, Edit, EyeOn, PdfIcon, Plus, ShareIcon, ThreeDotsVertical, Tick, Trash } from '@/components/svg'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FetchProjectDetails, UpdateProject } from '@/store/actions/project.actions'
+import { DeleteAttachment, FetchProjectDetails, UpdateProject } from '@/store/actions/project.actions'
 import DisplayDate from "@/components/elements/DisplayDate";
 import { useFormik } from 'formik';
-import moment from 'moment'; 
+import moment from 'moment';
 import ProgressBar from '@/components/elements/ProgressBar'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
@@ -19,6 +19,8 @@ import { DeleteTaskBoard, FetchProjectTaskBoards } from '@/store/actions/taskboa
 import Toast from '@/util/toast';
 import { FetchTasks } from '@/store/actions/task.actions';
 import { check_rights } from '@/util/helpers';
+import UploadAttachmentForm from '@/components/forms/projects/upload-attachment';
+import Profil from '@/components/elements/Profile';
 
 
 export default function ProjectsDetailPage() {
@@ -27,6 +29,7 @@ export default function ProjectsDetailPage() {
   const dispatch = useDispatch()
   const [board, setBoard] = useState(false)
   const [create, setCreate] = useState(false)
+  const [upload, setUpload] = useState(false)
   const [editProject, setEditProject] = useState(null);
   const [editLeaders, setEditLeaders] = useState(false)
   const [editMembers, setEditMembers] = useState(false)
@@ -35,10 +38,10 @@ export default function ProjectsDetailPage() {
   const { auth_user } = useSelector((state) => state.auth)
   const { employees_list } = useSelector((state) => state.employee)
   const { taskboard_list } = useSelector(state => state.taskboard);
+  const { projectId } = router.query
 
   useEffect(() => {
     dispatch(FetchEmployees())
-    const { projectId } = router.query
     if (projectId) {
       dispatch(FetchTasks(projectId));
       dispatch(FetchProjectTaskBoards(projectId))
@@ -48,10 +51,8 @@ export default function ProjectsDetailPage() {
 
 
   const progressPercentage = total_tasks > 0 ? ((completed_tasks / total_tasks) * 100).toFixed(0) : 0;
-  const removeTags = (str) => {
-    if (!str) return ''
-    return str.replace(/<\/?[^>]+(>|$)/g, "")
-  }
+
+
 
   const deleteHandler = (item) => {
     Toast.confirmDelete(() => {
@@ -62,7 +63,13 @@ export default function ProjectsDetailPage() {
       );
     }, t);
   };
-
+  const deleteAttachmentHandler = (id) => {
+    Toast.confirmDelete(() => {
+      dispatch(DeleteAttachment(id, () => {
+        Toast.success(t("Attachment deleted successfully"))
+      }))
+    }, t)
+  }
   const calculateTotalHours = (startDate, endDate) => {
     if (!startDate || !endDate) return 0;
     const start = moment(startDate);
@@ -78,7 +85,6 @@ export default function ProjectsDetailPage() {
     { title: t("Sprint No"), col: "Sprint" },
     { title: t("Due Date"), col: "DueDate" },
     { title: t("Action"), col: "Action" },
-
   ]
 
   const formik = useFormik({
@@ -100,8 +106,6 @@ export default function ProjectsDetailPage() {
     },
     enableReinitialize: true
   })
-
-
 
   const filteredLeadersList = employees_list.filter(employee => !formik.values.members.includes(employee._id));
   const filteredMembersList = employees_list.filter(employee => !formik.values.leads.includes(employee._id));
@@ -161,44 +165,53 @@ export default function ProjectsDetailPage() {
           </div>
           <div className='flex gap-6 items-start'>
             <div className='flex flex-col gap-6 grow'>
-              <div className='bg-white p-6 rounded-lg'>
+              {/* Project Description */}
+              <div className='zt-card'>
                 <div className='flex justify-between items-center mb-2'>
                   <h2 className='text-lg font-bold mb-0'>{t(project_detail?.name)}</h2>
                 </div>
-                <span className='text-themeGrayscale600 text-sm block mb-4'>{t("1 open tasks, 9 tasks completed")}</span>
                 <div className='text-themeGrayscale600 text-sm' dangerouslySetInnerHTML={{ __html: project_detail?.description }}>
                 </div>
               </div>
-              <div className='bg-white p-6 rounded-lg'>
-                <h2 className='text-lg font-bold'>{t("Uploaded files")}</h2>
+              {/* Project Attachments */}
+              <div className='zt-card'>
+                <div className="flex justify-between">
+                  <h2 className='text-lg font-bold'>{t("Uploaded files")}</h2>
+                  <div>
+                    <Button variant={'primary'} size={"sm"} value={t("Upload")} onClick={() => setUpload(true)} />
+                  </div>
+                </div>
                 <div className='flex flex-col gap-2'>
-                  {[0, 1].map((ele, i) => (
-                    <div key={i} className='border items-center border-themeGrayscale300 rounded-lg py-3 px-4 flex justify-between'>
-                      <div className='flex gap-3 items-center'>
-                        <PdfIcon />
-                        <div className='flex flex-col text-xs font-medium'>
-                          <span className='mb-1 text-themeGrayscale900'>{t("AHA Selfcare Mobile Application Test-Cases.pdf")}</span>
-                          <span>{t("1.4 Mb")} &nbsp; <span className='text-lightOrange'>{t("by Jhon Carter")}</span></span>
+                  {project_detail?.attachments?.length > 0 ?
+                    project_detail?.attachments?.map((attachment, index) => (
+                      <div key={index} className='border items-center border-themeGrayscale300 dark:border-dark-3 rounded-lg py-3 px-4 flex justify-between'>
+                        <div className='flex gap-3 items-center'>
+                          <PdfIcon />
+                          <div className='flex flex-col gap-1 font-medium'>
+                            <div>{attachment.name}</div>
+                            <div className='text-xs'><DisplayFileSize size={attachment.size} /></div>
+                          </div>
+                        </div>
+                        <div className='flex gap-2'>
+                          <Link href={attachment.link} target='_blank'>
+                            <Button type="button" variant={'light-primary'} className={'!p-2'}>
+                              <Download className={'h-4 w-4'} />
+                            </Button>
+                          </Link>
+                          <Button type="button" variant={'light-danger'} className={'!p-2'} onClick={() => deleteAttachmentHandler(attachment._id)}>
+                            <Trash className={'h-4 w-4'} />
+                          </Button>
                         </div>
                       </div>
-                      <div className='flex gap-2'>
-                        <Button type="button" variant={'light-success'} className={'!p-2'}>
-                          <ShareIcon className={'h-4 w-4'} />
-                        </Button>
-                        <Button type="button" variant={'light-primary'} className={'!p-2'}>
-                          <Download className={'h-4 w-4'} />
-                        </Button>
-                        <Button type="button" variant={'light-danger'} className={'!p-2'}>
-                          <Trash className={'h-4 w-4'} />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-
+                    )) :
+                    <div className='w-full h-40 flex flex-grow justify-center items-center'>{t("No data found")}</div>
+                  }
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg">
+              {/* Project Boards */}
+              <div className="zt-card">
                 <Table
+                  checkbox={false}
                   headings={headings}
                   rows={rows}
                   className={'zt-employeeTable zt-projectsTable'} />
@@ -206,7 +219,8 @@ export default function ProjectsDetailPage() {
             </div>
 
             <div className='flex flex-col gap-6 min-w-[388px]'>
-              <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
+              {/* Project Details */}
+              <div className='flex flex-col gap-4 zt-card'>
                 <div className='flex justify-between items-center'>
                   <h2 className='text-lg font-bold mb-0'>{t("Project Details")}</h2>
                   {check_rights(auth_user) && <span className='cursor-pointer' onClick={() => {
@@ -216,36 +230,37 @@ export default function ProjectsDetailPage() {
                 </div>
                 <hr className='bg-themeGrayscale200' />
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Total Hours")}</span>
-                  <span className='text-themeGrayscale900 font-semibold'>{t(totalHours + " Hours")}</span>
+                  <span className=''>{t("Total Hours")}</span>
+                  <span className=' font-semibold'>{t(totalHours + " Hours")}</span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Created Date")}</span>
-                  <span className='text-themeGrayscale900 font-semibold'>
+                  <span className=''>{t("Created Date")}</span>
+                  <span className=' font-semibold'>
                     <DisplayDate date={project_detail?.startDate} />
                   </span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Deadline")}</span>
-                  <span className='text-themeGrayscale900 font-semibold'>
+                  <span className=''>{t("Deadline")}</span>
+                  <span className=' font-semibold'>
                     <DisplayDate date={project_detail?.endDate} />
                   </span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Priority")}</span>
-                  <span className='zt-tag zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority.charAt(0).toUpperCase() + project_detail.priority.slice(1).toLowerCase())}</span>
+                  <span className=''>{t("Priority")}</span>
+                  <span className=' zt-tag-danger !rounded-lg !p-2'>{t(project_detail?.priority.charAt(0).toUpperCase() + project_detail.priority.slice(1).toLowerCase())}</span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Status")}</span>
-                  <span className='text-themeGrayscale900 font-semibold'>{t(project_detail?.status.charAt(0).toUpperCase() + project_detail.status.slice(1).toLowerCase())}</span>
+                  <span className=''>{t("Status")}</span>
+                  <span className=' font-semibold'>{t(project_detail?.status.charAt(0).toUpperCase() + project_detail.status.slice(1).toLowerCase())}</span>
                 </div>
                 <div className='flex justify-between text-sm'>
-                  <span className='text-themeGrayscale600'>{t("Created by")}</span>
-                  <span className='text-themeGrayscale900 font-semibold'>{t(project_detail?.createdBy?.firstName)} {t(project_detail?.createdBy?.lastName)}</span>
+                  <span className=''>{t("Created by")}</span>
+                  <span className=' font-semibold'>{t(project_detail?.createdBy?.firstName)} {t(project_detail?.createdBy?.lastName)}</span>
                 </div>
                 <ProgressBar percentage={`${progressPercentage}%`} variant={'success'} containerClasses={'flex flex-col gap-4'} titleBarClasses={'mb-0 flex justify-between'} progressClasses={'flex flex-col'} progressBarClasses={'grow rounded-full'} />
               </div>
-              <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
+              {/* Project Leads */}
+              <div className='flex flex-col gap-4 zt-card'>
                 {editLeaders ? (<> <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }}>
                   <div className='flex justify-between items-center'>
                     <h2 className='text-lg font-bold mb-0'>{t("Add Leader")}</h2>
@@ -276,9 +291,7 @@ export default function ProjectsDetailPage() {
                   <hr className='bg-themeGrayscale200' />
                   {project_detail?.leads?.map((lead, index) => (
                     <div key={index} className='flex gap-2 items-center'>
-                      <figure>
-                        <Image src='/assets/images/users/user-01.jpg' alt='profile' width={32} height={32} className='rounded-full object-cover' />
-                      </figure>
+                      <Profil name={lead.firstName} image={lead.avatar} />
                       <div className='text-xs'>
                         <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(lead?.firstName)} {t(lead?.lastName)} </h3>
                         <span className='text-themeGrayscale600'>{t(lead?.designation)}</span>
@@ -286,7 +299,8 @@ export default function ProjectsDetailPage() {
                     </div>))}
                 </>)}
               </div>
-              <div className='bg-white p-6 flex flex-col gap-4 rounded-lg border border-themeGrayscale200'>
+              {/* Project Members */}
+              <div className='flex flex-col gap-4 zt-card'>
                 {editMembers ? (<>
                   <form onSubmit={event => { event.preventDefault(); formik.handleSubmit() }} >
                     <div className='flex justify-between items-center'>
@@ -317,9 +331,7 @@ export default function ProjectsDetailPage() {
                   <hr className='bg-themeGrayscale200' />
                   {project_detail?.members?.map((member, index) => (
                     <div key={index} className='flex gap-2 items-center'>
-                      <figure>
-                        <Image src='/assets/images/users/user-01.jpg' alt='profile' width={32} height={32} className='rounded-full object-cover' />
-                      </figure>
+                      <Profil name={member.firstName} image={member.avatar} />
                       <div className='text-xs'>
                         <h3 className='mb-0 text-xs font-semibold text-themeGrayscale900'>{t(member?.firstName)} {t(member?.lastName)} </h3>
                         <span className='text-themeGrayscale600'>{t(member?.designation)}</span>
@@ -349,5 +361,6 @@ export default function ProjectsDetailPage() {
           setEditBoard(null);
         }}
       />}
+      {upload && <UploadAttachmentForm projectId={projectId} onClose={() => setUpload(false)} />}
     </>)
 }
