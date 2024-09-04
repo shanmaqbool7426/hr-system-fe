@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { DeleteTask } from '@/store/actions/task.actions';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
-import AddTaskForm from '@/components/forms/projects/addTask';
+import AddTaskForm from '@/components/forms/projects/create-task';
 import UserListView from '@/components/elements/UserListView';
 import moment from 'moment'
 import { check_rights } from '@/util/helpers';

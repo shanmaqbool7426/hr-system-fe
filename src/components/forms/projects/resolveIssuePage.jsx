@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import AddTaskForm from '@/components/forms/projects/addTask'
+import AddTaskForm from '@/components/forms/projects/create-task'
 import Toast from "@/util/toast";
 import { useState } from 'react'
 import { Button, DetailPanel } from '@/components/elements'

@@ -3,23 +3,16 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateTask,UpdateTask } from '@/store/actions/task.actions';
+import { CreateTask, UpdateTask } from '@/store/actions/task.actions';
+import { setLoading } from '@/store/slices/task.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react'; 
- 
-export default function AddTaskForm({ onClose, object , additionFields  }) {
+import Storage from "@/util/storage"
+export default function CreateTaskForm({ onClose, object, additionFields }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
+    const { auth_user } = useSelector((state) => state.auth);
     const { employees_list } = useSelector((state) => state.employee);
-    const {task_list, is_loading } = useSelector(state => state.task)
-   
-    const [filters, setFilters] = useState({
-        search: "",
-        project: null,
-        department: null,
-        status: null,
-    })
-    const getUserID = (user) => (user ? user._id : "");
+    const { task_list, is_loading } = useSelector(state => state.task)
 
     const formik = useFormik({
         initialValues: {
@@ -29,22 +22,28 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             dueDate: object?.dueDate || "",
             requiredTime: object?.requiredTime || "",
             priority: object?.priority || "",
-            lead: getUserID(object?.lead) || "",
-            assignedTo: getUserID(object?.assignedTo) || "",
+            lead: object?.lead?._id || "",
+            assignedTo: object?.assignedTo?._id || "",
             board: additionFields?._id || "",
             project: additionFields?.project?._id || "",
             parent: object?.parent || "",
+            attachment: null,
         },
         validationSchema: Yup.object().shape({
             name: Yup.string().required(t('Task name is required')),
             dueDate: Yup.string().required(t('Task Due date is required')),
             assignedTo: Yup.string().required(t('Member is required')),
             lead: Yup.string().required(t('Leader is required')),
-            requiredTime : Yup.string().required(t("Time is required")),
+            requiredTime: Yup.string().required(t("Time is required")),
             priority: Yup.string().required(t('Priority is required')),
             description: Yup.string().required(t('Description is required')),
         }),
         onSubmit: async (values) => {
+            dispatch(setLoading(true))
+            if (values.attachment) {
+                const { url } = await Storage.upload(values.attachment, auth_user.company._id)
+                values.attachment = url
+            }
             return object ? dispatch(UpdateTask(object._id, values, onCompleted)) : dispatch(CreateTask(values, onCompleted))
         }
     })
@@ -54,7 +53,7 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
     }
     const filteredLeadList = employees_list.filter(employee => employee._id !== formik.values.assignedTo);
     const filteredAssigneeList = employees_list.filter(employee => employee._id !== formik.values.lead);
-    
+
     const formElements = [
         {
             type: "text",
@@ -112,7 +111,7 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
                 value: item?._id,
                 display: item?.firstName + " " + item?.lastName,
             })),
-            multiple:false
+            multiple: false
         },
         {
             type: "select",
@@ -134,12 +133,16 @@ export default function AddTaskForm({ onClose, object , additionFields  }) {
             required: true,
             value: formik.values.description,
         },
+        {
+            type: "file",
+            name: "attachment",
+            label: t('Attachment'),
+            accept: `image/*,application/pdf,.doc,.docx`,
+            className: "col-span-2",
+            help: object ? t("Leave empty if don't want to replace old one") : ""
+        }
     ]
     return (
-        <BaseForm title={object ? "Edit Task" : 'Create Task'} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} >
-            {/* {back &&
-                <button onClick={() => onClose()} className='absolute left-1 top-9 text-h4'><ChevronLeft className={'h-5 w-4'} /></button>
-            } */}
-        </BaseForm>
+        <BaseForm title={object ? "Edit Task" : 'Create Task'} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
     )
 }

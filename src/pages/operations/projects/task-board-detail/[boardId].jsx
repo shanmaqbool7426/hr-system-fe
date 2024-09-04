@@ -1,12 +1,12 @@
 import { Button, DetailPanel, DisplayDate, DropDown, Table } from '@/components/elements'
 import ProgressBar from '@/components/elements/ProgressBar'
 import UserListView from '@/components/elements/UserListView'
-import AddTaskForm from '@/components/forms/projects/addTask'
+import CreateTaskForm from '@/components/forms/projects/create-task'
 import Pagination from '@/components/elements/Table/pagination'
 import FeedbackForm from '@/components/forms/projects/taskFeedback'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'
 import FilterArea from '@/components/includes/FilterArea'
-import { ChevronLeft, DiscussionIcon, Edit, EyeOn, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
+import { ChevronLeft, DiscussionIcon, Download, Edit, EyeOn, GridIcon, ListIcon, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg'
 import TaskCard from '@/modules/projects/taskCard'
 import Toast from "@/util/toast";
 import Link from 'next/link'
@@ -226,7 +226,7 @@ export default function TaskBoardDetailModule() {
     ]
     const headings = [
         { title: t("Task Id"), col: "TaskId" },
-        { title: t("Task Name"), col: "name" , sort:true },
+        { title: t("Task Name"), col: "name", sort: true },
         { title: t("Task Time"), col: "TaskTime", sort: true },
         { title: t("Project Name"), col: "ProjectName" },
         { title: t("Due Date"), col: "DueDate", sort: true },
@@ -405,7 +405,7 @@ export default function TaskBoardDetailModule() {
                 </h1>
                 {/* <h1 className="text-h4 mb-0">{t("Task Board")}</h1> */}
                 <div className='flex gap-6 items-center'>
-                    <div className='rounded-full p-1 flex bg-themeGrayscale200'>
+                    <div className='rounded-full p-1 flex bg-themeGrayscale200 dark:bg-dark-5'>
                         <button onClick={() => setView('list')} className={`${view === "list" ? "bg-themePurple" : ""} rounded-full p-2`}><ListIcon className={`${view === "list" ? "text-white" : "text-themeGrayscale500"}`} /></button>
                         <button onClick={() => setView('grid')} className={`${view === "grid" ? "bg-themePurple" : ""} rounded-full p-2`}><GridIcon className={`${view === "grid" ? "text-white" : "text-themeGrayscale500"}`} /></button>
                     </div>
@@ -521,7 +521,7 @@ export default function TaskBoardDetailModule() {
                 {feedback && <FeedbackForm
                     onClose={() => { setFeedback(false) }}
                 />}
-                {task && <AddTaskForm
+                {task && <CreateTaskForm
                     object={editTask}
                     additionFields={taskboard_details}
                     onClose={() => {
@@ -536,9 +536,12 @@ export default function TaskBoardDetailModule() {
             {details && <DetailPanel>
                 <div className="px-4">
                     <h4>{details.name}</h4>
-                    <p className='font-bold'>Description</p>
-                    <p>{details.description}</p>
+                    <div className='font-bold'>Description</div>
+                    <div>{details.description}</div>
+                </div>
+                <div className="flex gap-4">
                     <Button onClick={() => { setDetails(null) }} value={"Close"} />
+                    {details.attachment && <Link href={details.attachment} target='_blank'><Button value={t("Download Attachment")} /></Link>}
                 </div>
             </DetailPanel>
             }

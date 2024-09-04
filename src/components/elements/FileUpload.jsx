@@ -3,7 +3,7 @@ import { CloudUpload, CloseCross } from '../svg';
 import Toast from '@/util/toast';
 import { useTranslation } from 'next-i18next';
 
-const FileUpload = ({ label, id, name, onChange, className, max, accept, uploadIcon, disabled = false }) => {
+const FileUpload = ({ label, id, name, onChange, className, max, accept, uploadIcon, help, disabled = false }) => {
 	if (!id) id = name || "attachment"
 	const [selectedFile, setSelectedFile] = useState(null);
 	const { t } = useTranslation()
@@ -51,16 +51,19 @@ const FileUpload = ({ label, id, name, onChange, className, max, accept, uploadI
 	};
 
 	return (
-		<label className={`zt-fileUpload ${className}`} htmlFor={id}>
-			<span className='zt-fileUploadText'>{selectedFile ? selectedFile.name : label}</span>
-			{!selectedFile && <span className='zt-fileUploadIcon'>{uploadIcon ? uploadIcon : <CloudUpload />}</span>}
-			{selectedFile && <span className='zt-fileUploadIcon' onClick={(event) => {
-				event.preventDefault()
-				setSelectedFile(null)
-				onChange && onChange(null)
-			}}><CloseCross /></span>}
-			<input id={id} type="file" accept={accept} onChange={handleFileChange} disabled={disabled} />
-		</label>
+		<div className={`zt-fileUpload ${className}`}>
+			<label className={` `} htmlFor={id}>
+				<span className='zt-fileUploadText'>{selectedFile ? selectedFile.name : label}</span>
+				{!selectedFile && <span className='zt-fileUploadIcon'>{uploadIcon ? uploadIcon : <CloudUpload />}</span>}
+				{selectedFile && <span className='zt-fileUploadIcon' onClick={(event) => {
+					event.preventDefault()
+					setSelectedFile(null)
+					onChange && onChange(null)
+				}}><CloseCross /></span>}
+				<input id={id} type="file" accept={accept} onChange={handleFileChange} disabled={disabled} />
+			</label>
+			{help && <span className='text-sm text-themeGrayscale400 text-left w-full'>{help}</span>}
+		</div>
 	);
 };
 

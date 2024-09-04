@@ -13,7 +13,6 @@ export default function CreateDepartmentForm({ onClose, department }) {
     const dispatch = useDispatch()
     const { is_loading, departments_list } = useSelector((state) => state.department)
     const { employees_list } = useSelector((state) => state.employee)
-    console.log('department', department)
     const formik = useFormik({
         initialValues: {
             name: department?.name || "",

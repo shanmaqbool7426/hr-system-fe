@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class Storage {
+class StorageClass {
     async upload(file, directory, multiple = false) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -28,5 +28,5 @@ class Storage {
         })
     }
 }
-
-export default new Storage
+const Storage = new StorageClass
+export default Storage 

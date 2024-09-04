@@ -7,7 +7,7 @@ export default function DisplayDate({
   ...props
 }) {
   return (
-    <time dateTime={date} {...props}>
+    <time dateTime={date} {...props} className="dark:text-white">
       {timeOnly
         ? moment(date).format("HH:mm:ss")
         : moment(date).format(time ? "DD MMM YYYY hh:mm A" : "DD MMM YYYY")}
