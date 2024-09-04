@@ -34,7 +34,7 @@ export default function UploadAttachmentForm({ onClose, projectId }) {
                 values.size = size
             }
             dispatch(UploadAttachment(values, () => {
-                Toast.success(t("Change designation request created successfully"));
+                Toast.success(t("Attachment uploaded successfully"));
                 onClose();
             }))
         }
