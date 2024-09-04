@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { check_rights } from '@/util/helpers';
 
 
-export default function ProjectCard({ key, projectData }) {
+export default function ProjectCard({ projectData }) {
   const { t } = useTranslation()
   const dispatch = useDispatch();
   const { auth_user } = useSelector(state => state.auth)
@@ -36,7 +36,7 @@ export default function ProjectCard({ key, projectData }) {
   }
   return (
     <>
-      <div className='zt-projectCard'>
+      <div className='zt-card zt-projectCard'>
         <div className='zt--projectCardHead'>
           <div>
             <Link href={`/operations/projects/details/${projectData?._id}`} className='mb-0 text-h5 no-underline'>{t(projectData.name)}</Link>

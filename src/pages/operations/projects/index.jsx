@@ -1,8 +1,8 @@
-import { Button, DropDown, Table } from '@/components/elements'
+import { Button, DropDown, GridToggle, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
 import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import FilterArea from '@/components/includes/FilterArea'
-import { EyeOn, GridIcon, ListIcon } from '@/components/svg'
+import { EyeOn } from '@/components/svg'
 import ProjectCard from '@/modules/employee/projects/projectCard'
 import Link from 'next/link'
 import Pagination from '@/components/elements/Table/pagination'
@@ -19,7 +19,7 @@ export default function ProjectsPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation()
   const { auth_user } = useSelector(state => state.auth)
-  const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
+  const [view, setView] = useState(() => localStorage.getItem('projects_view') || 'grid');
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
@@ -75,10 +75,6 @@ export default function ProjectsPage() {
   };
 
   useEffect(() => {
-    const savedView = localStorage.getItem('View');
-    if (savedView) {
-      setView(savedView);
-    }
     dispatch(FetchProject());
     dispatch(FetchEmployees());
   }, [dispatch]);
@@ -147,11 +143,11 @@ export default function ProjectsPage() {
     { title: t("Project"), col: "name", sort: true },
     { title: t("Project ID"), col: "projectId", sort: true },
     { title: t("Client"), col: "client", sort: true },
-    { title: t("Leader"), col: "Leader", sort: true },
-    { title: t("Team"), col: "Team", sort: true },
+    { title: t("Leader"), col: "leads", sort: true },
+    { title: t("Team"), col: "members", sort: true },
     { title: t("Priority"), col: "priority", sort: true },
     { title: t("Status"), col: "status", sort: true },
-    { title: t("Action"), col: "Action" },
+    { title: t("Action"), col: "action" },
   ]
 
   let filteredRows = project_list?.filter((item) => {
@@ -175,8 +171,8 @@ export default function ProjectsPage() {
     name: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
     projectId: item?.projectId,
     client: item?.client,
-    Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads} />,
-    Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
+    leads: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads} />,
+    members: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
     priority: (
       check_rights(auth_user) ?
         <select
@@ -220,7 +216,7 @@ export default function ProjectsPage() {
         </select> :
         <span className={`zt-tag ${getStatusClass(item.status)}`}>{item.status}</span>
     ),
-    Action: (
+    action: (
       <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-1">
           <li className="!p-0">
@@ -277,24 +273,23 @@ export default function ProjectsPage() {
   return (
     <section className="flex flex-col grow">
       <div className="flex justify-between pb-6">
-        <h1 className="text-h4 mb-0">{t("Projects")}</h1>
+        <div>
+          <h1 className="text-h4 mb-0">{t("Manage Projects")}</h1>
+          <p className="mb-0 dark:text-white">{t("Manage your projects")}</p>
+        </div>
         <div className='flex gap-6 items-center'>
-          <div className='rounded-full p-1 flex bg-themeGrayscale200 dark:bg-dark-5'>
-            <button onClick={() => setView('list')} className={`${view === "list" ? "bg-themePurple" : ""} rounded-full p-2`}><ListIcon className={`${view === "list" ? "text-white" : "text-themeGrayscale500"}`} /></button>
-            <button onClick={() => setView('grid')} className={`${view === "grid" ? "bg-themePurple" : ""} rounded-full p-2`}><GridIcon className={`${view === "grid" ? "text-white" : "text-themeGrayscale500"}`} /></button>
-          </div>
+          <GridToggle name={"projects_view"} value={view} setter={setView} />
           {check_rights(auth_user) && <Button className={"btn btn-primary"} onClick={() => setCreate(true)}>{t("Add Project")}</Button>}
         </div>
       </div>
       <div className=" zt-card grow">
-        <FilterArea title={t("")}
+        <FilterArea title={t("Projects")}
           elements={filterElements}
           filters={filters}
           setFilters={setFilters}
         />
         {view === "grid" ?
-          <div className='zt-projectsList !shadow-none'>
-            <h2 className="text-h5 mb-0 col-span-3">{t("Projects")}</h2>
+          <div className='grid grid-cols-3'>
             {paginatedData?.map((project) => (
               <ProjectCard key={project?._id} projectData={project} />
             ))}
