@@ -1,21 +1,8 @@
-import {
-  Button,
-  Table,
-  DropDown,
-  Profile,
-} from "@/components/elements";
+import { Button, Table, DropDown, Profile } from "@/components/elements";
 import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
-import {
-  BlockIcon,
-  Edit,
-  EyeOff,
-  EyeOn,
-  ThreeDotsVertical,
-} from "@/components/svg";
-import {
-  FetchEmployees,
-} from "@/store/actions/employee.actions";
+import { BlockIcon, Edit, EyeOff, EyeOn, ThreeDotsVertical } from "@/components/svg";
+import { FetchEmployees } from "@/store/actions/employee.actions";
 import PageLoader from "@/components/elements/PageLoader";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
@@ -43,8 +30,8 @@ export default function EmployeesListPage() {
   });
 
   useEffect(() => {
-    dispatch(FetchEmployees())
-  }, [dispatch])
+    dispatch(FetchEmployees());
+  }, [dispatch]);
 
   const filterElements = [
     {
@@ -114,10 +101,7 @@ export default function EmployeesListPage() {
   const rows = paginatedData?.map((item, i) => {
     return {
       firstName: (
-        <Link
-          href={`/employees/details/${item._id}`}
-          className="flex gap-2 items-center no-underline dark:text-white"
-        >
+        <Link href={`/employees/details/${item._id}`} className="flex gap-2 items-center no-underline dark:text-white">
           <Profile image={item?.avatar} name={item.firstName} />
           <div className="text-left">
             <div>{`${item.firstName} ${item.lastName}`}</div>
@@ -128,9 +112,7 @@ export default function EmployeesListPage() {
       designation: item?.designation?.name || "------",
       project: item?.project?.name || "------",
       department: item?.department?.name || "------",
-      lineManager: item?.lineManager
-        ? `${item?.lineManager?.firstName} ${item?.lineManager?.lastName}`
-        : "------",
+      lineManager: item?.lineManager ? `${item?.lineManager?.firstName} ${item?.lineManager?.lastName}` : "------",
       status: item?.status?.name || "------",
       workMode: <span className="capitalize">{item?.workMode || "------"}</span>,
       action: (
@@ -139,9 +121,7 @@ export default function EmployeesListPage() {
             <li className="!p-0">
               <Link
                 href={`/employees/details/${item._id}`}
-                className={
-                  "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary"
-                }
+                className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary"}
               >
                 <span>
                   <EyeOn />
@@ -165,9 +145,7 @@ export default function EmployeesListPage() {
             <li className="!p-0">
               <a
                 onClick={() => editEmployee(item)}
-                className={
-                  "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeOrange"
-                }
+                className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeOrange"}
               >
                 <span>
                   <EyeOff />
@@ -178,9 +156,7 @@ export default function EmployeesListPage() {
             <li className="!p-0">
               <a
                 onClick={() => editEmployee(item)}
-                className={
-                  "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger"
-                }
+                className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger"}
               >
                 <span>
                   <BlockIcon />
@@ -220,23 +196,17 @@ export default function EmployeesListPage() {
         </div>
         <div className="flex items-start gap-2">
           {/* <Button className={"btn btn-dark-outline"}>{t("Export")}</Button> */}
-          <Button onClick={() => setReHire(true)} className={"btn btn-dark-outline"}>{t("Re-Hire employee")}</Button>
-          <Button
-            className={"btn btn-primary"}
-            onClick={() => setCreate("employee")}
-          >
+          <Button onClick={() => setReHire(true)} className={"btn btn-dark-outline"}>
+            {t("Re-Hire employee")}
+          </Button>
+          <Button className={"btn btn-primary"} onClick={() => setCreate("employee")}>
             {t("Add employee")}
           </Button>
         </div>
       </div>
 
       <div className="zt-card grow">
-        <FilterArea
-          title={t("Employees")}
-          elements={filterElements}
-          filters={filters}
-          setFilters={setFilters}
-        />
+        <FilterArea title={t("Employees")} elements={filterElements} filters={filters} setFilters={setFilters} />
 
         <Table
           headings={headings}
@@ -262,11 +232,7 @@ export default function EmployeesListPage() {
           }}
         />
       )}
-      {reHire &&
-        <ReHireForm
-          onClose={() => setReHire(false)}
-        />
-      }
+      {reHire && <ReHireForm onClose={() => setReHire(false)} />}
     </section>
   );
 }

@@ -39,12 +39,13 @@ export const DeleteShiftplan = (id) => async (dispatch) => {
   }
 };
 
-export const UpdateShiftPlane =(id,values, onSuccess = null) =>
+export const UpdateShiftPlane =
+  (id, values, onSuccess = null) =>
   async (dispatch) => {
     console.log(values, id, "editabaless");
     try {
-      dispatch(setLoading(true)); 
-      const data = await axios.put(`/shift-plan/update/${id}`, values); 
+      dispatch(setLoading(true));
+      const data = await axios.put(`/shift-plan/update/${id}`, values);
       onSuccess && onSuccess();
       return true;
     } catch (err) {

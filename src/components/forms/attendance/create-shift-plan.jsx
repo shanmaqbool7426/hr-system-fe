@@ -7,8 +7,8 @@ import { useDispatch } from "react-redux";
 import { Button, Input, SearchSelect, Select, Table, ToggleCheck } from "@/components/elements";
 import { useState } from "react";
 import { Plus, Trash } from "@/components/svg";
-import { CreateShiftplan, UpdateShiftPlane  , fetchShiftplan} from "@/store/actions/shiftplan.action";
-export default function CreateShiftplanForm({ onClose, object , is_loading }) {
+import { CreateShiftplan, UpdateShiftPlane, fetchShiftplan } from "@/store/actions/shiftplan.action";
+export default function CreateShiftplanForm({ onClose, object, is_loading }) {
   const { t } = useTranslation();
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
@@ -70,18 +70,18 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
     onSubmit: async (values) => {
       if (object) {
         const id = object?._id;
-       await dispatch(UpdateShiftPlane(id, values));
-       await dispatch(fetchShiftplan());
+        await dispatch(UpdateShiftPlane(id, values));
+        await dispatch(fetchShiftplan());
         Toast.success("Shift Plan Updated successfully");
       } else {
-       await dispatch(CreateShiftplan(values));
-       await dispatch(fetchShiftplan())
+        await dispatch(CreateShiftplan(values));
+        await dispatch(fetchShiftplan());
         Toast.success("Shift Plan created successfully");
       }
       onClose();
     },
-  }); 
-  
+  });
+
   // const onCompleted = () => {
   //   Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`));
   //   onClose();
@@ -90,7 +90,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
     const scheduleType = [...formik.values.scheduleType]; // Create a shallow copy
     const radioType = formik.values.radioStatus;
     const index = scheduleType.findIndex((item) => item.day === day);
-    
+
     if (index > -1) {
       scheduleType.splice(index, 1);
     } else {
@@ -101,48 +101,36 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
       }
     }
     formik.setFieldValue("scheduleType", scheduleType); // Update with the new array
-  }; 
+  };
 
   const handleHoursChange = (day, hours) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) { 
-      const updatedItem = { ...scheduleType[index], hours }; 
-      const updatedScheduleType = [
-          ...scheduleType.slice(0, index),
-          updatedItem,
-          ...scheduleType.slice(index + 1)
-      ]; 
+    if (index > -1) {
+      const updatedItem = { ...scheduleType[index], hours };
+      const updatedScheduleType = [...scheduleType.slice(0, index), updatedItem, ...scheduleType.slice(index + 1)];
       formik.setFieldValue("scheduleType", updatedScheduleType);
-  } 
+    }
   };
 
   const handleFromChange = (day, from) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) { 
-      const updatedItem = { ...scheduleType[index], from }; 
-      const updatedScheduleType = [
-          ...scheduleType.slice(0, index),
-          updatedItem,
-          ...scheduleType.slice(index + 1)
-      ]; 
+    if (index > -1) {
+      const updatedItem = { ...scheduleType[index], from };
+      const updatedScheduleType = [...scheduleType.slice(0, index), updatedItem, ...scheduleType.slice(index + 1)];
       formik.setFieldValue("scheduleType", updatedScheduleType);
-  } 
+    }
   };
   const handleToChange = (day, to) => {
     const scheduleType = formik.values.scheduleType;
     const index = scheduleType.findIndex((item) => item.day === day);
-    if (index > -1) { 
-      const updatedItem = { ...scheduleType[index], to }; 
-      const updatedScheduleType = [
-          ...scheduleType.slice(0, index),
-          updatedItem,
-          ...scheduleType.slice(index + 1)
-      ]; 
+    if (index > -1) {
+      const updatedItem = { ...scheduleType[index], to };
+      const updatedScheduleType = [...scheduleType.slice(0, index), updatedItem, ...scheduleType.slice(index + 1)];
       formik.setFieldValue("scheduleType", updatedScheduleType);
-  } 
-  };  
+    }
+  };
   const headings = [
     { title: t("Working Day"), col: "workingDay" },
     { title: t("From"), col: "From" },
@@ -178,7 +166,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "monday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("monday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
           required
         />
       ),
@@ -202,7 +190,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.from}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleFromChange("tuesday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}  
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}
           required
         />
       ),
@@ -212,7 +200,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("tuesday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}   
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}
           required
         />
       ),
@@ -236,7 +224,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.from}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleFromChange("wednesday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}    
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}
           required
         />
       ),
@@ -246,7 +234,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("wednesday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}     
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}
           required
         />
       ),
@@ -270,7 +258,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "thursday")?.from}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleFromChange("thursday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}    
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}
           required
         />
       ),
@@ -280,7 +268,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "thursday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("thursday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}     
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}
           required
         />
       ),
@@ -304,7 +292,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "friday")?.from}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleFromChange("friday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}  
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}
           required
         />
       ),
@@ -314,7 +302,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "friday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("friday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}   
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}
           required
         />
       ),
@@ -348,7 +336,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "saturday")?.to}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("saturday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")}
           required
         />
       ),
@@ -372,7 +360,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
           value={formik.values.scheduleType.find((item) => item.day === "sunday")?.from}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleFromChange("sunday", value.target.value)}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}
           required
         />
       ),
@@ -380,7 +368,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         <Input
           type="time"
           value={formik.values.scheduleType.find((item) => item.day === "sunday")?.to}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}  
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}
           placeholder={"9:00:00 PM"}
           onChange={(value) => handleToChange("sunday", value.target.value)}
           required
@@ -407,7 +395,7 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "monday")?.hours}
           disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
@@ -431,10 +419,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}
           placeholder={"Tuesday Hours"}
           onChange={(value) => handleHoursChange("tuesday", value.target.value)}
           required
@@ -455,10 +443,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}
           placeholder={"Wednesday Hours"}
           onChange={(value) => handleHoursChange("wednesday", value.target.value)}
           required
@@ -479,10 +467,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "thursday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}
           placeholder={"Thursday Hours"}
           onChange={(value) => handleHoursChange("thursday", value.target.value)}
           required
@@ -503,10 +491,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "friday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}
           placeholder={"Frinday Hours"}
           onChange={(value) => handleHoursChange("friday", value.target.value)}
           required
@@ -527,10 +515,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "saturday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")}
           placeholder={"Saturday Hours"}
           onChange={(value) => handleHoursChange("saturday", value.target.value)}
           required
@@ -551,10 +539,10 @@ export default function CreateShiftplanForm({ onClose, object , is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input 
+        <Input
           type="number"
           value={formik.values.scheduleType.find((item) => item.day === "sunday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")} 
+          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}
           placeholder={"Sunday Hours"}
           onChange={(value) => handleHoursChange("sunday", value.target.value)}
           required
