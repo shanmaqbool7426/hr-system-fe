@@ -16,7 +16,7 @@ export default function AttendanceSettingShiftPlanPage() {
   const [perPage, setPerPage] = useState(10);
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [editDetail, setEditDetails] = useState("");  
+  const [editDetail, setEditDetails] = useState("");
   const headings = [
     { title: t("Shift Title"), col: "shiftTitle" },
     { title: t("Start Time"), col: "startTime" },
@@ -28,13 +28,16 @@ export default function AttendanceSettingShiftPlanPage() {
   ];
   const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan);
   useEffect(() => {
-    dispatch(fetchShiftplan()); 
+    dispatch(fetchShiftplan());
   }, [dispatch]);
-  const handleDelete = async(id) => { 
-   await Toast.confirmDelete(() => {
-      dispatch(DeleteShiftplan(id))
-      Toast.success(t("Shift plan deleted successfully"));  
-      dispatch(fetchShiftplan()) 
+  const handleDelete = async (id) => {
+    await Toast.confirmDelete(() => {
+      dispatch(DeleteShiftplan(id));
+      Toast.success(t("Shift plan deleted successfully"));
+      setTimeout(() => {
+        dispatch(fetchShiftplan());
+      }, 1000);
+      // dispatch(fetchShiftplan());
     }, t);
   };
   const rows = shiftplandata?.list?.map((item) => ({

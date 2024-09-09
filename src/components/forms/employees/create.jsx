@@ -16,9 +16,9 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   const { auth_user } = useSelector((state) => state.auth);
   const { shiftplandata } = useSelector((state) => state.shiftplan);
 
-  // useEffect(() => {
-  //   dispatch(fetchShiftplan())
-  // }, [dispatch])
+  useEffect(() => {
+    dispatch(fetchShiftplan());
+  }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -40,7 +40,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       lineManager: employee?.lineManager?._id || "",
       mobileAttendance: employee?.mobileAttendance || false,
       webAttendance: employee?.webAttendance || false,
-      shiftplan: employee?.shiftplan || ""
+      shiftplan: employee?.shiftplan || "",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required(t("First name is required")),
@@ -56,7 +56,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       email: Yup.string().email("formik.invalidEmail").required(t("Email is required")),
       status: Yup.string().required(t("Status is required")),
       workMode: Yup.string().required(t("Work Mode is required")),
-      // shiftplan: Yup.string().required(t("Shift plan is required")),
+      shiftplan: Yup.string().required(t("Shift plan is required")),
     }),
     onSubmit: async (values) => {
       return employee
@@ -64,7 +64,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
         : dispatch(CreateEmployee(values, onCompleted));
     },
   });
-  console.log(formik.values, "values")
+  console.log(formik.values, "values");
   const onCompleted = () => {
     Toast.success(employee ? t("Employee updated successfully") : t("Employee created successfully"));
     onClose();
@@ -155,7 +155,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
         { display: "Onsite", value: "onsite" },
         { display: "Remote", value: "remote" },
         { display: "Hybrid", value: "hybrid" },
-      ]
+      ],
     },
     {
       type: "select",
@@ -213,9 +213,9 @@ export default function CreateEmployeeForm({ onClose, employee }) {
     },
     {
       type: "select",
-      name: "shiftPlan",
+      name: "shiftplan",
       label: t("Shift Plan"),
-      value: formik.values.shiftPlan,
+      value: formik.values.shiftplan,
       required: true,
       list: shiftplandata.list?.map((item) => ({
         value: item?._id,
@@ -255,6 +255,13 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   const formTitle = employee ? t("Update employee") : t("Create employee");
 
   return (
-    <BaseForm title={formTitle} buttonText={employee} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
+    <BaseForm
+      title={formTitle}
+      buttonText={employee}
+      formElements={formElements}
+      formik={formik}
+      onClose={onClose}
+      is_loading={is_loading}
+    />
   );
 }
