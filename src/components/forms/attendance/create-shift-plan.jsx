@@ -51,11 +51,28 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         then: () => Yup.string().required(t("Max End Time is required.")),
         otherwise: () => Yup.string(),
       }),
-      maxStartTime: Yup.string().when("radioStatus", {
-        is: "flexibleSchedule",
-        then: () => Yup.string().required(t("Max Start Time is required.")),
-        otherwise: () => Yup.string(),
-      }),
+      maxStartTime: Yup.string()
+        .required(t("Max Start Time is required."))
+        .test(
+          "is-greater-than-min-start-time",
+          t("Max Start Time should be later than Min Start Time. Enable 'Shift end next day' if applicable."),
+          function (value) {
+            const { minStartTime, shiftEndNextDay } = this.parent;
+            if (!minStartTime || !value) return true;
+
+            const [minHours, minMinutes] = minStartTime.split(":").map(Number);
+            const [maxHours, maxMinutes] = value.split(":").map(Number);
+
+            const minTimeInMinutes = minHours * 60 + minMinutes;
+            const maxTimeInMinutes = maxHours * 60 + maxMinutes;
+
+            if (!shiftEndNextDay) {
+              return maxTimeInMinutes > minTimeInMinutes;
+            }
+
+            return true;
+          }
+        ),
       breakStartTime: Yup.string().when("break", {
         is: true,
         then: () => Yup.string().required(t("Break Start Time is required.")),
@@ -66,16 +83,24 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         then: () => Yup.string().required(t("Break End Time is required.")),
         otherwise: () => Yup.string(),
       }),
+      scheduleType: Yup.array().of(
+        Yup.object().shape({
+          day: Yup.string().required("Day is required"),
+          hours: Yup.string()
+            .required("Working hours are required")
+            .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, "Working hours must be in HH:MM format"),
+        })
+      ),
     }),
     onSubmit: async (values) => {
       if (object) {
         const id = object?._id;
-        await dispatch(UpdateShiftPlane(id, values));
-        await dispatch(fetchShiftplan());
+        dispatch(UpdateShiftPlane(id, values));
+        dispatch(fetchShiftplan());
         Toast.success("Shift Plan Updated successfully");
       } else {
-        await dispatch(CreateShiftplan(values));
-        await dispatch(fetchShiftplan());
+        dispatch(CreateShiftplan(values));
+        dispatch(fetchShiftplan());
         Toast.success("Shift Plan created successfully");
       }
       onClose();
@@ -100,17 +125,34 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         scheduleType.push({ day, hours: "" });
       }
     }
-    formik.setFieldValue("scheduleType", scheduleType); // Update with the new array
+    formik.setFieldValue("scheduleType", scheduleType);
   };
 
   const handleHoursChange = (day, hours) => {
-    const scheduleType = formik.values.scheduleType;
+    const scheduleType = [...formik.values.scheduleType];
     const index = scheduleType.findIndex((item) => item.day === day);
+
     if (index > -1) {
       const updatedItem = { ...scheduleType[index], hours };
       const updatedScheduleType = [...scheduleType.slice(0, index), updatedItem, ...scheduleType.slice(index + 1)];
+
       formik.setFieldValue("scheduleType", updatedScheduleType);
+    } else {
+      const newItem = { day, hours };
+      formik.setFieldValue("scheduleType", [...scheduleType, newItem]);
     }
+  };
+
+  const handleHoursBlur = (day, hours) => {
+    const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    if (!timePattern.test(hours)) {
+      formik.setFieldError(`scheduleType.${day}`, "Invalid time format, please use HH:MM.");
+    } else {
+      formik.setFieldError(`scheduleType.${day}`, "");
+    }
+
+    formik.setTouched({ ...formik.touched, scheduleType: { ...formik.touched.scheduleType, [day]: true } });
   };
 
   const handleFromChange = (day, from) => {
@@ -131,6 +173,40 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       formik.setFieldValue("scheduleType", updatedScheduleType);
     }
   };
+
+  const generateShiftCode = (shiftName) => {
+    if (!shiftName) return "";
+
+    const cleanShiftName = shiftName.replace(/[^a-zA-Z\s]/g, " ");
+    const words = cleanShiftName.trim().split(/\s+/);
+
+    const codePrefix =
+      words.length >= 2
+        ? `${words[0][0].toUpperCase()}${words[1][0].toUpperCase()}`
+        : `${words[0].slice(0, 2).toUpperCase()}`;
+
+    const numberOfDigits = Math.floor(Math.random() * 3) + 3;
+    const randomNum = Math.floor(Math.random() * Math.pow(10, numberOfDigits));
+
+    return `${codePrefix}-${String(randomNum).padStart(numberOfDigits, "0")}`;
+  };
+
+  const handleShiftTimeChange = () => {
+    const { minStartTime, maxStartTime, shiftEndNextDay } = formik.values;
+
+    if (minStartTime && maxStartTime) {
+      const [minHours, minMinutes] = minStartTime.split(":").map(Number);
+      const [maxHours, maxMinutes] = maxStartTime.split(":").map(Number);
+
+      const minTimeInMinutes = minHours * 60 + minMinutes;
+      const maxTimeInMinutes = maxHours * 60 + maxMinutes;
+
+      if (maxTimeInMinutes > minTimeInMinutes && shiftEndNextDay) {
+        formik.setFieldValue("shiftEndNextDay", false);
+      }
+    }
+  };
+
   const headings = [
     { title: t("Working Day"), col: "workingDay" },
     { title: t("From"), col: "From" },
@@ -395,14 +471,21 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "monday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
-          placeholder={"Monday Hours"}
-          onChange={(value) => handleHoursChange("monday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "monday")?.hours || ""}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "monday")}
+            placeholder={"Monday hours (HH:MM)"}
+            onChange={(e) => handleHoursChange("monday", e.target.value)}
+            onBlur={(e) => handleHoursBlur("monday", e.target.value)}
+            required
+          />
+
+          {formik.errors.scheduleType && formik.errors.scheduleType.monday && (
+            <div className="custom-error">{formik.errors.scheduleType.monday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -419,14 +502,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}
-          placeholder={"Tuesday Hours"}
-          onChange={(value) => handleHoursChange("tuesday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "tuesday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "tuesday")}
+            placeholder={"Tuesday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("tuesday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("tuesday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.tuesday && (
+            <div className="custom-error">{formik.errors.scheduleType.tuesday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -443,14 +532,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}
-          placeholder={"Wednesday Hours"}
-          onChange={(value) => handleHoursChange("wednesday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "wednesday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "wednesday")}
+            placeholder={"Wednesday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("wednesday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("wednesday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.wednesday && (
+            <div className="custom-error">{formik.errors.scheduleType.wednesday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -467,14 +562,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "thursday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}
-          placeholder={"Thursday Hours"}
-          onChange={(value) => handleHoursChange("thursday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "thursday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "thursday")}
+            placeholder={"Thursday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("thursday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("thursday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.thursday && (
+            <div className="custom-error">{formik.errors.scheduleType.thursday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -491,14 +592,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "friday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}
-          placeholder={"Frinday Hours"}
-          onChange={(value) => handleHoursChange("friday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "friday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "friday")}
+            placeholder={"Frinday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("friday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("friday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.friday && (
+            <div className="custom-error">{formik.errors.scheduleType.friday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -515,14 +622,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "saturday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")}
-          placeholder={"Saturday Hours"}
-          onChange={(value) => handleHoursChange("saturday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "saturday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "saturday")}
+            placeholder={"Saturday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("saturday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("saturday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.saturday && (
+            <div className="custom-error">{formik.errors.scheduleType.saturday}</div>
+          )}
+        </div>
       ),
     },
     {
@@ -539,14 +652,20 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
         </div>
       ),
       workingHours: (
-        <Input
-          type="number"
-          value={formik.values.scheduleType.find((item) => item.day === "sunday")?.hours}
-          disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}
-          placeholder={"Sunday Hours"}
-          onChange={(value) => handleHoursChange("sunday", value.target.value)}
-          required
-        />
+        <div>
+          <Input
+            type="text"
+            value={formik.values.scheduleType.find((item) => item.day === "sunday")?.hours}
+            disabled={!formik.values.scheduleType.some((item) => item.day === "sunday")}
+            placeholder={"Sunday hours (HH:MM)"}
+            onChange={(value) => handleHoursChange("sunday", value.target.value)}
+            onBlur={(e) => handleHoursBlur("sunday", e.target.value)}
+            required
+          />
+          {formik.errors.scheduleType && formik.errors.scheduleType.sunday && (
+            <div className="custom-error">{formik.errors.scheduleType.sunday}</div>
+          )}
+        </div>
       ),
     },
   ];
@@ -707,9 +826,15 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       placeholder: t("Shift Name"),
       required: true,
       value: formik.values.shiftName,
+      onChange: (e) => {
+        formik.handleChange(e);
+        const shiftName = e.target.value;
+        const shiftCode = generateShiftCode(shiftName);
+        formik.setFieldValue("shiftCode", shiftCode);
+      },
     },
     {
-      type: "number",
+      type: "text",
       name: "shiftCode",
       label: t("Shift Code"),
       placeholder: t("Shift Code"),
@@ -756,6 +881,10 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       placeholder: t("Min Start Time"),
       required: true,
       value: formik.values.minStartTime,
+      onChange: (e) => {
+        formik.handleChange(e);
+        handleShiftTimeChange();
+      },
     },
     {
       type: formik.values.radioStatus === "flexibleSchedule" ? "time" : "hidden",
@@ -764,6 +893,10 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       placeholder: t("Max Start Time"),
       required: true,
       value: formik.values.maxStartTime,
+      onChange: (e) => {
+        formik.handleChange(e);
+        handleShiftTimeChange();
+      },
     },
     {
       type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
@@ -780,6 +913,7 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       label: t("Shift end on the next day"),
       checked: formik.values.shiftEndNextDay,
       className: "col-span-2",
+      onChange: (e) => formik.setFieldValue("shiftEndNextDay", e.target.checked),
     },
     {
       type: "switch",
