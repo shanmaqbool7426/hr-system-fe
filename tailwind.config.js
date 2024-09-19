@@ -198,7 +198,7 @@ module.exports = {
         6: "#161a20",
         7: "#07090b",
       },
-      
+
       themePrimary: "#243c7a",
       themePrimary400: "#8ea2d1",
       themePrimary300: "#a6b5d9",
@@ -226,8 +226,8 @@ module.exports = {
 
       themeSuccessLight: '#55c790',
       themeSuccess: '#0cAf60',
-      tickCussess:"#4BD37B",
-      themeSuccessLighter:"#E9F6F1",
+      tickCussess: "#4BD37B",
+      themeSuccessLighter: "#E9F6F1",
       themeSuccessDark: '#0ba259',
 
       themeWarningLight: '#ffde65',
@@ -240,20 +240,20 @@ module.exports = {
 
       themeOrange: '#fe964a',
       themeOrangeLight: '#FFF2CC',
-      lightOrange:"#F16E16",
+      lightOrange: "#F16E16",
       themeBlue: '#2f78ee',
       themeLightBlue: '#2F78EE1A',
       themePurple: '#8c62ff',
-      darkPurple:"#7239EA",
-      darkestPurple:"#171717",
-      bordeaux:"#7D3050",
-      pinkFlamingo:"#EE67F1",
-      themeYellow:"#FFC52F",
-      deepSkyBlue:"#00ADEE", 
-      LightSlateBlue:"#818CF8",
-      RoyalHeath:"#A64D79",
-      BrinkPink:"#FB7185",
-      Viridian:"#32876A",
+      darkPurple: "#7239EA",
+      darkestPurple: "#171717",
+      bordeaux: "#7D3050",
+      pinkFlamingo: "#EE67F1",
+      themeYellow: "#FFC52F",
+      deepSkyBlue: "#00ADEE",
+      LightSlateBlue: "#818CF8",
+      RoyalHeath: "#A64D79",
+      BrinkPink: "#FB7185",
+      Viridian: "#32876A"
     }),
     columns: {
       auto: 'auto',
@@ -400,11 +400,11 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
-      sans:  ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"',],
+      sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Color Emoji"',],
       serif: ['ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
-      mono:  ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace',],
-      inter: ['Inter', 'sans-serif' ],
-      plusJakartaSans: ['Plus Jakarta Sans', 'sans-serif' ]
+      mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace',],
+      inter: ['Inter', 'sans-serif'],
+      plusJakartaSans: ['Plus Jakarta Sans', 'sans-serif']
     },
     fontSize: {
       bxs: ['0.625rem', { lineHeight: '1rem' }],
@@ -425,7 +425,7 @@ module.exports = {
       '7xl': ['4.5rem', { lineHeight: '1' }],
       '8xl': ['6rem', { lineHeight: '1' }],
       '9xl': ['8rem', { lineHeight: '1' }],
-      '56':  ['3.5rem', { lineHeight: '1.365' }],
+      '56': ['3.5rem', { lineHeight: '1.365' }],
       'h1': ['var(--h1)', { lineHeight: '1.25' }],
       'h2': ['var(--h2)', { lineHeight: '1.25' }],
       'h3': ['var(--h3)', { lineHeight: '1.25' }],
@@ -917,10 +917,10 @@ module.exports = {
       150: '1.5',
     },
     screens: {
-      sm   : '640px',
-      md   : '768px',
-      lg   : '1024px',
-      xl   : '1280px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
       '2xl': '1440px',
       '3xl': '1800px',
       '4xl': '1800px',

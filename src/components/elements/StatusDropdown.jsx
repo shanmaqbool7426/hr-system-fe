@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { useState } from 'react'
+import { Spinner } from '../svg'
 
-const StatusDropdown = ({ item, options }) => {
-    const [status, setStatus] = useState(item?.status || (options[0] && options[0].value) || '');
-    const { t } = useTranslation();
-
-    const handleChange = (e) => {
-        setStatus(e.target.value);
-    };
-
+export default function StatusDropDown({ value = "new", list = [], type = "priority", onChange, loading = false }) {
+    const getColor = (color) => "zt-" + type + "-" + color
     return (
-        <select
-            className={`zt-tag ${options.find(opt => opt.value === status)?.className || 'zt-tag-default'}`}
-            value={status}
-            onChange={handleChange}
-        >
-            {options.map((option) => (
-                <option key={option.value} value={option.value} className={option.className}>
-                    {t(option.label)}
-                </option>
-            ))}
-        </select>
-    );
-};
+        <div className="flex justify-center">
+            <Menu>
+                <MenuButton className={`zt-status ${getColor(value)}`}>
+                    {loading ? <Spinner /> : value}
+                </MenuButton>
 
-export default StatusSelect;
+                <MenuItems
+                    transition
+                    anchor="bottom end"
+                    className="zt-status-items"
+                >
+                    {list.length > 0 && list.filter(item => item.show).map(item => (
+                        <MenuItem onClick={() => { onChange(item.value) }} key={item.value}>
+                            <div className={`zt-status-item ${getColor(item.value)} text-center capitalize text-white`}>
+                                {item.value}
+                            </div>
+                        </MenuItem>
+                    ))}
+                </MenuItems>
+            </Menu>
+        </div>
+    )
+}

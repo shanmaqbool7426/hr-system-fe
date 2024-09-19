@@ -1,4 +1,4 @@
-import { Button, DropDown, GridToggle, Table } from '@/components/elements'
+import { Button, DropDown, GridToggle, StatusDropdown, Table } from '@/components/elements'
 import UserListView from '@/components/elements/UserListView'
 import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import FilterArea from '@/components/includes/FilterArea'
@@ -34,16 +34,14 @@ export default function ProjectsPage() {
   });
 
 
-  const handlePriorityChange = (e, projectId) => {
-    const newPriority = e.target.value;
-    dispatch(UpdateProject(projectId, { priority: newPriority }, () => {
+  const handlePriorityChange = (projectId, priority) => {
+    dispatch(UpdateProject(projectId, { priority }, () => {
       Toast.success(t("Project priority updated successfully"));
     }));
   };
 
-  const handleStatusChange = (e, projectId) => {
-    const newStatus = e.target.value;
-    dispatch(UpdateProject(projectId, { status: newStatus }, () => {
+  const handleStatusChange = (projectId, status) => {
+    dispatch(UpdateProject(projectId, { status }, () => {
       Toast.success(t("Project status updated successfully"));
     }));
   };
@@ -173,49 +171,34 @@ export default function ProjectsPage() {
     client: item?.client,
     leads: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads} />,
     members: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
-    priority: (
-      check_rights(auth_user) ?
-        <select
-          className={`zt-tag ${getPriorityClass(item.priority)}`}
-          value={item.priority}
-          onChange={(e) => handlePriorityChange(e, item._id)}
-        >
-          <option value="low" className='zt-tag-low'>
-            Low
-          </option>
-          <option value="medium" className='zt-tag-medium'>
-            Medium
-          </option>
-          <option value="high" className='zt-tag-high'>
-            High
-          </option>
-        </select>
-        : <span className={`zt-tag ${getPriorityClass(item.priority)}`}>{item.priority}</span>
-    ),
-    status: (
-      check_rights(auth_user) ?
-        <select
-          className={`zt-tag ${getStatusClass(item.status)}`}
-          value={item.status}
-          onChange={(e) => handleStatusChange(e, item._id)}
-        >
-          {item.status === "new" && (
-            <option value="new" className='zt-tag-new'>
-              {t("New")}
-            </option>
-          )}
-          <option value="pending" className='zt-tag-pending'>
-            Pending
-          </option>
-          <option value="progress" className='zt-tag-progress'>
-            Progress
-          </option>
-          <option value="completed" className='zt-tag-completed'>
-            Completed
-          </option>
-        </select> :
-        <span className={`zt-tag ${getStatusClass(item.status)}`}>{item.status}</span>
-    ),
+    priority:
+      <StatusDropdown
+        value={item.priority}
+        type="priority"
+        loading={is_loading}
+        list={[
+          { value: "low", show: check_rights(auth_user) },
+          { value: "medium", show: check_rights(auth_user) },
+          { value: "high", show: check_rights(auth_user) },
+        ]}
+        onChange={(value) => {
+          handlePriorityChange(item._id, value)
+        }}
+      />,
+    status: <StatusDropdown
+      value={item.status}
+      type="status"
+      loading={is_loading}
+      list={[
+        { value: "pending", show: check_rights(auth_user) },
+        { value: "working", show: check_rights(auth_user) },
+        { value: "paused", show: check_rights(auth_user) },
+        { value: "completed", show: check_rights(auth_user) },
+      ]}
+      onChange={(value) => {
+        handleStatusChange(item._id, value)
+      }}
+    />,
     action: (
       <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-1">

@@ -757,3 +757,18 @@
   }
 }
 .recharts-cartesian-axis-tick-value{@apply dark:fill-white}
+
+
+.zt-status {@apply w-36 capitalize flex justify-center font-semibold rounded-lg px-2 py-1 text-white}
+.zt-status-items {@apply w-36 origin-top-right rounded-lg border dark:border-dark-3 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] data-[closed]:scale-95 data-[closed]:opacity-0}
+.zt-status-item {@apply cursor-pointer px-2 py-1 text-white}
+
+.zt-priority-low {@apply bg-[#66bb6a]}
+.zt-priority-medium {@apply bg-[#ab47bc]}
+.zt-priority-high {@apply bg-[#ffa726]}
+.zt-priority-critical {@apply bg-[#f44336]}
+
+.zt-status-pending {@apply bg-[#f44336]}
+.zt-status-working {@apply bg-[#ab47bc]}
+.zt-status-paused {@apply bg-[#ffa726]}
+.zt-status-completed {@apply bg-[#66bb6a]}
