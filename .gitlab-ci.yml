@@ -4,6 +4,11 @@ deploy_dev-fe:
   stage: deploy
   tags:
     - zaffre
+  cache:
+    key: development
+    paths:
+      - node_modules/
+      - .next/cache/
   script:
     - cp .env.dev .env
     - yarn
