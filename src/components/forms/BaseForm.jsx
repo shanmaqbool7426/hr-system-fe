@@ -100,10 +100,9 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             key={index}
                                             variant={'dark'}
                                             id={element.id}
-                                            checked={formik.values.radioStatus === element.name}
                                             label={element.label}
                                             onChange={(event) => {
-                                                formik.setFieldValue('radioStatus', element.name);
+                                                formik.setFieldValue(element.name, element.value);
                                             }}
                                             {...element}
                                         />;

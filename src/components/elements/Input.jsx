@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, InputErrorInfo } from "../svg";
-export default function Input({ name, formik, className, containerClass, type, label, disabled, ...props }) {
+export default function Input({ name, formik, className, containerClass, type, label, disabled, error, ...props }) {
     const [showPassword, setShowPassword] = useState(false);
     const changeHandler = (event) => {
         if (type === "number") {
@@ -51,6 +51,10 @@ export default function Input({ name, formik, className, containerClass, type, l
             {formik?.touched[name] && formik?.errors[name] && <span className="zt-errorMessage">
                 <InputErrorInfo />
                 {formik?.errors[name]}
+            </span>}
+            {error && <span className="zt-errorMessage">
+                <InputErrorInfo />
+                {error}
             </span>}
         </div>
     )
