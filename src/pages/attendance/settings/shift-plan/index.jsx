@@ -5,11 +5,12 @@ import CreateShiftPlan from "@/components/forms/attendance/create-shift-plan";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
 import Toast from "@/util/toast";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchShiftplan, DeleteShiftplan } from "@/store/actions/shiftplan.action";
+import { DeleteShift, FetchShifts } from "@/store/actions/shiftplan.action";
 
-export default function AttendanceSettingShiftPlanPage() {
+export default function ShiftPlanPage() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { is_loading, shift_list } = useSelector((state) => state.shift);
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState(null);
   const [page, setPage] = useState(1);
@@ -17,36 +18,30 @@ export default function AttendanceSettingShiftPlanPage() {
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editDetail, setEditDetails] = useState("");
+
+
   const headings = [
-    { title: t("Shift Title"), col: "shiftTitle" },
+    { title: t("Shift Title"), col: "name" },
+    { title: t("Shift Code"), col: "shiftCode" },
+    { title: t("Shift Type"), col: "shiftType" },
     { title: t("Start Time"), col: "startTime" },
     { title: t("End Time"), col: "endTime" },
-    { title: t("Shift End On Next Day"), col: "shiftEnd" },
-    { title: t("Break"), col: "Break" },
-    { title: t("Break Countable"), col: "BreakCountable" },
     { title: t("Action"), col: "action" },
   ];
-  const { is_loading, shiftplandata } = useSelector((state) => state.shiftplan);
-  useEffect(() => {
-    dispatch(fetchShiftplan());
-  }, [dispatch]);
-  const handleDelete = async (id) => {
-    await Toast.confirmDelete(() => {
-      dispatch(DeleteShiftplan(id));
-      Toast.success(t("Shift plan deleted successfully"));
-      setTimeout(() => {
-        dispatch(fetchShiftplan());
-      }, 1000);
-      // dispatch(fetchShiftplan());
-    }, t);
-  };
-  const rows = shiftplandata?.list?.map((item) => ({
-    shiftTitle: item?.shiftName,
-    Break: item?.break === false ? "No" : "Yes",
-    BreakCountable: item?.breakCountable === false ? "No" : "Yes",
-    startTime: item?.startTime ? item?.startTime : "00:00",
-    endTime: item?.endTime ? item?.endTime : "23:59",
-    shiftEnd: item?.shiftEndNextDay === false ? "No" : "Yes",
+  let filteredrows = [...shift_list].sort((a, b) => {
+    if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+    else return b[sortCol]?.localeCompare(a[sortCol]);
+  });
+  const indexOfLastItem = page * perPage;
+  const indexOfFirstItem = indexOfLastItem - perPage;
+  const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
+
+  const rows = paginatedData?.map((item, i) => ({
+    name: item?.name,
+    shiftCode: item?.shiftCode,
+    shiftType: <span className="capitalize">{item?.shiftType}</span>,
+    startTime: item?.shiftType === 'fixed' ? item?.startTime : item?.minStartTime,
+    endTime: item?.endTime || '-----',
     action: (
       <DropDown icon={<ThreeDotsVertical />}>
         <ul className="zt-themeDropDownList zt-sm gap-4">
@@ -67,7 +62,7 @@ export default function AttendanceSettingShiftPlanPage() {
           <li className="!p-0">
             <a
               onClick={() => {
-                handleDelete(item._id);
+                deleteHandler(item._id);
               }}
               className={"flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"}
             >
@@ -81,6 +76,18 @@ export default function AttendanceSettingShiftPlanPage() {
       </DropDown>
     ),
   }));
+
+  const deleteHandler = (id) => {
+    Toast.confirmDelete(() => {
+      dispatch(DeleteShift(id, () => {
+        Toast.success(t("Shift deleted successfully"))
+      }))
+    }, t)
+  }
+
+  useEffect(() => {
+    dispatch(FetchShifts());
+  }, [dispatch]);
 
   return (
     <section className="flex flex-col grow relative">

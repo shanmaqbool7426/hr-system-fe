@@ -1,56 +1,56 @@
 import axios from "@/util/axios";
-import { setLoading, setShiftplandata } from "../slices/shiftplan.slice.js";
+import { pushShift, removeShift, setLoading, setShift, setShifts } from "../slices/shiftplan.slice.js";
 
-export const CreateShiftplan =
-  (payload, onSuccess = null) =>
+export const CreateShift = (payload, onSuccess = null) =>
   async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      const data = await axios.post(`/shift-plan/create`, payload);
+      const data = await axios.post(`/shift-plans/create`, payload);
+      dispatch(pushShift(data.shift))
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.error("Error creating shift plan:", err);
+      console.error(err);
     } finally {
       dispatch(setLoading(false));
     }
   };
-export const fetchShiftplan = (payload) => async (dispatch) => {
+export const FetchShifts = (payload, onSuccess) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const data = await axios.get(`/shift-plan/list`, payload);
-    dispatch(setShiftplandata(data));
-    return true;
+    const data = await axios.get(`/shift-plans/list`, payload);    
+    dispatch(setShifts(data.list));
+    onSuccess && onSuccess()
   } catch (err) {
-    console.error("Error creating shift plan:", err);
+    console.error(err);
   } finally {
     dispatch(setLoading(false));
   }
 };
-export const DeleteShiftplan = (id) => async (dispatch) => {
+export const UpdateShift = (id, payload, onSuccess = null) =>
+  async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      const data = await axios.patch(`/shift-plans/update/${id}`, payload);
+      dispatch(setShift(data.shift));
+      onSuccess && onSuccess();
+      return true;
+    } catch (err) {
+      console.log("Error", err);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+export const DeleteShift = (id, onSuccess) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const data = await axios.delete(`/shift-plan/delete/${id}`);
-    return true;
+    await axios.delete(`/shift-plans/delete/${id}`);
+    dispatch(removeShift(id))
+    onSuccess && onSuccess()
   } catch (err) {
-    console.error("Error deleting shift plan:", err);
+    console.error(err);
   } finally {
     dispatch(setLoading(false));
   }
 };
 
-export const UpdateShiftPlane =
-  (id, values, onSuccess = null) =>
-  async (dispatch) => {
-    console.log(values, id, "editabaless");
-    try {
-      dispatch(setLoading(true));
-      const data = await axios.put(`/shift-plan/update/${id}`, values);
-      onSuccess && onSuccess();
-      return true;
-    } catch (err) {
-      console.error("Error creating shift plan:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };

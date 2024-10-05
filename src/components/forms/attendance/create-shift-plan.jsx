@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Toast from "@/util/toast";
 import { useDispatch } from "react-redux";
 import { Input, Switch, } from "@/components/elements";
-import { CreateShiftplan, UpdateShiftPlane, fetchShiftplan } from "@/store/actions/shiftplan.action";
+import { CreateShift, UpdateShift } from "@/store/actions/shiftplan.action";
 export default function CreateShiftplanForm({ onClose, object, is_loading }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -244,39 +244,28 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
     onSubmit: async (values) => {
       if (object) {
         const id = object?._id;
-        dispatch(UpdateShiftPlane(id, values));
-        dispatch(fetchShiftplan());
-        Toast.success("Shift Plan Updated successfully");
+        dispatch(UpdateShift(id, values, () => {
+          Toast.success("Shift Plan Updated successfully");
+          onClose();
+        }));
+
       } else {
-        dispatch(CreateShiftplan(values));
-        dispatch(fetchShiftplan());
-        Toast.success("Shift Plan created successfully");
+        dispatch(CreateShift(values, () => {
+          Toast.success("Shift Plan created successfully")
+          onClose();
+        }));
       }
-      onClose();
     },
   });
   const formElements = [
     {
       type: "text",
-      name: "shiftName",
+      name: "name",
       label: t("Shift Name"),
       placeholder: t("Shift Name"),
       required: true,
-      value: formik.values.shiftName,
-      onChange: (e) => {
-        formik.handleChange(e);
-        const shiftName = e.target.value;
-        const shiftCode = generateShiftCode(shiftName);
-        formik.setFieldValue("shiftCode", shiftCode);
-      },
-    },
-    {
-      type: "text",
-      name: "shiftCode",
-      label: t("Shift Code"),
-      placeholder: t("Shift Code"),
-      required: true,
-      value: formik.values.shiftCode,
+      value: formik.values.name,
+      containerClass: "col-span-2"
     },
     {
       type: "radio",
@@ -298,7 +287,7 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       checked: formik.values.shiftType === 'fixed'
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
+      type: formik.values.shiftType === "fixed" ? "time" : "hidden",
       name: "startTime",
       label: t("Start Time"),
       placeholder: t("Start Time"),
@@ -306,7 +295,7 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       value: formik.values.startTime,
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
+      type: formik.values.shiftType === "fixed" ? "time" : "hidden",
       name: "endTime",
       label: t("End Time"),
       placeholder: t("End Time"),
@@ -320,25 +309,17 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
       placeholder: t("Min Start Time"),
       required: true,
       value: formik.values.minStartTime,
-      onChange: (e) => {
-        formik.handleChange(e);
-        handleShiftTimeChange();
-      },
     },
     {
-      type: formik.values.radioStatus === "flexibleSchedule" ? "time" : "hidden",
+      type: formik.values.shiftType === "flexible" ? "time" : "hidden",
       name: "maxStartTime",
       label: t("Max Start Time"),
       placeholder: t("Max Start Time"),
       required: true,
       value: formik.values.maxStartTime,
-      onChange: (e) => {
-        formik.handleChange(e);
-        handleShiftTimeChange();
-      },
     },
     {
-      type: formik.values.radioStatus === "clockBased" ? "time" : "hidden",
+      type: formik.values.shiftType === "fixed" ? "time" : "hidden",
       name: "maxEndTime",
       label: t("Max End Time"),
       placeholder: t("Max End Time"),
@@ -355,10 +336,10 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
     },
     {
       type: "switch",
-      name: "breakCountable",
-      id: "breakCountable",
+      name: "isBreakCountable",
+      id: "isBreakCountable",
       label: t("Is Break Countable?"),
-      checked: formik.values.breakCountable,
+      checked: formik.values.isBreakCountable
     },
     {
       type: "switch",
