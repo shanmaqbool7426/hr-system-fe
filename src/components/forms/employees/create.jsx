@@ -5,8 +5,7 @@ import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { CreateEmployee, UpdateEmployee } from "@/store/actions/employee.actions";
 import Toast from "@/util/toast";
-import { fetchShiftplan } from "@/store/actions/shiftplan.action";
-import { useEffect } from "react";
+
 
 export default function CreateEmployeeForm({ onClose, employee }) {
   const { t } = useTranslation();
@@ -14,11 +13,8 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   const { is_loading, employees_list } = useSelector((state) => state.employee);
   const { customfield_list } = useSelector((state) => state.customfield);
   const { auth_user } = useSelector((state) => state.auth);
-  const { shiftplandata } = useSelector((state) => state.shiftplan);
+  const { shift_list } = useSelector((state) => state.shift);
 
-  useEffect(() => {
-    dispatch(fetchShiftplan());
-  }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -47,7 +43,6 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       lastName: Yup.string().required(t("Last name is required")),
       fatherName: Yup.string().required(t("Father name is required")),
       fatherCnic: Yup.string().required(t("Father CNIC is required")),
-      employeeCode: Yup.string().required(t("Employee code is required")),
       contact: Yup.string().required(t("Contact number is required")),
       cnic: Yup.string().required(t("CNIC is required")),
       designation: Yup.string().required(t("Designation is required")),
@@ -64,7 +59,6 @@ export default function CreateEmployeeForm({ onClose, employee }) {
         : dispatch(CreateEmployee(values, onCompleted));
     },
   });
-  console.log(formik.values, "values");
   const onCompleted = () => {
     Toast.success(employee ? t("Employee updated successfully") : t("Employee created successfully"));
     onClose();
@@ -217,9 +211,9 @@ export default function CreateEmployeeForm({ onClose, employee }) {
       label: t("Shift Plan"),
       value: formik.values.shiftplan,
       required: true,
-      list: shiftplandata.list?.map((item) => ({
+      list: shift_list?.map((item) => ({
         value: item?._id,
-        display: item?.shiftName,
+        display: item?.name,
       })),
     },
     {
@@ -253,6 +247,7 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   ];
 
   const formTitle = employee ? t("Update employee") : t("Create employee");
+  console.log(formik.errors);
 
   return (
     <BaseForm

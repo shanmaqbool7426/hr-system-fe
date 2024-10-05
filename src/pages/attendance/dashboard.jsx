@@ -125,7 +125,6 @@ export default function Dashboard() {
 
   return (
     <section className="flex flex-col gap-6 grow">
-      {/* {is_loading && <PageLoader/>} */}
       <div className="flex flex-col xl:flex-row justify-between gap-2 xl:items-center">
         <h1 className="text-h4 mb-0">{t("Dashboard")}</h1>
         <div className='flex gap-4 flex-wrap xl:flex-nowrap'>

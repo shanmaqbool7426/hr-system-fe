@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import ReHireForm from "@/components/forms/employees/reHire";
+import { FetchShifts } from "@/store/actions/shiftplan.action";
 
 export default function EmployeesListPage() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ export default function EmployeesListPage() {
 
   useEffect(() => {
     dispatch(FetchEmployees());
+    dispatch(FetchShifts())
   }, [dispatch]);
 
   const filterElements = [

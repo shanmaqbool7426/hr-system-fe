@@ -11,7 +11,15 @@ import {
   getBreaks,
 } from "@/store/actions/attendance.actions";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 export const TimeSheet = ({ className }) => {
+  const { auth_user } = useSelector(state => state.auth)
+  const ShiftType = auth_user?.shiftplan?.shiftType
+  const ShiftDetails = auth_user?.shiftplan ? auth_user?.shiftplan?.workingDays[moment().format('dddd')] : {}
+
+
+
+
   const { todayAttendance, getBreaksByAttendance, getLastBreak } = useSelector((state) => state.attendance);
   // Function to calculate total break time
   function calculateTotalBreakTime(breaks) {
@@ -80,7 +88,7 @@ export const TimeSheet = ({ className }) => {
     await dispatch(CheckIn());
     await dispatch(todaysAttendance());
   };
-  
+
 
   const handleCheckOut = async (id) => {
     await dispatch(checkOut(id));
@@ -111,10 +119,7 @@ export const TimeSheet = ({ className }) => {
     const minutes = Math.floor((duration / 1000 / 60) % 60);
     return `${hours}.${minutes < 10 ? "0" : ""}${minutes} hrs`;
   };
-  const getFormattedDate = () => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date().toLocaleDateString("en-US", options);
-  };
+
   function formatTimes(dateString) {
     const date = new Date(dateString);
     const options = {
@@ -129,21 +134,24 @@ export const TimeSheet = ({ className }) => {
     if (todayAttendance) {
       dispatch(getBreaks(todayAttendance._id))
     }
-  }, [dispatch]); 
+  }, [dispatch]);
   return (
     <div className={`${className} zt-card grid grid-cols-2 gap-4`}>
+      {/* Head */}
       <div className="col-span-2 sm:col-span-1 flex flex-col text-left">
         <h2 className="text-xl font-bold mb-0">{t("TimeSheet")}</h2>
-        <time dateTime={new Date().toISOString()} className="text-themeGrayscale600 dark:text-white text-sm block">
-          {t(getFormattedDate())}
+        <time dateTime={moment().format()} className="text-themeGrayscale600 dark:text-white text-sm block">
+          {moment().format('MMMM DD, yyyy')}
         </time>
       </div>
-      <div className="col-span-2 sm:col-span-1 flex flex-col gap-2 sm:text-right">
-        <span className="text-themeGrayscale600 dark:text-white">{t("Current Shift")}</span>
-        <time className="font-semibold" dateTime="09:00 AM - 06:00 PM">
-          {t("09:00 AM - 06:00 PM")}
-        </time>
+      <div className="col-span-2 sm:col-span-1 flex flex-col text-right">
+        <h2 className="text-xl font-bold mb-0">{t("Current Shift")}</h2>
+        <span className="text-themeGrayscale600 dark:text-white text-sm block">
+          {auth_user?.shiftplan && ShiftDetails.isWorkingDay ? <></> : "Day Off"}
+        </span>
       </div>
+      {/* Work Mode */}
+
       <div className="bg-themeGrayscale50 dark:bg-gray-700 rounded-lg px-4 py-3 col-span-2 flex flex-wrap gap-2 justify-between">
         <div className="flex flex-col gap-1">
           <span className="text-themeGrayscale600 dark:text-white">{t("Check In at")}</span>
@@ -154,55 +162,62 @@ export const TimeSheet = ({ className }) => {
         <div className="flex flex-col gap-1">
           <span className="text-themeGrayscale600 dark:text-white">{t("Work Mode")}</span>
           <span className="font-semibold text-themeGrayscale900 dark:text-white flex items-center gap-1">
-            <LocationIcon /> {t("Onsite")}
+            <LocationIcon />
+            {auth_user?.workMode}
           </span>
         </div>
       </div>
+      {/* Time escaped */}
       <div className="col-span-2 h-28 w-28 rounded-full border-5 border-themeGrayscale400 bg-themeGrayscale50 dark:bg-gray-700 mx-auto flex justify-center items-center">
         <time className="text-xs font-bold" dateTime={workedHours}>
           {workedHours}
         </time>
       </div>
-      {!todayAttendance || todayAttendance?.checkOutAt ? (
+      {/* Check in buttons */}
+      {ShiftDetails?.isWorkingDay &&
         <>
-          <Button
-            onClick={handleCheckIn}
-            variant={"primary"}
-            className={"flex w-full items-center whitespace-nowrap"}
-            disabled={todayAttendance ? (todayAttendance?.checkOutAt ? true : false) : false}
-          >
-            Check In
-          </Button>
-        </>
-      ) : (
-        <>
-          {!getLastBreak || getLastBreak?.endAt ? (
-            <Button
-              onClick={() => handleTakeBreak(todayAttendance?._id)}
-              variant={"orange"}
-              className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
-            >
-              Take Break <TakeBreakIcon className={"shrink-0"} />
-            </Button>
+          {!todayAttendance || todayAttendance?.checkOutAt ? (
+            <>
+              <Button
+                onClick={handleCheckIn}
+                variant={"primary"}
+                className={"flex w-full items-center whitespace-nowrap"}
+                disabled={todayAttendance ? (todayAttendance?.checkOutAt ? true : false) : false}
+              >
+                Check In
+              </Button>
+            </>
           ) : (
-            <Button
-              onClick={() => handleBreakOff(getLastBreak?._id)}
-              variant={"orange"}
-              className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
-            >
-              Break Off <TakeBreakIcon className={"shrink-0"} />
-            </Button>
+            <>
+              {!getLastBreak || getLastBreak?.endAt ? (
+                <Button
+                  onClick={() => handleTakeBreak(todayAttendance?._id)}
+                  variant={"orange"}
+                  className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
+                >
+                  Take Break <TakeBreakIcon className={"shrink-0"} />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => handleBreakOff(getLastBreak?._id)}
+                  variant={"orange"}
+                  className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
+                >
+                  Break Off <TakeBreakIcon className={"shrink-0"} />
+                </Button>
+              )}
+            </>
           )}
-        </>
-      )}
-      <Button
-        onClick={() => handleCheckOut(todayAttendance?._id)}
-        variant={"primary"}
-        className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
-        disabled={todayAttendance ? (todayAttendance?.checkOutAt ? true : false) : true}
-      >
-        Check Out <CheckOutIcon className={"shrink-0"} />
-      </Button>
+
+          <Button
+            onClick={() => handleCheckOut(todayAttendance?._id)}
+            variant={"primary"}
+            className={"flex w-full items-center whitespace-nowrap col-span-2 sm:col-span-1"}
+            disabled={todayAttendance ? (todayAttendance?.checkOutAt ? true : false) : true}
+          >
+            Check Out <CheckOutIcon className={"shrink-0"} />
+          </Button>
+        </>}
       <div className="w-full bg-themeGrayscale50 dark:bg-gray-700 p-4 rounded-lg flex flex-col text-center gap-1">
         <span>{t("Break")}</span>
         <time className="font-bold" dateTime={getBreaksByAttendance[0]?.endAt ? totalBreakTime : "00:00:00"}>
