@@ -328,11 +328,11 @@ export default function CreateShiftplanForm({ onClose, object, is_loading }) {
     },
     {
       type: "switch",
-      name: "shiftEndNextDay",
-      id: "shiftEndNextDay",
+      name: "shiftEndsOnNextDay",
+      id: "shiftEndsOnNextDay",
       label: t("Shift end on the next day"),
-      checked: formik.values.shiftEndNextDay,
-      onChange: (e) => formik.setFieldValue("shiftEndNextDay", e.target.checked),
+      checked: formik.values.shiftEndsOnNextDay,
+      onChange: (e) => formik.setFieldValue("shiftEndsOnNextDay", e.target.checked),
     },
     {
       type: "switch",
