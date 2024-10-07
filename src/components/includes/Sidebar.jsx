@@ -33,7 +33,7 @@ export default function Sidebar() {
     { icon: Leave, name: t("Leave"), href: "leave" },
     { icon: Projects, name: t("Operations"), href: "operations" },
     { icon: Connect, name: t("Connect"), href: "connect", },
-    { icon: RemoteWork, name: t("Remote Work"), href: "remoteWork" },
+    { icon: RemoteWork, name: t("Remote Work"), href: "remote-work" },
     { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
     { icon: Payroll, name: t("Payroll"), href: "payroll" },
     { icon: Report, name: t("Report"), href: "report" },
@@ -235,7 +235,7 @@ export default function Sidebar() {
         ].sort((a, b) => a.name.localeCompare(b.name))
       }, 
     ],
-    remoteWork: [
+    "remote-work": [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
       { name: t("My Remote Work"), href: "/remote-work/my-remote-work" },
       { name: t("Screenshot"), href: "/remote-work/screenshot" },

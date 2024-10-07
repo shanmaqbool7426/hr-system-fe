@@ -1,6 +1,6 @@
 import { Datepicker, DropDown, SearchSelect, Table, Tabs } from "@/components/elements";
 import ChangeRemoteTeamForm from "@/components/forms/remoteWork/ChangeTeam";
-import CreateRemoteTeamForm from "@/components/forms/remoteWork/createTeam";
+import CreateRemoteTeamForm from "@/components/forms/remoteWork/create-team";
 import { ChevronLeft, ChevronRight, Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
 import DayTab from "@/modules/remoteWork/myRemoteWork/DayTab";
 import Toast from "@/util/toast";

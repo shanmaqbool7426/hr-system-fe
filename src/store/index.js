@@ -16,8 +16,8 @@ import taskboard from "./slices/taskboard.slice";
 import task from "./slices/task.slice"
 import taskraiseissue from "./slices/task-raise-issue.slice"
 import job from "./slices/job.slice"
+import remoteteam from "./slices/remote-team.slice.js"
 import shift from "./slices/shiftplan.slice"
-
 
 export default configureStore({
   reducer: {
@@ -30,6 +30,7 @@ export default configureStore({
     employee,
     feedback,
     gazetteholiday,
+    job,
     leavepolicy,
     leaverequest,
     project,
@@ -37,7 +38,7 @@ export default configureStore({
     task,
     taskboard,
     taskraiseissue,
-    job,
-    shift
+    remoteteam,
+    shift,
   },
 });
