@@ -435,7 +435,7 @@
 // Basic table
 // 
 .zt-table {
-  @apply w-full mb-6 dark:text-white border-collapse;
+  @apply w-full mb-6 dark:text-white border-collapse text-center;
 
   tr {
     td {
@@ -462,12 +462,12 @@
     @apply align-top;
 
     tr {
-      @apply bg-themeGrayscale50 dark:bg-dark-3;
+      @apply bg-themeGrayscale100 dark:bg-dark-3;
       th {
         @apply select-none px-2 py-5;
   
         &:first-child {
-          @apply pl-4;
+          @apply pl-4 rounded-l-lg ;
   
           >div {
             @apply justify-start
@@ -476,7 +476,7 @@
    
   
         &:last-child {
-          @apply pr-4;
+          @apply pr-4 rounded-r-lg;
   
           >div {
             @apply justify-end

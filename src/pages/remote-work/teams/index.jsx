@@ -1,4 +1,4 @@
-import { Button, CheckBox, DropDown, ModifiedBy, Table } from "@/components/elements";
+import { Button, DropDown, ModifiedBy, Table } from "@/components/elements";
 import CreateRemoteTeamForm from "@/components/forms/remoteWork/create-team";
 import FilterArea from "@/components/includes/FilterArea";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -14,6 +14,7 @@ export default function RemoteTeamsPage() {
     const dispatch = useDispatch()
     const [create, setCreate] = useState(false)
     const [edit, setEdit] = useState(null)
+    const [selected, setSelected] = useState([])
     const [filters, setFilters] = useState({
         search: "",
     })
@@ -40,7 +41,7 @@ export default function RemoteTeamsPage() {
         { title: t("Modified By"), col: "modifiedBy" },
         { title: t("Action"), col: "action" }
     ]
-    let filteredRows = team_list?.filter((item) => filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase()))
+    let filteredRows = team_list?.filter((item) => !filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase()))
         .sort((a, b) => {
             if (!sortCol) return 0;
             if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
@@ -52,6 +53,7 @@ export default function RemoteTeamsPage() {
     const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
 
     const rows = paginatedData?.map((item) => ({
+        _id: item._id,
         name: item.name,
         members: item.members?.length || 0,
         modifiedBy: item.modifiedBy ? <ModifiedBy user={item.modifiedBy} date={item.updatedAt} /> : "-------",
@@ -104,6 +106,8 @@ export default function RemoteTeamsPage() {
                     setFilters={setFilters}
                 />
                 <Table
+                    selected={selected}
+                    setSelected={setSelected}
                     headings={headings}
                     rows={rows}
                     sortCol={sortCol}
@@ -115,7 +119,6 @@ export default function RemoteTeamsPage() {
                     setPerPage={setPerPage}
                     page={page}
                     setPage={setPage}
-                    className={'zt-employeeTable zt-attendanceRequestsTable'}
                 />
             </div>
             {create && <CreateRemoteTeamForm onClose={() => { setCreate(false); setEdit(null) }} object={edit} />}

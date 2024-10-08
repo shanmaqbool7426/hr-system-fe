@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker, FileUpload } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker, FileUpload, ColorPicker } from "../elements"
 import { useTranslation } from "next-i18next"
 import Radio from "../elements/Radio"
 
@@ -72,8 +72,8 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                     case 'textarea':
                                         return <Textarea key={index} {...element}
                                             error={formik.touched[element.name] && formik.errors[element.name]}
-                                            onBlur={() => {
-                                                formik.setFieldTouched(element.name, true)
+                                            onBlur={async () => {
+                                                await formik.setFieldTouched(element.name, true)
                                             }}
                                             onInput={formik.handleBlur}
                                             onChange={formik?.handleChange}
@@ -84,15 +84,16 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             onBlur={() => {
                                                 formik.setFieldTouched(element.name, true)
                                             }}
-                                            onChange={(value) => {
-
-                                                formik.setFieldValue(element.name, value)
+                                            onChange={async (value) => {
+                                                await formik.setFieldValue(element.name, value)
+                                                await formik.setFieldTouched(element.name, true)
                                             }}
                                         />
                                     case 'switch':
                                         return <ToggleCheck key={index}
-                                            onChange={(event) => {
-                                                formik.setFieldValue(element.name, event.target.checked)
+                                            onChange={async (event) => {
+                                                await formik.setFieldValue(element.name, event.target.checked)
+                                                await formik.setFieldTouched(element.name, true)
                                             }}
                                             {...element} />
                                     case "radio":
@@ -101,8 +102,9 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             variant={'dark'}
                                             id={element.id}
                                             label={element.label}
-                                            onChange={(event) => {
-                                                formik.setFieldValue(element.name, element.value);
+                                            onChange={async (event) => {
+                                                await formik.setFieldValue(element.name, element.value);
+                                                await formik.setFieldTouched(element.name, true)
                                             }}
                                             {...element}
                                         />;
@@ -111,8 +113,9 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             <div key={index} className="zt-formGroup col-span-2">
                                                 <CheckBox
                                                     variant={'dark'}
-                                                    onChange={(event) => {
-                                                        formik.setFieldValue(element.name, event.target.checked)
+                                                    onChange={async (event) => {
+                                                        await formik.setFieldValue(element.name, event.target.checked)
+                                                        await formik.setFieldTouched(element.name, true)
                                                     }}
                                                     {...element} />
                                             </div>);
@@ -122,6 +125,15 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                         return <FileUpload
                                             onChange={(file) => {
                                                 formik.setFieldValue(element.name, file)
+                                            }}
+                                            {...element}
+                                        />
+                                    case 'color':
+                                        return <ColorPicker
+                                            key={index}
+                                            onChange={async (color) => {
+                                                await formik.setFieldValue(element.name, color)
+                                                await formik.setFieldTouched(element.name, true)
                                             }}
                                             {...element}
                                         />

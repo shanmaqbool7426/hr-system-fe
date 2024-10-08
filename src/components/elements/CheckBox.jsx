@@ -6,7 +6,7 @@ export default function CheckBox({ id, onChange, name, className, labelClass, ty
   return (
     <div className={`zt-check-box select-none ${variant ? `zt-${variant}` : ''} ${size ? `zt-${size}` : ''} ${className}`}>
       <input id={id} onChange={onChange} type="checkbox" {...props} disabled={disabled} />
-      <label htmlFor={id}>
+      <label htmlFor={id} className={`flex items-center gap-2`}>
         <Tick className={iconClass} />
         <span className={`${labelClass}`}>{label}</span>
       </label>
