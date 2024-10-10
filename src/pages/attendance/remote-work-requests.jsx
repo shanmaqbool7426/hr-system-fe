@@ -2,7 +2,7 @@ import { Button, Dialog, DisplayDate, DropDown, ModifiedBy, Table, Textarea } fr
 import CreateRemoteWorkRequestForm from '@/components/forms/attendance/create-remote-work-request'
 import ViewRemoteWorkForm from '@/components/forms/attendance/viewRemoteWork'
 import FilterArea from '@/components/includes/FilterArea'
-import { CrossClose, Edit, EyeOn, ThreeDotsVertical, Tick } from '@/components/svg'
+import { CrossClose, Edit, EyeOn, ThreeDotsVertical, Tick, Trash } from '@/components/svg'
 import { FetchEmployees } from '@/store/actions/employee.actions'
 import { DeleteRemoteWorkRequest, FetchRemoteWorkRequests, UpdateRemoteRequestStatus } from '@/store/actions/remote-request.actions'
 import { FetchRemoteTeams } from '@/store/actions/remote-team.actions'
