@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { Combobox, Transition } from "@headlessui/react";
+import { useState } from "react";
+import { Combobox, Fragment, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import {
   ChevronDown,
   Check,
@@ -26,11 +26,11 @@ export default function SearchSelect({
     query === ""
       ? list
       : list.filter((item) =>
-          item.value
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
-        );
+        item.value
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes(query.toLowerCase().replace(/\s+/g, ""))
+      );
 
   const getDisplayValue = (payload) => {
     if (payload && typeof payload === 'string') {
@@ -57,7 +57,7 @@ export default function SearchSelect({
       <Combobox value={selectedItem} onChange={changeHandler}>
         <>
           {label && (
-            <Combobox.Label
+            <label
               className="dark:text-themeGrayscale300"
               htmlFor={id}
             >
@@ -65,11 +65,11 @@ export default function SearchSelect({
               {props?.required && (
                 <sup className="text-[1.25rem] text-themeDanger">*</sup>
               )}
-            </Combobox.Label>
+            </label>
           )}
 
           <div className="relative">
-            <Combobox.Input
+            <ComboboxInput
               {...props}
               id={id}
               className={`zt-themeInput${error ? " zt-error" : ""}`}
@@ -85,52 +85,50 @@ export default function SearchSelect({
                     <CloseCross aria-hidden="true" />
                   </button>
                 )}
-                <Combobox.Button className="zt-btnDownArrow">
+                <ComboboxButton className="zt-btnDownArrow">
                   <ChevronDown className={'dark:text-white'} aria-hidden="true" />
-                </Combobox.Button>
+                </ComboboxButton>
               </div>
             )}
 
-            <Transition
-              as={Fragment}
+            {/* <Fragment
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
               afterLeave={() => setQuery("")}
-            >
-              <Combobox.Options className="zt-multiSelectList">
-                {filtered?.length > 0 ? (
-                  filtered.map((item, index) => (
-                    <Combobox.Option
-                      key={index}
-                      value={item.value}
-                      className={`hover:text-white ${comboClass}`}
-                    >
-                      {({ selected, active }) => (
-                        <>
-                          <span
-                            className={`block truncate ${
-                              selected ? "font-medium" : "font-normal"
+            > */}
+            <ComboboxOptions className="zt-multiSelectList py-2">
+              {filtered?.length > 0 ? (
+                filtered.map((item, index) => (
+                  <ComboboxOption
+                    key={index}
+                    value={item.value}
+                    className={`hover:text-themeSuccess cursor-pointer px-4 py-2 ${comboClass}`}
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span
+                          className={`block truncate ${selected ? "font-medium" : "font-normal"
                             }`}
-                          >
-                            {item.display}
+                        >
+                          {item.display}
+                        </span>
+                        {selected && (
+                          <span className={`flex items-center pl-3`}>
+                            <Check className="h-5 w-5" aria-hidden="true" />
                           </span>
-                          {selected && (
-                            <span className={`flex items-center pl-3`}>
-                              <Check className="h-5 w-5" aria-hidden="true" />
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </Combobox.Option>
-                  ))
-                ) : (
-                  <p className="select-none px-4 py-2 text-h6 font-semibold mb-0">
-                    Nothing found.
-                  </p>
-                )}
-              </Combobox.Options>
-            </Transition>
+                        )}
+                      </>
+                    )}
+                  </ComboboxOption>
+                ))
+              ) : (
+                <p className="select-none px-4 py-2 text-h6 font-semibold mb-0">
+                  Nothing found.
+                </p>
+              )}
+            </ComboboxOptions>
+            {/* </Fragment> */}
           </div>
         </>
       </Combobox>

@@ -9,7 +9,7 @@ export default function Textarea({ id, label, error, containerClass, className, 
             </label>}
             <textarea
                 id={id}
-                className={`border dark:bg-gray-700 dark:border-gray-700 border-gray-400 text-gray-900 w-full py-3 px-4 resize-none rounded-md ${error ? "zt-error" : ""} ${className}`}
+                className={`border dark:bg-gray-700 dark:border-gray-700 dark:text-white border-gray-400 text-gray-900 w-full py-3 px-4 resize-none rounded-md ${error ? "zt-error" : ""} ${className}`}
                 {...props}
             />
             {error && <span className="zt-errorMessage">

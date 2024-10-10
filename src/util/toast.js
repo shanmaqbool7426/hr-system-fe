@@ -48,7 +48,7 @@ const Toast = {
             }
         });
     },
-    dynamicTitle(successCallback, t,title) {
+    dynamicTitle(successCallback, t, title) {
         Swal.fire({
             title: t(`${title}`),
             showDenyButton: true,
@@ -59,7 +59,7 @@ const Toast = {
                 successCallback()
             }
         });
-    }, 
+    },
 }
 
 export default Toast

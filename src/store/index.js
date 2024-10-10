@@ -18,6 +18,7 @@ import taskraiseissue from "./slices/task-raise-issue.slice"
 import job from "./slices/job.slice"
 import remotecategory from "./slices/remote-category.slice.js"
 import remoteteam from "./slices/remote-team.slice.js"
+import remoterequest from "./slices/remote-request.slice.js"
 import shift from "./slices/shiftplan.slice"
 
 export default configureStore({
@@ -41,6 +42,7 @@ export default configureStore({
     taskraiseissue,
     remotecategory,
     remoteteam,
+    remoterequest,
     shift,
   },
 });
