@@ -3,48 +3,54 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { UpdateEmployee } from '@/store/actions/employee.actions';
 
-export default function ChangeRemoteTeamForm({ onClose, object }) {
+export default function ChangeRemoteTeamForm({ onClose, employee = null, team = null }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
+    const { employees_list } = useSelector(state => state.employee)
+    const { team_list } = useSelector(state => state.remoteteam)
     const formik = useFormik({
         initialValues: {
-            employee: object?.employee?._id || "",
-            currentTeam: object?.employee?._id || "",
-            newTeam: object?.employee?._id || "", 
+            employee: employee || "",
+            currentTeam: team || "",
+            newTeam: "",
         },
         validationSchema: Yup.object().shape({
-            employee: Yup.string().required(t('Employee is required')), 
-            newTeam: Yup.string().required(t('New Team is required')), 
+            employee: Yup.string().required(t('Employee is required')),
+            newTeam: Yup.string().required(t('New Team is required')),
         }),
         onSubmit: async (values) => {
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
+            return dispatch(UpdateEmployee(values.employee, { team: values.newTeam }, () => {
+                Toast.success(t(`Employee team updated successfully`))
+                onClose()
+            }))
         }
     })
-    const onCompleted = () => {
-        Toast.success(object ? t(`Exemption request updated successfully`) : t(`Exemption request created successfully`))
-        onClose()
-    }
+
     const formElements = [
         {
             type: "select",
             name: "employee",
             label: t('Employee'),
             required: true,
+            readOnly: !!employee,
             placeholder: "Employee",
-            list:[{display:"John",value:"John"}],
+            list: employees_list.map(item => ({ display: `${item.firstName} ${item.lastName}`, value: item._id })),
             value: formik.values.employee,
+            onChange: async (value) => {
+                await formik.setFieldValue("employee", value)
+                await formik.setFieldValue("currentTeam", (await employees_list.find(item => item._id === value))?.team?.name || "")
+            }
         },
         {
             type: "text",
             name: "currentTeam",
             label: t('Current Team'),
-            required: true,
-            placeholder: "Current Team", 
+            placeholder: "Current Team",
             value: formik.values.currentTeam,
-            readOnly:true
+            readOnly: true
         },
         {
             type: "select",
@@ -52,12 +58,12 @@ export default function ChangeRemoteTeamForm({ onClose, object }) {
             label: t('New Team'),
             required: true,
             placeholder: "New Team",
-            list:[{display:"Management",value:"Management"}],
+            list: team_list.map(item => ({ display: item.name, value: item._id })),
             value: formik.values.newTeam,
         },
     ]
     return (
-        <BaseForm title={object ? t(`Change Remote Team`) : t(`Change Remote Team`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={t(`Change Remote Team`)} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }
 

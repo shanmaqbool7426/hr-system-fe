@@ -5,6 +5,7 @@
   /* for Firefox */
   scrollbar-width: none;
   overflow-y: scroll;
+
   &::-webkit-scrollbar {
     display: none;
     /* for Chrome, Safari, and Opera */
@@ -57,7 +58,7 @@
     }
 
     button {
-      @apply  whitespace-nowrap inline-flex justify-center items-center rounded-full border border-themeGrayscale300 dark:bg-gray-700 dark:border-gray-500 dark:text-white bg-themeGrayscale50 text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
+      @apply whitespace-nowrap inline-flex justify-center items-center rounded-full border border-themeGrayscale300 dark:bg-gray-700 dark:border-gray-500 dark:text-white bg-themeGrayscale50 text-base py-2 px-6 font-medium text-themeGrayscale600 hover:border-themePurple hover:bg-themePurple hover:text-white transition-all duration-150;
 
       &.zt-activeTab {
         @apply border-themePurple bg-themePurple text-white;
@@ -87,7 +88,7 @@
     }
 
     button {
-      @apply inline-flex justify-center font-bold items-center border-b-2 border-white bg-white   text-base py-2 px-6 text-themeGrayscale600 hover:border-themePurple hover:text-themePurple transition-all duration-150;
+      @apply inline-flex justify-center font-bold items-center border-b-2 border-white bg-white text-base py-2 px-6 text-themeGrayscale600 hover:border-themePurple hover:text-themePurple transition-all duration-150;
 
       &.zt-activeTab {
         @apply border-themePurple text-themePurple;
@@ -442,6 +443,7 @@
       &:first-child {
         @apply text-left
       }
+
       &:last-child {
         @apply text-right
       }
@@ -463,21 +465,22 @@
 
     tr {
       @apply bg-themeGrayscale100 dark:bg-dark-3;
+
       th {
         @apply select-none px-2 py-5;
-  
+
         &:first-child {
-          @apply pl-4 rounded-l-lg ;
-  
+          @apply pl-4 rounded-l-lg;
+
           >div {
             @apply justify-start
           }
         }
-   
-  
+
+
         &:last-child {
           @apply pr-4 rounded-r-lg;
-  
+
           >div {
             @apply justify-end
           }
@@ -756,19 +759,104 @@
     }
   }
 }
-.recharts-cartesian-axis-tick-value{@apply dark:fill-white}
+
+.recharts-cartesian-axis-tick-value {
+  @apply dark:fill-white
+}
 
 
-.zt-status {@apply w-36 capitalize flex justify-center font-semibold rounded-lg px-2 py-1 text-white}
-.zt-status-items {@apply w-36 origin-top-right rounded-lg border dark:border-dark-3 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] data-[closed]:scale-95 data-[closed]:opacity-0}
-.zt-status-item {@apply cursor-pointer px-2 py-1 text-white}
+.zt-status {
+  @apply w-36 capitalize flex justify-center font-semibold rounded-lg px-2 py-1 text-white
+}
 
-.zt-priority-low {@apply bg-[#66bb6a]}
-.zt-priority-medium {@apply bg-[#ab47bc]}
-.zt-priority-high {@apply bg-[#ffa726]}
-.zt-priority-critical {@apply bg-[#f44336]}
+.zt-status-items {
+  @apply w-36 origin-top-right rounded-lg border dark:border-dark-3 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] data-[closed]:scale-95 data-[closed]:opacity-0
+}
 
-.zt-status-pending {@apply bg-[#f44336]}
-.zt-status-working {@apply bg-[#ab47bc]}
-.zt-status-paused {@apply bg-[#ffa726]}
-.zt-status-completed {@apply bg-[#66bb6a]}
+.zt-status-item {
+  @apply cursor-pointer px-2 py-1 text-white
+}
+
+.zt-priority-low {
+  @apply bg-[#66bb6a]
+}
+
+.zt-priority-medium {
+  @apply bg-[#ab47bc]
+}
+
+.zt-priority-high {
+  @apply bg-[#ffa726]
+}
+
+.zt-priority-critical {
+  @apply bg-[#f44336]
+}
+
+.zt-status-pending {
+  @apply bg-[#f44336]
+}
+
+.zt-status-working {
+  @apply bg-[#ab47bc]
+}
+
+.zt-status-paused {
+  @apply bg-[#ffa726]
+}
+
+.zt-status-completed {
+  @apply bg-[#66bb6a]
+}
+
+.zt-stats-card {
+  @apply bg-white dark:text-white rounded-2xl p-6 shadow-lg relative overflow-hidden;
+
+  .zt-side-icon-placeholder {
+    @apply w-32 h-32 rounded-bl-3xl flex grow absolute -top-5 -right-12 rotate-45
+  }
+
+  .zt-side-icon {
+    @apply w-12 h-12 rounded-xl flex grow absolute top-5 right-3 text-white
+  }
+
+  >h4 {
+    @apply text-3xl font-bold mb-3 text-gray-800 dark:text-gray-100
+  }
+
+  >p {
+    @apply mb-0 text-lg font-semibold text-gray-600 dark:text-gray-300
+  }
+
+  &.variant-primary {
+    @apply bg-blue-400/30 dark:bg-blue-400/50;
+
+    .zt-side-icon-placeholder {
+      @apply bg-themePrimary
+    }
+  }
+
+  &.variant-orange {
+    @apply bg-orange-400/20 dark:bg-orange-400/50;
+
+    .zt-side-icon-placeholder {
+      @apply bg-lightOrange dark:bg-lightOrange/80
+    }
+  }
+
+  &.variant-green {
+    @apply bg-green-400/20 dark:bg-green-400/50;
+
+    .zt-side-icon-placeholder {
+      @apply bg-themeSuccess dark:bg-themeSuccess/80
+    }
+  }
+
+  &.variant-purple {
+    @apply bg-purple-400/20 dark:bg-purple-400/50;
+
+    .zt-side-icon-placeholder {
+      @apply bg-themePurple dark:bg-themePurple/80
+    }
+  }
+}

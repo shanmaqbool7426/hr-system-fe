@@ -1,30 +1,67 @@
-import { DropDown, Table } from "@/components/elements";
+import { DisplayDate, DropDown, Profile, Table } from "@/components/elements";
 import ChangeRemoteTeamForm from "@/components/forms/remoteWork/ChangeTeam";
 import FilterArea from "@/components/includes/FilterArea";
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from "@/components/svg";
+import { FetchEmployees } from "@/store/actions/employee.actions";
+import { RevokeRemoteAccess } from "@/store/actions/remote-request.actions";
+import { FetchRemoteTeams } from "@/store/actions/remote-team.actions";
 import Toast from "@/util/toast";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Employees() {
+export default function RemoteEmployeesPage() {
     const { t } = useTranslation()
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const [changeTeam, setChangeTeam] = useState(false)
-    const { customfield_list } = useSelector(state => state.customfield)
+    const [changeTeam, setChangeTeam] = useState(null)
+    const { employees_list } = useSelector(state => state.employee)
+    const { team_list } = useSelector(state => state.remoteteam)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(FetchEmployees())
+        dispatch(FetchRemoteTeams())
+    }, [dispatch])
+
     const [filters, setFilters] = useState({
         search: "",
-        project: null,
-        department: null,
-        status: null,
+        team: null,
     })
+
+    let filteredrows = employees_list
+        .filter(item => item.workMode === "remote")
+        .filter((item) => {
+            let include = true;
+            if (filters.search && filters.search.length > 0) {
+                let fullname = item.firstName + " " + item.lastName;
+                include =
+                    fullname.toLowerCase().includes(filters.search.toLowerCase()) ||
+                    item.email.toLowerCase().includes(filters.search.toLowerCase());
+                if (!include) return false;
+            }
+            if (filters.team) {
+                include = item?.team?._id === filters.team;
+                if (!include) return false;
+            }
+            return include;
+        })
+        .sort((a, b) => {
+            if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
+            else return b[sortCol]?.localeCompare(a[sortCol]);
+        });
+    const indexOfLastItem = page * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
+
+
+
     const pagination = {
-        totalRecords: 5,
+        totalRecords: filteredrows.length,
         showPerPage: true,
         prevAction: () => page > 1 && setPage(page - 1),
         clickAction: (value) => setPage(value),
@@ -45,138 +82,74 @@ export default function Employees() {
         },
         {
             type: "select",
-            name: "LineManager",
-            placeholder: "LineManager",
-            value: filters.status,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
+            name: "team",
+            placeholder: "Team",
+            value: filters.team,
+            list: team_list.map(item => {
                 return { value: item._id, display: item.name }
             }),
-            onChange: (status) => {
+            onChange: (value) => {
                 let _filter = { ...filters }
-                _filter['status'] = status
+                _filter['team'] = value
                 setFilters(_filter)
             }
-        },
-        {
-            type: "select",
-            name: "Status",
-            placeholder: "Status",
-            value: filters.status,
-            list: customfield_list.filter(item => item.type === 'employee_status').map(item => {
-                return { value: item._id, display: item.name }
-            }),
-            onChange: (status) => {
-                let _filter = { ...filters }
-                _filter['status'] = status
-                setFilters(_filter)
-            }
-        },
+        }
     ]
 
     const headings = [
-
-        { title: t("Name"), col: "Name", },
-        { title: t("Department"), col: "Department" },
+        { title: t("Name"), col: "name", },
+        { title: t("Department"), col: "department" },
         { title: t("Team"), col: "team" },
-        { title: t("Line Manager"), col: "LineManager", },
-        { title: t("From"), col: "From", sort: true },
-        { title: t("To"), col: "To", sort: true },
+        { title: t("Line Manager"), col: "lineManager", },
+        { title: t("From"), col: "from", sort: true },
+        { title: t("To"), col: "to", sort: true },
         { title: t("Action"), col: "action" }
     ]
 
-    const rows = [
-        {
+    const rows = paginatedData?.map((item, i) => ({
 
-            Name: <div className="flex items-center justify-center gap-4 grow">
-                <figure className="shrink-0">
-                    <Image alt="profile" height={40} width={40} src={'/assets/images/users/user-02.jpg'} className="rounded-full" /></figure>
-                <div className={'flex flex-col text-left'}>
-                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500'}>{t('23056')}</span>
-                </div>
-            </div>,
-            Department: 'Frontend',
-            team:"React",
-            From: '23 May 2024',
-            To: '23 May 2024',
-            LineManager: "Company Admin",
-            Client: '-',
-            action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-44">
-                    <a onClick={() => {setChangeTeam(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                        <span><Edit /></span>
-                        <span>{t("Change Team")}</span>
+        name: <Link href={`/employees/details/${item._id}`} className="flex gap-2 items-center no-underline dark:text-white">
+            <Profile image={item?.avatar} name={item.firstName} />
+            <div className="text-left">
+                <div>{`${item.firstName} ${item.lastName}`}</div>
+                <div className="text-xs">{`${item.employeeCode}`}</div>
+            </div>
+        </Link>,
+        department: item?.department?.name || "------",
+        team: item?.team?.name || "------",
+        lineManager: item?.lineManager ? `${item?.lineManager?.firstName} ${item?.lineManager?.lastName}` : "------",
+        from: item?.remoteWork?.from ? <DisplayDate date={item?.remoteWork?.from} /> : "------",
+        to: item?.remoteWork?.to ? <DisplayDate date={item?.remoteWork?.to} /> : "------",
+        action: <DropDown icon={<ThreeDotsVertical />}>
+            <ul className="zt-themeDropDownList zt-sm gap-4 w-44">
+                <a onClick={() => { setChangeTeam(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    <span><Edit /></span>
+                    <span>{t("Change Team")}</span>
+                </a>
+                <li className="!p-0">
+                    <Link href={`/employees/details/${item._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                        <span><EyeOn /></span>
+                        <span>{t("Detail")}</span>
+                    </Link>
+                </li>
+                <li className="!p-0">
+                    <a onClick={() => {
+                        Toast.dynamicTitle(() => {
+                            dispatch(RevokeRemoteAccess(item._id, () => {
+                                Toast.success(t("Remote Access Revoked Successfully"))
+                            }))
+                        }, t, t('Are you sure? You want to revoke remote access for this employee?'))
+                    }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+                        <span><Trash /></span>
+                        <span>{t("Revoke")}</span>
                     </a>
-                    <li className="!p-0">
-                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("Detail")}</span>
-                        </Link>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => {
-                            Toast.dynamicTitle(() => {
-                                // dispatch(DeleteCustomfield(item._id, () => {
-                                Toast.success(t("Remote Access Revoked Successfully"))
-                                // }))
-                            }, t,'Are you want to revoke remote access for this employee?')
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><Trash /></span>
-                            <span>{t("Revoke")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>
-        },
-        {
+                </li>
+            </ul>
+        </DropDown>
+    }))
 
-            Name: <div className="flex items-center justify-center gap-4 grow">
-                <figure className="shrink-0">
-                    <Image alt="profile" height={40} width={40} src={'/assets/images/users/user-01.jpg'} className="rounded-full" /></figure>
-                <div className={'flex flex-col text-left'}>
-                    <strong className={'text-themeGrayscale '}>{t('Kelli Lebsack')}</strong>
-                    <span className={'text-themeGrayscale500'}>{t('503')}</span>
-                </div>
-            </div>,
-            team:"Recruitment",
-            Department: 'HR',
-            From: '23 May 2024',
-            To: '23 May 2024',
-            LineManager: "Company Admin",
-            Client: '-',
-            action: <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4 w-44">
-                    <li className="!p-0">
-                        <a onClick={() => {setChangeTeam(true)}} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><Edit /></span>
-                            <span>{t("Change Team")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <Link href='/employees/details/6689569e410235cd11e326b2' className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>{t("Detail")}</span>
-                        </Link>
-                    </li>
-                    <li className="!p-0">
-                        <a onClick={() => {
-                            Toast.dynamicTitle(() => {
-                                // dispatch(DeleteCustomfield(item._id, () => {
-                                Toast.success(t("Remote Access Revoked Successfully"))
-                                // }))
-                            }, t,'Are you want to revoke remote access for this employee?')
-                        }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                            <span><Trash /></span>
-                            <span>{t("Revoke")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>
-        },
-    ]
     return (
         <section className="flex flex-col grow">
-            {/* {is_loading && <PageLoader/>} */}
             <div className="flex justify-between pb-6">
                 <h1 className="text-h4 mb-0">{t("Remote Employees")}</h1>
             </div>
@@ -199,10 +172,12 @@ export default function Employees() {
                     setPerPage={setPerPage}
                     page={page}
                     setPage={setPage}
-                    className={'zt-employeeTable zt-attendanceRequestsTable'}
                 />
             </div>
-            {changeTeam && <ChangeRemoteTeamForm onClose={()=>setChangeTeam(false)}/>}
+            {changeTeam && <ChangeRemoteTeamForm onClose={() => setChangeTeam(false)}
+                employee={changeTeam._id}
+                team={changeTeam?.team?.name}
+            />}
         </section>
     )
 }
