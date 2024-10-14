@@ -18,66 +18,65 @@ export default function Pagination({
                 {totalPages > 1 &&
                     <ul className="m-0 p-0 flex items-center gap-5">
                         <li>
-                            <button className={`w-[32px] h-[32px] border border-gray-200 flex items-center justify-center rounded-8 ${page === 1 ? 'text-gray-500' : ''} `}
+                            <button className={`zt-pagination-btn ${page === 1 ? 'disabled' : ''} `}
                                 disabled={page === 1} type="button"
                                 onClick={() => pagination.prevAction()}>
-
-                                <ChevronLeft />
+                                <ChevronLeft className={"w-3 h-3"} />
                             </button>
                         </li>
                         {pages.length < 6 &&
-                            pages.map((page) => (
-                                <li key={`pagination-${page}`}>
-                                    <button className={`w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 font-semibold text-xs ${page === page ? 'bg-gray-100' : 'dark:text-white'}`}
-                                        type="button" onClick={() => pagination.clickAction(page)}
-                                    >{page}</button>
+                            pages.map((item) => (
+                                <li key={`pagination-${item}`}>
+                                    <button className={`zt-pagination-btn ${item === page ? 'active' : ''}`}
+                                        type="button" onClick={() => pagination.clickAction(item)}
+                                    >{item}</button>
                                 </li>
                             ))
                         }
 
                         {pages.length > 6 &&
                             <>
-                                {pages.slice(0, 2).map((page) => (
-                                    <li key={`pagination-${page}`}>
-                                        <button className={`w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 font-semibold text-xs ${page === page ? 'bg-gray-100' : 'dark:text-white'}`}
-                                            type="button" onClick={() => pagination.clickAction(page)}>{page}</button>
+                                {pages.slice(0, 2).map((item) => (
+                                    <li key={`pagination-${item}`}>
+                                        <button className={`zt-pagination-btn ${item === page ? 'active' : ''}`}
+                                            type="button" onClick={() => pagination.clickAction(item)}>{item}</button>
                                     </li>
                                 ))}
 
                                 {page > 1 && page < (totalPages - 1) &&
                                     <li>
-                                        <button className="w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 dark:text-white font-semibold text-xs" type="button">...</button>
+                                        <button className="zt-pagination-btn" type="button"><span className='pb-2'>...</span></button>
                                     </li>
                                 }
 
                                 {page > 1 && page < (totalPages - 1) &&
-                                    pages.slice(page - (page > 2 ? 2 : 0), page + (page === (totalPages - 2) ? 0 : (page > 2 ? 1 : 3))).map((page) => (
-                                        <li key={`pagination-${page}`}>
-                                            <button className={`w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 font-semibold text-xs ${page === page ? 'bg-gray-100' : 'dark:text-white'}`}
-                                                type="button" onClick={() => pagination.clickAction(page)}>{page}</button>
+                                    pages.slice(page - (page > 2 ? 2 : 0), page + (page === (totalPages - 2) ? 0 : (page > 2 ? 1 : 3))).map((item) => (
+                                        <li key={`pagination-${item}`}>
+                                            <button className={`zt-pagination-btn ${item === page ? 'active' : ''}`}
+                                                type="button" onClick={() => pagination.clickAction(item)}>{item}</button>
                                         </li>
                                     ))
                                 }
 
                                 <li>
-                                    <button className="w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 dark:text-white font-semibold text-xs" type="button">...</button>
+                                    <button className="zt-pagination-btn" type="button"><span className='pb-2'>...</span></button>
                                 </li>
 
                                 {
-                                    pages.slice(-2).map((page) => (
-                                        <li key={`pagination-${page}`}>
-                                            <button className={`w-[32px] h-[32px] flex items-center justify-center rounded-10 text-gray-900 font-semibold text-xs ${page === page ? 'bg-gray-100' : 'dark:text-white'}`}
-                                                type="button" onClick={() => pagination.clickAction(page)}>{page}</button>
+                                    pages.slice(-3).map((item) => (
+                                        <li key={`pagination-${item}`}>
+                                            <button className={`zt-pagination-btn ${item === page ? 'active' : ''}`}
+                                                type="button" onClick={() => pagination.clickAction(item)}>{item}</button>
                                         </li>
                                     ))
                                 }
                             </>
                         }
                         <li>
-                            <button className={`w-[32px] h-[32px] border border-gray-200 flex items-center justify-center rounded-8 ${page === totalPages ? 'text-gray-500' : ''} `}
+                            <button className={`zt-pagination-btn ${page === totalPages ? 'disabled' : ''} `}
                                 disabled={page === totalPages} type="button"
                                 onClick={() => pagination.nextAction()}>
-                                <ChevronRight width={15} height={18} />
+                                <ChevronLeft className={"rotate-180 w-3 h-3"} />
                             </button>
                         </li>
                     </ul>

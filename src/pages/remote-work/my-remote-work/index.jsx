@@ -1,24 +1,49 @@
-import { Datepicker, SearchSelect } from "@/components/elements";
+import { Datepicker, DisplayDate, SearchSelect } from "@/components/elements";
 import { ArivalIcon, LeftTimeIcon, ProductiveTimeIcon, RemoteTimeIcon } from '@/components/svg'
 import StatsCard from "@/components/elements/Widgets/StatsCard";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import axios from "@/util/axios";
 import moment from "moment";
+import Image from "next/image";
+import Pagination from "@/components/elements/Table/pagination";
 export default function MyRemoteWork() {
     const { t } = useTranslation()
     const [fromDate, setFromDate] = useState(new Date())
     const [toDate, setToDate] = useState(new Date())
+    const [page, setPage] = useState(1)
+    const [perPage, setPerPage] = useState(8)
     const [stats, setStats] = useState({
         arrival_time: null,
         left_time: null,
         productive_time: null,
         total_remote_time: null,
-        process_list: []
+        process_list: [],
+        screenshots: []
     })
     const getStats = async (params = {}) => {
-        const data = await axios.get('/remote/dashboard-stats', { params })
-        setStats(data)
+        let data = await axios.get('/remote/my-remote-work', { params })
+        let processed_process_list = data?.process_list?.reduce((acc, item) => {
+            const subProcess = item.process.name.split('-').at(0).trim();
+            const processName = item.process.name.split('-').at(-1).trim();
+            console.log("subProcess", subProcess, "processName", processName);
+            const existingItem = acc.find(i => i.name === processName);
+            if (existingItem) {
+                existingItem.time_spent += item.time_spent;
+                if (!existingItem.subProcess.some(sp => sp === subProcess)) {
+                    existingItem.subProcess.push(subProcess);
+                }
+            } else {
+                acc.push({
+                    ...item,
+                    name: processName,
+                    subProcess: [subProcess]
+                });
+            }
+            return acc;
+        }, []);
+        console.log(processed_process_list);
+        setStats({ ...data, process_list: processed_process_list })
     }
 
     useEffect(() => {
@@ -32,10 +57,18 @@ export default function MyRemoteWork() {
     const getTimeInHoursAndMinutes = (seconds = 0) => {
         const hours = Math.floor(seconds / 3600) || 0;
         const minutes = Math.floor((seconds % 3600) / 60) || 0;
-        return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+        const remainingSeconds = Math.floor(seconds % 60);
+        return hours > 0 ? `${hours}h ${minutes}m ${remainingSeconds}s` : minutes > 0 ? `${minutes}m ${remainingSeconds}s` : `${remainingSeconds}s`;
     }
 
     const differenceInDays = moment(toDate).diff(moment(fromDate), 'days')
+
+
+    const indexOfLastItem = page * perPage;
+    const indexOfFirstItem = indexOfLastItem - perPage;
+    const paginatedScreenshots = stats?.screenshots.slice(indexOfFirstItem, indexOfLastItem);
+
+
     return (
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
@@ -84,7 +117,7 @@ export default function MyRemoteWork() {
                             {
                                 productiveProcesses?.length > 0 ? productiveProcesses?.map((item, index) => (
                                     <div className="flex items-center justify-between" key={index}>
-                                        <span className="text-md font-medium dark:text-white">{item?.process?.name}</span>
+                                        <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
                                 )) : <div className="flex justify-center items-center h-full">
@@ -105,8 +138,8 @@ export default function MyRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themeDanger/10">
                             {
                                 unproductiveProcesses?.length > 0 ? unproductiveProcesses?.map((item, index) => (
-                                    <div className="flex items-center justify-between" key={index}>
-                                        <span className="text-md font-medium dark:text-white">{item?.process?.name}</span>
+                                    <div className="flex items-start justify-between" key={index}>
+                                        <span className="text-md font-medium dark:text-white mb-0 truncate w-2/3">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
                                 )) : <div className="flex justify-center items-center h-full">
@@ -127,7 +160,7 @@ export default function MyRemoteWork() {
                             {
                                 neutralProcesses?.length > 0 ? neutralProcesses?.map((item, index) => (
                                     <div className="flex items-center justify-between" key={index}>
-                                        <span className="text-md font-medium dark:text-white">{item?.process?.name}</span>
+                                        <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
                                 )) : <div className="flex justify-center items-center h-full">
@@ -137,10 +170,37 @@ export default function MyRemoteWork() {
                         </div>
                     </div>
                 </div>
+                <h4 className="text-h4 mb-0">{t("Screenshots")}</h4>
+                <div className="grid grid-cols-4 gap-4">
+                    {
+                        paginatedScreenshots?.map((item, index) => (
+                            <div className="w-full h-full" key={index}>
+                                <figure className="w-full h-full">
+                                    <Image src={item?.url} alt={item?.processName} width={100} height={100} className="w-full object-cover" />
+                                    <figcaption className="text-themePrimary text-sm">
+                                        <span className="font-medium">{item?.processName}</span>
+                                        <DisplayDate date={item?.taken_at} time={true} />
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        ))
+                    }
+                </div>
+                <Pagination
+                    pagination={{
+                        totalRecords: stats?.screenshots?.length,
+                        showPerPage: false,
+                        prevAction: () => page > 1 && setPage(page - 1),
+                        clickAction: (value) => setPage(value),
+                        nextAction: () => setPage(page + 1),
+                    }}
+                    currentLength={paginatedScreenshots?.length}
+                    perPage={perPage}
+                    setPerPage={setPerPage}
+                    page={page}
+                    setPage={setPage}
+                />
             </div>
-
-
-
         </section>
     )
 }

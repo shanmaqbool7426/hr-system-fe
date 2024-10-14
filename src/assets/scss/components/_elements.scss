@@ -860,3 +860,15 @@
     }
   }
 }
+
+.zt-pagination-btn {
+  @apply flex items-center justify-center w-9 h-9 border border-gray-200 dark:border-dark-3 rounded-full dark:text-white leading-none;
+
+  &.disabled {
+    @apply bg-themeGrayscale300 dark:bg-dark-6 dark:border-dark-6 cursor-not-allowed
+  }
+
+  &.active {
+    @apply bg-themePrimary text-white border-themePrimary
+  }
+}
