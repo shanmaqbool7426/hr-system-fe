@@ -65,7 +65,6 @@ export default function CreateAttendanceForm({ onClose, object }) {
       dispatch(CreateShiftplan(values));
     },
   });
-  console.log(formik.values, "Custom");
 
   const onCompleted = () => {
     Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`));

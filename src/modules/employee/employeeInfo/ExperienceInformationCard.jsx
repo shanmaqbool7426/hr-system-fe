@@ -55,8 +55,8 @@ export default function ExperienceInformationCard() {
       };
       const valuesToSubmit = {
         ...values,
-        startDate: values.startDate.toISOString(),
-        endDate: values.endDate ? values.endDate.toISOString() : null,
+        startDate: values.startDate.format(),
+        endDate: values.endDate ? values.endDate.format() : null,
       };
       if (edit) {
         dispatch(UpdateJobExperience(edit._id, { user: employee_details._id, ...valuesToSubmit }, onSuccess));

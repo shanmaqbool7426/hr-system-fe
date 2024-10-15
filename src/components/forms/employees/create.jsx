@@ -247,7 +247,6 @@ export default function CreateEmployeeForm({ onClose, employee }) {
   ];
 
   const formTitle = employee ? t("Update employee") : t("Create employee");
-  console.log(formik.errors);
 
   return (
     <BaseForm

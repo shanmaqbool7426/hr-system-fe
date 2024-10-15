@@ -6,7 +6,7 @@ export const fetchJobs = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await axios.get('/add-new-jobs/getJobs');
-            console.log('Fetched jobs:', response);
+            console.error('Fetched jobs:', response);
             const data =  response;
             return data;
         } catch (error) {
@@ -22,7 +22,7 @@ export const createJob = createAsyncThunk(
     async (jobData, { rejectWithValue }) => {
         try {
             const response = await axios.post('/add-new-jobs/create', jobData);
-            console.log('Job created:', response);
+            console.error('Job created:', response);
             return response;
         } catch (error) {
             console.error('Create job error:', error);

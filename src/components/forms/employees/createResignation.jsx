@@ -36,7 +36,6 @@ export default function CreateResignationForm({ onClose, object }) {
 			file: Yup.string(),
 		}),
 		onSubmit: (values) => {
-			console.log("Form Values:", values); // Logging form values on submit
 		}
 	});
 

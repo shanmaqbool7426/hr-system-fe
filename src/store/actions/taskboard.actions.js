@@ -11,7 +11,7 @@ export const FetchProjectTaskBoards = (project_id,payload) => async (dispatch) =
     dispatch(setTaskBoardList(data));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -26,7 +26,7 @@ export const FetchTaskBoards = (payload) => async (dispatch) => {
       dispatch(setTaskBoardList(data));
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -39,7 +39,7 @@ export const FetchTaskBoards = (payload) => async (dispatch) => {
       dispatch(setTaskBoardDetails(data.board));
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -55,7 +55,7 @@ export const FetchTaskBoards = (payload) => async (dispatch) => {
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -71,7 +71,7 @@ export const FetchTaskBoards = (payload) => async (dispatch) => {
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -85,7 +85,7 @@ export const FetchTaskBoards = (payload) => async (dispatch) => {
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }

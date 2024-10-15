@@ -36,7 +36,7 @@ export const UpdateShift = (id, payload, onSuccess = null) =>
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }

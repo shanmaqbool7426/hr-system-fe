@@ -9,7 +9,7 @@ export const FetchAssets = (payload) => async (dispatch) => {
         const data = await axios.get(`/assets/list?${query}`)
         dispatch(setAssetList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -21,7 +21,7 @@ export const FetchAssetsDetails = (id) => async (dispatch) => {
         const data = await axios.get(`/assets/details/${id}`)
         dispatch(setAssetDetails(data.asset))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -34,7 +34,7 @@ export const CreateAsset = (payload, onSuccess = null) => async (dispatch) => {
         dispatch(pushAsset(data.asset))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -47,7 +47,7 @@ export const UpdateAsset = (id, payload, onSuccess = null) => async (dispatch) =
         dispatch(setAsset(data.asset))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -60,7 +60,7 @@ export const DeleteAsset = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeAsset(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -73,7 +73,7 @@ export const RestoreAsset = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeAsset(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -86,7 +86,7 @@ export const AssignAsset = (id, payload, onSuccess = null) => async (dispatch) =
         dispatch(setAsset(data.asset))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -99,7 +99,7 @@ export const ReturnAsset = (id, payload, onSuccess = null) => async (dispatch) =
         dispatch(setAsset(data.asset))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -111,7 +111,7 @@ export const FetchAssetHistory = () => async (dispatch) => {
         const data = await axios.get(`/assets/history`)
         dispatch(setAssetHistory(data.list))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

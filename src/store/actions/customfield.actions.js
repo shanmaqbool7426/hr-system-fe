@@ -9,7 +9,7 @@ export const FetchCustomfields = (payload) => async (dispatch) => {
         const data = await axios.get(`/custom-fields/list?${query}`)
         dispatch(setCustomfieldList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const CreateCustomfield = (payload, onSuccess = null) => async (dispatch)
         dispatch(pushCustomfield(data.custom_field))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const UpdateCustomfield = (id, payload, onSuccess = null) => async (dispa
         dispatch(setCustomfield(data.custom_field))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -48,7 +48,7 @@ export const DeleteCustomfield = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeCustomfield(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

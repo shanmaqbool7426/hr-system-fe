@@ -15,7 +15,7 @@ export const FetchGazettedHoliday = (payload) => async (dispatch) => {
     dispatch(setHolidaysList(data));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -46,7 +46,7 @@ export const UpdateGazetteHoliday = (id, payload, onSuccess = null) => async (
     onSuccess && onSuccess();
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -60,7 +60,7 @@ export const DeleteHoliday = (id, onSuccess = null) => async (dispatch) => {
     onSuccess && onSuccess();
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }

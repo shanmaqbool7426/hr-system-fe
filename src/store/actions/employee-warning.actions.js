@@ -19,7 +19,7 @@ export const CreateWarning = (payload, onSuccess = null) => async (
     dispatch(pushWarning(data.warning));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -38,7 +38,7 @@ export const UpdateWarning = (id, payload, onSuccess = null) => async (
     dispatch(setWarning(data.warning));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -52,7 +52,7 @@ export const DeleteWarning = (id, onSuccess = null) => async (dispatch) => {
     onSuccess && onSuccess();
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }

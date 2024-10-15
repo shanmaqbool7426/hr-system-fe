@@ -35,7 +35,6 @@ export default function TransitionPage() {
 			reason: Yup.string(),
 		}),
 		onSubmit: (values) => {
-			console.log("Form Values:", values); // Logging form values on submit
 		}
 	});
 	const [sortCol, setSortCol] = useState(null)

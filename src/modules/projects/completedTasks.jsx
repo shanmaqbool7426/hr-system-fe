@@ -24,7 +24,6 @@ export default function CompletedTaskModule() {
     const { completed_task_list} = useSelector(state => state.task)
 
     useEffect(()=>{
-        console.log('first', completed_task_list)
         dispatch(FetchEmployees())
         dispatch(FetchCompletedTasks())
     }, [dispatch])

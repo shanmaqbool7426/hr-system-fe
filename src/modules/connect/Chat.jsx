@@ -17,7 +17,6 @@ const Chat = () => {
     const [isRichText, setIsRichText] = useState(false);
 
     function handleOnEnter(text) {
-        console.log("enter", text);
     }
 
     return (

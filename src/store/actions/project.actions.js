@@ -13,7 +13,7 @@ export const FetchProject = (payload) => async (dispatch) => {
         const data = await axios.get(`/projects/list?${query}`)
         dispatch(setProjectList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -26,7 +26,7 @@ export const FetchCompletedProjects = (payload) => async (dispatch) => {
         const data = await axios.get(`/projects/list-completed/?${query}`);
         dispatch(setCompletedProjectList(data));
         return true;
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false));
     }
@@ -38,7 +38,7 @@ export const FetchProjectDetails = (id) => async (dispatch) => {
         const { project, total_tasks, completed_tasks } = data;
         dispatch(setProjectDetails({ project, total_tasks, completed_tasks }));
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -51,7 +51,7 @@ export const CreateProject = (payload, onSuccess = null) => async (dispatch) => 
         dispatch(pushProject(data.project))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -64,7 +64,7 @@ export const UpdateProject = (id, payload, onSuccess = null) => async (dispatch)
         dispatch(setProject(data.project))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -77,7 +77,7 @@ export const DeleteProject = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeProject(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -90,7 +90,7 @@ export const UploadAttachment = (payload, onSuccess = null) => async (dispatch) 
         dispatch(pushAttachment(data.attachment))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -103,7 +103,7 @@ export const DeleteAttachment = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeAttachment(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

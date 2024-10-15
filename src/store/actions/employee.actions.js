@@ -16,7 +16,7 @@ export const FetchEmployees = (payload) => async (dispatch) => {
     dispatch(setEmployeesList(data));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -29,7 +29,7 @@ export const FetchEmployeeDetails = (id) => async (dispatch) => {
     dispatch(setEmployeeDetails(data.employee));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -45,7 +45,7 @@ export const CreateEmployee =
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -61,7 +61,7 @@ export const UpdateEmployee =
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -77,7 +77,7 @@ export const DeleteEmployee =
       onSuccess && onSuccess();
       return true;
     } catch (err) {
-      console.log("Error", err);
+      console.error("Error", err);
     } finally {
       dispatch(setLoading(false));
     }

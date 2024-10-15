@@ -19,7 +19,7 @@ export const CreateAcademic = (payload, onSuccess = null) => async (
     dispatch(pushAcademic(data.academic));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -38,7 +38,7 @@ export const UpdateAcademic = (id, payload, onSuccess = null) => async (
     dispatch(setAcademic(data.academic));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -52,7 +52,7 @@ export const DeleteAcademic = (id, onSuccess = null) => async (dispatch) => {
     onSuccess && onSuccess();
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }

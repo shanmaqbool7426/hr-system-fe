@@ -9,7 +9,7 @@ export const CreateFeedBack = (payload, onSuccess = null) => async (dispatch) =>
         dispatch(pushFeedBack(data.feedback))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

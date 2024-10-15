@@ -15,9 +15,6 @@ export default function AssetsList() {
     const [perPage, setPerPage] = useState(10)
     const {  employee_details } = useSelector((state) => state.employee);
     const [raiseIssue, setRaiseIssue] = useState(false)
-    useEffect(()=>{
-        console.log('employee_details', employee_details?.assets)
-    },[])
     const headings = [
     
         { title: t("Asset ID"), col: "assetID", sort: false },

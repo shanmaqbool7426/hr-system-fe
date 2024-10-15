@@ -9,7 +9,7 @@ export const FetchLeaveRequests = (payload) => async (dispatch) => {
         const data = await axios.get(`/leave-requests/list?${query}`)
         dispatch(setLeaverequestList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const CreateLeaveRequest = (payload, onSuccess = null) => async (dispatch
         dispatch(pushLeaverequest(data.leave_request))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const UpdateLeaveRequest = (id, payload, onSuccess = null) => async (disp
         dispatch(setLeaverequest(data.leave_request))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -48,7 +48,7 @@ export const DeleteRequest = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeLeaverequest(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

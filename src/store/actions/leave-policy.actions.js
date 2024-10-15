@@ -9,7 +9,7 @@ export const FetchLeavePolicies = (payload) => async (dispatch) => {
         const data = await axios.get(`/leaves/list?${query}`)
         dispatch(setLeavepolicyList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const CreateLeavePolicy = (payload, onSuccess = null) => async (dispatch)
         dispatch(pushLeavepolicy(data.leave))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const UpdateLeavePolicy = (id, payload, onSuccess = null) => async (dispa
         dispatch(setLeavepolicy(data.leave))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -48,7 +48,7 @@ export const DeletePolicy = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeLeavepolicy(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

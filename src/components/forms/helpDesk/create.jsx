@@ -44,7 +44,6 @@ export default function CreatHelpDeskForm({ onClose, object, }) {
         Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
-    console.log(formik.values);
     const itCategory = [
         { value: "Hardware Issues", display: "Hardware Issues" },
         { value: "Software Problems", display: "Software Problems" },

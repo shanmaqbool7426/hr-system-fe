@@ -15,12 +15,10 @@ export default function AddJob({ onClose, type, object, additionFields }) {
     const departments = useSelector(state => state.departments) || [];
 
     useEffect(() => {
-        console.log("Fetching departments...");
         dispatch(FetchDepartments({}));
     }, [dispatch]);
 
     useEffect(() => {
-        console.log("Departments data:", departments);
     }, [departments]);
 
     const formik = useFormik({
@@ -46,7 +44,6 @@ export default function AddJob({ onClose, type, object, additionFields }) {
             prefix: additionFields.length > 0 ? Yup.string().required(t('formik.nameRequired')) : Yup.string().optional(),
         }),
         onSubmit: async (values) => {
-            console.log("Form values:", values);
             return object
                 ? dispatch(UpdateCustomfield(object._id, values, onCompleted))
                 : dispatch(createJob(values, onCompleted));

@@ -29,7 +29,6 @@ export default function CreateTypeForm({ onClose, object }) {
         Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
         onClose()
     }
-    console.log(formik.values)
     const formElements = [
         {
             type: "text",

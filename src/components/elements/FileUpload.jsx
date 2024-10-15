@@ -40,7 +40,6 @@ const FileUpload = ({ label, id, name, onChange, className, max, accept, uploadI
 				return
 			}
 			setSelectedFile(event.target.files[0])
-			console.log("Selected File", event.target.files[0]);
 
 			onChange && onChange(event.target.files[0])
 		} else {

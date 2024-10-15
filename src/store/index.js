@@ -16,9 +16,10 @@ import taskboard from "./slices/taskboard.slice";
 import task from "./slices/task.slice"
 import taskraiseissue from "./slices/task-raise-issue.slice"
 import job from "./slices/job.slice"
-import remotecategory from "./slices/remote-category.slice.js"
-import remoteteam from "./slices/remote-team.slice.js"
-import remoterequest from "./slices/remote-request.slice.js"
+import remoteapplication from "./slices/remote-application.slice"
+import remotecategory from "./slices/remote-category.slice"
+import remoteteam from "./slices/remote-team.slice"
+import remoterequest from "./slices/remote-request.slice"
 import shift from "./slices/shiftplan.slice"
 
 export default configureStore({
@@ -40,6 +41,7 @@ export default configureStore({
     task,
     taskboard,
     taskraiseissue,
+    remoteapplication,
     remotecategory,
     remoteteam,
     remoterequest,

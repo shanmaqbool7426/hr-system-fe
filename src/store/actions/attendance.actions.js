@@ -9,7 +9,7 @@ export const FetchAttendance = (payload) => async (dispatch) => {
     dispatch(setAttendanceList(data.list));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -21,7 +21,7 @@ export const CheckIn = () => async (dispatch) => {
     const data = await axios.post('/attendance/check-in');  
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -33,7 +33,7 @@ export const todaysAttendance = () => async (dispatch) => {
     dispatch(setTodayAttendance(data?.attendace));  
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -45,7 +45,7 @@ export const startBreak = (id) => async (dispatch) => {
     dispatch(setBreakTimeStart(data?.attendance_break)) 
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -57,7 +57,7 @@ export const endBreak = (id) => async (dispatch) => {
     const data = await axios.post(`/attendance/end-break/${id}`);   
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -67,12 +67,12 @@ export const checkOut = (id) => async (dispatch) => {
   try {
     dispatch(setLoading(true));  
     const data = await axios.post(`/attendance/check-out/${id}`);  
-    console.log(data , "hello");
+    console.error(data , "hello");
      
     dispatch(setCheckoutAttendance(data?.attendance))
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -87,7 +87,7 @@ export const getBreaks = (id) => async (dispatch) => {
     dispatch(setLastBreak(lastBreak)) 
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }

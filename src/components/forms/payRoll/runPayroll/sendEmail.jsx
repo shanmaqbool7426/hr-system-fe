@@ -53,7 +53,6 @@ export default function SendEmailForm({ onClose, object, }) {
         Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
         onClose()
     }
-    console.log(formik.values);
     const formElements=[
         {
             

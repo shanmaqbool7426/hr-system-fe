@@ -9,7 +9,7 @@ export const CreateJobExperience = (payload, onSuccess = null) => async (dispatc
         dispatch(pushJobExperience(data.experience))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const UpdateJobExperience = (id, payload, onSuccess = null) => async (dis
         dispatch(setJobExperience(data.experience))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const DeleteJobExperience = (id, onSuccess = null) => async (dispatch) =>
         dispatch(removeJobExperience(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

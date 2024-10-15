@@ -20,7 +20,6 @@ export default function ProjectFeedbackForm({ onClose, object , project }) {
             display: `${member.firstName} ${member.lastName}  (Member)`,
         })),
     ];
-    console.log('allMembers', allMembers)
     const formik = useFormik({
         initialValues: {
             name: object?.name || "",

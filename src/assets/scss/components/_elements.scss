@@ -859,6 +859,14 @@
       @apply bg-themePurple dark:bg-themePurple/80
     }
   }
+
+  &.variant-red {
+    @apply bg-red-400/20 dark:bg-red-400/50;
+
+    .zt-side-icon-placeholder {
+      @apply bg-themeDanger dark:bg-themeDanger/80
+    }
+  }
 }
 
 .zt-pagination-btn {

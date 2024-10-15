@@ -36,8 +36,8 @@ export default function EducationInformationCard() {
       };
       const valuesToSubmit = {
         ...values,
-        startDate: values.startDate ? values.startDate.toISOString() : null,
-        endDate: values.endDate ? values.endDate.toISOString() : null,
+        startDate: values.startDate ? values.startDate.format() : null,
+        endDate: values.endDate ? values.endDate.format() : null,
       };
       if (edit) {
         dispatch(UpdateAcademic(edit._id, { user: employee_details._id, ...valuesToSubmit }, onSuccess));

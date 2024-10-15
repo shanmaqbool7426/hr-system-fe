@@ -9,7 +9,7 @@ export const FetchDepartments = (payload) => async (dispatch) => {
         const data = await axios.get(`/departments/list?${query}`)
         dispatch(setDepartmentsList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const CreateDepartment = (payload, onSuccess = null) => async (dispatch) 
         dispatch(pushDepartment(data.department))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const UpdateDepartment = (id, payload, onSuccess = null) => async (dispat
         dispatch(setDepartment(data.department))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -48,7 +48,7 @@ export const DeleteDepartment = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeDepartment(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

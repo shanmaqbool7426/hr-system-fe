@@ -11,7 +11,7 @@ export const CreateRaiseIssue = (payload, onSuccess = null) => async (dispatch) 
         dispatch(pushRaiseIssue(data.issue))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

@@ -14,7 +14,6 @@ export const leavepolicySlice = createSlice({
             state.leave_policies = action.payload.list
         },
         setLeavepolicy(state, action) {
-            console.log("setLeavepolicy", state.leave_policies);
             let index = state.leave_policies.findIndex((item) => item._id === action.payload._id)
             if (index !== -1)
                 state.leave_policies[index] = action.payload

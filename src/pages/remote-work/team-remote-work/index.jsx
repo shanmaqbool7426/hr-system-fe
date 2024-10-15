@@ -1,4 +1,4 @@
-import { Datepicker, DisplayDate, SearchSelect } from "@/components/elements";
+import { Button, Datepicker, DisplayDate, SearchSelect } from "@/components/elements";
 import { ArivalIcon, LeftTimeIcon, ProductiveTimeIcon, RemoteTimeIcon } from '@/components/svg'
 import StatsCard from "@/components/elements/Widgets/StatsCard";
 import { useTranslation } from "next-i18next";
@@ -7,12 +7,23 @@ import axios from "@/util/axios";
 import moment from "moment";
 import Image from "next/image";
 import Pagination from "@/components/elements/Table/pagination";
-export default function MyRemoteWork() {
+import { useDispatch, useSelector } from "react-redux";
+import { FetchEmployees } from "@/store/actions/employee.actions";
+import { FetchRemoteTeams } from "@/store/actions/remote-team.actions";
+export default function TeamRemoteWork() {
+    const dispatch = useDispatch()
     const { t } = useTranslation()
-    const [fromDate, setFromDate] = useState(new Date())
-    const [toDate, setToDate] = useState(new Date())
-    const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(8)
+
+    const { team_list } = useSelector(state => state.remoteteam)
+    const { employees_list } = useSelector(state => state.employee)
+    const [loading, setLoading] = useState(false)
+    const [filters, setFilters] = useState({
+        team: null,
+        employee: null,
+        startDate: new Date(),
+        endDate: new Date()
+    })
+
     const [stats, setStats] = useState({
         arrival_time: null,
         left_time: null,
@@ -21,32 +32,45 @@ export default function MyRemoteWork() {
         process_list: [],
         screenshots: []
     })
+
+    const [page, setPage] = useState(1)
+    const [perPage, setPerPage] = useState(8)
+
     const getStats = async (params = {}) => {
-        let data = await axios.get('/remote/my-remote-work', { params })
-        let processed_process_list = data?.process_list?.reduce((acc, item) => {
-            const subProcess = item.process.name.split('-').at(0).trim();
-            const processName = item.process.name.split('-').at(-1).trim();
-            const existingItem = acc.find(i => i.name === processName);
-            if (existingItem) {
-                existingItem.time_spent += item.time_spent;
-                if (!existingItem.subProcess.some(sp => sp === subProcess)) {
-                    existingItem.subProcess.push(subProcess);
+        setLoading(true)
+        try {
+            let data = await axios.get('/remote/team-remote-work', { params })
+            let processed_process_list = data?.process_list?.reduce((acc, item) => {
+                const subProcess = item.process.name.split('-').at(0).trim();
+                const processName = item.process.name.split('-').at(-1).trim();
+                const existingItem = acc.find(i => i.name === processName);
+                if (existingItem) {
+                    existingItem.time_spent += item.time_spent;
+                    if (!existingItem.subProcess.some(sp => sp === subProcess)) {
+                        existingItem.subProcess.push(subProcess);
+                    }
+                } else {
+                    acc.push({
+                        ...item,
+                        name: processName,
+                        subProcess: [subProcess]
+                    });
                 }
-            } else {
-                acc.push({
-                    ...item,
-                    name: processName,
-                    subProcess: [subProcess]
-                });
-            }
-            return acc;
-        }, []);
-        setStats({ ...data, process_list: processed_process_list })
+                return acc;
+            }, []);
+            setStats({ ...data, process_list: processed_process_list })
+        }
+        catch (err) { }
+        finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
-        getStats({ startDate: fromDate, endDate: toDate })
-    }, [fromDate, toDate])
+        dispatch(FetchEmployees())
+        dispatch(FetchRemoteTeams())
+    }, [dispatch])
+
 
     const productiveProcesses = stats?.process_list?.filter(item => item?.process?.nature === "productive")
     const unproductiveProcesses = stats?.process_list?.filter(item => item?.process?.nature === "unproductive")
@@ -59,7 +83,7 @@ export default function MyRemoteWork() {
         return hours > 0 ? `${hours}h ${minutes}m ${remainingSeconds}s` : minutes > 0 ? `${minutes}m ${remainingSeconds}s` : `${remainingSeconds}s`;
     }
 
-    const differenceInDays = moment(toDate).diff(moment(fromDate), 'days')
+    const differenceInDays = moment(filters?.endDate).diff(moment(filters?.startDate), 'days')
 
 
     const indexOfLastItem = page * perPage;
@@ -71,25 +95,48 @@ export default function MyRemoteWork() {
         <section className="flex flex-col grow">
             <div className="flex justify-between pb-6">
                 <div className="flex flex-col">
-                    <h1 className="text-h4 mb-0">{t("My Remote Work")}</h1>
+                    <h1 className="text-h4 mb-0">{t("Team Remote Work")}</h1>
                     <p className="text-body-2 text-gray-500">
-                        {t("View your remote work stats")}
+                        {t("View your team remote work stats")}
                     </p>
                 </div>
-                <div className="flex items-center gap-4 px-4">
+                <div className="flex items-end gap-4 px-4">
+                    <SearchSelect
+                        label={t("Team")}
+                        containerClass={'w-max'}
+                        name={'team'}
+                        value={filters?.team}
+                        onChange={(value) => setFilters({ ...filters, team: value })}
+                        list={team_list?.map(item => ({ display: item?.name, value: item?._id }))}
+                    />
+                    <SearchSelect
+                        label={t("Employee")}
+                        containerClass={'w-max'}
+                        name={'employee'}
+                        value={filters?.employee}
+                        onChange={(value) => setFilters({ ...filters, employee: value })}
+                        list={employees_list?.filter(item => item?.workMode === "remote")?.map(item => ({ display: `${item?.firstName} ${item?.lastName}`, value: item?._id }))}
+                    />
                     <Datepicker
                         label={t("From Date")}
                         containerClass={'w-max'}
-                        name={'fromDate'}
-                        value={fromDate}
-                        onChange={(value) => setFromDate(value)}
+                        name={'startDate'}
+                        value={filters?.startDate}
+                        onChange={(value) => setFilters({ ...filters, startDate: value })}
                     />
                     <Datepicker
                         label={t("To Date")}
                         containerClass={'w-max'}
-                        name={'toDate'}
-                        value={toDate}
-                        onChange={(value) => setToDate(value)}
+                        name={'endDate'}
+                        value={filters?.endDate}
+                        onChange={(value) => setFilters({ ...filters, endDate: value })}
+                    />
+                    <Button
+                        value={t("Apply")}
+                        variant="primary"
+                        disabled={loading}
+                        is_loading={loading}
+                        onClick={() => getStats({ ...filters })}
                     />
                 </div>
             </div>

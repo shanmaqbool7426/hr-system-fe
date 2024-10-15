@@ -42,7 +42,6 @@ export default function CreateTransitionForm({ onClose, object }) {
 			reason: Yup.string(),
 		}),
 		onSubmit: (values) => {
-			console.log("Form Values:", values); // Logging form values on submit
 		}
 	});
 

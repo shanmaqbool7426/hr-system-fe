@@ -91,19 +91,13 @@ export default function SearchSelect({
               </div>
             )}
 
-            {/* <Fragment
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              afterLeave={() => setQuery("")}
-            > */}
             <ComboboxOptions className="zt-multiSelectList py-2">
               {filtered?.length > 0 ? (
                 filtered.map((item, index) => (
                   <ComboboxOption
                     key={index}
                     value={item.value}
-                    className={`hover:text-themeSuccess cursor-pointer px-4 py-2 ${comboClass}`}
+                    className={`hover:text-themeSuccess cursor-pointer px-4 py-2 flex items-center justify-between ${comboClass}`}
                   >
                     {({ selected }) => (
                       <>
@@ -128,7 +122,6 @@ export default function SearchSelect({
                 </p>
               )}
             </ComboboxOptions>
-            {/* </Fragment> */}
           </div>
         </>
       </Combobox>

@@ -11,7 +11,6 @@ const ImageUpload = ({ label, id, onChange, className, max, accept, uploadIcon, 
                 let fileURL = await Storage.upload(file, auth_user?.company?._id, (url) => {
                     formik.setFieldValue('fileURL', url);
                 });
-                console.log('fileUrl', fileURL)
             } catch (error) {
                 console.error("File upload failed", error);
             }

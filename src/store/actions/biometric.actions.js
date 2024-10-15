@@ -9,7 +9,7 @@ export const FetchDevices = (payload) => async (dispatch) => {
         const data = await axios.get(`/biometric/list?${query}`)
         dispatch(setDevicesList(data))
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -22,7 +22,7 @@ export const CreateDevice = (payload, onSuccess = null) => async (dispatch) => {
         dispatch(pushDevice(data.device))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -35,7 +35,7 @@ export const UpdateDevice = (id, payload, onSuccess = null) => async (dispatch) 
         dispatch(setDevice(data.device))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -48,7 +48,7 @@ export const DeleteDevice = (id, onSuccess = null) => async (dispatch) => {
         dispatch(removeDevice(id))
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }
@@ -60,7 +60,7 @@ export const SyncDevice = (id, onSuccess = null) => async (dispatch) => {
         await axios.post(`/biometric/sync/${id}`)
         onSuccess && onSuccess()
         return true
-    } catch (err) { console.log("Error", err); }
+    } catch (err) { console.error("Error", err); }
     finally {
         dispatch(setLoading(false))
     }

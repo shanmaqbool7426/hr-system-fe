@@ -9,7 +9,6 @@ const ReactComponent = ({className}) => {
     const [text, setText] = useState("");
 
     function handleOnEnter(text) {
-        console.log("enter", text);
     }
     return (
         <div className={`${className} absolute -top-10 hidden chat__emoji  cursor-pointer bg-white shadow-xl rounded-lg p-3 items-center text-xl`}>

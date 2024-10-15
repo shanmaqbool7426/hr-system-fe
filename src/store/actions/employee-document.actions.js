@@ -19,7 +19,7 @@ export const CreateDocument = (payload, onSuccess = null) => async (
     dispatch(pushDocument(data.document));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -38,7 +38,7 @@ export const UpdateDocument = (id, payload, onSuccess = null) => async (
     dispatch(setDocument(data.document));
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }
@@ -52,7 +52,7 @@ export const DeleteDocument = (id, onSuccess = null) => async (dispatch) => {
     onSuccess && onSuccess();
     return true;
   } catch (err) {
-    console.log("Error", err);
+    console.error("Error", err);
   } finally {
     dispatch(setLoading(false));
   }

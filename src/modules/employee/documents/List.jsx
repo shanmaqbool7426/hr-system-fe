@@ -25,7 +25,6 @@ export default function DocumentList() {
     const [newDocument, setNewDocument] = useState({ documentType: '', attachment: null, documentPath: '', uploadedDate: '' });
 
     useEffect(() => {
-        console.log('employee_details', employee_details)
         if (!employee_details) {
             dispatch(FetchEmployees());
         }

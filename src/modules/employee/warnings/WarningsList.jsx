@@ -24,9 +24,6 @@ export default function WarningsList() {
     const [revoke, setRevoke] = useState(false)
     const [selectedWarning, setSelectedWarning] = useState(null)
 
-    useEffect(()=>{
-        console.log('employee_details?.warning', employee_details?.warnings)
-    },[])
     const deleteHandler = (id) => {
         Toast.confirmDelete(() => {
           dispatch(DeleteWarning(id, () => {

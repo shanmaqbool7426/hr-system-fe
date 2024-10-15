@@ -44,7 +44,6 @@ export default function CreateTransferForm({ onClose, object }) {
 			description: Yup.string(),
 		}),
 		onSubmit: (values) => {
-			console.log("Form Values:", values); // Logging form values on submit
 		}
 	});
 

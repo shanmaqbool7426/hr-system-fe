@@ -6,7 +6,6 @@ import { useState } from "react";
 export default function Accounts() {
     const { t } = useTranslation()
     const [remoteEmployess, setRemoteEmployess] = useState(false)
-    console.log(remoteEmployess, "remoteEmployess");
 
     return (
         <section className="flex flex-col grow">
