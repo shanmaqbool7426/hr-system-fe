@@ -1,25 +1,43 @@
 /* All Layout Style start here */
-.zt-defaultLayout { @apply flex bg-themeGrayscale100 }
-.zt-authLayout { @apply bg-themePrimary bg-auth bg-no-repeat bg-auto bg-left-bottom flex flex-col justify-around lg:justify-normal items-center lg:items-stretch p-4 sm:py-20 sm:px-16 lg:p-0 lg:flex-row gap-12 lg:gap-0 }
+.zt-defaultLayout {
+  @apply flex bg-themeGrayscale100
+}
+
+.zt-authLayout {
+  @apply bg-themePrimary bg-auth bg-no-repeat bg-auto bg-left-bottom flex flex-col justify-around lg:justify-normal items-center lg:items-stretch p-4 sm:py-20 sm:px-16 lg:p-0 lg:flex-row gap-12 lg:gap-0
+}
+
 /* All Layout Style end here */
 
 /* Header Style start here */
 .zt-headerUser {
   .zt-topBarLogo {
     @apply w-12 mx-5 block h-[34px] shrink-0 flex justify-center;
-    a { @apply block }
-  }
-}
-.zt-topBar { @apply w-full bg-white dark:text-themeGrayscale300 dark:bg-dark-4 py-3 pr-8 flex justify-between items-center }
-.zt-topNavigation {
-  @apply flex flex-col;
-  > ul {
-    @apply flex items-center justify-center gap-6;
-    > li {
-      a { @apply block }
+
+    a {
+      @apply block
     }
   }
 }
+
+.zt-topBar {
+  @apply w-full bg-white dark:text-themeGrayscale300 dark:bg-dark-4 py-3 pr-8 flex justify-between items-center
+}
+
+.zt-topNavigation {
+  @apply flex flex-col;
+
+  >ul {
+    @apply flex items-center justify-center gap-6;
+
+    >li {
+      a {
+        @apply block
+      }
+    }
+  }
+}
+
 /* Header Style end here */
 
 /* Sidebar Style start here */
@@ -29,80 +47,146 @@
 
 .zt-sidebar-link {
   @apply no-underline cursor-pointer text-themePrimary hover:text-themePurple dark:text-white dark:hover:text-themePurple;
-  &.zt-active { @apply text-themePurple}
-}
-.zt-menuIcon { @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary dark:text-white}
 
-.btn-helpDesk { @apply text-sm text-center no-underline bg-themeOrange rounded-full p-2 shadow-2xl shadow-themeOrange }
+  &.zt-active {
+    @apply text-themePurple
+  }
+}
+
+.zt-menuIcon {
+  @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary dark:text-white
+}
+
+.btn-helpDesk {
+  @apply text-sm text-center no-underline bg-themeOrange rounded-full p-2 shadow-2xl shadow-themeOrange
+}
+
 .zt-sidebar {
-  @apply w-sidebar h-full overflow-hidden transition-all duration-300 shrink-0 /* hover:w-sidebarOpen hover:overflow-visible */;
-  a { @apply flex flex-col text-center relative text-xs p-2 no-underline items-center justify-center transition-all duration-300 text-themeGrayscale dark:text-themeGrayscale300; }
+  @apply w-sidebar h-full overflow-hidden transition-all duration-300 shrink-0
+  /* hover:w-sidebarOpen hover:overflow-visible */
+  ;
+
+  a {
+    @apply flex flex-col text-center relative text-xs p-2 no-underline items-center justify-center transition-all duration-300 text-themeGrayscale dark:text-themeGrayscale300;
+  }
+
   /*
   .zt-menuText { @apply invisible opacity-0 transition-all duration-300 relative left-20 whitespace-nowrap }
   */
-  
+
   /*
   &:hover {
     a { @apply flex-row }
     .zt-menuText { @apply visible opacity-100 left-0 }
   }
   */
-  
+
   .zt-subMenu {
     @apply fixed top-0 left-[90px] w-60 h-screen py-3 bg-themeGrayscale50 transition-all duration-100 flex flex-col gap-6 shadow-xl z-10;
-    > ul {
+
+    >ul {
       @apply flex flex-col gap-2 grow overflow-y-scroll px-4;
-      a { @apply font-medium text-sm no-underline text-themeGrayscale py-2 px-3 flex items-start justify-start rounded-lg transition-all duration-300 hover:border-themePurple hover:bg-themePurple hover:text-white }
-      a.zt-active { @apply border-themePurple bg-themePurple text-white }
+
+      a {
+        @apply font-medium text-sm no-underline text-themeGrayscale py-2 px-3 flex items-start justify-start rounded-lg transition-all duration-300 hover:border-themePurple hover:bg-themePurple hover:text-white
+      }
+
+      a.zt-active {
+        @apply border-themePurple bg-themePurple text-white
+      }
     }
-    > ul {
-      > li {
+
+    >ul {
+      >li {
         &.zt-active {
-          > a { @apply border-themePurple bg-themePurple text-white }
+          >a {
+            @apply border-themePurple bg-themePurple text-white
+          }
         }
       }
     }
+
     .zt-innerSubMenu {
       @apply pl-2 pt-2;
-      a { @apply hover:bg-opacity-10 hover:text-themePurple; }
-      .zt-active a { @apply border-themePurple bg-themePurple/15 text-themePurple; }
+
+      a {
+        @apply hover:bg-opacity-10 hover:text-themePurple;
+      }
+
+      .zt-active a {
+        @apply border-themePurple bg-themePurple/15 text-themePurple;
+      }
     }
   }
 }
-.zt-sidebarHolder { @apply relative z-20 h-full bg-white dark:text-white dark:bg-gray-900 flex flex-col pb-4 gap-4 }
+
+.zt-sidebarHolder {
+  @apply relative z-20 h-full bg-white dark:text-white dark:bg-gray-900 flex flex-col pb-4 gap-4
+}
+
 .zt-sidebarNav {
   @apply flex flex-col font-medium overflow-hidden hover:overflow-y-auto grow;
-  ul { @apply flex flex-col h-full gap-2;}
+
+  ul {
+    @apply flex flex-col h-full gap-2;
+  }
+
   a {
-    svg { @apply text-themeGrayscale500 }
+    svg {
+      @apply text-themeGrayscale500
+    }
+
     &:hover {
+
       .zt-menuText,
-      svg { @apply text-themePurple }
+      svg {
+        @apply text-themePurple
+      }
+
       @apply text-themePurple;
     }
-    &[data-title] { @apply relative after:bg-themePrimary after:text-white after:rounded after:py-1 after:px-1 after:whitespace-nowrap after:invisible after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:opacity-0 after:z-50 after:content-[attr(data-title)] after:transition-all after:duration-150 hover:after:opacity-100 hover:after:visible }
+
+    &[data-title] {
+      @apply relative after:bg-themePrimary after:text-white after:rounded after:py-1 after:px-1 after:whitespace-nowrap after:invisible after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:opacity-0 after:z-50 after:content-[attr(data-title)] after:transition-all after:duration-150 hover:after:opacity-100 hover:after:visible
+    }
   }
+
   .zt-active {
     @apply bg-themeGrayscale50 dark:bg-themeOrange;
-    > a {
+
+    >a {
       @apply text-themePurple dark:text-white;
-      svg { @apply text-themePurple dark:text-white;}
+
+      svg {
+        @apply text-themePurple dark:text-white;
+      }
     }
   }
 }
+
 // .zt-hasDropDown:hover > .zt-subMenu { @apply left-32 opacity-100 visible }
 /* Sidebar Style end here */
 
 /* Side Panel Style Start here */
-.zt-backDropSidePanel { @apply fixed top-0 right-0 z-30 w-full h-full bg-gray-900/30  flex flex-col items-end }
-.zt-sidePanel { @apply flex flex-col grow gap-6 py-6 max-w-4xl w-full relative border rounded-l-lg bg-white dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700 }
+.zt-backDropSidePanel {
+  @apply fixed top-0 right-0 z-30 w-full h-full bg-gray-900/30 flex flex-col items-end
+}
+
+.zt-sidePanel {
+  @apply flex flex-col grow gap-6 py-6 max-w-4xl w-full relative border rounded-l-lg bg-white dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700
+}
+
 /* Side Panel Style end here */
 
 /* Main Style start here */
 .zt-main {
   @apply grow dark:bg-dark-3;
-  .zt-content { @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 dark:border-dark-5 overflow-y-auto }
+
+  .zt-content {
+    @apply grow flex flex-col p-3 md:p-6 border-t border-l border-themeGrayscale300 dark:border-dark-5 overflow-y-auto
+  }
 }
+
 /* Main Style end here */
 
 
@@ -110,21 +194,50 @@
   Authentication Module
   Authentication Style start here
 ****************************************/
-.zt-authContent, .zt-authForm { @apply flex flex-col items-center lg:w-1/2 lg:py-20 lg:px-16 }
+.zt-authContent, .zt-authForm {
+  @apply flex flex-col items-center lg:w-1/2 lg:py-20 lg:px-16
+}
+
 .zt-authContent {
   @apply lg:bg-themePrimary lg:bg-auth hidden md:flex bg-no-repeat bg-auto bg-left-bottom text-white;
-  .zt-logo { @apply max-w-authLogo w-full mb-0 lg:mb-14 }
+
+  .zt-logo {
+    @apply max-w-authLogo w-full mb-0 lg:mb-14
+  }
 }
-.zt-authContentHolder { @apply max-w-[37.5rem] w-full grow gap-4 flex flex-col p-5 lg:p-10 rounded-3xl bg-white/30 backdrop-blur-md border border-white/70 }
+
+.zt-authContentHolder {
+  @apply max-w-[37.5rem] w-full grow gap-4 flex flex-col p-5 lg:p-10 rounded-3xl bg-white/30 backdrop-blur-md border border-white/70
+}
+
 .zt-authForm {
   @apply justify-center max-w-[37.5rem] w-full lg:max-w-full lg:w-1/2 bg-white bg-opacity-75 rounded-3xl shadow-2xl p-6 border border-white lg:bg-opacity-100 lg:rounded-none lg:shadow-none lg:py-20 lg:px-16 lg:border-0;
-  .zt-logo { @apply flex w-full items-center justify-center mb-4 }
-  p { @apply max-w-[37.5rem] lg:max-w-formBox w-full text-center }
-  fieldset { @apply max-w-[37.5rem] lg:max-w-formBox w-full flex flex-col lg:bg-transparent lg:rounded-none lg:shadow-none lg:p-0 }
+
+  .zt-logo {
+    @apply flex w-full items-center justify-center mb-4
+  }
+
+  p {
+    @apply max-w-[37.5rem] lg:max-w-formBox w-full text-center
+  }
+
+  fieldset {
+    @apply max-w-[37.5rem] lg:max-w-formBox w-full flex flex-col lg:bg-transparent lg:rounded-none lg:shadow-none lg:p-0
+  }
 }
-.zt-paginationbullets { @apply bottom-0 flex gap-2 }
-.zt-paginationbullets .swiper-pagination-bullet { @apply w-4 h-4 bg-themeGrayscale50 rounded-lg transition-all duration-300 }
-.zt-paginationbullets .swiper-pagination-bullet-active { @apply w-12 }
+
+.zt-paginationbullets {
+  @apply bottom-0 flex gap-2
+}
+
+.zt-paginationbullets .swiper-pagination-bullet {
+  @apply w-4 h-4 bg-themeGrayscale50 rounded-lg transition-all duration-300
+}
+
+.zt-paginationbullets .swiper-pagination-bullet-active {
+  @apply w-12
+}
+
 /***************************************
   Authentication Style end here
 ***************************************/
@@ -136,12 +249,21 @@
 ****************************************/
 .zt-themeForm {
   @apply flex flex-col grow gap-8 text-center;
-  fieldset { @apply grow gap-6 }
+
+  fieldset {
+    @apply grow gap-6
+  }
 }
-.zt-btns { @apply flex px-6 pb-6 gap-8 }
+
+.zt-btns {
+  @apply flex px-6 pb-6 gap-8
+}
+
 .zt-employeeTable,
 .zt-departmentTable,
-.zt-employeeRoleTable { @apply text-center }
+.zt-employeeRoleTable {
+  @apply text-center
+}
 
 
 
@@ -161,51 +283,107 @@
 
 
 .zt-employeeCard,
-.zt-employeeCardTimeLine { @apply flex flex-col p-6 text-sm rounded-xl bg-white shadow-card border border-solid border-themeGrayscale300 }
+.zt-employeeCardTimeLine {
+  @apply flex flex-col p-6 text-sm rounded-xl bg-white shadow-card border border-solid border-themeGrayscale300
+}
+
 .zt-employeeCard {
-  > div { @apply flex align-top gap-6 }
-  figure { @apply w-24 h-24 }
-  ul { @apply flex flex-col gap-4; }
-  ul li {
-    span { @apply w-1/3 }
-    strong { @apply grow }
+  >div {
+    @apply flex align-top gap-6
   }
+
+  figure {
+    @apply w-24 h-24
+  }
+
+  ul {
+    @apply flex flex-col gap-4;
+  }
+
+  ul li {
+    span {
+      @apply w-1/3
+    }
+
+    strong {
+      @apply grow
+    }
+  }
+
   ul li,
   p {
     @apply flex items-center gap-1;
-    span { @apply text-themeGrayscale600   shrink-0 }
+
+    span {
+      @apply text-themeGrayscale600 shrink-0
+    }
   }
-  a, time, strong, address { @apply font-semibold grow no-underline not-italic }
+
+  a, time, strong, address {
+    @apply font-semibold grow no-underline not-italic
+  }
 }
-.zt-employeeInfoCard { @apply grid grid-cols-2 py-6 px-2 }
+
+.zt-employeeInfoCard {
+  @apply grid grid-cols-2 py-6 px-2
+}
+
 .zt--employeeCardHead {
   @apply flex justify-between items-center gap-4 mb-4 px-0 pb-4 border-b border-themeGrayscale300;
+
   h3 {
     @apply text-h5 mb-0;
-    + span { @apply inline-flex }
+
+    +span {
+      @apply inline-flex
+    }
   }
 }
+
 .zt--employeeCardBody {
   @apply m-0 p-0 flex flex-col;
-  li { @apply grid grid-cols-2 }
-}
-.zt-employeeCardTimeLine {
-  .zt--employeeCardBody{
-    li { @apply flex flex-col relative pt-1 border-l-2 pl-5 border-themeGrayscale400 before:absolute before:top-0 before:-left-[5px] before:w-2 before:h-2 before:rounded-full before:bg-themeGrayscale400 }
+
+  li {
+    @apply grid grid-cols-2
   }
+}
+
+.zt-employeeCardTimeLine {
+  .zt--employeeCardBody {
+    li {
+      @apply flex flex-col relative pt-1 border-l-2 pl-5 border-themeGrayscale400 before:absolute before:top-0 before:-left-[5px] before:w-2 before:h-2 before:rounded-full before:bg-themeGrayscale400
+    }
+  }
+
   h4 {
     @apply text-base mb-0;
-    + span { @apply inline-flex }
+
+    +span {
+      @apply inline-flex
+    }
   }
 }
 
 
 
-.zt-projectsList { @apply bg-white rounded-xl shadow-card p-6 grid grid-cols-3 gap-6 }
-.zt-taskBoardList { @apply grid grid-cols-3 gap-6 mb-6}
-.zt-projectCard { @apply bg-white border border-themeGrayscale200 rounded-2xl flex flex-col p-6 }
-.zt--projectCardHead { @apply flex justify-between }
+.zt-projectsList {
+  @apply bg-white rounded-xl shadow-card p-6 grid grid-cols-3 gap-6
+}
+
+.zt-taskBoardList {
+  @apply grid grid-cols-3 gap-6 mb-6
+}
+
+.zt-projectCard {
+  @apply bg-white border border-themeGrayscale200 rounded-2xl flex flex-col p-6
+}
+
+.zt--projectCardHead {
+  @apply flex justify-between
+}
+
 .zt--projectCardBody {}
+
 /***************************************
   Employee Style end here
 ***************************************/
@@ -217,72 +395,173 @@
 .zt-assetHistoryTable {
   tbody {
     td {
-      &:last-child { @apply max-w-64 }
+      &:last-child {
+        @apply max-w-64
+      }
     }
   }
 }
-.zt-addScheduleSpan { @apply text-xs font-medium p-2 }
-.ql-toolbar { @apply bg-themeGrayscale300 rounded-t-lg }
-.ql-container {@apply rounded-b-lg min-h-24}
-.zt-uploadLabel{ @apply rounded-l-lg px-5 py-4 bg-themeGrayscale300 dark:text-white dark:bg-themePrimary font-medium text-sm cursor-pointer } 
-.recharts-default-legend{@apply flex justify-between}
 
-.zt-scheduleSidebar { @apply overflow-y-scroll zt-hideScrollbar bg-white dark:bg-dark-4 rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)] }
-.zt-activitySidebar { @apply bg-white dark:bg-dark-4 dark:text-white rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)] }
+.zt-addScheduleSpan {
+  @apply text-xs font-medium p-2
+}
+
+.ql-toolbar {
+  @apply bg-themeGrayscale300 rounded-t-lg
+}
+
+.ql-container {
+  @apply rounded-b-lg min-h-24
+}
+
+.zt-uploadLabel {
+  @apply rounded-l-lg px-5 py-4 bg-themeGrayscale300 dark:text-white dark:bg-themePrimary font-medium text-sm cursor-pointer
+}
+
+.recharts-default-legend {
+  @apply flex justify-between
+}
+
+.zt-scheduleSidebar {
+  @apply overflow-y-scroll zt-hideScrollbar bg-white dark:bg-dark-4 rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)]
+}
+
+.zt-activitySidebar {
+  @apply bg-white dark:bg-dark-4 dark:text-white rounded-lg p-6 mb-6 2xl:mb-0 2xl:sticky 2xl:top-0 2xl:float-right flex flex-col gap-4 w-full 2xl:w-[calc(25%_-_24px)] 2xl:h-[calc(100dvh_-_118px)]
+}
 
 .zt-attendanceStatisticCard {
   @apply flex rounded-lg bg-white dark:bg-dark-4 shadow-md gap-6 p-4 items-center justify-between;
-  h2 { @apply mb-0 }
-  h3 { @apply mb-0 text-h6 text-right }
+
+  h2 {
+    @apply mb-0
+  }
+
+  h3 {
+    @apply mb-0 text-h6 text-right
+  }
 }
 
 
-.zt-card { @apply rounded-lg bg-white dark:bg-dark-4 dark:text-white p-3 sm:p-6 }
+.zt-card {
+  @apply rounded-lg bg-white dark:bg-dark-4 dark:text-white p-3 sm:p-6 shadow-md
+}
+
 .zt-announcementsTabs,
 .zt-myRequestsTabs {
   .zt-themeTabNav {
-    li { @apply w-1/2 }
-    button { @apply text-themeGrayscale600 border-themeGrayscale300 bg-themeGrayscale50 w-full text-bmd }
+    li {
+      @apply w-1/2
+    }
+
+    button {
+      @apply text-themeGrayscale600 border-themeGrayscale300 bg-themeGrayscale50 w-full text-bmd
+    }
   }
 }
+
 .zt-activityLogs {
   @apply flex flex-col h-[386px] overflow-y-scroll gap-4 items-start relative text-bmd text-themeGrayscale600 before:top-2 before:left-2 before:w-1 before:h-[calc(100%_-_12%)] before:absolute before:rounded-full before:bg-themeGrayscale300;
+
   li {
     @apply flex items-start gap-3 relative pl-6 before:top-[2px] before:left-[2px] before:w-4 before:h-4 before:absolute before:rounded-full before:bg-white before:border-4 before:border-themePurple;
-    time { @apply text-themeGrayscale }
+
+    time {
+      @apply text-themeGrayscale
+    }
   }
 }
+
 .zt-candidateExperiance {
   @apply flex flex-col gap-4 items-start relative before:top-2 before:left-2 before:w-1 before:h-[calc(100%_-_12%)] before:absolute before:rounded-full before:bg-themeGrayscale300;
+
   li {
     @apply flex items-start gap-3 relative pl-8 before:top-[2px] before:left-[2px] before:w-4 before:h-4 before:absolute before:rounded-full before:bg-themeGrayscale300;
-    time { @apply text-themeGrayscale }
+
+    time {
+      @apply text-themeGrayscale
+    }
   }
 }
 
 
-.zt-employeeProfile::before{content: ""; @apply bg-bordeaux w-20 h-5 absolute bottom-0 right-0 z-10}
-.zt-employeeProfile::after{content: ""; @apply bg-bordeaux w-20 h-5 absolute top-0 left-0 z-10}
-.custom__grid{ grid-template-columns: repeat(auto-fit, minmax(216px, 1fr) ) }
-.zt-remote__grid{ grid-template-columns: repeat(auto-fit, minmax(310px, 1fr) ) }
-.zt-remote__type__grid{ grid-template-columns: repeat(auto-fit, minmax(370px, 1fr) ) }
-.zt-remoteStats__grid{ grid-template-columns: repeat(auto-fit, minmax(330px, 1fr) ) }
+.zt-employeeProfile::before {
+  content: "";
+  @apply bg-bordeaux w-20 h-5 absolute bottom-0 right-0 z-10
+}
+
+.zt-employeeProfile::after {
+  content: "";
+  @apply bg-bordeaux w-20 h-5 absolute top-0 left-0 z-10
+}
+
+.custom__grid {
+  grid-template-columns: repeat(auto-fit, minmax(216px, 1fr))
+}
+
+.zt-remote__grid {
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr))
+}
+
+.zt-remote__type__grid {
+  grid-template-columns: repeat(auto-fit, minmax(370px, 1fr))
+}
+
+.zt-remoteStats__grid {
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr))
+}
 
 ::-webkit-scrollbar {
-  width: 1px;  /* for vertical scrollbars */
-  height: 1px; /* for horizontal scrollbars */
+  width: 1px;
+  /* for vertical scrollbars */
+  height: 1px;
+  /* for horizontal scrollbars */
 }
-::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
-::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.5); }
-.candidate_detail{@apply min-h-[50rem] zt-card grow relative }
-.zt-chat__history:hover .chat__action{@apply flex}
-.chat__content:hover .chat__emoji{@apply flex gap-3}
-.chat__content .react-input-emoji--input{@apply hidden}
-.chat__content .react-input-emoji--container{@apply hidden}
-.react-input-emoji--button{padding: 0 !important;}
-.apps__state:hover .action_btn{@apply flex}
-.apps__state:hover .action_btn{@apply flex}
-.remote__image:hover .remote_image_label{@apply flex justify-center items-center}
-.zt-chatTabs ul{
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.candidate_detail {
+  @apply min-h-[50rem] zt-card grow relative
+}
+
+.zt-chat__history:hover .chat__action {
+  @apply flex
+}
+
+.chat__content:hover .chat__emoji {
+  @apply flex gap-3
+}
+
+.chat__content .react-input-emoji--input {
+  @apply hidden
+}
+
+.chat__content .react-input-emoji--container {
+  @apply hidden
+}
+
+.react-input-emoji--button {
+  padding: 0 !important;
+}
+
+.apps__state:hover .action_btn {
+  @apply flex
+}
+
+.apps__state:hover .action_btn {
+  @apply flex
+}
+
+.remote__image:hover .remote_image_label {
+  @apply flex justify-center items-center
+}
+
+.zt-chatTabs ul {
   gap: 8px !important;
 }

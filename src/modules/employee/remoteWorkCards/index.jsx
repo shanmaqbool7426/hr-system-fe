@@ -4,27 +4,7 @@ import { useState } from "react";
 
 export default function RemoteProfile({ gridCols, colSpan, parentClass }) {
     const { t } = useTranslation()
-    const [checkedApps, setCheckedApps] = useState({});
 
-    const handleCheckboxChange = (appName) => {
-        setCheckedApps(prevState => ({
-            ...prevState,
-            [appName]: !prevState[appName]
-        }));
-    };
-
-    const isAnyCheckboxChecked = (apps) => {
-        // return apps.some(app => checkedApps[app.name]);
-    };
-    const NewsApps = [
-        { name: "Email", },
-        { name: "Work Apps", },
-        { name: "Communication", },
-        { name: "Social Media", },
-        { name: "Entertainment", },
-        { name: "News", },
-        { name: "Undefined", },
-    ];
     return (
         <>
             <section className={`flex flex-col gap-4`}>
@@ -61,28 +41,7 @@ export default function RemoteProfile({ gridCols, colSpan, parentClass }) {
                     <SearchSelect containerClass={'!gap-1'} label={'Default application productivity'} list={[{ display: "Unproductive", value: "Unproductive" }, { display: "Neutral", value: "Neutral" }, { display: "Productive", value: "Productive" }]} />
                     <SearchSelect containerClass={'!gap-1'} label={'Track weekend days'} list={[{ display: "Enable", value: "Enable" }, { display: "Disable", value: "Disable" }]} />
                 </div>
-                <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-3 "} gap-4`}>
-                    <h2 className={`text-h4 mb-0 ${colSpan ? colSpan : "col-span-3"}  text-left`}>{t("Productive Categories")}</h2>
-                    {isAnyCheckboxChecked("COMMUNICATION") && (
-                        <div className='flex items-end gap-4 p-6'>
-                            <Select label='Change status' options={['Email', 'Social Media', 'WORK Apps', 'Entertainment', 'News', 'Undefined']} />
-                            <Button className={'btn btn-success'}>{t("Confirm")}</Button>
-                        </div>
-                    )}
-                    <div className={`pt-4 ${colSpan ? colSpan : "col-span-4"} !grid ${gridCols ? gridCols : " grid-cols-4"} gap-4`}>
-                        {NewsApps.map((app, j) => (
-                            <div key={j} className='flex py-1 justify-between'>
-                                <CheckBox
-                                    name={app.name}
-                                    id={app.name}
-                                    label={app.name}
-                                    checked={checkedApps[app.name] || false}
-                                    onChange={() => handleCheckboxChange(app.name)}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+
                 <div className={`zt-employeeCard !grid ${gridCols ? gridCols : " grid-cols-4"} gap-10`}>
                     <h2 className={`text-h4 mb-0  ${colSpan ? colSpan : "col-span-4"} text-left`}>{t("Other")}</h2>
                     <div className="flex gap-6 justify-between">

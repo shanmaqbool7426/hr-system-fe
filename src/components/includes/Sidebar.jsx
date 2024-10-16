@@ -373,7 +373,7 @@ export default function Sidebar() {
         </nav>
 
         <span className="flex justify-center">
-          <Link href={"/operations/helpdesk/tickets"} className="btn-helpDesk">
+          <Link href={"/operations/helpdesk/tickets"} className="btn-helpDesk" onClick={() => setSelected(null)}>
             <span className="zt-menuIcon text-white">
               <HelpLine width={28} height={28} />
             </span>
@@ -383,7 +383,7 @@ export default function Sidebar() {
 
       {selected &&
         MiniBar.findIndex((item) => item.href === selected) !== -1 && (
-          <div className="p-4 w-64 h-full overflow-y-scroll border-l dark:border-l-dark-5 bg-white dark:bg-dark-4 absolute lg:static ml-[74px] lg:ml-0 z-10">
+          <div className="p-4 w-64 h-full overflow-y-scroll border-l dark:border-l-dark-5 bg-white dark:bg-dark-4 absolute lg:static ml-[74px] lg:ml-0">
             <h4>{MiniBar.find((item) => item.href === selected)?.name}</h4>
             <ul className="flex flex-col gap-3">
               {Navigation[selected].map((item, index) => (

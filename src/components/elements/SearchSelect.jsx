@@ -33,11 +33,11 @@ export default function SearchSelect({
       );
 
   const getDisplayValue = (payload) => {
-    if (payload && typeof payload === 'string') {
+    if (payload && (typeof payload === 'string' || typeof payload === 'number')) {
       const index = list?.findIndex((item) =>
-        item.value
+        item.value?.toString()
           .replace(/\s+/g, "")
-          .includes(payload?.toLowerCase()?.replace(/\s+/g, ""))
+          .includes(payload?.toString()?.toLowerCase()?.replace(/\s+/g, ""))
       );
       if (typeof list[index]?.display === "string") return list[index]?.display;
     }
