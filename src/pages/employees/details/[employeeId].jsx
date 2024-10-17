@@ -24,7 +24,7 @@ export default function EmployeeDetailPage() {
     const { is_loading, employee_details } = useSelector((state) => state.employee)
     useEffect(() => {
         const employeeId = router.query.employeeId
-        if (employeeId) {
+        if (employeeId && !employee_details && employee_details?._id !== employeeId) {
             dispatch(FetchEmployeeDetails(employeeId))
         }
     }, [router, dispatch])
@@ -33,7 +33,6 @@ export default function EmployeeDetailPage() {
 
     return (
         <section className="flex flex-col grow">
-            {is_loading && <PageLoader />}
             <h1 className="text-h4 mb-6 flex items-center justify-start gap-3">
                 <Link href={`/employees/list`}><ChevronLeft className={'text-themeGrayscale600'} width={10} /></Link>
                 <span className='shrink-0'>{t("Employee Detail")}</span>

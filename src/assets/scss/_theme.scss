@@ -284,7 +284,7 @@
 
 .zt-employeeCard,
 .zt-employeeCardTimeLine {
-  @apply flex flex-col p-6 text-sm rounded-xl bg-white shadow-card border border-solid border-themeGrayscale300
+  @apply flex flex-col p-6 text-sm rounded-xl bg-white dark:bg-dark-4 dark:text-white shadow-md border border-solid border-themeGrayscale300 dark:border-dark-5
 }
 
 .zt-employeeCard {
@@ -329,7 +329,7 @@
 }
 
 .zt--employeeCardHead {
-  @apply flex justify-between items-center gap-4 mb-4 px-0 pb-4 border-b border-themeGrayscale300;
+  @apply flex justify-between items-center gap-4 mb-4 px-0 pb-4 border-b border-themeGrayscale300 dark:border-dark-3;
 
   h3 {
     @apply text-h5 mb-0;

@@ -12,6 +12,7 @@ export default function RemoteCollectiveSettings() {
     const dispatch = useDispatch()
     const { team_list } = useSelector(state => state.remoteteam)
     const [loading, setLoading] = useState(false)
+    
     useEffect(() => {
         dispatch(FetchRemoteTeams())
     }, [])
@@ -30,7 +31,7 @@ export default function RemoteCollectiveSettings() {
             idleTime: 3,
             ignoreIdleWhenInactive: false,
             hideScreenshots: false,
-            disableQuite: false,
+            disableQuit: false,
         },
         validationSchema: Yup.object({
             team: Yup.string().when('allEmployees', {
@@ -56,12 +57,15 @@ export default function RemoteCollectiveSettings() {
             idleTime: Yup.number().required(),
             ignoreIdleWhenInactive: Yup.boolean().required(),
             hideScreenshots: Yup.boolean().required(),
-            disableQuite: Yup.boolean().required(),
+            disableQuit: Yup.boolean().required(),
         }),
         onSubmit: (values) => {
+            setLoading(true)
             axios.post('/remote/collective-settings', values)
                 .then(res => {
                     Toast.success(t("Settings saved successfully"))
+                }).finally(() => {
+                    setLoading(false)
                 })
         }
     })
