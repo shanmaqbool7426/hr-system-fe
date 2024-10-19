@@ -95,7 +95,7 @@ export default function InventoryPage() {
 				<div className="flex items-center justify-start gap-4 grow">
 					<Profile name={item.user.firstName} image={item.user.avatar} />
 					<div className={'flex flex-col gap-1 text-left'}>
-						<strong className={'text-themeGrayscale900 text-sm'}>{item.user.firstName} {item.user.lastName}</strong>
+						<strong className={'text-sm'}>{item.user.firstName} {item.user.lastName}</strong>
 						<span className={'text-themeGrayscale500 text-xs'}>{item.user.employeeCode}</span>
 					</div>
 				</div> : "------",
