@@ -3,11 +3,11 @@ import Image from "next/legacy/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { AlertRedDot, SearchIcon, NotificationBell, Gear, Users, Moon, Sun, ThreeDotsHorizontal } from "../svg"
+import { AlertRedDot, SearchIcon, NotificationBell, Gear, Users, Moon, Sun } from "../svg"
 import { useTranslation } from "next-i18next"
 import DropDown from "../elements/DropDown"
 import { Menu } from '@headlessui/react'
-import Button from '../elements/Button'
+import { IoMdPower } from "react-icons/io";
 import { Profile } from "../elements"
 import { useEffect, useState } from "react"
 import ls from "localstorage-slim"
@@ -82,7 +82,8 @@ const Topbar = () => {
 
       <nav className="zt-topNavigation">
         <ul>
-          <li>
+          {/* Notification */}
+          {/* <li>
             <DropDown size={'zt-dropDownLG'} icon={<AlertRedDot />}>
               <div className="zt-themeDropDownList zt-dropDownLG">
                 <div className='flex justify-between items-center'>
@@ -130,8 +131,10 @@ const Topbar = () => {
                 <Button type="submit" value={t('Show All Notification')} variant={'primary'} />
               </div>
             </DropDown>
-          </li>
+          </li> */}
+          {/* Dark Mode */}
           <li><span onClick={toggleDarkMode} className="cursor-pointer select-none">{!!darkMode ? <Moon /> : <Sun />}</span></li>
+          {/* Locale */}
           <li>
             <DropDown title={locale}>
               <ul className="zt-themeDropDownList !py-2 !px-6">
@@ -140,12 +143,19 @@ const Topbar = () => {
               </ul>
             </DropDown>
           </li>
+          {/* Profile */}
           <li>
             <DropDown size={'zt-lg'} icon={<Profile name={auth_user?.firstName} image={auth_user?.avatar} />}>
-              <div className="z-50 absolute bg-white p-4 right-0 top-12 border rounded-lg zt-dropDownSM">
+              <div className="z-50 absolute bg-white dark:bg-dark-4 p-4 right-0 top-12 border rounded-lg zt-dropDownSM dark:border-dark-3">
                 <Menu.Items as='ul' className={"flex flex-col gap-3"}>
-                  <Menu.Item as='li' className='w-full' ><Link href={"/profile"}>Profile</Link></Menu.Item>
-                  <Menu.Item as='li' className='w-full cursor-pointer'><span onClick={signoutHandler}>Sign Out</span></Menu.Item>
+                  <Menu.Item as='li' className='w-full cursor-pointer flex items-center gap-2'>
+                    <Users />
+                    <span onClick={() => router.push('/profile')}>{t("Profile")}</span>
+                  </Menu.Item>
+                  <Menu.Item as='li' className='w-full cursor-pointer flex items-center gap-2'>
+                    <IoMdPower />
+                    <span onClick={signoutHandler}>{t("Sign Out")}</span>
+                  </Menu.Item>
                 </Menu.Items>
               </div>
             </DropDown>

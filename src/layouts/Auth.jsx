@@ -25,7 +25,7 @@ export default function Auth({ children, description, title }) {
     return (
         <>
             <main id="zt-main" className={`zt-main zt-authLayout zt-page zt-page-${pageName} flex grow`}>
-                <div className="zt-authContent">
+                <div className={`zt-authContent !bg-cover !bg-center bg-[url('/assets/images/auth.png')]`}>
                     <div className="zt-authContentHolder">
                         <div className="flex flex-col text-white relative grow">
                             <figure>
@@ -49,7 +49,7 @@ export default function Auth({ children, description, title }) {
                                 }}
                                 pagination={{ clickable: true, modifierClass: "zt-pagination" }}
                                 navigation={true}
-                                modules={[Autoplay,Pagination, Navigation]}
+                                modules={[Autoplay, Pagination, Navigation]}
                             >
                                 {[...Array(3)].map((ele, i) => (
                                     <SwiperSlide key={i} className="!flex flex-col justify-between">
@@ -58,12 +58,12 @@ export default function Auth({ children, description, title }) {
                                             <p className="mb-0">{t('We help to complete all your conveyancing needs easily')}</p>
                                         </div>
                                         <div className="flex justify-center">
-                                            <span className="flex self-end justify-center items-center rounded-full bg-white h-32 w-32">
+                                            <span className="flex self-end justify-center items-center rounded-full bg-white dark:bg-dark-3 h-32 w-32">
                                                 <LockIcon />
                                             </span>
                                         </div>
                                     </SwiperSlide>
-                                ))} 
+                                ))}
                             </Swiper>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ export default function Auth({ children, description, title }) {
                 {children}
 
             </main>
-            <footer className="bg-white px-10 py-4 flex justify-between items-center">
+            <footer className="bg-white dark:bg-dark-4 px-10 py-4 flex justify-between items-center">
                 <figure>
                     <Image
                         src={'/assets/images/logo-full.svg'}
@@ -86,10 +86,10 @@ export default function Auth({ children, description, title }) {
                 </figure>
                 <p className="mb-0"> {t("Copyright ©")} {new Date().getFullYear()} {t("Zaffre Tech, Inc. - All Rights Reserved")}</p>
                 <div className="flex gap-5">
-                    <Link href={'#'} target="_blank"><FaceBookIcon /></Link>
+                    <Link href={'https://www.facebook.com/zaffretech1/'} target="_blank"><FaceBookIcon /></Link>
+                    <Link href={'https://www.linkedin.com/company/zaffretech/'} target="_blank"><LinkdInIcon /></Link>
                     <Link href={'#'} target="_blank"><InstaIcon /></Link>
                     <Link href={'#'} target="_blank"><TwitterIcon /></Link>
-                    <Link href={'#'} target="_blank"><LinkdInIcon /></Link>
                 </div>
             </footer>
         </>

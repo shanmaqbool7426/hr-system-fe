@@ -64,7 +64,6 @@ module.exports = {
       'gradient-to-bl': 'linear-gradient(to bottom left, var(--tw-gradient-stops))',
       'gradient-to-l': 'linear-gradient(to left, var(--tw-gradient-stops))',
       'gradient-to-tl': 'linear-gradient(to top left, var(--tw-gradient-stops))',
-      'auth': "url('/assets/images/authBackground.svg')",
       'hrProcess': "url('/assets/imagesWeb/image-05.svg')",
       'banner': "url('/assets/imagesWeb/heroBG.svg')",
     },

@@ -6,11 +6,21 @@ import { Provider } from "react-redux"
 import store from "../store"
 import { useEffect, useState } from "react"
 import i18n from "../util/i18n"
+import ls from "localstorage-slim"
 
 export default function App({ Component, pageProps }) {
     const [ready, setReady] = useState(false)
     useEffect(() => {
         setReady(true)
+        const preferredTheme = ls.get('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light")
+        if (preferredTheme === "dark") {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+        if (!ls.get('theme')) {
+            ls.set('theme', preferredTheme)
+        }
     }, [])
     const Layout = Component.layout || DefaultLayout;
 

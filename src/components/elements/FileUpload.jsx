@@ -17,27 +17,29 @@ const FileUpload = ({ label, id, name, onChange, className, max, accept, uploadI
 				Toast.error(t('File size exceed allowed size'))
 				return
 			}
-			let allowedFiles = accept.split(',')
-			let allowCheck = false
-			for (let index in allowedFiles) {
-				if (allowedFiles[index] === file.type) {
-					allowCheck = true
-					break;
+			if (accept) {
+				let allowedFiles = accept.split(',')
+				let allowCheck = false
+				for (let index in allowedFiles) {
+					if (allowedFiles[index] === file.type) {
+						allowCheck = true
+						break;
+					}
+					allowCheck = file.type.split('/')[0] === allowedFiles[index].split('/')[0]
+					if (allowedFiles[index].split('/')[1] !== '*') {
+						allowCheck = file.type.split('/')[1] === allowedFiles[index].split('/')[1]
+					}
+					if (allowCheck) {
+						break;
+					}
 				}
-				allowCheck = file.type.split('/')[0] === allowedFiles[index].split('/')[0]
-				if (allowedFiles[index].split('/')[1] !== '*') {
-					allowCheck = file.type.split('/')[1] === allowedFiles[index].split('/')[1]
+				if (!allowCheck) {
+					event.target.value = null
+					onChange && onChange(null)
+					setSelectedFile(null)
+					Toast.error(t('Selected file is not allowed'))
+					return
 				}
-				if (allowCheck) {
-					break;
-				}
-			}
-			if (!allowCheck) {
-				event.target.value = null
-				onChange && onChange(null)
-				setSelectedFile(null)
-				Toast.error(t('Selected file is not allowed'))
-				return
 			}
 			setSelectedFile(event.target.files[0])
 

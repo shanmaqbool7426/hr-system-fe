@@ -1,32 +1,20 @@
 import Image from "next/legacy/image"
-
-export default function Profil({ name, lastName, image, width, height, nameClass }) {
+import { Edit } from "@/components/svg"
+export default function Profil({ name, lastName, image, width = 100, height = 100, className, nameClass, edit = false, action = () => { } }) {
     return (<>
-        {
-            image ?
-                <figure className="w-10 h-10 m-0 overflow-hidden rounded-full cursor-pointer">
-                    <Image
-                        src={image}
-                        width={width}
-                        height={height}
-                        quality={100}
-                        priority={true}
-                        placeholder="blur"
-                        blurDataURL={image}
-                        alt="user picture"
-                    />
+        <figure className={`flex items-center justify-center relative shrink-0 w-10 h-10 group bg-gray-300 transition-all dark:bg-dark-7 dark:text-white rounded-full overflow-hidden ${className} ${nameClass}`}>
+            {image ? <Image
+                src={image}
+                width={width}
+                height={height}
+                alt="user picture"
+            /> :
+                <span className={`capitalize`}>{name && name[0]}{lastName && lastName[0]}</span>}
 
-                </figure > :
-                <div className={`flex items-center capitalize justify-center bg-gray-300 dark:bg-gray-700 dark:text-white rounded-full ${nameClass}`}>
-                    {name && name[0]}{lastName && lastName[0]}
-                </div>
-        }
+            {edit && <span onClick={action} className="absolute inset-0 invisible group-hover:visible transition-all flex items-center justify-center bg-gray-400/85 text-white dark:bg-dark-6/85 cursor-pointer">
+                <Edit width={'1.5rem'} height={'auto'} />
+            </span>}
+        </figure>
+
     </>)
-}
-
-Profil.defaultProps = {
-    lastName: null,
-    width: 40,
-    height: 40,
-    nameClass: 'w-10 h-10 text-xl'
 }
