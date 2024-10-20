@@ -5,104 +5,81 @@ import Storage from '@/util/storage';
 import { useTranslation } from 'react-i18next';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateProject, UpdateProject } from "@/store/actions/project.actions";
-import { useState } from 'react';
-import ImageUpload from '@/components/elements/ImadeUploader';
+import { CreateHelpdeskTicket, UpdateHelpdeskTicket } from '@/store/actions/helpdesk.actions';
 
-export default function CreatHelpDeskForm({ onClose, object, }) {
+export default function CreateTicketForm({ onClose, object, }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { is_loading } = useSelector(state => state.project)
     const { auth_user } = useSelector(state => state.auth);
+    const { asset_list } = useSelector((state) => state.asset)
 
     const formik = useFormik({
         initialValues: {
-            issueTitle: object?.issueTitle || "",
-            priority: object?.priority || "",
-            departement: object?.departement || "",
-            category: object?.category || "",
-            subCategory: object?.subCategory || "",
-            assetId: object?.assetId || "",
+            title: object?.title || "",
             description: object?.description || "",
-
+            type: object?.type || "",
+            priority: object?.priority || "",
+            asset: object?.assetId || "",
+            attachment: null,
         },
         validationSchema: Yup.object().shape({
-            issueTitle: Yup.string().required(t('issueTitle is required')),
-            priority: Yup.string().required(t('priority is required')),
-            departement: Yup.string().required(t('departement is required')),
-            category: Yup.string().required(t('category is required')),
-            subCategory: Yup.string().required(t('subCategory is required')),
-            assetId: Yup.string().required(t('assetId is required')),
+            title: Yup.string().required(t('Title is required')),
             description: Yup.string().required(t('Description is required')),
-
+            type: Yup.string().required(t('Type is required')),
+            priority: Yup.string().required(t('Priority is required')),
+            asset: Yup.string().when('type', {
+                is: 'hardware',
+                then: () => Yup.string().required(t('Asset is required')),
+                otherwise: () => Yup.string().notRequired(),
+            }),
         }),
         onSubmit: async (values) => {
-            return object ? dispatch(UpdateProject(object._id, values, onCompleted)) : dispatch(CreateProject(values, onCompleted))
+            if (values.type !== "hardware") {
+                delete values.asset
+            }
+            if (values.attachment) {
+                const { url } = await Storage.upload(values.attachment, auth_user.company._id)
+                values.attachment = url
+            }
+            return object ? dispatch(UpdateHelpdeskTicket(object._id, values, onCompleted)) : dispatch(CreateHelpdeskTicket(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t("Project updated successfully") : t("Project created successfully"))
+        Toast.success(object ? t("Ticket updated successfully") : t("Ticket created successfully"))
         onClose()
     }
-    const itCategory = [
-        { value: "Hardware Issues", display: "Hardware Issues" },
-        { value: "Software Problems", display: "Software Problems" },
-        { value: "Printer/Scanner Problems", display: "Printer/Scanner Problems" },
-        { value: "Email Problems", display: "Email Problems" },
-        { value: "Account and Access Issues", display: "Account and Access Issues" },
-        { value: "Security Concerns", display: "Security Concerns" },
-        { value: "Data Center Issues", display: "Data Center Issues" },
-    ]
-    const adminCategory = [
-        { value: "Facilities Management", display: "Facilities Management" },
-        { value: "Office Supllies", display: "Office Supllies" },
-        { value: "Health and Safety", display: "Health and Safety" },
-    ]
-    const HRCategory = [
-        { value: "Payslip", display: "Payslip" },
-        { value: "Attendance leaves", display: "Attendance leaves" },
-        { value: "Genaral Inquiry", display: "Genaral Inquiry" },
-    ]
-    const AccountsCategory = [
-        { value: "Payslip", display: "Payslip" },
-        { value: "Attendance leaves", display: "Attendance leaves" },
-        { value: "Genaral Inquiry", display: "Genaral Inquiry" },
-    ]
-    const FacilitiesManagementSubCategory = [
-        { value: "House Keeping", display: "House Keeping" },
-        { value: "Air Conditioner", display: "Air Conditioner" },
-        { value: "Kitchen Issues", display: "Kitchen Issues" },
-        { value: "Lighting Issues", display: "Lighting Issues" },
-        { value: "Security Concerns", display: "Security Concerns" },
-    ]
-    const OfficeSuplliesSubCategory = [
-        { value: "Stationary Request", display: "Stationary Request" },
-        { value: "Furtinure Issue", display: "Furtinure Issue" },
-        { value: "Equipment Request", display: "Equipment Request" },
-    ]
-    const HealthandSafetySubCategory = [
-        { value: "Safety Hazards", display: "Safety Hazards" },
-        { value: "Fire Safety", display: "Fire Safety" },
-        { value: "First Ail Supplies", display: "First Ail Supplies" },
-    ]
+
     const formElements = [
         {
             type: "text",
-            name: "issueTitle",
-            label: t('Issue Title'),
-            placeholder: t("Issue Title"),
+            name: "title",
+            label: t('Title'),
+            placeholder: t("Title"),
             required: true,
-            value: formik.values.issueTitle,
+            value: formik.values.title,
         },
         {
-            type: "text",
-            name: "assetId",
-            label: t('Asset Id'),
-            placeholder: t("Asset Id"),
+            type: "select",
+            name: "type",
+            label: t("Type"),
+            value: formik.values.type,
             required: true,
-            value: formik.values.assetId,
+            list: [
+                { value: "hardware", display: "Hardware" },
+                { value: "software", display: "Software" },
+                { value: "support", display: "Support" },
+            ]
         },
-
+        {
+            type: formik.values.type == "hardware" ? "select" : "hidden",
+            name: "asset",
+            label: t('Asset'),
+            placeholder: t("Asset"),
+            required: true,
+            value: formik.values.asset,
+            list: asset_list.filter((asset) => asset.user == auth_user._id).map((asset) => ({ value: asset._id, display: asset.assetId })),
+        },
         {
             type: "select",
             name: "priority",
@@ -111,54 +88,27 @@ export default function CreatHelpDeskForm({ onClose, object, }) {
             required: true,
             list: [
                 { value: "low", display: "Low" },
-                { value: "normal", display: "Normal" },
+                { value: "medium", display: "Medium" },
                 { value: "high", display: "High" },
-                { value: "Critical", display: "Critical" },
+                { value: "critical", display: "Critical" },
             ]
         },
-        {
-            type: "select",
-            name: "departement",
-            label: t("Departement"),
-            value: formik.values.departement,
-            required: true,
-            list: [
-                { value: "IT", display: "IT" },
-                { value: "Admin", display: "Admin" },
-                { value: "HR", display: "HR" },
-                { value: "Accounts", display: "Accounts" },
-            ]
-        },
-        {
-            type: "select",
-            name: "category",
-            label: t('Category'),
-            value: formik.values.category,
-            required: true,
-            list: formik.values.departement == 'IT' ? itCategory : formik.values.departement == 'Admin' ? adminCategory : formik.values.departement == 'HR' ? HRCategory : AccountsCategory,
-        },
-        {
-            type: "select",
-            name: "subCategory",
-            label: t('Sub Category'),
-            value: formik.values.subCategory,
-            required: true,
-            list: formik.values.category == "Facilities Management" ? FacilitiesManagementSubCategory : formik.values.category == "Office Supllies" ? OfficeSuplliesSubCategory : formik.values.category == "Health and Safety" ? HealthandSafetySubCategory : AccountsCategory,
-        },
-
         {
             type: "textarea",
             containerClass: "col-span-2",
             required: true,
             name: "description",
             label: t('Description'),
+        },
+        {
+            type: "file",
+            name: "attachment",
+            label: t('Attachment'),
+            accept: `image/*,application/pdf,.doc,.docx`,
+            className: "col-span-2"
         }
     ]
     return (
-        <BaseForm title={object ? "Submit New Ticket" : "Submit New Ticket"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
-            <div className='flex flex-col gap-6 col-span-2'>
-                <ImageUpload />
-            </div>
-        </BaseForm>
+        <BaseForm title={object ? "Update Ticket" : "Create Ticket"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
     )
 }
