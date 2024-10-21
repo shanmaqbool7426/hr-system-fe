@@ -4,20 +4,18 @@ import { Filter } from "../svg";
 import { useState } from "react";
 import { capitalize } from "@/util/helpers";
 
-export default function FilterArea({ children, elements, title, filters, setFilters, filterHandler }) {
+export default function FilterArea({ title, elements = [], filters = {}, setFilters = () => { } }) {
     const { t } = useTranslation()
     const [open, setOpen] = useState(false)
     const [edit, setEdit] = useState(false)
     const submitHandler = (event) => {
         event.preventDefault()
-        // filterHandler()
     }
     const clearFilters = () => {
         for (let key in filters) {
             filters[key] = ""
             setFilters(filters)
         }
-        // filterHandler()
     }
 
     const toggleOpen = () => {
@@ -38,7 +36,7 @@ export default function FilterArea({ children, elements, title, filters, setFilt
         <form className="flex flex-col gap-4 mb-6 pb-6 border-b border-themeGrayscale300 dark:border-gray-700" onSubmit={submitHandler}>
             <div className="flex justify-between items-center">
                 <h2 className="mb-0 text-h5">{title}</h2>
-                <div className="flex gap-2">
+                {elements.length > 0 && <div className="flex gap-2">
                     <Button onClick={toggleOpen} type="button"
                         className={`btn ${open ? "btn-dark" : "btn-dark-outline"} items-center`}>
                         <Filter /> {t("Filter")}</Button>
@@ -46,11 +44,11 @@ export default function FilterArea({ children, elements, title, filters, setFilt
                         onClick={toggleEdit} type="button"
                         className={`btn ${edit ? "btn-dark" : "btn-dark-outline"} items-center`}>
                         <Edit /> {t('Edit Filter')}</Button> */}
-                </div>
+                </div>}
             </div>
 
             {open && <>
-                <hr className="border-themeGrayscale300 dark:border-gray-700"/>
+                <hr className="border-themeGrayscale300 dark:border-gray-700" />
                 <div className="grid xl:grid-cols-6 grid-cols-4 gap-4">
                     {elements?.map((element, index) => {
                         switch (element.type) {

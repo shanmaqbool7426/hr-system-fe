@@ -3,11 +3,13 @@ import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatHelpDeskForm from "@/components/forms/helpdesk/create";
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
-import Toast from "@/util/toast";
+import { ThreeDotsVertical, Tick, Users } from "@/components/svg";
 import { FetchHelpdeskTickets } from "@/store/actions/helpdesk.actions";
 import { FetchAssets } from "@/store/actions/asset.actions";
 import FilterArea from "@/components/includes/FilterArea";
+import AssignTicketForm from "@/components/forms/helpdesk/assign";
+import CloseTicketForm from "@/components/forms/helpdesk/close";
+import { FetchEmployees } from "@/store/actions/employee.actions";
 
 
 export default function TicketsPage() {
@@ -20,12 +22,21 @@ export default function TicketsPage() {
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
     const [create, setCreate] = useState(false)
-
+    const [assign, setAssign] = useState(null)
+    const [transfer, setTransfer] = useState(null)
+    const [closeTicket, setCloseTicket] = useState(null)
     const [filters, setFilters] = useState({
         search: "",
         status: "",
     })
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case "open": return "bg-themeWarning"
+            case "in-progress": return "bg-themePurple"
+            case "closed": return "bg-themeSuccess"
+        }
+    }
     const filterElements = [
         {
             type: "search",
@@ -45,6 +56,7 @@ export default function TicketsPage() {
             value: filters.status,
             list: [
                 { value: "open", display: t("Open") },
+                { value: "in-progress", display: t("In Progress") },
                 { value: "closed", display: t("Closed") },
             ],
             onChange: (status) => {
@@ -56,6 +68,7 @@ export default function TicketsPage() {
     ];
     const headings = [
         { title: t("Ticket Id"), col: "ticketId" },
+        { title: t("Issue Type"), col: "type" },
         { title: t("Issue Title"), col: "title" },
         { title: t("Requested by"), col: "createdBy" },
         { title: t("Assign to"), col: "assignTo" },
@@ -94,38 +107,56 @@ export default function TicketsPage() {
     }
     const rows = paginatedData.map((item) => ({
         ticketId: item.ticketId,
+        type: <span className="capitalize">
+            {item.type}
+            {item.hardwareType && <div>
+                <span className="text-sm text-themeGrayscale500">
+                    ({item.hardwareType})
+                </span>
+            </div>}
+        </span>,
         title: item.title,
         createdBy: item.createdBy ? <ModifiedBy user={item.createdBy} /> : "------",
-        assignTo: item.assignTo ? <ModifiedBy user={item.assignTo} /> : "------",
+        assignTo: item.assignedTo ? <ModifiedBy user={item.assignedTo} /> : "------",
         priority: <StatusDropdown
             value={item.priority}
             type="priority"
         />,
         status: <div className={`flex justify-center`}>
-            <span className={`zt-status ${item.status === 'open' ? 'bg-themePurple' : 'bg-themeSuccess'}`}>{item.status}</span>
+            <span className={`zt-status ${getStatusColor(item.status)}`}>{item.status}</span>
         </div>,
-        action: <DropDown icon={<ThreeDotsVertical />}>
-            <ul className="zt-themeDropDownList zt-sm gap-4">
-                <li className="!p-0">
-                    <a onClick={() => { setCreate(true) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                        <span><Edit /></span>
-                        <span>{t("Edit")}</span>
-                    </a>
-                </li>
-                <li className="!p-0">
-                    <a onClick={() => Toast.confirmDelete(() => {
-                        Toast.success(t("Ticket deleted successfully"))
-                    }, t)} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
-                        <span><Trash /></span>
-                        <span>{t("Delete")}</span>
-                    </a>
-                </li>
-            </ul>
-        </DropDown>
+        action: <>
+            {item.status !== "closed" && <DropDown icon={<ThreeDotsVertical />}>
+                <ul className="zt-themeDropDownList zt-sm gap-4">
+                    {item.status === "open" && <li className="!p-0">
+                        <a onClick={() => { setAssign(item._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><Users /></span>
+                            <span>{t("Assign")}</span>
+                        </a>
+                    </li>}
+                    {item.status === "in-progress" && <>
+                        <li className="!p-0">
+                            <a onClick={() => { setAssign(item._id); setTransfer(item?.assignedTo?._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                                <span><Users /></span>
+                                <span>{t("Transfer")}</span>
+                            </a>
+                        </li>
+                        <li className="!p-0">
+                            <a onClick={() => { setCloseTicket(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                                <span><Tick /></span>
+                                <span>{t("Close")}</span>
+                            </a>
+                        </li>
+                    </>}
+
+                </ul>
+            </DropDown>}
+        </>
     }))
     useEffect(() => {
         dispatch(FetchHelpdeskTickets())
         dispatch(FetchAssets())
+        dispatch(FetchEmployees())
     }, [dispatch])
 
     return (
@@ -137,6 +168,7 @@ export default function TicketsPage() {
             <div className="zt-card grow">
                 <FilterArea title={t("Ticket Details")} elements={filterElements} filters={filters} setFilters={setFilters} />
                 <Table
+                    checkbox={false}
                     headings={headings}
                     rows={rows}
                     sortCol={sortCol}
@@ -152,6 +184,8 @@ export default function TicketsPage() {
             </div>
 
             {create && <CreatHelpDeskForm onClose={() => setCreate(false)} />}
+            {assign && <AssignTicketForm onClose={() => { setAssign(null); setTransfer(false) }} ticketId={assign} transfer={transfer} />}
+            {closeTicket && <CloseTicketForm onClose={() => setCloseTicket(null)} ticket={closeTicket} />}
         </section>
     )
 }

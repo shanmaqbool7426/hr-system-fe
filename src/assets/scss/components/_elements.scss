@@ -810,7 +810,7 @@
 }
 
 .zt-stats-card {
-  @apply bg-white dark:text-white rounded-2xl p-6 shadow-lg relative overflow-hidden;
+  @apply bg-white dark:text-white rounded-2xl p-6 shadow-md relative overflow-hidden;
 
   .zt-side-icon-placeholder {
     @apply w-32 h-32 rounded-bl-3xl flex grow absolute -top-5 -right-12 rotate-45
@@ -820,12 +820,12 @@
     @apply w-12 h-12 rounded-xl flex grow absolute top-5 right-3 text-white
   }
 
-  >h4 {
+  .title {
     @apply text-3xl font-bold mb-3 text-gray-800 dark:text-gray-100
   }
 
-  >p {
-    @apply mb-0 text-lg font-semibold text-gray-600 dark:text-gray-300
+  .desc {
+    @apply mb-0 text-lg font-semibold text-gray-600 dark:text-themeGrayscale400
   }
 
   &.variant-primary {
@@ -833,6 +833,11 @@
 
     .zt-side-icon-placeholder {
       @apply bg-themePrimary
+    }
+
+    .title,
+    .desc {
+      @apply text-themePrimary dark:text-themeGrayscale400
     }
   }
 
@@ -842,6 +847,11 @@
     .zt-side-icon-placeholder {
       @apply bg-lightOrange dark:bg-lightOrange/80
     }
+
+    .title,
+    .desc {
+      @apply text-themeOrange dark:text-themeGrayscale400
+    }
   }
 
   &.variant-green {
@@ -849,6 +859,11 @@
 
     .zt-side-icon-placeholder {
       @apply bg-themeSuccess dark:bg-themeSuccess/80
+    }
+
+    .title,
+    .desc {
+      @apply text-themeSuccess dark:text-themeGrayscale400
     }
   }
 
@@ -858,6 +873,11 @@
     .zt-side-icon-placeholder {
       @apply bg-themePurple dark:bg-themePurple/80
     }
+
+    .title,
+    .desc {
+      @apply text-themePurple dark:text-themeGrayscale400
+    }
   }
 
   &.variant-red {
@@ -865,6 +885,11 @@
 
     .zt-side-icon-placeholder {
       @apply bg-themeDanger dark:bg-themeDanger/80
+    }
+
+    .title,
+    .desc {
+      @apply text-themeDanger dark:text-themeGrayscale400
     }
   }
 }

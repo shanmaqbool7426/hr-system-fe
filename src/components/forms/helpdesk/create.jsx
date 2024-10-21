@@ -19,6 +19,7 @@ export default function CreateTicketForm({ onClose, object, }) {
             title: object?.title || "",
             description: object?.description || "",
             type: object?.type || "",
+            hardwareType: object?.hardwareType || "",
             priority: object?.priority || "",
             asset: object?.assetId || "",
             attachment: null,
@@ -27,9 +28,14 @@ export default function CreateTicketForm({ onClose, object, }) {
             title: Yup.string().required(t('Title is required')),
             description: Yup.string().required(t('Description is required')),
             type: Yup.string().required(t('Type is required')),
-            priority: Yup.string().required(t('Priority is required')),
-            asset: Yup.string().when('type', {
+            hardwareType: Yup.string().when('type', {
                 is: 'hardware',
+                then: () => Yup.string().required(t('Hardware type is required')),
+                otherwise: () => Yup.string().notRequired(),
+            }),
+            priority: Yup.string().required(t('Priority is required')),
+            asset: Yup.string().when('hardwareType', {
+                is: (hardwareType) => hardwareType !== "new",
                 then: () => Yup.string().required(t('Asset is required')),
                 otherwise: () => Yup.string().notRequired(),
             }),
@@ -54,9 +60,10 @@ export default function CreateTicketForm({ onClose, object, }) {
         {
             type: "text",
             name: "title",
-            label: t('Title'),
-            placeholder: t("Title"),
+            label: t('Issue'),
+            placeholder: t("Issue"),
             required: true,
+            containerClass: "col-span-2",
             value: formik.values.title,
         },
         {
@@ -66,19 +73,32 @@ export default function CreateTicketForm({ onClose, object, }) {
             value: formik.values.type,
             required: true,
             list: [
-                { value: "hardware", display: "Hardware" },
+                { value: "network", display: "Network" },
                 { value: "software", display: "Software" },
                 { value: "support", display: "Support" },
+                { value: "hardware", display: "Hardware" },
             ]
         },
         {
             type: formik.values.type == "hardware" ? "select" : "hidden",
+            name: "hardwareType",
+            label: t("Hardware Type"),
+            value: formik.values.hardwareType,
+            required: true,
+            list: [
+                { value: "new", display: "New" },
+                { value: "faulty", display: "Faulty" },
+                { value: "replace", display: "Replace" },
+            ]
+        },
+        {
+            type: formik.values.type == "hardware" && formik.values.hardwareType !== "new" ? "select" : "hidden",
             name: "asset",
             label: t('Asset'),
             placeholder: t("Asset"),
             required: true,
             value: formik.values.asset,
-            list: asset_list.filter((asset) => asset.user == auth_user._id).map((asset) => ({ value: asset._id, display: asset.assetId })),
+            list: asset_list.filter((asset) => asset.user._id == auth_user._id && !asset.deletedAt).map((asset) => ({ value: asset._id, display: asset.assetId })),
         },
         {
             type: "select",
@@ -109,6 +129,6 @@ export default function CreateTicketForm({ onClose, object, }) {
         }
     ]
     return (
-        <BaseForm title={object ? "Update Ticket" : "Create Ticket"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
+        <BaseForm title={object ? t("Update Ticket") : t("Create Ticket")} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
     )
 }

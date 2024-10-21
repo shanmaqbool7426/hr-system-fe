@@ -1,281 +1,161 @@
-import { DropDown, Table } from '@/components/elements'
-import UserListView from '@/components/elements/UserListView' 
-import FilterArea from '@/components/includes/FilterArea'
-import { EyeOn } from '@/components/svg' 
-import Link from 'next/link'
-import Pagination from '@/components/elements/Table/pagination'
-import Toast from "@/util/toast";
-import React, { useEffect, useState } from 'react'
-import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux';
-import { FetchProject, DeleteProject, UpdateProject } from '@/store/actions/project.actions';
-import { FetchEmployees } from '@/store/actions/employee.actions'
+import { DropDown, ModifiedBy, StatusDropdown, Table } from "@/components/elements";
+import { useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ThreeDotsVertical, Tick, Users } from "@/components/svg";
+import { FetchHelpdeskTickets } from "@/store/actions/helpdesk.actions";
+import FilterArea from "@/components/includes/FilterArea";
+import AssignTicketForm from "@/components/forms/helpdesk/assign";
+import CloseTicketForm from "@/components/forms/helpdesk/close";
+import { FetchEmployees } from "@/store/actions/employee.actions";
 
-export default function InventoryTaskModule() {
-    const dispatch = useDispatch();
+
+export default function InventoryReportedTaskPage() {
     const { t } = useTranslation()
-    const [view, setView] = useState(() => localStorage.getItem('View') || 'grid');
+    const dispatch = useDispatch()
+    const { ticket_list } = useSelector((state) => state.helpdesk)
+
     const [sortCol, setSortCol] = useState(null)
     const [sortDir, setSortDir] = useState(null)
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(10)
-    const { project_list, is_loading } = useSelector(state => state.project);
-    const [create, setCreate] = useState(false)
-    const [editProject, setEditProject] = useState(null);
+    const [assign, setAssign] = useState(null)
+    const [transfer, setTransfer] = useState(null)
+    const [closeTicket, setCloseTicket] = useState(null)
     const [filters, setFilters] = useState({
         search: "",
-        priority: null,
-        status: null,
-    });
+        status: "",
+    })
 
-
-    const handlePriorityChange = (e, projectId) => {
-        const newPriority = e.target.value;
-        dispatch(UpdateProject(projectId, { priority: newPriority }, () => {
-            Toast.success(t("Project priority updated successfully"));
-        }));
-    };
-
-    const handleStatusChange = (e, projectId) => {
-        const newStatus = e.target.value;
-        dispatch(UpdateProject(projectId, { status: newStatus }, () => {
-            Toast.success(t("Project status updated successfully"));
-        }));
-    };
-    const getPriorityClass = (priority) => {
-        switch (priority.toLowerCase()) {
-            case 'high':
-                return 'zt-tag-danger';
-            case 'medium':
-                return 'zt-tag-dark';
-            case 'low':
-                return 'zt-tag-success';
-            default:
-                return 'zt-tag-default';
-        }
-    };
-    const getStatusClass = (status) => {
-        switch (status.toLowerCase()) {
-            case 'pending':
-                return 'zt-tag-danger';
-            case 'progress':
-                return 'zt-tag-dark';
-            case 'completed':
-                return 'zt-tag-success';
-            case "new":
-                return 'zt-tag-dark';
-            default:
-                return 'zt-tag-default';
-        }
-    };
-
-    useEffect(() => {
-        const savedView = localStorage.getItem('View');
-        if (savedView) {
-            setView(savedView);
-        }
-        dispatch(FetchProject());
-        dispatch(FetchEmployees());
-    }, [dispatch]);
-
-    useEffect(() => {
-        localStorage.setItem('View', view);
-    }, [view]);
-
-    const deleteHandler = (item) => {
-        Toast.confirmDelete(() => {
-            dispatch(
-                DeleteProject(item._id, () => {
-                    Toast.success(t("Project deleted successfully"));
-                })
-            );
-        }, t);
-    };
-
-    const headings = [
-        { title: t("Project"), col: "Project", sort: true },
-        { title: t("Project ID"), col: "ProjectID", sort: true },
-        { title: t("Client"), col: "Client", sort: true },
-        { title: t("Leader"), col: "Leader", sort: true },
-        { title: t("Team"), col: "Team", sort: true },
-        { title: t("Priority"), col: "Priority", sort: true },
-        { title: t("Status"), col: "Status", sort: true },
-        { title: t("Action"), col: "Action" },
-    ]
     const filterElements = [
         {
             type: "search",
             name: "search",
             value: filters.search,
-            placeholder: t("Project"),
+            placeholder: t("Search tickets by title"),
             className: "xl:col-span-2",
             onChange: (event) => {
                 let _filter = { ...filters };
-                _filter['search'] = event.target.value;
+                _filter["search"] = event.target.value;
                 setFilters(_filter);
-            }
+            },
         },
         {
             type: "select",
-            name: "Priority",
-            className: "xl:col-span-2",
-            placeholder: t("Priority"),
-            value: filters.priority,
-            list: [
-                { value: "low", display: "Low" },
-                { value: "normal", display: "Normal" },
-                { value: "high", display: "High" },
-            ],
-            onChange: (priority) => {
-                let _filter = { ...filters };
-                _filter['priority'] = priority;
-                setFilters(_filter);
-            }
-        },
-        {
-            type: "select",
-            name: "Status",
-            className: "xl:col-span-2",
-            placeholder: t("Status"),
+            name: "status",
             value: filters.status,
             list: [
-                { value: "new", display: "New" },
+                { value: "open", display: t("Open") },
+                { value: "in-progress", display: t("In Progress") },
             ],
             onChange: (status) => {
                 let _filter = { ...filters };
-                _filter['status'] = status;
+                _filter["status"] = status;
                 setFilters(_filter);
-            }
+            },
         },
     ];
+    const headings = [
+        { title: t("Ticket Id"), col: "ticketId" },
+        { title: t("Issue Type"), col: "type" },
+        { title: t("Issue Title"), col: "title" },
+        { title: t("Requested by"), col: "createdBy" },
+        { title: t("Assign to"), col: "assignTo" },
+        { title: t("Priority"), col: "priority" },
+        { title: t("Status"), col: "status" },
+        { title: t("Action"), col: "action" },
+    ]
 
-    let filteredRows = project_list?.filter((item) => {
-        return (
-            (!filters.search || item.name.toLowerCase().includes(filters.search.toLowerCase())) &&
-            (!filters.priority || item.priority === filters.priority) &&
-            (!filters.status || item.status === filters.status)
-        );
-    })
+    let filteredrows = ticket_list
+        .filter((item) => {
+            let include = true;
+            if (filters.search && filters.search.length > 0) {
+                include = item.title.toLowerCase().includes(filters.search.toLowerCase())
+                if (!include) return false;
+            }
+            if (filters.status) {
+                include = item?.status === filters.status;
+                if (!include) return false;
+            }
+            return include;
+        })
         .sort((a, b) => {
-            if (!sortCol) return 0;
             if (sortDir === "asc") return a[sortCol]?.localeCompare(b[sortCol]);
             else return b[sortCol]?.localeCompare(a[sortCol]);
         });
-
     const indexOfLastItem = page * perPage;
     const indexOfFirstItem = indexOfLastItem - perPage;
-    const paginatedData = filteredRows?.slice(indexOfFirstItem, indexOfLastItem);
+    const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
 
-    const rows = paginatedData?.map((item, index) => ({
-        Project: <Link href={`/operations/projects/details/${item?._id}`}><span className=''>{item?.name}</span></Link>,
-        ProjectID: item?.projectId,
-        Client: item?.client,
-        Leader: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.leads} />,
-        Team: <UserListView imgClass="h-[32px] w-[32px]" key={index} list={item?.members} limit={2} />,
-        Priority: (
-            <select
-                className={`zt-tag ${getPriorityClass(item.priority)}`}
-                value={item.priority}
-                onChange={(e) => handlePriorityChange(e, item._id)}
-            >
-                <option value="low" className='zt-tag-low'>
-                    Low
-                </option>
-                <option value="medium" className='zt-tag-medium'>
-                    Medium
-                </option>
-                <option value="high" className='zt-tag-high'>
-                    High
-                </option>
-            </select>
-        ),
-        Status: (
-            <select
-                className={`zt-tag ${getStatusClass(item.status)}`}
-                value={item.status}
-                onChange={(e) => handleStatusChange(e, item._id)}
-            >
-                {item.status === "new" && (
-                    <option value="new" className='zt-tag-new'>
-                        {t("New")}
-                    </option>
-                )}
-                <option value="pending" className='zt-tag-pending'>
-                    Pending
-                </option>
-                <option value="progress" className='zt-tag-progress'>
-                    Progress
-                </option>
-                <option value="completed" className='zt-tag-completed'>
-                    Completed
-                </option>
-            </select>
-        ),
-        Action: (
-            <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-1">
-                    <li className="!p-0">
-                        <a href={`/operations/projects/details/${item?._id}`} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
-                            <span><EyeOn /></span>
-                            <span>Details</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a
-                            className={
-                                "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark"
-                            }
-                            onClick={() => {
-                                setEditProject(item); 
-                            }}
-                        >
-                            <span>
-                                <Edit />
-                            </span>
-                            <span>{t("Edit")}</span>
-                        </a>
-                    </li>
-                    <li className="!p-0">
-                        <a
-                            onClick={() => {
-                                deleteHandler(item);
-                            }}
-                            className={
-                                "flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDangerDark"
-                            }
-                        >
-                            <span>
-                                <Trash />
-                            </span>
-                            <span>{t("Delete")}</span>
-                        </a>
-                    </li>
-                </ul>
-            </DropDown>
-        )
-    }))
     const pagination = {
-        totalRecords: filteredRows?.length,
+        totalRecords: ticket_list?.total_records,
         showPerPage: true,
         prevAction: () => page > 1 && setPage(page - 1),
         clickAction: (value) => setPage(value),
         nextAction: () => setPage(page + 1),
-    };
+    }
+    const rows = paginatedData.map((item) => ({
+        ticketId: item.ticketId,
+        type: <span className="capitalize">
+            {item.type}
+            {item.hardwareType && <div>
+                <span className="text-sm text-themeGrayscale500">
+                    ({item.hardwareType})
+                </span>
+            </div>}
+        </span>,
+        title: item.title,
+        createdBy: item.createdBy ? <ModifiedBy user={item.createdBy} /> : "------",
+        assignTo: item.assignedTo ? <ModifiedBy user={item.assignedTo} /> : "------",
+        priority: <StatusDropdown
+            value={item.priority}
+            type="priority"
+        />,
+        status: <div className={`flex justify-center`}>
+            <span className={`zt-status ${item.status === 'open' ? 'bg-themePurple' : 'bg-themeSuccess'}`}>{item.status}</span>
+        </div>,
+        action: <>
+            {item.status !== "closed" && <DropDown icon={<ThreeDotsVertical />}>
+                <ul className="zt-themeDropDownList zt-sm gap-4">
+                    {item.status === "open" && <li className="!p-0">
+                        <a onClick={() => { setAssign(item._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><Users /></span>
+                            <span>{t("Assign")}</span>
+                        </a>
+                    </li>}
+                    {item.status === "in-progress" && <>
+                        <li className="!p-0">
+                            <a onClick={() => { setAssign(item._id); setTransfer(item?.assignedTo?._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                                <span><Users /></span>
+                                <span>{t("Transfer")}</span>
+                            </a>
+                        </li>
+                        <li className="!p-0">
+                            <a onClick={() => { setCloseTicket(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                                <span><Tick /></span>
+                                <span>{t("Close")}</span>
+                            </a>
+                        </li>
+                    </>}
+
+                </ul>
+            </DropDown>}
+        </>
+    }))
+    useEffect(() => {
+        dispatch(FetchHelpdeskTickets({ status: "open,in-progress", type: "hardware" }))
+        dispatch(FetchEmployees())
+    }, [dispatch])
 
     return (
         <section className="flex flex-col grow">
-            <div className="flex justify-between pb-6">
+            <div className="flex justify-between items-center pb-6">
                 <h1 className="text-h4 mb-0">{t("Inventory Reported Task")}</h1>
-
             </div>
-            <div className=" zt-card grow">
-                <FilterArea title={t("")}
-                    elements={filterElements}
-                    filters={filters}
-                    setFilters={setFilters}
-                />
+            <div className="zt-card grow">
+                <FilterArea title={t("Inventory Reported Task")} elements={filterElements} filters={filters} setFilters={setFilters} />
                 <Table
+                    checkbox={false}
                     headings={headings}
                     rows={rows}
                     sortCol={sortCol}
@@ -286,17 +166,12 @@ export default function InventoryTaskModule() {
                     setPerPage={setPerPage}
                     page={page}
                     setPage={setPage}
-                    className={'zt-employeeTable zt-projectsTable'}
-                    isLoading={is_loading}
-                />
-                {paginatedData?.length > 0 && pagination && <Pagination
                     pagination={pagination}
-                    currentLength={rows?.length}
-                    perPage={perPage}
-                    setPerPage={setPerPage}
-                    page={page}
-                    setPage={setPage} />}
+                />
             </div>
+
+            {assign && <AssignTicketForm onClose={() => { setAssign(null); setTransfer(false) }} ticketId={assign} transfer={transfer} />}
+            {closeTicket && <CloseTicketForm onClose={() => setCloseTicket(null)} ticket={closeTicket} />}
         </section>
-    );
+    )
 }

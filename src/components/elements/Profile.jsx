@@ -8,6 +8,7 @@ export default function Profil({ name, lastName, image, width = 100, height = 10
                 width={width}
                 height={height}
                 alt="user picture"
+                className="object-cover"
             /> :
                 <span className={`capitalize`}>{name && name[0]}{lastName && lastName[0]}</span>}
 

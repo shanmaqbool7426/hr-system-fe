@@ -54,11 +54,19 @@
 }
 
 .zt-menuIcon {
-  @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary dark:text-white
+  @apply w-full max-w-[55px] flex justify-center shrink-0 text-themePrimary/45 hover:text-themePrimary text-themeGrayscale500 dark:text-themeGrayscale600;
+
+  &.selected {
+    @apply text-themePrimary dark:text-themeGrayscale400
+  }
+
+  &.active {
+    @apply text-themePurple dark:text-themePurple font-bold
+  }
 }
 
 .btn-helpDesk {
-  @apply text-sm text-center no-underline bg-themeOrange rounded-full p-2 shadow-2xl shadow-themeOrange
+  @apply text-sm text-center no-underline bg-themePurple rounded-full p-2 shadow-xl shadow-themePurple
 }
 
 .zt-sidebar {
@@ -444,7 +452,7 @@
 
 
 .zt-card {
-  @apply rounded-lg bg-white dark:bg-dark-4 dark:text-white p-3 sm:p-6 shadow-md
+  @apply rounded-lg bg-white dark:bg-dark-4/80 dark:text-white p-3 sm:p-6 shadow-md
 }
 
 .zt-announcementsTabs,

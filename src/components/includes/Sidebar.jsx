@@ -3,20 +3,22 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import {
-  Attendance,
+  Attendance as Leave,
   ChevronDown,
   Connect,
-  Dashboard,
   Employees,
   HelpLine,
-  Leave,
-  Organization,
-  Payroll,
-  Projects,
   Recruitment,
   RemoteWork,
-  Report,
 } from "../svg";
+
+import { LuLayoutDashboard as Dashboard } from "react-icons/lu";
+import { HiOutlineBriefcase as Attendance } from "react-icons/hi2";
+import { PiBooks as Operations } from "react-icons/pi";
+import { TbDeviceDesktopDollar as Payroll } from "react-icons/tb";
+import { HiOutlineDocumentReport as Report } from "react-icons/hi";
+import { MdOutlineHomeWork as Organization } from "react-icons/md";
+
 import { useSelector } from "react-redux";
 
 export default function Sidebar() {
@@ -31,7 +33,7 @@ export default function Sidebar() {
     { icon: Employees, name: t("Employees"), href: "employees" },
     { icon: Attendance, name: t("Attendance"), href: "attendance" },
     { icon: Leave, name: t("Leave"), href: "leave" },
-    { icon: Projects, name: t("Operations"), href: "operations" },
+    { icon: Operations, name: t("Operations"), href: "operations" },
     { icon: Connect, name: t("Connect"), href: "connect", },
     { icon: RemoteWork, name: t("Remote Work"), href: "remote-work" },
     { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
@@ -201,7 +203,7 @@ export default function Sidebar() {
       { name: t("Evaluation"), href: "/recruitment/evaluation" },
     ],
     payroll: [
-      { name: t("Run Payroll"), href: "/payroll/run-payroll" }, 
+      { name: t("Run Payroll"), href: "/payroll/run-payroll" },
       { name: t("Salary Deduction"), href: "/payroll/salary-deduction" },
       { name: t("Salary Changes"), href: "/payroll/salary-changes" },
       { name: t("Allowance/ Arrears"), href: "/payroll/allowance-arrears" },
@@ -220,7 +222,7 @@ export default function Sidebar() {
       { name: t("PF Withdrawal Request"), href: "/payroll/pf-withdrawal" },
       {
         name: t("Payroll Setting"), href: "/payroll/setting",
-        innerSubMenu: [ 
+        innerSubMenu: [
           { name: t("Salary Setup"), href: "/payroll/salary-setup" },
           { name: t("Pay Schedule"), href: "/payroll/setting/pay-schedule" },
           { name: t("Payroll Option"), href: "/payroll/setting/option" },
@@ -229,11 +231,11 @@ export default function Sidebar() {
           { name: t("Salary Setting"), href: "/payroll/setting/salary-setting" },
           { name: t("Overtime"), href: "/payroll/setting/overtime" },
           { name: t("Auto Deduction"), href: "/payroll/setting/auto-deduction" },
-          { name: t("Final Settlement"), href: "/payroll/setting/final-settlement" }, 
-          { name: t("PF Policy"), href: "/payroll/setting/PF-policy" }, 
-          { name: t("Currency"), href: "/payroll/setting/currency" }, 
+          { name: t("Final Settlement"), href: "/payroll/setting/final-settlement" },
+          { name: t("PF Policy"), href: "/payroll/setting/PF-policy" },
+          { name: t("Currency"), href: "/payroll/setting/currency" },
         ].sort((a, b) => a.name.localeCompare(b.name))
-      }, 
+      },
     ],
     "remote-work": [
       { name: t("Remote Work Dashboard"), href: "/remote-work" },
@@ -348,7 +350,7 @@ export default function Sidebar() {
                   <div className="relative group">
                     <Link data-title={item.name} href={item.href}
                       onClick={() => setSelected(null)}>
-                      <span className={`zt-menuIcon ${router.asPath === item.href && "!text-themePurple"}`}><item.icon /></span>
+                      <span className={`zt-menuIcon ${item.href === selected && "selected"} ${router.asPath === item.href && "active"}`}><item.icon className="w-7 h-7" /></span>
                     </Link>
                     <div className="absolute bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       {item.name}
@@ -360,7 +362,7 @@ export default function Sidebar() {
                       event.preventDefault()
                       setSelected(item.href)
                     }}>
-                      <span className={`zt-menuIcon ${router.asPath.includes(item.href) && "!text-themePurple"}`}><item.icon /></span>
+                      <span className={`zt-menuIcon ${item.href === selected && "selected"} ${router.asPath.includes(item.href) && "active"}`}><item.icon className="w-7 h-7" /></span>
                     </a>
                     <div className="absolute z-50 bottom-full -left-3 transform mb-2 w-max bg-themePrimary text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                       {item.name}
@@ -374,7 +376,7 @@ export default function Sidebar() {
 
         <span className="flex justify-center">
           <Link href={"/operations/helpdesk/tickets"} className="btn-helpDesk" onClick={() => setSelected(null)}>
-            <span className="zt-menuIcon text-white">
+            <span className="zt-menuIcon !text-white">
               <HelpLine width={28} height={28} />
             </span>
           </Link>
@@ -404,7 +406,7 @@ export default function Sidebar() {
                         }}
                       >
                         {item.name}
-                        <ChevronDown className={`transition-all w-5 h-5 ${subMenu === item.href ? " rotate-90": ""}`}/>
+                        <ChevronDown className={`transition-all w-5 h-5 ${subMenu === item.href ? " rotate-90" : ""}`} />
                       </a>
                     ) : (
                       <Link
