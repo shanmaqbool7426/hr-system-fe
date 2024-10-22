@@ -119,7 +119,7 @@ export default function DashboardPage() {
             <div className='zt-card mb-6'>
                 <div className='flex justify-between mb-6'>
                     <h2 className="m-0 text-2xl">{t("Ticket Summary")}</h2>
-                    <p className='text-sm text-themeGray'>{t("Total Tickets")}: {stats.reduce((acc, ele) => acc + ele.count, 0)}</p>
+                    <p className='text-sm text-themeGray'>{t("Total Tickets")}: {stats?.total}</p>
                 </div>
                 <ResponsiveContainer width="100%" height={400}>
                     <LineChart
