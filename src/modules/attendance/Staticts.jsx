@@ -1,6 +1,6 @@
 import ProgressBar from '@/components/elements/ProgressBar'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export const Staticts = () => {
     const { t } = useTranslation()

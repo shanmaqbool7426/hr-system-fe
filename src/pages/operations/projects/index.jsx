@@ -9,7 +9,7 @@ import Pagination from '@/components/elements/Table/pagination'
 import Toast from "@/util/toast";
 import React, { useEffect, useState } from 'react'
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux';
 import { FetchProject, DeleteProject, UpdateProject } from '@/store/actions/project.actions';
 import { FetchEmployees } from '@/store/actions/employee.actions'

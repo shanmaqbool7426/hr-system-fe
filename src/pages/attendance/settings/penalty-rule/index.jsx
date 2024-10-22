@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Button, DropDown, Table } from "@/components/elements";
 import AddPenaltyForm from "@/components/forms/attendance/addPenaltyRule";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";

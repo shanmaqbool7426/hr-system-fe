@@ -1,6 +1,6 @@
 import AssetDetailCard from '@/modules/employee/assets/AssetDetailCard'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export default function InventoryDetailPage() {
     const { t } = useTranslation()

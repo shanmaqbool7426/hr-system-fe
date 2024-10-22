@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next';  
+import { useTranslation } from 'next-i18next';  
 import { Input } from '@/components/elements';
 import DisclosureComponent from '@/components/elements/Disclosure';
 export default function OrganizationCompanySettingPage() {

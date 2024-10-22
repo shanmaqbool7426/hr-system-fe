@@ -7,7 +7,7 @@ import { EyeOn, SuccessTick, ThreeDotsVertical, WarningIcon } from '@/components
 import Toast from '@/util/toast'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
 export default function AllowancePage() {

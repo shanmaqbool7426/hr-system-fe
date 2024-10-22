@@ -1,6 +1,6 @@
 import { ClockIcon } from '@/components/svg'
 import React, { Fragment, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import { todaysAttendance, getBreaks } from "@/store/actions/attendance.actions"
 import { useDispatch, useSelector } from 'react-redux'

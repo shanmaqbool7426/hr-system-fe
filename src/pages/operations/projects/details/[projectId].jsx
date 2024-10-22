@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import CreateBoardForm from '@/components/forms/projects/createBoard'
 import * as Yup from 'yup';

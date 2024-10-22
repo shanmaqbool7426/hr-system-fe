@@ -1,6 +1,6 @@
 import FilterArea from '@/components/includes/FilterArea'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import ls from "localstorage-slim"
 import { useEffect } from 'react';

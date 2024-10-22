@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button } from '@/components/elements'
 import { UpcomingSchedule } from '@/modules/dashboard/UpcomingSchedule'
 import { EmployeeListed } from '@/modules/recruitment/dashboard/EmployeeListed'

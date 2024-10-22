@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../elements/Button'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import { CloseCross } from '../svg'
 import Modal from "./Modal"

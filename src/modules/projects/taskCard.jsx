@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Edit, EyeOn, Plus, ThreeDotsVertical, TransforIcon, Trash } from '@/components/svg';
 import { Button, DisplayDate, DropDown } from '@/components/elements';
 import ProgressBar from '@/components/elements/ProgressBar';

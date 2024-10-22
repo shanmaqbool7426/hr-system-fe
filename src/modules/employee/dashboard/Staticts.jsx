@@ -2,7 +2,7 @@ import { Button, SearchSelect, Select, Tabs } from '@/components/elements';
 import { Download, EyeOn } from '@/components/svg';
 import { Tab } from '@headlessui/react';
 import React from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export const Staticts = () => {
     const { t } = useTranslation();

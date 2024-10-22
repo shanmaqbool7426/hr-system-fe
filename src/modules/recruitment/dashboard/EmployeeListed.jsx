@@ -1,7 +1,7 @@
 import { CheckBox, Table, Tabs } from '@/components/elements'
 import { Tab } from '@headlessui/react'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export const EmployeeListed = () => {
     const { t } = useTranslation()

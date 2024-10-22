@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Button, CheckBox, DisplayDate, DropDown, Table } from '@/components/elements';
 import { EyeOn, ThreeDotsVertical, Trash, WarningIcon } from '@/components/svg';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import CreateWarningForm from '@/components/forms/employees/createWarning';
 import Toast from '@/util/toast';
 import CreateWarningRevokeForm from '@/components/forms/employees/createWarningRevoke';

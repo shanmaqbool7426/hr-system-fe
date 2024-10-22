@@ -13,7 +13,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { DeleteTask, FetchTasks, FetchTaskDetails, UpdateTask } from '@/store/actions/task.actions'
 import { FetchTaskBoardDetails } from '@/store/actions/taskboard.actions'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer

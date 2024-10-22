@@ -1,7 +1,7 @@
 import { SearchSelect } from "@/components/elements";
 import DisclosureComponent from "@/components/elements/Disclosure";
 import React from "react";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "next-i18next"; 
 export default function AttendanceGeneralSettingPage() {
   const { t } = useTranslation();
   const data = [

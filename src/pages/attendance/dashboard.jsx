@@ -12,7 +12,7 @@ import { AttendanceSummaryStatistic } from '@/modules/dashboard/AttendanceSummar
 import { FetchAttendance } from '@/store/actions/attendance.actions' 
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Dashboard() {

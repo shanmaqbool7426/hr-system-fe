@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Toast from '@/util/toast'; 
 import BaseForm from '../../BaseForm';
 

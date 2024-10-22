@@ -6,7 +6,7 @@ import FeedbackReplyForm from "@/components/forms/projects/feedbackReply";
 import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } from "@/components/svg";
 import { FetchCompletedTasks } from "@/store/actions/task.actions";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchEmployees } from "@/store/actions/employee.actions";
 

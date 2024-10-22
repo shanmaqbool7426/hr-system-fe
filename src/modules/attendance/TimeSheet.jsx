@@ -1,7 +1,7 @@
 import { Button } from "@/components/elements";
 import { CheckOutIcon, LocationIcon, TakeBreakIcon } from "@/components/svg";
 import React, { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import {
   CheckIn,
   startBreak,

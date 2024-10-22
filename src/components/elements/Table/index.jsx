@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Pagination from './pagination';
 import { SortEmpty, SortAsc, SortDesc } from "@/components/svg";
 import CheckBox from '../CheckBox';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export default function Table({
     headings,

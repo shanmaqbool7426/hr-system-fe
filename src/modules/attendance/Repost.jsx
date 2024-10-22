@@ -1,6 +1,6 @@
 import { Datepicker, SearchSelect } from '@/components/elements';
 import React from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export const RepostModule = () => {
     const { t } = useTranslation();

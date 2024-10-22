@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Toast from '@/util/toast';
 import { CreateRemoteTeam, UpdateRemoteTeam } from "@/store/actions/remote-team.actions"
 import { useDispatch } from 'react-redux';

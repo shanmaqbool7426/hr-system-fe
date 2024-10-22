@@ -1,7 +1,7 @@
 import { Tabs } from '@/components/elements'
 import { Tab } from '@headlessui/react'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export const Announcements = () => {
     const { t } = useTranslation()

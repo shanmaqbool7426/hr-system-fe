@@ -5,7 +5,7 @@ import { CloseCross, Edit, HeadPhone, InputErrorInfo, ThreeDotsVertical, Trash, 
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
 import React, { lazy, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function ManageAssetTypesPage() {

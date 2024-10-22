@@ -4,7 +4,7 @@ import { CloseCross, Edit, InputErrorInfo, ThreeDotsVertical, Trash } from '@/co
 import { DeleteCustomfield } from '@/store/actions/customfield.actions'
 import Toast from '@/util/toast'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function ManageExpenseUnitPage () {

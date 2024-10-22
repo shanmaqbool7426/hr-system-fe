@@ -1,7 +1,7 @@
 import { Button, CheckBox, Select } from '@/components/elements';
 import { ChevronLeft } from '@/components/svg';
 import React, { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Pagination, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';

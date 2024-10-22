@@ -1,7 +1,7 @@
 import { Button } from '@/components/elements';
 import { Calendar, CheckOutIcon, OvertimeIcon } from '@/components/svg';
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { RadialChart } from './RadialChart';
 import AddRequestForm from '@/components/forms/attendance/addRequest';
 import CreateLeaveRequestForm from '@/components/forms/leaves/create-request';

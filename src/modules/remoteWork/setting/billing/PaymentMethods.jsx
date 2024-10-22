@@ -2,7 +2,7 @@ import { Button } from '@/components/elements'
 import ChangePlanForm from '@/components/forms/remoteWork/change-plan'
 import CreateMemberForm from '@/components/forms/remoteWork/createMember'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const PaymentMethods = () => {
     const { t } = useTranslation()

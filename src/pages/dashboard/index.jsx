@@ -1,7 +1,7 @@
 import { auth } from "@/store/actions/auth.actions"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { AttendanceChart } from "@/modules/dashboard/AttendanceChart";
 import { Requests } from "@/modules/dashboard/Requests";
 import { TopEmployee } from "@/modules/dashboard/TopEmployee";

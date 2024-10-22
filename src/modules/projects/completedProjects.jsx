@@ -7,7 +7,7 @@ import { Edit, FeedbackIcon, StarIcon, ThreeDotsVertical, Trash, WarningIcon } f
 import { FetchCompletedProjects } from "@/store/actions/project.actions";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CompletedProjectsModule() {

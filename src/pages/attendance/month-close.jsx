@@ -4,7 +4,7 @@ import AttendanceRepostForm from '@/components/forms/attendance/repostAttendance
 import { Edit, ExitIcon, ThreeDotsVertical } from '@/components/svg'
 import Toast from '@/util/toast'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export default function MonthClose() {
 	const { t } = useTranslation()

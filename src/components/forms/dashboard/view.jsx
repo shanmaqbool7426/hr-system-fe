@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import BaseForm from '../BaseForm';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { useSelector } from 'react-redux';
 import { Button, Input, TextEditor, ToggleCheck } from '@/components/elements';
 import { useState } from 'react';

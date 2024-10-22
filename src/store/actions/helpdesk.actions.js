@@ -100,3 +100,16 @@ export const AssignHelpdeskTicket = (id, payload, onSuccess = null) => async (di
         dispatch(setLoading(false))
     }
 }
+
+export const FeedbackHelpdeskTicket = (id, payload, onSuccess = null) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const data = await axios.post(`/helpdesk-tickets/feedback/${id}`, payload)
+        dispatch(setTicket(data.ticket))
+        onSuccess && onSuccess()
+        return true
+    } catch (err) { console.error("Error", err); }
+    finally {
+        dispatch(setLoading(false))
+    }
+}

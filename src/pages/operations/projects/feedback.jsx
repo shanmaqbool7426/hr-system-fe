@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Button, Tabs } from '@/components/elements'; 
 import { Tab } from '@headlessui/react'
 import TaskFeedbackForm from '@/components/forms/projects/taskFeedback';

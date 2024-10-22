@@ -3,7 +3,7 @@ import CreateTypeForm from "@/components/forms/attendance/createType";
 import AddReasonTypeForm from "@/components/forms/attendance/reasonType";
 import { CrossClose, Edit, SuccessTick,ThreeDotsVertical } from "@/components/svg";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 export default function ExemptionModule() {
     const { t } = useTranslation()

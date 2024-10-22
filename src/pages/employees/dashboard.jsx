@@ -4,7 +4,7 @@ import { OnGoingProjects } from '@/modules/employee/dashboard/OnGoingProjects';
 import { Profile } from '@/modules/employee/dashboard/Profile';
 import { Staticts } from '@/modules/employee/dashboard/Staticts';
 import React from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export default function EmployeeDashboardPage() {
 	const { t } = useTranslation();

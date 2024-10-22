@@ -6,7 +6,7 @@ import FilterArea from "@/components/includes/FilterArea";
 import Toast from "@/util/toast";
 import { CrossClose, Edit, ThreeDotsVertical } from "@/components/svg";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FetchShiftFlags,

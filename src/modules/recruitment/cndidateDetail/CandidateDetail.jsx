@@ -4,7 +4,7 @@ import ScheduleInterview from '@/components/forms/recruitment/candidate-detail/S
 import { RadialChart } from '@/modules/dashboard/RadialChart'
 import { Tab } from '@headlessui/react'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import GeneralTab from './GeneralTab'
 import ExperinceTab from './ExperinceTab'
 import EducationTab from './EducationTab'

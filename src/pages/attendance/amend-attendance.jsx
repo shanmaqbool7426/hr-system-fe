@@ -4,7 +4,7 @@ import AttendanceRepostForm from '@/components/forms/attendance/repostAttendance
 import FilterArea from '@/components/includes/FilterArea'
 import { CloseCross, InputErrorInfo } from '@/components/svg'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
 export default function AmmendAttendance() {

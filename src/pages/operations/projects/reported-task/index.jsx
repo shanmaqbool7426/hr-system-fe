@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { DisplayDate, DropDown, Table } from '@/components/elements'
 import { useEffect, useState } from 'react'
 import { EyeOn, SuccessTick, ThreeDotsVertical, Trash } from '@/components/svg'

@@ -1,6 +1,6 @@
 import { Button, CheckBox, Select } from '@/components/elements'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const AppsCategory = () => {
     const { t } = useTranslation()

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, DisplayDate, Table } from '@/components/elements'
 import { useEffect, useState } from 'react'
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue'

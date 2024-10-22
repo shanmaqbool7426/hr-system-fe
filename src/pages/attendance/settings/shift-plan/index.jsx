@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Button, CheckBox, DropDown, Table } from "@/components/elements";
 import CreateShiftPlan from "@/components/forms/attendance/create-shift-plan";
 import { Edit, ThreeDotsVertical, Trash } from "@/components/svg";

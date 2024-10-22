@@ -2,7 +2,7 @@ import { DropDown, Tabs } from '@/components/elements'
 import { Edit, InfoIcon, MuteIcon, PinIcon, ThreeDotsVertical, Trash } from '@/components/svg'
 import Image from 'next/image'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { Tab } from '@headlessui/react'
 const ChatHistory = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const StatusSelect = ({ item, options }) => {
     const [status, setStatus] = useState(item?.status || (options[0] && options[0].value) || '');

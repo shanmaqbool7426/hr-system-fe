@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Edit, EyeOn, ThreeDotsVertical, Trash } from '../../../components/svg';
 import CreateProjectsForm from '@/components/forms/projects/create-projects'
 import ProgressBar from '../../../components/elements/ProgressBar';

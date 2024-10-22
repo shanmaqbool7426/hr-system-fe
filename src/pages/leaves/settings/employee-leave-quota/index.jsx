@@ -2,7 +2,7 @@ import { CheckBox, DropDown, Table } from '@/components/elements'
 import { Edit, ThreeDotsVertical, Trash } from '@/components/svg'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 export default function LeaveQuotaSettingsPage() {
     const { t } = useTranslation()

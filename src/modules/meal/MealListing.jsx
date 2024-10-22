@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Edit, FilledClockIcon, MealMenuIcon } from '@/components/svg'
 import CreateMealMenuForm from "@/components/forms/meal/create-meal-menu";
 import { Button, CheckBox, SearchSelect, Table, ToggleCheck } from '@/components/elements'

@@ -2,7 +2,7 @@ import { ChevronLeft } from '@/components/svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const CandidateProfile = () => {
     const { t } = useTranslation()

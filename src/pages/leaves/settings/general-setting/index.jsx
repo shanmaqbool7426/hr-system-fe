@@ -1,6 +1,6 @@
 import React from 'react';
 import DisclosureComponent from "@/components/elements/Disclosure";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Button, Input, SearchSelect } from '@/components/elements';
 
 export default function LeaveGeneralSettingsPage() {

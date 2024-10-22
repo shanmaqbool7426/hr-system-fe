@@ -3,18 +3,22 @@ import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CreatHelpDeskForm from "@/components/forms/helpdesk/create";
-import { ThreeDotsVertical, Tick, Users } from "@/components/svg";
+import { EyeOn, ThreeDotsVertical, Tick, Users } from "@/components/svg";
+import { VscFeedback } from "react-icons/vsc";
 import { FetchHelpdeskTickets } from "@/store/actions/helpdesk.actions";
 import { FetchAssets } from "@/store/actions/asset.actions";
 import FilterArea from "@/components/includes/FilterArea";
 import AssignTicketForm from "@/components/forms/helpdesk/assign";
 import CloseTicketForm from "@/components/forms/helpdesk/close";
 import { FetchEmployees } from "@/store/actions/employee.actions";
+import FeedbackForm from "@/components/forms/helpdesk/feedback";
+import TicketDetails from "@/modules/helpdesk/details";
 
 
 export default function TicketsPage() {
     const { t } = useTranslation()
     const dispatch = useDispatch()
+    const { auth_user } = useSelector((state) => state.auth)
     const { ticket_list } = useSelector((state) => state.helpdesk)
 
     const [sortCol, setSortCol] = useState(null)
@@ -25,6 +29,8 @@ export default function TicketsPage() {
     const [assign, setAssign] = useState(null)
     const [transfer, setTransfer] = useState(null)
     const [closeTicket, setCloseTicket] = useState(null)
+    const [feedback, setFeedback] = useState(null)
+    const [details, setDetails] = useState(null)
     const [filters, setFilters] = useState({
         search: "",
         status: "",
@@ -110,7 +116,7 @@ export default function TicketsPage() {
         type: <span className="capitalize">
             {item.type}
             {item.hardwareType && <div>
-                <span className="text-sm text-themeGrayscale500">
+                <span className="text-sm font-medium text-themeGrayscale600 dark:text-themeGrayscale400">
                     ({item.hardwareType})
                 </span>
             </div>}
@@ -126,8 +132,14 @@ export default function TicketsPage() {
             <span className={`zt-status ${getStatusColor(item.status)}`}>{item.status}</span>
         </div>,
         action: <>
-            {item.status !== "closed" && <DropDown icon={<ThreeDotsVertical />}>
+            <DropDown icon={<ThreeDotsVertical />}>
                 <ul className="zt-themeDropDownList zt-sm gap-4">
+                    <li className="!p-0">
+                        <a onClick={() => { setDetails(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary'}>
+                            <span><EyeOn /></span>
+                            <span>{t("Details")}</span>
+                        </a>
+                    </li>
                     {item.status === "open" && <li className="!p-0">
                         <a onClick={() => { setAssign(item._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Users /></span>
@@ -148,9 +160,14 @@ export default function TicketsPage() {
                             </a>
                         </li>
                     </>}
-
+                    {item.status === "closed" && !item.rating && item.createdBy?._id === auth_user._id && <li className="!p-0">
+                        <a onClick={() => { setFeedback(item._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                            <span><VscFeedback /></span>
+                            <span>{t("Feedback")}</span>
+                        </a>
+                    </li>}
                 </ul>
-            </DropDown>}
+            </DropDown>
         </>
     }))
     useEffect(() => {
@@ -186,6 +203,8 @@ export default function TicketsPage() {
             {create && <CreatHelpDeskForm onClose={() => setCreate(false)} />}
             {assign && <AssignTicketForm onClose={() => { setAssign(null); setTransfer(false) }} ticketId={assign} transfer={transfer} />}
             {closeTicket && <CloseTicketForm onClose={() => setCloseTicket(null)} ticket={closeTicket} />}
+            {feedback && <FeedbackForm onClose={() => setFeedback(null)} ticket={feedback} />}
+            {details && <TicketDetails onClose={() => setDetails(null)} ticket={details} />}
         </section>
     )
 }

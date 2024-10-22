@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Tabs } from '@/components/elements'
 import { ChevronLeft } from '@/components/svg'
 import InfoModule from '@/modules/employee/employeeInfo'

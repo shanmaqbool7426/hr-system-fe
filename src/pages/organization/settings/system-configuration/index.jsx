@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'next-i18next'; 
 import DisclosureComponent from "@/components/elements/Disclosure"; 
 import { CheckBox, Table, ToggleCheck } from '@/components/elements';
 

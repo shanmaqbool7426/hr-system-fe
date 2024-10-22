@@ -3,7 +3,7 @@ import FilterArea from '@/components/includes/FilterArea'
 import { ChevronDown } from '@/components/svg'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Screenshot() {

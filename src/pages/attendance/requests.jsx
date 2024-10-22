@@ -5,7 +5,7 @@ import FilterArea from '@/components/includes/FilterArea'
 import { ThreeDotsVertical } from '@/components/svg'
 import Toast from '@/util/toast'
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 
 export default function Requests() {

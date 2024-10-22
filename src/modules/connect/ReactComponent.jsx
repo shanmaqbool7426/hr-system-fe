@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import InputEmoji from "react-input-emoji";
 import { CopyIcon, ForwardIcon, PinIcon, ThreeDotsVertical, Trash } from '@/components/svg'
 import { DropDown } from '@/components/elements';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const ReactComponent = ({className}) => {
     const { t } = useTranslation()

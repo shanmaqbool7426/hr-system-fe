@@ -1,5 +1,5 @@
 import Button from "../elements/Button"
-import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker, FileUpload, ColorPicker } from "../elements"
+import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, ToggleCheck, CheckBox, SearchInput, Timepicker, FileUpload, ColorPicker, RatingInput } from "../elements"
 import { useTranslation } from "next-i18next"
 import Radio from "../elements/Radio"
 
@@ -119,8 +119,8 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                                     }}
                                                     {...element} />
                                             </div>);
-                                    case 'hidden':
-                                        return null;
+                                    case 'rating':
+                                        return <RatingInput value={formik.values[element.name]} onChange={(value) => formik.setFieldValue(element.name, value)} {...element} />
                                     case 'file':
                                         return <FileUpload
                                             onChange={(file) => {
@@ -137,6 +137,8 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                                             }}
                                             {...element}
                                         />
+                                    case 'hidden':
+                                        return null;
                                     default:
                                         return <Input formik={formik} {...element} key={index} />
                                 }

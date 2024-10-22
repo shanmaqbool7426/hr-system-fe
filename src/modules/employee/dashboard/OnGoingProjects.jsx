@@ -1,7 +1,7 @@
 // import UserListView from '@/components/elements/UserListView';
 // import { ChevronLeft } from '@/components/svg';
 // import React, { useRef } from 'react'
-// import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'next-i18next';
 // import { Navigation, Pagination } from 'swiper/modules';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import 'swiper/css';
@@ -110,7 +110,7 @@
 import UserListView from '@/components/elements/UserListView';
 import { ChevronLeft } from '@/components/svg';
 import React, { useRef } from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';

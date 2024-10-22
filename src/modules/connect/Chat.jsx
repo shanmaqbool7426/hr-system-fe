@@ -2,7 +2,7 @@ import { Button, DropDown, Textarea } from '@/components/elements';
 import { ImportantIcon, Plus, TextFormatIcon, UpArrow, VoiceIcon } from '@/components/svg';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import InputEmoji from "react-input-emoji";
 import ReactComponent from './ReactComponent';
 import dynamic from 'next/dynamic';

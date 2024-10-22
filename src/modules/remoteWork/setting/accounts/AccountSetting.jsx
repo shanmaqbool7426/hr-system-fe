@@ -1,6 +1,6 @@
 import { CheckBox, SearchSelect } from '@/components/elements';
 import React from 'react'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const AccountSetting = () => {
     const { t } = useTranslation();

@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Button, SearchInput, Datepicker, SearchSelect, MultiSelect, Input, CheckBox } from "../elements";
 import { Filter } from "../svg";
 import { useState } from "react";

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import Storage from '@/util/storage';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreateHelpdeskTicket, UpdateHelpdeskTicket } from '@/store/actions/helpdesk.actions';

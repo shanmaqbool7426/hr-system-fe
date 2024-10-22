@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { CheckBox, DropDown, Table } from '@/components/elements';
 import { ThreeDotsVertical, WarningIcon } from '@/components/svg';
 import RaiseIssueForm from '@/components/forms/projects/raiseIssue';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export default function AssetsList() {
     const { t } = useTranslation()

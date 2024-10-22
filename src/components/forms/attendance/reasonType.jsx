@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Toast from '@/util/toast';
 import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
 import { useDispatch } from 'react-redux'; 
