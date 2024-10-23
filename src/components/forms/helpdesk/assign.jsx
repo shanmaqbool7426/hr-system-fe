@@ -7,20 +7,22 @@ import Toast from '@/util/toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { AssignHelpdeskTicket, TransferHelpdeskTicket } from '@/store/actions/helpdesk.actions';
 
-export default function AssignTicketForm({ onClose, ticketId, transfer = null }) {
+export default function AssignTicketForm({ onClose, ticket, transfer = null }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const { employees_list } = useSelector(state => state.employee)
     const { is_loading } = useSelector(state => state.helpdesk)
     const formik = useFormik({
         initialValues: {
-            assignTo: "",
+            assignTo: ticket?.assignedTo?._id || "",
+            priority: ticket?.priority || "",
         },
         validationSchema: Yup.object().shape({
             assignTo: Yup.string().required(t('Assign to is required')),
+            priority: Yup.string().required(t('Priority is required')),
         }),
         onSubmit: async (values) => {
-            return dispatch(transfer ? TransferHelpdeskTicket(ticketId, values, onCompleted) : AssignHelpdeskTicket(ticketId, values, onCompleted))
+            return dispatch(transfer ? TransferHelpdeskTicket(ticket._id, values, onCompleted) : AssignHelpdeskTicket(ticket._id, values, onCompleted))
         }
     })
     const onCompleted = () => {
@@ -37,6 +39,19 @@ export default function AssignTicketForm({ onClose, ticketId, transfer = null })
             required: true,
             list: employees_list.filter(item => item._id !== transfer).map(item => ({ value: item._id, display: `${item.firstName} ${item.lastName}` }))
         },
+        {
+            type: "select",
+            name: "priority",
+            label: t("Priority"),
+            value: formik.values.priority,
+            required: true,
+            list: [
+                { value: "low", display: "Low" },
+                { value: "medium", display: "Medium" },
+                { value: "high", display: "High" },
+                { value: "critical", display: "Critical" },
+            ]
+        }
     ]
     return (
         <BaseForm title={transfer ? "Transfer Ticket" : "Assign Ticket"} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />

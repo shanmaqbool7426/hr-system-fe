@@ -9,7 +9,7 @@ import { CloseHelpdeskTicket } from '@/store/actions/helpdesk.actions';
 export default function CloseTicketForm({ onClose, ticket }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { is_loading } = useSelector(state => state.project)
+    const { is_loading } = useSelector(state => state.helpdesk)
     const formik = useFormik({
         initialValues: {
             remarks: "",
@@ -17,7 +17,7 @@ export default function CloseTicketForm({ onClose, ticket }) {
         },
         validationSchema: Yup.object().shape({
             remarks: Yup.string().required(t('Remarks is required')),
-            repairCost: ticket?.hardwareType === 'faulty' ? Yup.number().required(t('Repair cost is required')).min(1, t('Repair cost is required')) : Yup.number().optional(),
+            repairCost: Yup.number().optional(),
         }),
         onSubmit: async (values) => {
             return dispatch(CloseHelpdeskTicket(ticket._id, values, onCompleted))
@@ -32,7 +32,6 @@ export default function CloseTicketForm({ onClose, ticket }) {
         {
             type: ticket?.hardwareType === 'faulty' ? "number" : "hidden",
             containerClass: "col-span-2",
-            required: ticket?.hardwareType === 'faulty',
             name: "repairCost",
             label: t('Repair Cost'),
             step: 1,

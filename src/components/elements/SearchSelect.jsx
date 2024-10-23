@@ -69,27 +69,29 @@ export default function SearchSelect({
           )}
 
           <div className="relative">
-            <ComboboxInput
-              {...props}
-              id={id}
-              className={`zt-themeInput${error ? " zt-error" : ""}`}
-              placeholder={placeholder || "Select"}
-              displayValue={getDisplayValue}
-              onChange={(event) => setQuery(event.target.value)}
-            />
+            <ComboboxButton className="w-full">
+              <ComboboxInput
+                {...props}
+                id={id}
+                className={`zt-themeInput${error ? " zt-error" : ""}`}
+                placeholder={placeholder || "Select"}
+                displayValue={getDisplayValue}
+                onChange={(event) => setQuery(event.target.value)}
+              />
 
-            {!props?.readOnly && (
-              <div className="zt-actions">
-                {value && (
-                  <button className="zt-btnClearAll" onClick={clearInput}>
-                    <CloseCross aria-hidden="true" />
-                  </button>
-                )}
-                <ComboboxButton className="zt-btnDownArrow">
-                  <ChevronDown className={'dark:text-white'} aria-hidden="true" />
-                </ComboboxButton>
-              </div>
-            )}
+              {!props?.readOnly && (
+                <div className="zt-actions">
+                  {value && (
+                    <button className="zt-btnClearAll" onClick={clearInput}>
+                      <CloseCross aria-hidden="true" />
+                    </button>
+                  )}
+                  <ComboboxButton className="zt-btnDownArrow">
+                    <ChevronDown className={'dark:text-white'} aria-hidden="true" />
+                  </ComboboxButton>
+                </div>
+              )}
+            </ComboboxButton>
 
             <ComboboxOptions className="zt-multiSelectList py-2">
               {filtered?.length > 0 ? (

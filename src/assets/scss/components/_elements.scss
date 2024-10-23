@@ -763,7 +763,24 @@
 .recharts-cartesian-axis-tick-value {
   @apply dark:fill-white
 }
+/*
+Theme  DropDown
+*/
+.zt-dropdown {
+  @apply capitalize flex justify-center font-semibold rounded-lg px-2 py-1 text-white
+}
 
+.zt-dropdown-items {
+  @apply origin-top-right rounded-lg border dark:border-dark-3 transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] data-[closed]:scale-95 data-[closed]:opacity-0
+}
+
+.zt-dropdown-item {
+  @apply cursor-pointer px-2 py-1 text-white
+}
+
+/**
+Theme status dropdown
+*/
 
 .zt-status {
   @apply w-36 capitalize flex justify-center font-semibold rounded-lg px-2 py-1 text-white

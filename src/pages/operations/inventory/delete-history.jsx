@@ -1,21 +1,22 @@
-import { Table,  DropDown, Profile, DisplayDate } from "@/components/elements";
+import { Table, DropDown, Profile, DisplayDate } from "@/components/elements";
 import FilterArea from "@/components/includes/FilterArea";
-import { EyeOn, ThreeDotsVertical } from "@/components/svg"; 
-import { useTranslation } from "next-i18next"; 
-import { useEffect, useState } from "react"; 
+import { EyeOn, ThreeDotsVertical } from "@/components/svg";
+import { useTranslation } from "next-i18next";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FetchAssets, RestoreAsset } from "@/store/actions/asset.actions";
 
 export default function DeleteHistoryPage() {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const { is_loading, asset_list } = useSelector((state) => state.asset)
+  const { asset_list } = useSelector((state) => state.asset)
   const [sortCol, setSortCol] = useState(null)
   const [sortDir, setSortDir] = useState(null)
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(10)
   const [filters, setFilters] = useState({
-    search: "", fields: ['Model', 'Serial']
+    search: "", fields: []
+    // fields: ['Model', 'Serial']
   })
 
   const filterElements = [
@@ -31,22 +32,22 @@ export default function DeleteHistoryPage() {
         setFilters(_filter)
       }
     },
-    {
-      type: "select",
-      multiple: true,
-      value: filters.fields,
-      list: asset_list.reduce((acc, item) => {
-        acc = acc.concat(Object.keys(item.fields))
-        return acc
-      }, []).map((item) => { return { display: item, value: item } }),
-      onChange: (values) => {
-        setFilters((prev) => {
-          prev = { ...prev }
-          prev['fields'] = [...values]
-          return prev
-        })
-      }
-    }
+    // {
+    //   type: "select",
+    //   multiple: true,
+    //   value: filters.fields,
+    //   list: asset_list.reduce((acc, item) => {
+    //     acc = item.fields ? acc.concat(Object.keys(item.fields)) : acc
+    //     return acc
+    //   }, []).map((item) => { return { display: item, value: item } }),
+    //   onChange: (values) => {
+    //     setFilters((prev) => {
+    //       prev = { ...prev }
+    //       prev['fields'] = [...values]
+    //       return prev
+    //     })
+    //   }
+    // }
   ]
 
   const headings = [

@@ -38,17 +38,37 @@ export default function TicketDetails({ onClose, ticket }) {
                         <span className={col2Class}>{ticket.assignedTo ? `${ticket.assignedTo?.firstName} ${ticket.assignedTo?.lastName}` : "------"}</span>
                     </div>
                 </div>
+                {/* History */}
                 <div className='border border-dark-2 rounded-xl p-4'>
-                    <h4 className="text-2xl mb-0 font-medium">{t("Issue")}</h4>
-                    <p className='text-justify'>{ticket.title}</p>
-                    <h4 className="text-2xl mb-0 font-medium">{t("Description")}</h4>
-                    <p className='text-justify'>{ticket.description}</p>
-                    {ticket.remarks && <>
-                        <h4 className="text-2xl mb-0 font-medium">{t("Remarks")}</h4>
-                        <p className='text-justify'>{ticket.remarks}</p>
-                    </>}
+                    <h4 className="text-h4">{t("History")}</h4>
+                    {ticket.history?.length > 0 ? <ul className='space-y-2 border-l-4 border-themePurple/60 pl-8 pt-2 pb-4'>
+                        {ticket.history.map((item, index) => (
+                            <li key={index} className='flex justify-between items-center relative'>
+                                <span className='absolute -left-[42px] top-2 w-4 h-4 bg-themePurple rounded-full'></span>
+                                <div className='capitalize text-lg font-semibold'>{item.status}</div>
+                                <div className='flex items-center gap-2'>
+                                    <DisplayDate date={item.timestamp} time={true} className="text-sm" />
+                                    {item.assignedTo && <span className='text-sm'>{item.assignedTo}</span>}
+                                </div>
+                            </li>
+                        ))}
+                    </ul> : <div className='text-center text-2xl text-themeGrayscale500'>{t("No history found")}</div>}
                 </div>
             </div>
+            <div className='text-justify'>
+                <span className='text-h4 mr-4 font-medium'>{t("Issue")}</span>
+                {ticket.title}
+            </div>
+            <div className='text-justify'>
+                <span className='text-h4 mr-4 font-medium'>{t("Description")}</span>
+                {ticket.description}
+            </div>
+            {ticket.remarks && <>
+                <div className='text-justify'>
+                    <span className='text-h4 mr-4 font-medium'>{t("Remarks")}</span>
+                    {ticket.remarks}
+                </div>
+            </>}
             {
                 ticket.attachment && <>
                     <h4 className="text-h4 mb-0">{t("Attachment")}</h4>
@@ -61,9 +81,9 @@ export default function TicketDetails({ onClose, ticket }) {
                 </>
             }
             {ticket.feedback && <>
-                <h4 className="text-h4 mb-0">{t("Feedback")}</h4>
-                <Rating value={ticket.rating} />
-                <p className='border border-dark-2 rounded-xl p-4 text-justify'>{ticket.feedback}</p>
+                <h4 className="text-h4 mb-0 flex items-center gap-2">{t("Feedback")} <Rating value={ticket.rating} /></h4>
+
+                <p className='text-justify'>{ticket.feedback}</p>
             </>}
         </DetailPanel>
     )

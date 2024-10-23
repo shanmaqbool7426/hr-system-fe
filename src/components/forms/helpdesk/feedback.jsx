@@ -9,7 +9,7 @@ import { FeedbackHelpdeskTicket } from '@/store/actions/helpdesk.actions';
 export default function FeedbackForm({ onClose, ticket }) {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    const { is_loading } = useSelector(state => state.project)
+    const { is_loading } = useSelector(state => state.helpdesk)
     const formik = useFormik({
         initialValues: {
             feedback: "",

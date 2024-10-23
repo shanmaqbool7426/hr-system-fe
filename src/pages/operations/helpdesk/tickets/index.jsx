@@ -133,26 +133,26 @@ export default function TicketsPage() {
         </div>,
         action: <>
             <DropDown icon={<ThreeDotsVertical />}>
-                <ul className="zt-themeDropDownList zt-sm gap-4">
+                <ul className="zt-themeDropDownList w-36 gap-4">
                     <li className="!p-0">
                         <a onClick={() => { setDetails(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themePrimary'}>
                             <span><EyeOn /></span>
                             <span>{t("Details")}</span>
                         </a>
                     </li>
-                    {item.status === "open" && <li className="!p-0">
-                        <a onClick={() => { setAssign(item._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
+                    {item.status !== "closed" && <li className="!p-0">
+                        <a onClick={() => { setAssign(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                             <span><Users /></span>
-                            <span>{t("Assign")}</span>
+                            <span>{item?.assignedTo ? t("Re-assign") : t("Assign")}</span>
                         </a>
                     </li>}
                     {item.status === "in-progress" && <>
-                        <li className="!p-0">
+                        {/* <li className="!p-0">
                             <a onClick={() => { setAssign(item._id); setTransfer(item?.assignedTo?._id) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                                 <span><Users /></span>
                                 <span>{t("Transfer")}</span>
                             </a>
-                        </li>
+                        </li> */}
                         <li className="!p-0">
                             <a onClick={() => { setCloseTicket(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
                                 <span><Tick /></span>
@@ -201,7 +201,7 @@ export default function TicketsPage() {
             </div>
 
             {create && <CreatHelpDeskForm onClose={() => setCreate(false)} />}
-            {assign && <AssignTicketForm onClose={() => { setAssign(null); setTransfer(false) }} ticketId={assign} transfer={transfer} />}
+            {assign && <AssignTicketForm onClose={() => { setAssign(null); setTransfer(false) }} ticket={assign} transfer={transfer} />}
             {closeTicket && <CloseTicketForm onClose={() => setCloseTicket(null)} ticket={closeTicket} />}
             {feedback && <FeedbackForm onClose={() => setFeedback(null)} ticket={feedback} />}
             {details && <TicketDetails onClose={() => setDetails(null)} ticket={details} />}

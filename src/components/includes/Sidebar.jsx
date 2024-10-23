@@ -34,11 +34,11 @@ export default function Sidebar() {
     { icon: Attendance, name: t("Attendance"), href: "attendance" },
     { icon: Leave, name: t("Leave"), href: "leave" },
     { icon: Operations, name: t("Operations"), href: "operations" },
-    { icon: Connect, name: t("Connect"), href: "connect", },
+    // { icon: Connect, name: t("Connect"), href: "connect", },
     { icon: RemoteWork, name: t("Remote Work"), href: "remote-work" },
-    { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
-    { icon: Payroll, name: t("Payroll"), href: "payroll" },
-    { icon: Report, name: t("Report"), href: "report" },
+    // { icon: Recruitment, name: t("Recruitment"), href: "recruitment" },
+    // { icon: Payroll, name: t("Payroll"), href: "payroll" },
+    // { icon: Report, name: t("Report"), href: "report" },
     { icon: Organization, name: t("Organization"), href: "organization" }
   ]
 
@@ -151,20 +151,20 @@ export default function Sidebar() {
           { name: t("Tickets"), href: "/operations/helpdesk/tickets" },
         ]
       },
-      {
-        name: t("Procurement"), href: "/operations/procurement",
-        innerSubMenu: [
-          { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
-          { name: t('Vendors'), href: "/operations/procurement/vendors" },
-          { name: t('Quotations'), href: "/operations/procurement/quotations" },
-          { name: t('Items Price'), href: "/operations/procurement/items-price" },
-          { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
-          { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
-          { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
-          { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
-          { name: t("Setting"), href: "/operations/procurement/setting" },
-        ]
-      },
+      // {
+      //   name: t("Procurement"), href: "/operations/procurement",
+      //   innerSubMenu: [
+      //     { name: t('Dashboard'), href: "/operations/procurement/dashboard" },
+      //     { name: t('Vendors'), href: "/operations/procurement/vendors" },
+      //     { name: t('Quotations'), href: "/operations/procurement/quotations" },
+      //     { name: t('Items Price'), href: "/operations/procurement/items-price" },
+      //     { name: t("Purchasing"), href: "/operations/procurement/purchasing" },
+      //     { name: t("Maintenance"), href: "/operations/procurement/maintenance" },
+      //     { name: t("Asset Repearing"), href: "/operations/procurement/asset-repearing" },
+      //     { name: t("Rejected Items"), href: "/operations/procurement/rejected-items" },
+      //     { name: t("Setting"), href: "/operations/procurement/setting" },
+      //   ]
+      // },
       {
         name: t("Asset Inventory"), href: "/operations/inventory",
         innerSubMenu: [
