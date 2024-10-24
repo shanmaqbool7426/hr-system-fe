@@ -19,19 +19,18 @@ export default function RemoteWorkModule() {
     const { employee_details } = useSelector(state => state.employee)
     const [loading, setLoading] = useState(false)
 
-
     const formik = useFormik({
         initialValues: {
-            screenShotEnabled: employee_details?.remote_work?.screenShotEnabled || false,
-            blurScreenShot: employee_details?.remote_work?.blurScreenShot || false,
-            screenShotInterval: employee_details?.remote_work?.screenShotInterval || 3,
-            screenShotPerInterval: employee_details?.remote_work?.screenShotPerInterval || 3,
-            screenShotQuality: employee_details?.remote_work?.screenShotQuality || "sd",
-            storeOfflineData: employee_details?.remote_work?.storeOfflineData || true,
-            idleTime: employee_details?.remote_work?.idleTime || 3,
-            ignoreIdleWhenInactive: employee_details?.remote_work?.ignoreIdleWhenInactive || false,
-            hideScreenshots: employee_details?.remote_work?.hideScreenshots || false,
-            disableQuit: employee_details?.remote_work?.disableQuit || false,
+            screenShotEnabled: employee_details?.remoteSetting?.screenShotEnabled || false,
+            blurScreenShot: employee_details?.remoteSetting?.blurScreenShot || false,
+            screenShotInterval: employee_details?.remoteSetting?.screenShotInterval || 3,
+            screenShotPerInterval: employee_details?.remoteSetting?.screenShotPerInterval || 3,
+            screenShotQuality: employee_details?.remoteSetting?.screenShotQuality || "sd",
+            storeOfflineData: employee_details?.remoteSetting?.storeOfflineData || true,
+            idleTime: employee_details?.remoteSetting?.idleTime || 3,
+            ignoreIdleWhenInactive: employee_details?.remoteSetting?.ignoreIdleWhenInactive || false,
+            hideScreenshots: employee_details?.remoteSetting?.hideScreenshots || false,
+            disableQuit: employee_details?.remoteSetting?.disableQuit || false,
         },
         validationSchema: Yup.object({
             screenShotInterval: Yup.number().required(t("Screenshot interval is required")),
