@@ -97,7 +97,7 @@ export default function RemoteEmployeesPage() {
     ]
 
     const headings = [
-        { title: t("Name"), col: "name", },
+        { title: t("Name"), col: "name" },
         { title: t("Department"), col: "department" },
         { title: t("Team"), col: "team" },
         { title: t("Line Manager"), col: "lineManager", },

@@ -1,216 +1,438 @@
-a, input, button, select, textarea { @apply focus:outline-none }
+a,
+input,
+button,
+select,
+textarea {
+  @apply focus:outline-none
+}
 
-label { @apply text-themeGrayscale font-medium text-sm }
-label sup { @apply top-0 }
+label {
+  @apply text-themeGrayscale font-medium text-sm
+}
+
+label sup {
+  @apply top-0
+}
 
 
 /* Theme Input Styling Start here */
 .zt-formGroup {
   @apply flex flex-col text-left gap-1 text-themeGrayscale dark:text-white;
-  &.zt-formGroupV2 { @apply flex-row }
+
+  &.zt-formGroupV2 {
+    @apply flex-row
+  }
 }
+
 .zt-formGroupV2 {
-  label { @apply w-1/3 shrink-0 text-themeGrayscale600 }
+  label {
+    @apply w-1/3 shrink-0 text-themeGrayscale600
+  }
 }
-.zt-themeInput { @apply border border-themeGrayscale500 dark:border-dark-2 w-full py-3 px-4 rounded-lg text-sm focus:border-themePrimary placeholder:text-themeGrayscale600 dark:placeholder:text-themeGrayscale500 disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 dark:disabled:border-gray-500 disabled:text-themeGrayscale disabled:placeholder:text-themeGrayscale dark:bg-gray-700 dark:text-white;
-  .zt-formGroupV2 & { @apply rounded-none p-0 border-x-0 border-t-0 border-themeGrayscale300 }
+
+.zt-themeInput {
+  @apply border border-themeGrayscale500 dark:border-dark-2 w-full py-3 px-4 rounded-lg text-sm focus:border-themePrimary placeholder:text-themeGrayscale600 dark:placeholder:text-themeGrayscale500 disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 dark:disabled:border-gray-500 disabled:text-themeGrayscale disabled:placeholder:text-themeGrayscale dark:bg-gray-700 dark:text-white;
+
+  .zt-formGroupV2 & {
+    @apply rounded-none p-0 border-x-0 border-t-0 border-themeGrayscale300
+  }
 }
+
 .zt-formGroupV2 {
-  > div { @apply grow }
+  >div {
+    @apply grow
+  }
 }
-.zt-errorMessage { @apply text-themeDanger flex items-center gap-1 text-sm }
-.zt-themeInput.zt-error { @apply border-themeDanger }
-.zt-error { @apply border-themeDanger }
+
+.zt-errorMessage {
+  @apply text-themeDanger flex items-center gap-1 text-sm
+}
+
+.zt-themeInput.zt-error {
+  @apply border-themeDanger
+}
+
+.zt-error {
+  @apply border-themeDanger
+}
+
 /* Theme Input Styling End here */
 
 
 /* Theme CheckBox Styling Start here */
 .zt-check-box {
   @apply relative flex justify-start;
+
   input {
     @apply absolute top-0 left-0 invisible opacity-0;
+
     &:checked {
-      + label {
-        @apply before:bg-themePrimary;
-        svg { @apply visible opacity-100 }
+      +label {
+        @apply before:bg-themePrimary dark:before:bg-dark-2;
+
+        svg {
+          @apply visible opacity-100
+        }
       }
+
       &:disabled {
-        + label { @apply before:bg-themeGrayscale500 }
+        +label {
+          @apply before:bg-themeGrayscale500
+        }
       }
     }
+
     &:disabled {
-      + label { @apply cursor-not-allowed opacity-50 before:border-themeGrayscale500; filter: none; }
+      +label {
+        @apply cursor-not-allowed opacity-50 before:border-themeGrayscale500;
+        filter: none;
+      }
     }
   }
+
   label {
-    @apply flex gap-2 font-semibold cursor-pointer items-center before:transition-all before:duration-300 before:top-0 before:left-0 before:w-6 before:h-6 before:border before:border-themePrimary before:rounded-md before:shrink-0;
-    svg { @apply absolute top-1 left-1 invisible opacity-0 text-white transition-all duration-300 }
-    span { @apply block }
+    @apply flex gap-2 font-semibold cursor-pointer items-center before:transition-all before:duration-300 before:top-0 before:left-0 before:w-6 before:h-6 before:border before:border-themePrimary dark:before:border-themeGrayscale500 before:rounded-md before:shrink-0;
+
+    svg {
+      @apply absolute top-1 left-1 invisible opacity-0 text-white transition-all duration-300
+    }
+
+    span {
+      @apply block
+    }
   }
 
   &.zt-sm {
     label {
       @apply text-sm before:w-5 before:h-5 rounded-[4px];
-      svg { @apply top-[2px] left-[2px] }
+
+      svg {
+        @apply top-[2px] left-[2px]
+      }
     }
   }
+
   &.zt-lg {
     label {
       @apply text-lg before:w-7 before:h-7 rounded-lg;
-      svg { @apply top-[6px] left-[6px] }
+
+      svg {
+        @apply top-[6px] left-[6px]
+      }
     }
   }
 }
+
 /* Theme CheckBox Styling End here */
 
 
 /* Theme Radio Styling Start here */
 .zt-themeRadio {
   @apply relative flex justify-start;
+
   input {
     @apply absolute top-0 left-0 invisible opacity-0;
+
     &:checked {
-      + label { @apply before:border-6 before:bg-white; }
+      +label {
+        @apply before:border-6 before:bg-white;
+      }
     }
+
     &:disabled {
-      + label { @apply cursor-not-allowed opacity-50 before:border-themeGrayscale500; filter: none; }
+      +label {
+        @apply cursor-not-allowed opacity-50 before:border-themeGrayscale500;
+        filter: none;
+      }
     }
   }
+
   label {
     @apply flex gap-4 font-semibold cursor-pointer items-center before:transition-all before:duration-300 before:top-0 before:left-0 before:w-6 before:h-6 before:bg-white before:border before:border-themePrimary before:rounded-full before:shrink-0;
-    span { @apply block }
+
+    span {
+      @apply block
+    }
   }
 
   &.zt-sm {
     input {
       &:checked {
-        + label { @apply before:border-5 }
+        +label {
+          @apply before:border-5
+        }
       }
-      + label { @apply text-xs before:w-5 before:h-5 }
+
+      +label {
+        @apply text-xs before:w-5 before:h-5
+      }
     }
   }
+
   &.zt-lg {
     input {
       &:checked {
-        + label { @apply before:border-7 }
+        +label {
+          @apply before:border-7
+        }
       }
-      + label { @apply text-lg before:w-7 before:h-7 }
+
+      +label {
+        @apply text-lg before:w-7 before:h-7
+      }
     }
   }
 }
+
 /* Theme Radio Styling End here */
 
 
 /* Theme Toggle Check Styling Start here */
-.zt-themeToggleCheck{
+.zt-themeToggleCheck {
   @apply flex justify-start;
+
   input {
     @apply sr-only;
+
     &:checked {
-      ~ label {
+      ~label {
         .zt-toggleActive {
-          @apply block text-themePrimary ;
-          &.zt-themePurple { @apply text-themePurple }
-          &.zt-themeGrayscale { @apply text-themeGrayscale }
-          &.zt-themeSecondary { @apply text-themeSecondary }
-          &.zt-themeSuccess { @apply text-themeSuccess }
-          &.zt-themeDanger { @apply text-themeDanger }
+          @apply block text-themePrimary;
+
+          &.zt-themePurple {
+            @apply text-themePurple
+          }
+
+          &.zt-themeGrayscale {
+            @apply text-themeGrayscale
+          }
+
+          &.zt-themeSecondary {
+            @apply text-themeSecondary
+          }
+
+          &.zt-themeSuccess {
+            @apply text-themeSuccess
+          }
+
+          &.zt-themeDanger {
+            @apply text-themeDanger
+          }
         }
-        .zt-toggleInactive { @apply hidden }
+
+        .zt-toggleInactive {
+          @apply hidden
+        }
+
         div {
           @apply bg-themePrimary dark:bg-themePrimary;
-          &.zt-themePurple { @apply bg-themePurple }
-          &.zt-themeGrayscale { @apply bg-themeGrayscale }
-          &.zt-themeSecondary { @apply bg-themeSecondary }
-          &.zt-themeSuccess { @apply bg-themeSuccess }
-          &.zt-themeDanger { @apply bg-themeDanger }
+
+          &.zt-themePurple {
+            @apply bg-themePurple
+          }
+
+          &.zt-themeGrayscale {
+            @apply bg-themeGrayscale
+          }
+
+          &.zt-themeSecondary {
+            @apply bg-themeSecondary
+          }
+
+          &.zt-themeSuccess {
+            @apply bg-themeSuccess
+          }
+
+          &.zt-themeDanger {
+            @apply bg-themeDanger
+          }
         }
-        .zt-toggleDot { @apply translate-x-full }
+
+        .zt-toggleDot {
+          @apply translate-x-full
+        }
       }
     }
+
     &:disabled {
-      + label { @apply cursor-not-allowed opacity-50 }
+      +label {
+        @apply cursor-not-allowed opacity-50
+      }
     }
-    + label {
+
+    +label {
       @apply relative flex cursor-pointer select-none items-center gap-4;
-      > div { @apply bg-themeGrayscale400 dark:bg-gray-700 block w-14 h-8 rounded-full transition }
+
+      >div {
+        @apply bg-themeGrayscale400 dark:bg-gray-700 block w-14 h-8 rounded-full transition
+      }
     }
-    ~ label {
-      .zt-toggleDot { @apply absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition; }
-      .zt-toggleActive { @apply hidden transition-all duration-300 }
-      .zt-toggleInactive { @apply block text-themeGrayscale400 transition-all duration-300 }
+
+    ~label {
+      .zt-toggleDot {
+        @apply absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition;
+      }
+
+      .zt-toggleActive {
+        @apply hidden transition-all duration-300
+      }
+
+      .zt-toggleInactive {
+        @apply block text-themeGrayscale400 transition-all duration-300
+      }
     }
   }
 }
+
 /* Theme Toggle Check Styling End here */
 
 
 /* Theme Date Time Picker Styling Start here */
-.zt-dateTimePicker{
-  .react-date-picker__calendar { width: 296px;}
+.zt-dateTimePicker {
+  .react-date-picker__calendar {
+    width: 296px;
+  }
+
   @apply py-2;
-  .react-date-picker__wrapper { @apply border-0 gap-2 items-center }
-  .react-date-picker__inputGroup { line-height: 1.29; }
-  .react-date-picker__button svg { @apply transition-all duration-300 }
+
+  .react-date-picker__wrapper {
+    @apply border-0 gap-2 items-center
+  }
+
+  .react-date-picker__inputGroup {
+    line-height: 1.29;
+  }
+
+  .react-date-picker__button svg {
+    @apply transition-all duration-300
+  }
+
   .react-date-picker__button:enabled:hover .react-date-picker__button__icon,
-  .react-date-picker__button:enabled:focus .react-date-picker__button__icon { @apply stroke-themePurple }
+  .react-date-picker__button:enabled:focus .react-date-picker__button__icon {
+    @apply stroke-themePurple
+  }
+
   .react-calendar__month-view__weekdays {
     @apply text-xs text-themeGrayscale500 font-normal;
-    abbr { @apply no-underline }
-  }
-  .react-calendar__navigation button:enabled:hover,
-  .react-calendar__navigation button:enabled:focus { @apply text-themePurple bg-themePurple bg-opacity-15 hover:border-themePurple hover:bg-themePurple hover:bg-opacity-15 }
-  .react-calendar {
-    @apply dark:bg-gray-700 border-themeGrayscale border-opacity-30 rounded-lg text-base overflow-hidden;
-    button { @apply  bg-white dark:bg-gray-700 dark:hover:text-gray-900 border border-white dark:border-gray-700 hover:border-themeGrayscale }
-    .react-calendar__tile {
-      @apply rounded-full text-sm;
-      &:enabled:hover,
-      &:enabled:focus { @apply bg-white border border-themeGrayscale }
-      &.react-calendar__tile--now { @apply bg-themePrimary text-white border border-themePrimary border-dashed hover:text-white hover:bg-themePrimary }
-      &.react-calendar__tile--hasActive { @apply text-white bg-themeGrayscale   hover:text-white hover:bg-themeGrayscale }
-      &.react-calendar__tile--active { @apply bg-themeGrayscale hover:bg-themeGrayscale hover:border-themeGrayscale hover:text-white }
+
+    abbr {
+      @apply no-underline
     }
   }
+
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    @apply text-themePurple bg-themePurple bg-opacity-15 hover:border-themePurple hover:bg-themePurple hover:bg-opacity-15
+  }
+
+  .react-calendar {
+    @apply dark:bg-gray-700 border-themeGrayscale border-opacity-30 rounded-lg text-base overflow-hidden;
+
+    button {
+      @apply bg-white dark:bg-gray-700 dark:hover:text-gray-900 border border-white dark:border-gray-700 hover:border-themeGrayscale
+    }
+
+    .react-calendar__tile {
+      @apply rounded-full text-sm;
+
+      &:enabled:hover,
+      &:enabled:focus {
+        @apply bg-white border border-themeGrayscale
+      }
+
+      &.react-calendar__tile--now {
+        @apply bg-themePrimary text-white border border-themePrimary border-dashed hover:text-white hover:bg-themePrimary
+      }
+
+      &.react-calendar__tile--hasActive {
+        @apply text-white bg-themeGrayscale hover:text-white hover:bg-themeGrayscale
+      }
+
+      &.react-calendar__tile--active {
+        @apply bg-themeGrayscale hover:bg-themeGrayscale hover:border-themeGrayscale hover:text-white
+      }
+    }
+  }
+
   .react-calendar__month-view__days,
   .react-calendar__year-view__months,
   .react-calendar__decade-view__years {
-    button { @apply border border-dashed border-white hover:border-themePurple }
+    button {
+      @apply border border-dashed border-white hover:border-themePurple
+    }
   }
+
   .react-calendar__year-view__months,
-  .react-calendar__decade-view__years { @apply py-3 }
+  .react-calendar__decade-view__years {
+    @apply py-3
+  }
+
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
-  .react-calendar__century-view .react-calendar__tile { @apply p-2 }
+  .react-calendar__century-view .react-calendar__tile {
+    @apply p-2
+  }
 }
+
 /* Theme Date Time Picker Styling End here */
 
 
 /* Theme Multi Select and Search Select Styling Start here */
-.zt-multiSelectedList { @apply  w-[calc(100%-60px)] absolute z-10 top-[1px] left-[1px] flex h-[calc(100%-2px)] bg-white overflow-x-scroll items-center gap-2 rounded-l-lg text-sm border-r-0 pl-3 }
-.zt-tag { @apply bg-gray-300 px-2 py-1 rounded-md }
+.zt-multiSelectedList {
+  @apply w-[calc(100%-60px)] absolute z-10 top-[1px] left-[1px] flex h-[calc(100%-2px)] bg-white overflow-x-scroll items-center gap-2 rounded-l-lg text-sm border-r-0 pl-3
+}
+
+.zt-tag {
+  @apply bg-gray-300 px-2 py-1 rounded-md
+}
+
 .zt-actions {
   @apply absolute top-0 right-0 h-full flex items-center gap-1 pr-2;
+
   .zt-btnClearAll,
   .zt-btnDownArrow {
     @apply w-5 h-5;
-    svg { @apply w-full h-auto }
+
+    svg {
+      @apply w-full h-auto
+    }
   }
 }
+
 .zt-multiSelectList {
   @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white dark:bg-gray-700 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm z-20;
-  li { @apply relative cursor-default select-none py-2 px-4 hover:bg-themePrimary hover:text-white flex justify-between }
-  .zt-notFound { @apply select-none px-4 py-2 text-h6 font-semibold mb-0 }
+
+  li {
+    @apply relative cursor-default select-none py-2 px-4 hover:bg-themePrimary hover:text-white flex justify-between
+  }
+
+  .zt-notFound {
+    @apply select-none px-4 py-2 text-h6 font-semibold mb-0
+  }
 }
+
 /* Theme Multi Select and Search Select Styling End here */
 
 
 /* Theme Custom Theme FileUpload Styling Start here */
 .zt-fileUpload {
   @apply flex flex-col w-full;
-  label {@apply border border-themeGrayscale500 dark:border-dark-2 rounded-lg overflow-hidden cursor-pointer flex w-full text-sm disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 disabled:text-themeGrayscale dark:bg-gray-700 dark:text-white;}
-  input { @apply absolute bottom-full left-full opacity-0 invisible }
-  .zt-fileUploadText { @apply  grow py-3 px-4 }
-  .zt-fileUploadIcon { @apply bg-themePurple/20 text-themePurple border-l border-themeGrayscale500 dark:border-dark-2 shrink-0 py-1 px-4 flex items-center}
+
+  label {
+    @apply border border-themeGrayscale500 dark:border-dark-2 rounded-lg overflow-hidden cursor-pointer flex w-full text-sm disabled:bg-themeGrayscale200 disabled:border-themeGrayscale300 disabled:text-themeGrayscale dark:bg-gray-700 dark:text-white;
+  }
+
+  input {
+    @apply absolute bottom-full left-full opacity-0 invisible
+  }
+
+  .zt-fileUploadText {
+    @apply grow py-3 px-4
+  }
+
+  .zt-fileUploadIcon {
+    @apply bg-themePurple/20 text-themePurple border-l border-themeGrayscale500 dark:border-dark-2 shrink-0 py-1 px-4 flex items-center
+  }
 }
+
 /* Theme Custom Theme FileUpload Styling End here */

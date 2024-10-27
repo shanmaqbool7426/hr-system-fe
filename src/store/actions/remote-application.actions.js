@@ -15,3 +15,15 @@ export const FetchRemoteApplications = (payload) => async (dispatch) => {
     }
 };
 
+export const UpdateRemoteApplications = (payload, onSuccess) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const data = await axios.post(`/remote-applications/update`, payload)
+        dispatch(setApplications(data.list))
+        onSuccess && onSuccess()
+    } catch (err) { console.error("Error", err); }
+    finally {
+        dispatch(setLoading(false))
+    }
+}
+

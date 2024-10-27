@@ -23,34 +23,16 @@ export default function MyRemoteWork() {
     })
     const getStats = async (params = {}) => {
         let data = await axios.get('/remote/my-remote-work', { params })
-        let processed_process_list = data?.process_list?.reduce((acc, item) => {
-            const subProcess = item.process.name.split('-').at(0).trim();
-            const processName = item.process.name.split('-').at(-1).trim();
-            const existingItem = acc.find(i => i.name === processName);
-            if (existingItem) {
-                existingItem.time_spent += item.time_spent;
-                if (!existingItem.subProcess.some(sp => sp === subProcess)) {
-                    existingItem.subProcess.push(subProcess);
-                }
-            } else {
-                acc.push({
-                    ...item,
-                    name: processName,
-                    subProcess: [subProcess]
-                });
-            }
-            return acc;
-        }, []);
-        setStats({ ...data, process_list: processed_process_list })
+        setStats({ ...data, process_list: data?.process_list })
     }
 
     useEffect(() => {
         getStats({ startDate: fromDate, endDate: toDate })
     }, [fromDate, toDate])
 
-    const productiveProcesses = stats?.process_list?.filter(item => item?.process?.nature === "productive")
-    const unproductiveProcesses = stats?.process_list?.filter(item => item?.process?.nature === "unproductive")
-    const neutralProcesses = stats?.process_list?.filter(item => item?.process?.nature === "neutral")
+    const productiveProcesses = stats?.process_list?.filter(item => item?.nature === "productive")
+    const unproductiveProcesses = stats?.process_list?.filter(item => item?.nature === "unproductive")
+    const neutralProcesses = stats?.process_list?.filter(item => item?.nature === "neutral")
 
     const getTimeInHoursAndMinutes = (seconds = 0) => {
         const hours = Math.floor(seconds / 3600) || 0;

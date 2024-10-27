@@ -520,18 +520,18 @@
 }
 
 ::-webkit-scrollbar {
-  width: 1px;
   /* for vertical scrollbars */
-  height: 1px;
+  width: 5px;
   /* for horizontal scrollbars */
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  @apply bg-themeGrayscale300 dark:bg-transparent rounded-full
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.5);
+  @apply bg-themePrimary/40 hover:bg-themePrimary dark:bg-dark-1 hover:dark:bg-themeGrayscale300 rounded-full
 }
 
 .candidate_detail {
