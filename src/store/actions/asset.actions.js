@@ -2,6 +2,13 @@
 import axios from '@/util/axios';
 import { setLoading, setAssetList, setAsset, pushAsset, removeAsset, setAssetHistory, setAssetDetails } from '../slices/asset.slice'
 
+export const FetchAssetDashboard = () => new Promise(async (resolve, reject) => {
+    try {
+        const data = await axios.get(`/assets/dashboard`)
+        resolve(data)
+    } catch (err) { reject(err) }
+})
+
 export const FetchAssets = (payload) => async (dispatch) => {
     try {
         dispatch(setLoading(true))

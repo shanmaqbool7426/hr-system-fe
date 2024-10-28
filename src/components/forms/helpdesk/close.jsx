@@ -30,7 +30,7 @@ export default function CloseTicketForm({ onClose, ticket }) {
 
     const formElements = [
         {
-            type: ticket?.hardwareType === 'faulty' ? "number" : "hidden",
+            type: ticket?.hardwareType === 'support' ? "number" : "hidden",
             containerClass: "col-span-2",
             name: "repairCost",
             label: t('Repair Cost'),

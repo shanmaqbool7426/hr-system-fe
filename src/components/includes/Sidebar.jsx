@@ -168,7 +168,8 @@ export default function Sidebar() {
       {
         name: t("Asset Inventory"), href: "/operations/inventory",
         innerSubMenu: [
-          { name: t('Asset List'), href: "/operations/inventory" },
+          { name: t('Dashboard'), href: "/operations/inventory/dashboard" },
+          { name: t('Asset List'), href: "/operations/inventory/list" },
           { name: t('Asset History'), href: "/operations/inventory/asset-history" },
           { name: t('Repair History'), href: "/operations/inventory/repair-history" },
           { name: t('Delete History'), href: "/operations/inventory/delete-history" },
