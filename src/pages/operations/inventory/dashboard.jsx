@@ -108,10 +108,7 @@ export default function InventoryDashboardPage() {
                     ))}
 
                 </div>
-
             </div>
-
-
         </section>
     )
 }
