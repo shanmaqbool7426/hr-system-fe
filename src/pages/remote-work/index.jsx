@@ -4,20 +4,30 @@ import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tool
 import axios from "@/util/axios";
 import { useEffect, useState } from "react";
 import ProgressBar from "@/components/elements/ProgressBar";
+import { socket } from "@/util/helpers";
+import { useSelector } from "react-redux";
+
+
 export default function RemoteWork() {
     const { t } = useTranslation()
+    const { auth_user } = useSelector(state => state.auth)
     const [stats, setStats] = useState({})
-    const [applicationTimeSpent, setApplicationTimeSpent] = useState([])
-    const [productiveTimeSpent, setProductiveTimeSpent] = useState([])
     const [topPerformers, setTopPerformers] = useState([])
+    const [data, setData] = useState({})
+
     useEffect(() => {
         axios.get('/remote/dashboard').then(data => {
-            console.log("data", data)
+            setData(data)
             setStats(data?.stats)
-            setApplicationTimeSpent(data?.applicationTimeSpent)
-            setProductiveTimeSpent(data?.productiveTimeSpent)
             setTopPerformers(data?.topPerformers)
         })
+        console.log(auth_user.company._id)
+        socket.on(`company_${auth_user.company._id}`, (data) => {
+            console.log(data)
+        })
+        return () => {
+            socket.off(`company_${auth_user.company._id}`)
+        }
     }, [])
 
     return (
@@ -37,24 +47,6 @@ export default function RemoteWork() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-
-                    <div className="zt-card col-span-2">
-                        <h4 className="text-h5 mb-4">{t("Productive Time Spent")}</h4>
-                        <ResponsiveContainer width="100%" height={400} className="text-themeSuccessDark dark:text-themeSuccessLight">
-                            <AreaChart
-                                width={500}
-                                height={250}
-                                data={productiveTimeSpent}
-                                margin={{
-                                    bottom: 20,
-                                }}
-                            >
-                                <XAxis tickLine={false} dataKey="date" tick={{ fill: 'currentColor', fontSize: 12 }} />
-                                <YAxis tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} />
-                                <Area type="monotone" dot={false} dataKey="timeSpent" stroke="currentColor" fill="currentColor" strokeWidth={0} />
-                            </AreaChart>
-                        </ResponsiveContainer>
-                    </div>
                     <div className="zt-card">
                         <h4 className="text-h5 mb-4">{t("Top Performers")}</h4>
                         <div className="flex flex-col gap-2">
@@ -78,6 +70,59 @@ export default function RemoteWork() {
                             })}
                         </div>
                     </div>
+
+                    {/* <div className="zt-card">
+                        <h4 className="text-h5 mb-4">{t("Application Time Spent")}</h4>
+                        <ResponsiveContainer width="100%" height={400} className="text-dark-1">
+                            <BarChart
+                                width={500}
+                                height={250}
+                                data={data?.applicationTimeSpent}
+                                margin={{
+                                    bottom: 20,
+                                }}
+                            >
+                                <XAxis tickLine={false} dataKey="name" tick={{ fill: 'currentColor', fontSize: 12 }} />
+                                <YAxis tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} />
+                                <Bar dataKey="timeSpent" fill="currentColor" label={{ fill: '#fefefe', fontSize: 12 }} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div> */}
+                    <div className="zt-card">
+                        <h4 className="text-h5 mb-4">{t("Application Time Spent")}</h4>
+                        <ResponsiveContainer width="100%" height={400} className="text-dark-2">
+                            <BarChart
+                                width={500}
+                                height={250}
+                                data={data?.applicationTimeSpentByNature}
+                                margin={{
+                                    bottom: 20,
+                                }}
+                            >
+                                <XAxis tickLine={false} dataKey="name" tick={{ fill: 'currentColor', fontSize: 12 }} className="capitalize" />
+                                <YAxis tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} />
+                                <Bar dataKey="timeSpent" fill="currentColor" barSize={30} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                    <div className="zt-card col-span-2">
+                        <h4 className="text-h5 mb-4">{t("Productive Time Spent of current month")}</h4>
+                        <ResponsiveContainer width="100%" height={400} className="text-themeSuccessDark dark:text-themeSuccessLight">
+                            <AreaChart
+                                width={500}
+                                height={250}
+                                data={data?.productiveTimeSpent}
+                                margin={{
+                                    bottom: 20,
+                                }}
+                            >
+                                <XAxis tickLine={false} dataKey="date" tick={{ fill: 'currentColor', fontSize: 12 }} />
+                                <YAxis tickLine={false} tick={{ fill: 'currentColor', fontSize: 12 }} />
+                                <Area type="monotone" dot={false} dataKey="timeSpent" stroke="currentColor" fill="currentColor" strokeWidth={0} />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+
                 </div>
 
             </section>
