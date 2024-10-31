@@ -3,6 +3,16 @@ import { Input, Datepicker, TextEditor, MultiSelect, SearchSelect, Textarea, Tog
 import { useTranslation } from "next-i18next"
 import Radio from "../elements/Radio"
 
+/**
+ * @param {Object} children - The children of the form.
+ * @param {Array} formElements - An array of form elements, each element is an object containing details such as type, name, label, and other properties specific to the element type.
+ * @param {Function} onClose - The function to close the form.
+ * @param {String} title - The title of the form.
+ * @param {Object} formik - The formik object, which manages the state of the form.
+ * @param {Boolean} is_loading - The loading state of the form, indicating if the form is currently submitting.
+ * @param {String} className - The class name of the form, used for styling and layout purposes.
+ */
+
 
 export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className }) {
     const { t } = useTranslation()

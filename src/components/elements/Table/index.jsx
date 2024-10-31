@@ -3,6 +3,28 @@ import Pagination from './pagination';
 import { SortEmpty, SortAsc, SortDesc } from "@/components/svg";
 import CheckBox from '../CheckBox';
 import { useTranslation } from 'next-i18next';
+// Table component parameters:
+// - headings: Array of objects, the column headings for the table
+//   - Each heading object contains:
+//     - col: String, the column name
+//     - title: String, the column label to display
+//     - sort: Boolean, whether to allow sorting on this column
+//     - className: String, additional classes for the column
+// - rows: Array of objects, the data to be displayed in the table
+// - sortCol: String, the column to sort by
+// - sortDir: String, the direction to sort in (asc or desc)
+// - setSortCol: Function, to set the column to sort by
+// - setSortDir: Function, to set the direction to sort in
+// - perPage: Number, the number of rows to display per page
+// - setPerPage: Function, to set the number of rows to display per page
+// - page: Number, the current page number
+// - setPage: Function, to set the current page number
+// - pagination: Boolean, whether to display pagination or not
+// - className: String, additional classes for the table
+// - checkbox: Boolean, whether to display a checkbox column or not
+// - selected: Array of strings, the selected rows
+// - setSelected: Function, to set the selected rows
+
 
 export default function Table({
     headings,

@@ -131,7 +131,6 @@ export default function CreateTicketForm({ onClose, object, }) {
             className: "col-span-2"
         }
     ]
-    console.log(formik.errors, formik.values)
     return (
         <BaseForm title={object ? t("Update Ticket") : t("Create Ticket")} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} />
     )

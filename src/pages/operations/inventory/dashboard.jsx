@@ -35,8 +35,6 @@ export default function InventoryDashboardPage() {
                 setNetWorth(data.netWorth)          
             })
     }, [])
-    console.log(assetsByType);
-
   
     return (
         <section className="flex flex-col grow space-y-6">

@@ -13,7 +13,3 @@ export default function CheckBox({ id, onChange, name, className, labelClass, ty
     </div>
   )
 }
-
-CheckBox.defaultProps = {
-  className: ""
-}
