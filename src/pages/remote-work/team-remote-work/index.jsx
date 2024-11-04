@@ -1,4 +1,4 @@
-import { Button, Datepicker, DisplayDate, SearchSelect } from "@/components/elements";
+import { Button, Datepicker, DetailPanel, DisplayDate, SearchSelect } from "@/components/elements";
 import { ArivalIcon, LeftTimeIcon, ProductiveTimeIcon, RemoteTimeIcon } from '@/components/svg'
 import StatsCard from "@/components/elements/Widgets/StatsCard";
 import { useTranslation } from "next-i18next";
@@ -13,7 +13,7 @@ import { FetchRemoteTeams } from "@/store/actions/remote-team.actions";
 export default function TeamRemoteWork() {
     const dispatch = useDispatch()
     const { t } = useTranslation()
-
+    const [processDetails, setProcessDetails] = useState([])
     const { team_list } = useSelector(state => state.remoteteam)
     const { employees_list } = useSelector(state => state.employee)
     const [loading, setLoading] = useState(false)
@@ -161,7 +161,7 @@ export default function TeamRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themeSuccess/10 space-y-4">
                             {
                                 productiveProcesses?.length > 0 ? productiveProcesses?.map((item, index) => (
-                                    <div className="flex items-center justify-between" key={index}>
+                                    <div className="flex items-center justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
@@ -183,7 +183,7 @@ export default function TeamRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themeDanger/10">
                             {
                                 unproductiveProcesses?.length > 0 ? unproductiveProcesses?.map((item, index) => (
-                                    <div className="flex items-start justify-between" key={index}>
+                                    <div className="flex items-start justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white mb-0 truncate w-2/3">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
@@ -204,7 +204,7 @@ export default function TeamRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themePurple/10">
                             {
                                 neutralProcesses?.length > 0 ? neutralProcesses?.map((item, index) => (
-                                    <div className="flex items-center justify-between" key={index}>
+                                    <div className="flex items-center justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
@@ -248,6 +248,34 @@ export default function TeamRemoteWork() {
                     />
                 </>}
             </div>
+            {
+                processDetails?.length > 0 && <DetailPanel
+                    onClose={() => setProcessDetails([])}
+                >
+                    <div className="flex flex-col gap-4">
+                        <h4 className="text-h4 mb-0">{t("Process Details")}</h4>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="col-span-2 font-bold">
+                                {t("Process")}
+                            </div>
+                            <div className="col-span-1 font-bold text-right">
+                                {t("Time Spent")}
+                            </div>
+                            {processDetails?.map((item, index) => (
+                                <>
+                                    <div key={index} className="col-span-2 flex flex-col gap-1">
+                                        <span className="font-medium">{item?.title}</span>
+                                        <DisplayDate date={item?.createdAt} time={true} className="text-sm text-gray-500" />
+                                    </div>
+                                    <div key={index} className="text-right font-semibold">
+                                        {getTimeInHoursAndMinutes(item?.time_spent)}
+                                    </div>
+                                </>
+                            ))}
+                        </div>
+                    </div>
+                </DetailPanel>
+            }
         </section>
     )
 }

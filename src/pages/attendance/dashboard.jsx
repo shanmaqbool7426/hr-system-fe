@@ -1,6 +1,6 @@
 import { Button, DisplayDate, Profile, Table } from '@/components/elements'
 import AddExemptionForm from '@/components/forms/attendance/addExemption'
-import AddRequestForm from '@/components/forms/attendance/addRequest'
+import CreateAttendanceRequest from '@/components/forms/attendance/create-attendance-request'
 import ChangeShiftForm from '@/components/forms/attendance/ChangeShift'
 import ApplyOvertimeForm from '@/components/forms/overTime/create'
 import FilterArea from '@/components/includes/FilterArea'
@@ -159,7 +159,7 @@ export default function Dashboard() {
           className={'zt-employeeTable zt-projectsTable'}
         />
       </div>
-      {request && <AddRequestForm onClose={() => { setRequest(false) }} object={edit} />}
+      {request && <CreateAttendanceRequest onClose={() => { setRequest(false) }} object={edit} />}
       {changeShift && <ChangeShiftForm onClose={() => { setChangeShift(false) }} />}
       {overTime && <ApplyOvertimeForm onClose={() => { setOverTime(false) }} />}
       {create && <AddExemptionForm onClose={() => { setCreate(false); setEdit(null) }} object={edit} />}

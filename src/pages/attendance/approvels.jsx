@@ -1,5 +1,5 @@
 import { Button, DropDown, Table } from '@/components/elements'
-import AddRequestForm from '@/components/forms/attendance/addRequest'
+import CreateAttendanceRequestForm from '@/components/forms/attendance/create-attendance-request'
 import ViewAttendanceForm from '@/components/forms/attendance/view' 
 import FilterArea from '@/components/includes/FilterArea' 
 import { CloseCross, InputErrorInfo, ThreeDotsVertical} from '@/components/svg'
@@ -309,7 +309,7 @@ export default function Approvels() {
                 object={edit}
             />}
 
-            {create && <AddRequestForm 
+            {create && <CreateAttendanceRequestForm 
                 onClose={() => { setCreate(false); setEdit(null) }}
                 object={edit}
             />}

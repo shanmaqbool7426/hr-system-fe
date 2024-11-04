@@ -11,10 +11,12 @@ import Radio from "../elements/Radio"
  * @param {Object} formik - The formik object, which manages the state of the form.
  * @param {Boolean} is_loading - The loading state of the form, indicating if the form is currently submitting.
  * @param {String} className - The class name of the form, used for styling and layout purposes.
+ * @param {String} alertMessage - The alert message to be displayed in the form.
+ * @param {Boolean} disabled - The disabled state of the form, indicating if the form is currently disabled.
  */
 
 
-export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className }) {
+export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className, alertMessage = null, disabled = false }) {
     const { t } = useTranslation()
     const close = () => onClose()
     const submitHamdler = (event) => {
@@ -25,8 +27,13 @@ export default function BaseForm({ children, formElements, onClose, title, formi
         <div className="zt-backDropSidePanel">
             <div className="zt-sidePanel relative">
                 {title && <h3 className="mb-0 px-6 capitalize">{title || ""}</h3>}
+
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
+
                     <fieldset className="zt-customScrollbar overflow-y-auto px-6 h-[calc(100dvh_-_185px)]">
+                        {alertMessage && <div className="py-2 px-6 bg-orange-300 text-orange-900 mb-4 rounded-lg font-semibold">
+                            {alertMessage}
+                        </div>}
                         <div className={`grid sm:grid-cols-2 gap-x-6 gap-y-4 ${className}`}>
                             {formElements?.map((element, index) => {
                                 switch (element.type) {
@@ -158,7 +165,7 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                     </fieldset>
                     <div className="zt-btns">
                         <Button type="button" value={t("Cancel")} className={"btn w-full btn-primary-outline"} onClick={close} />
-                        <Button type="button" onClick={submitHamdler} value={t("Save")} className={"btn w-full btn-success"} is_loading={is_loading} disabled={!formik?.isValid} />
+                        <Button type="button" onClick={submitHamdler} value={t("Save")} className={"btn w-full btn-success"} is_loading={is_loading} disabled={!formik?.isValid || disabled} />
                     </div>
                 </form>
             </div>

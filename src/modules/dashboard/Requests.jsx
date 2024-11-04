@@ -3,7 +3,7 @@ import { Calendar, CheckOutIcon, OvertimeIcon } from '@/components/svg';
 import React, { useState } from 'react'
 import { useTranslation } from 'next-i18next';
 import { RadialChart } from './RadialChart';
-import AddRequestForm from '@/components/forms/attendance/addRequest';
+import CreateAttendanceRequestForm from '@/components/forms/attendance/create-attendance-request';
 import CreateLeaveRequestForm from '@/components/forms/leaves/create-request';
 import ApplyOvertimeForm from '@/components/forms/overTime/create';
 
@@ -43,7 +43,7 @@ export const Requests = () => {
                 ))}
             </div>
             {leave && <CreateLeaveRequestForm onClose={() => { setLeave(false) }} />}
-            {create && <AddRequestForm onClose={() => { setCreate(false) }} />}
+            {create && <CreateAttendanceRequestForm onClose={() => { setCreate(false) }} />}
             {overTime && <ApplyOvertimeForm onClose={() => { setOverTime(false) }} />}
         </div>
     )
