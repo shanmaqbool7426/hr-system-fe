@@ -97,7 +97,7 @@ export default function MyRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themeSuccess/10 space-y-4">
                             {
                                 productiveProcesses?.length > 0 ? productiveProcesses?.map((item, index) => (
-                                    <div className="flex items-center justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
+                                    <div className="flex items-center justify-between cursor-pointer" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
@@ -119,7 +119,7 @@ export default function MyRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themeDanger/10">
                             {
                                 unproductiveProcesses?.length > 0 ? unproductiveProcesses?.map((item, index) => (
-                                    <div className="flex items-start justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
+                                    <div className="flex items-start justify-between cursor-pointer" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white mb-0 truncate w-2/3">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>
@@ -140,7 +140,7 @@ export default function MyRemoteWork() {
                         <div className="p-4 h-72  overflow-y-auto bg-themePurple/10">
                             {
                                 neutralProcesses?.length > 0 ? neutralProcesses?.map((item, index) => (
-                                    <div className="flex items-center justify-between" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
+                                    <div className="flex items-center justify-between cursor-pointer" key={index} onClick={() => setProcessDetails(item?.sub_process)}>
                                         <span className="text-md font-medium dark:text-white">{item?.name}</span>
                                         <span className="text-md dark:text-white">{getTimeInHoursAndMinutes(item?.time_spent)}</span>
                                     </div>

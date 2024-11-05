@@ -19,6 +19,7 @@ export default function CreateAssetForm({ onClose, asset }) {
             vendor: asset?.vendor || "",
             cost: asset?.cost || 0,
             fields: asset?.fields || {},
+            condition: asset?.condition || 1,
         },
         validationSchema: Yup.object().shape({
             assetType: Yup.string().required(t('formik.assetTypeRequired')),
@@ -26,6 +27,7 @@ export default function CreateAssetForm({ onClose, asset }) {
             purchaseDate: Yup.date().required(t('formik.purchaseDateRequired')),
             vendor: Yup.string().required(t('formik.vendorRequired')),
             cost: Yup.number().required(t('formik.costRequired')),
+            condition: Yup.number().required(t('formik.conditionRequired')),
         }),
         onSubmit: async (values) => {
             return asset ? dispatch(UpdateAsset(asset._id, values, onCompleted)) : dispatch(CreateAsset(values, onCompleted))
@@ -87,6 +89,17 @@ export default function CreateAssetForm({ onClose, asset }) {
             required: true,
             value: formik.values.vendor,
         },
+        {
+            type: "rating",
+            name: "condition",
+            label: t('Condition'),
+            placeholder: t("Enter condition"),
+            required: true,
+            value: formik.values.condition,
+            onChange: (value) => {
+                formik.setFieldValue("condition", value)
+            }
+        }
     ]
 
     const formTitle = asset ? t("Edit Asset") : t("Add Asset")

@@ -60,6 +60,19 @@ export const UpdateAsset = (id, payload, onSuccess = null) => async (dispatch) =
     }
 };
 
+export const ChangeAssetStatus = (id, payload, onSuccess = null) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const data = await axios.patch(`/assets/change-status/${id}`, payload)
+        dispatch(setAsset(data.asset))
+        onSuccess && onSuccess()
+        return true
+    } catch (err) { console.error("Error", err); }
+    finally {
+        dispatch(setLoading(false))
+    }
+};
+
 export const DeleteAsset = (id, onSuccess = null) => async (dispatch) => {
     try {
         dispatch(setLoading(true))

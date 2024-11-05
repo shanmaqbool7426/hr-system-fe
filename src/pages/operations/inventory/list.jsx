@@ -1,6 +1,7 @@
-import { Button, SearchInput, Table, SearchSelect, DropDown, DisplayDate, Profile } from "@/components/elements";
+import { Button, Rating, Table, DropDown, DisplayDate, Profile } from "@/components/elements";
 import AssignToForm from "@/components/forms/organization/inventory/assignTo";
 import CreateAssetForm from "@/components/forms/organization/inventory/create";
+import ChangeStatusForm from "@/components/forms/organization/inventory/change-status";
 import ReturnToForm from "@/components/forms/organization/inventory/returnTo";
 import FilterArea from "@/components/includes/FilterArea";
 import { AssignTo, Edit, HandFree, HeadPhone, Led, ReturnTo, ThreeDotsVertical, Trash } from "@/components/svg";
@@ -11,6 +12,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IconCompnent from "@/components/forms/organization/inventory/IconCompnent"
+import { RiExchangeDollarLine as SoldIcon } from "react-icons/ri";
+import { MdOutlineAutoDelete as ExpiredIcon } from "react-icons/md";
+
 
 export default function InventoryPage() {
 	const { t } = useTranslation()
@@ -66,6 +70,7 @@ export default function InventoryPage() {
 		{ title: t("Warranty Expiry"), col: "warrantyExpiry", sort: true },
 		{ title: t("Amount"), col: "amount", sort: true },
 		{ title: t("Status"), col: "status", sort: true },
+		{ title: t("Condition"), col: "condition", sort: true },
 		{ title: t("Action"), col: "action" },
 	]
 
@@ -107,10 +112,11 @@ export default function InventoryPage() {
 			purchaseDate: <DisplayDate date={item.purchaseDate} />,
 			warrantyExpiry: <DisplayDate date={item.warrantyExpiry} />,
 			amount: item.cost.toFixed(2),
+			condition: <Rating value={item.condition} />,
 			status: <span className='zt-tag zt-tag-purple capitalize'>{item.status}</span>,
-			action: <DropDown icon={<ThreeDotsVertical />}>
+			action: !["sold", "expired"].includes(item.status) && <DropDown icon={<ThreeDotsVertical />}>
 				<ul className="zt-themeDropDownList zt-sm gap-4">
-					{item.status !== 'assigned' && <li className="!p-0">
+					{["sold", "reported", "expired"].includes(item.status) && <li className="!p-0">
 						<a onClick={() => { setCreate('assignTo'); setSelected(item) }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal'}>
 							<span><AssignTo /></span>
 							<span className="whitespace-nowrap">{t('Assign To')}</span>
@@ -122,6 +128,18 @@ export default function InventoryPage() {
 							<span className="whitespace-nowrap">{t('Return To')}</span>
 						</a>
 					</li>}
+					<li className="!p-0">
+						<a onClick={() => { setSelected(item); setCreate('sold') }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeOrange'}>
+							<span><SoldIcon /></span>
+							<span>{t("Sold")}</span>
+						</a>
+					</li>
+					<li className="!p-0">
+						<a onClick={() => { setSelected(item); setCreate('expired') }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeDanger'}>
+							<span><ExpiredIcon /></span>
+							<span>{t("Expired")}</span>
+						</a>
+					</li>
 					<li className="!p-0">
 						<a onClick={() => { setSelected(item); setCreate('create') }} className={'flex items-center no-underline gap-2 cursor-pointer font-normal hover:text-themeSuccessDark'}>
 							<span><Edit /></span>
@@ -198,6 +216,7 @@ export default function InventoryPage() {
 			{create === "create" && <CreateAssetForm asset={selected} onClose={() => { setCreate(""); setSelected(null) }} />}
 			{create === "assignTo" && <AssignToForm asset={selected} onClose={() => { setCreate(""); setSelected(null) }} />}
 			{create === "returnTo" && <ReturnToForm asset={selected} onClose={() => { setCreate(""); setSelected(null) }} />}
+			{["sold", "expired"].includes(create) && <ChangeStatusForm status={create} asset={selected} onClose={() => { setCreate(""); setSelected(null) }} />}
 		</section>
 	)
 }
