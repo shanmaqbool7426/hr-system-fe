@@ -3,94 +3,87 @@ import { useFormik } from 'formik';
 import BaseForm from '../BaseForm';
 import { useTranslation } from 'next-i18next';
 import Toast from '@/util/toast';
-import { CreateCustomfield, UpdateCustomfield } from "@/store/actions/customfield.actions"
-import { useDispatch } from 'react-redux';
+import { CreateChangeShiftRequest, UpdateChangeShiftRequest } from "@/store/actions/change-shift-request.actions"
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ChangeShiftForm({ onClose, object }) {
     const { t } = useTranslation()
-
+    const { employees_list } = useSelector(state => state.employee)
+    const { shift_list } = useSelector(state => state.shift)
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
-            EmployeeName: object?.EmployeeName || "",
-            lineManager: object?.lineManager || "",
-            currentShift: object?.currentShift || "",
+            employee: object?.employee || null,
+            previousShift: object?.previousShift || "",
             requestedShift: object?.requestedShift || "",
-            effectedDatefrom: object?.effectedDatefrom || "",
-            onward: object?.onward || false,
-            tillDate: object?.tillDate || "",
+            effectiveDate: object?.effectiveDate || "",
+            validTill: object?.validTill || null,
         },
         validationSchema: Yup.object().shape({
-            name: Yup.string().required(t('formik.nameRequired')),
+            employee: Yup.string().required(t('Employee is required')),
+            requestedShift: Yup.string().required(t('Requested Shift is required')),
+            effectiveDate: Yup.date().required(t('Effective Date is required')),
         }),
         onSubmit: async (values) => {
-
-            return object ? dispatch(UpdateCustomfield(object._id, values, onCompleted)) : dispatch(CreateCustomfield(values, onCompleted))
+            delete values.previousShift
+            return object ? dispatch(UpdateChangeShiftRequest(object._id, values, onCompleted)) : dispatch(CreateChangeShiftRequest(values, onCompleted))
         }
     })
     const onCompleted = () => {
-        Toast.success(object ? t(`${type} updated successfully`) : t(`${type} created successfully`))
+        Toast.success(object ? t(`Request updated successfully`) : t(`Request created successfully`))
         onClose()
     }
     const formElements = [
         {
-            type: "text",
-            name: "EmployeeName",
-            label: t('Employee Name'),
-            placeholder: t("Employee Name"),
+            type: "select",
+            name: "employee",
+            label: t('Employee'),
+            placeholder: t("Employee"),
             required: true,
-            value: formik.values.EmployeeName,
+            value: formik.values.employee,
+            list: employees_list.map(item => ({ display: `${item.firstName} ${item.lastName}`, value: item._id })),
+            onChange: async (value) => {
+                const employee = employees_list.find(item => item._id === value)
+                await formik.setFieldValue("employee", value)
+                await formik.setFieldTouched("employee", true)
+                formik.setFieldValue("previousShift", employee?.shiftplan?.name || t("None"))
+            }
         },
         {
             type: "text",
-            name: "lineManager",
-            label: t('Line Manager'),
-            placeholder: t("Line Manager"),
-            value: formik.values.lineManager,
-            disabled: true,
-            className: "cursor-not-allowed"
-        },
-        {
-            type: "text",
-            name: "currentShift",
+            name: "previousShift",
             label: t('Current Shift'),
-            placeholder: t("9:00 AM to 6:00 PM"),
-            value: formik.values.currentShift,
-            disabled: true,
+            placeholder: t("Current Shift"),
+            value: formik.values.previousShift,
+            readOnly: true,
             className: "cursor-not-allowed"
         },
         {
-            type: "text",
+            type: "select",
             name: "requestedShift",
             label: t('Requested Shift'),
-            placeholder: t("10:00 AM to 7:00 PM"),
+            placeholder: t("Requested Shift"),
             required: true,
             value: formik.values.requestedShift,
+            list: shift_list.map(item => ({ display: item.name, value: item._id })),
         },
         {
             type: "date",
-            name: "effectedDatefrom",
-            label: t('Effected Date from'),
+            name: "effectiveDate",
+            label: t('Effective Date'),
             required: true,
-            value: formik.values.effectedDatefrom,
+            minDate: new Date(),
+            value: formik.values.effectiveDate,
         },
         {
-            type: "switch",
-            name: "onward",
-            label: t('Onward'),
-            required: true,
-            id: "onward",
-            value: formik.values.onward,
-        },
-        {
-            type: formik.values.onward ? "hidden" : 'date',
-            name: "tillDate",
-            label: t('Till Date'),
-            required: true,
-            value: formik.values.tillDate,
+            type: "date",
+            name: "validTill",
+            label: t('Valid Till'),
+            required: false,
+            value: formik.values.validTill,
         },
     ]
     return (
-        <BaseForm title={object ? `Change Shift` : `Change Shift`} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
+        <BaseForm title={object ? t("Edit Change Shift Request") : t("Change Shift Request")} formElements={formElements} formik={formik} onClose={onClose} is_loading={false} />
     )
 }

@@ -4,6 +4,7 @@ import attendance from "./slices/attendance.slice";
 import attendancerequest from "./slices/attendance-request.slice";
 import auth from "./slices/auth.slice";
 import biometric from "./slices/biometric.slice";
+import changeshiftrequest from "./slices/change-shift-request.slice";
 import customfield from "./slices/customfield.slice";
 import department from "./slices/department.slice";
 import employee from "./slices/employee.slice";
@@ -32,6 +33,7 @@ export default configureStore({
     auth,
     biometric,
     customfield,
+    changeshiftrequest,
     department,
     employee,
     feedback,

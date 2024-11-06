@@ -82,7 +82,7 @@ export default function SearchSelect({
               {!props?.readOnly && (
                 <div className="zt-actions">
                   {value && (
-                    <button className="zt-btnClearAll" onClick={clearInput}>
+                    <button className="zt-btnClearAll hover:text-themeDanger" onClick={clearInput}>
                       <CloseCross aria-hidden="true" />
                     </button>
                   )}
