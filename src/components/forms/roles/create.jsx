@@ -51,37 +51,48 @@ export default function CreateRoleForm({ onClose, role }) {
   const formTitle = role ? t("Update employee role") : t("Create employee roles");
 
   return (
-    <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading}>
+    <BaseForm title={formTitle} formElements={formElements} formik={formik} onClose={onClose} is_loading={is_loading} size="lg">
       <div className="flex flex-col w-full gap-4 col-span-2">
         <h2 className="text-h4 mb-2 text-left">{t("Rights")}</h2>
-        <div>
-          <div>
-            <CheckBox size={"sm"} label={t("Projects")} />{" "}
-          </div>
-          <div className="flex py-2 gap-x-6">
-            <CheckBox size={"sm"} label={t("View")} />
-            <CheckBox size={"sm"} label={t("Manage")} />
-          </div>
-        </div>
-        <div>
-          <div>
-            <CheckBox size={"sm"} label={t("Taskboards")} />{" "}
-          </div>
-          <div className="flex py-2 gap-x-6">
-            <CheckBox size={"sm"} label={t("View")} />
-            <CheckBox size={"sm"} label={t("Manage")} />
-          </div>
-        </div>
-        <div>
-          <div>
-            <CheckBox size={"sm"} label={t("Tasks")} />{" "}
-          </div>
-          <div className="flex py-2 gap-x-6">
-            <CheckBox size={"sm"} label={t("View")} />
-            <CheckBox size={"sm"} label={t("Employee")} />
-            <CheckBox size={"sm"} label={t("Manage")} />
-          </div>
-        </div>
+
+
+        <table className="w-full zt-table">
+          <thead>
+            <tr>
+              <th className="w-12">{t("Module")}</th>
+              <th>{t("Rights")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>{t("Employee")}</th>
+              <td>
+                <div className="flex gap-x-6">
+                  <CheckBox size={"sm"} label={t("View")} />
+                  <CheckBox size={"sm"} label={t("View All")} />
+                  <CheckBox size={"sm"} label={t("Edit")} />
+                  <CheckBox size={"sm"} label={t("Change Request")} />
+                  <CheckBox size={"sm"} label={t("On Boarding")} />
+                  <CheckBox size={"sm"} label={t("Off Boarding")} />
+                  <CheckBox size={"sm"} label={t("Settings")} />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>{t("Employee")}</th>
+              <td>
+                <div className="flex gap-x-6">
+                  <CheckBox size={"sm"} label={t("View")} />
+                  <CheckBox size={"sm"} label={t("View All")} />
+                  <CheckBox size={"sm"} label={t("Edit")} />
+                  <CheckBox size={"sm"} label={t("Change Request")} />
+                  <CheckBox size={"sm"} label={t("On Boarding")} />
+                  <CheckBox size={"sm"} label={t("Off Boarding")} />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </BaseForm>
   );

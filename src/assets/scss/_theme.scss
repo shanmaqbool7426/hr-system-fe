@@ -181,7 +181,19 @@
 }
 
 .zt-sidePanel {
-  @apply flex flex-col grow gap-6 py-6 max-w-4xl w-full relative border rounded-l-lg bg-white dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700
+  @apply flex flex-col grow gap-6 py-6 w-full relative border rounded-l-lg bg-white dark:text-themeGrayscale300 dark:bg-gray-800 dark:border-gray-700;
+
+  &.sm {
+    @apply max-w-2xl
+  }
+
+  &.md {
+    @apply max-w-4xl
+  }
+
+  &.lg {
+    @apply max-w-7xl
+  }
 }
 
 /* Side Panel Style end here */

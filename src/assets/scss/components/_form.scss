@@ -61,7 +61,7 @@ label sup {
 
 /* Theme CheckBox Styling Start here */
 .zt-check-box {
-  @apply relative flex justify-start;
+  @apply relative flex justify-start dark:text-white;
 
   input {
     @apply absolute top-0 left-0 invisible opacity-0;
@@ -91,7 +91,7 @@ label sup {
   }
 
   label {
-    @apply flex gap-2 font-semibold cursor-pointer items-center before:transition-all before:duration-300 before:top-0 before:left-0 before:w-6 before:h-6 before:border before:border-themePrimary dark:before:border-themeGrayscale500 before:rounded-md before:shrink-0;
+    @apply flex gap-2 font-semibold cursor-pointer items-center before:transition-all before:duration-300 before:top-0 before:left-0 before:w-6 before:h-6 before:border before:border-themePrimary dark:before:border-themeGrayscale500 before:rounded-md before:shrink-0 dark:text-white;
 
     svg {
       @apply absolute top-1 left-1 invisible opacity-0 text-white transition-all duration-300

@@ -32,7 +32,7 @@ export default function AttendanceFlagsSettingPage() {
   }, [dispatch]);
 
   const headings = [
-   
+
     { title: t("Reason Type"), col: "name" },
     { title: t("Deduction"), col: "deduction" },
     { title: t("Modified On"), col: "modifiedOn" },
@@ -79,7 +79,7 @@ export default function AttendanceFlagsSettingPage() {
   const indexOfLastItem = page * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
   const paginatedData = filteredrows.slice(indexOfFirstItem, indexOfLastItem);
-  const rows = paginatedData?.map((item,i) => ({
+  const rows = paginatedData?.map((item, i) => ({
     name: item?.name,
     deduction: item?.deduction,
     modifiedOn: (
@@ -153,7 +153,7 @@ export default function AttendanceFlagsSettingPage() {
         </Button>
       </div>
       <div className="zt-card grow">
-        <div className="w-full bg-white p-1 rounded-lg grow">
+        <div className="w-full p-1 rounded-lg grow">
           <FilterArea
             title={t("Flags Setting")}
             elements={filterElements}

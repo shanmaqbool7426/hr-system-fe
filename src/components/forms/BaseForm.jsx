@@ -13,10 +13,11 @@ import Radio from "../elements/Radio"
  * @param {String} className - The class name of the form, used for styling and layout purposes.
  * @param {String} alertMessage - The alert message to be displayed in the form.
  * @param {Boolean} disabled - The disabled state of the form, indicating if the form is currently disabled.
+ * @param {String} size - The size of the form, indicating if the form is currently scrollable. Allowed values are 'sm', 'md', 'lg'. 
  */
 
 
-export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className, alertMessage = null, disabled = false }) {
+export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className, size = 'md', alertMessage = null, disabled = false }) {
     const { t } = useTranslation()
     const close = () => onClose()
     const submitHamdler = (event) => {
@@ -24,8 +25,8 @@ export default function BaseForm({ children, formElements, onClose, title, formi
         formik.submitForm()
     }
     return (
-        <div className="zt-backDropSidePanel">
-            <div className="zt-sidePanel relative">
+        <div className={`zt-backDropSidePanel`}>
+            <div className={`zt-sidePanel relative ${size}`}>
                 {title && <h3 className="mb-0 px-6 capitalize">{title || ""}</h3>}
 
                 <form className="zt-themeForm zt-baseForm" onSubmit={submitHamdler}>
