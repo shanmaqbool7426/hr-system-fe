@@ -86,9 +86,9 @@ export default function Sidebar() {
       {
         name: t("Employee Settings"), href: "/employees/settings",
         innerSubMenu: [
-          { name: t("Approval Level"), href: "/employees/settings/approval-level", },
-          { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
-          { name: t("Exit/ Onboarding Assets"), href: "/employees/settings/exit-onboarding-assets" },
+          // { name: t("Approval Level"), href: "/employees/settings/approval-level", },
+          // { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+          { name: t("On/Off Boarding Tasks"), href: "/employees/settings/onboarding-offboarding-tasks" },
         ],
       },
     ],
