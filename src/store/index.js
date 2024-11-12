@@ -13,6 +13,7 @@ import gazetteholiday from "./slices/gazetteholiday.slice";
 import helpdesk from "./slices/helpdesk.slice"
 import leavepolicy from "./slices/leave-policy.slice";
 import leaverequest from "./slices/leave-request.slice";
+import onboardingoffboarding from "./slices/onboarding-offboarding.slice";
 import project from "./slices/project.slice"
 import job from "./slices/job.slice"
 import remoteapplication from "./slices/remote-application.slice"
@@ -42,6 +43,7 @@ export default configureStore({
     job,
     leavepolicy,
     leaverequest,
+    onboardingoffboarding,
     project,
     remoteapplication,
     remotecategory,

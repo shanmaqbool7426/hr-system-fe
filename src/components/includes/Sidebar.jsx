@@ -86,8 +86,7 @@ export default function Sidebar() {
       {
         name: t("Employee Settings"), href: "/employees/settings",
         innerSubMenu: [
-          // { name: t("Approval Level"), href: "/employees/settings/approval-level", },
-          // { name: t("Employee Field Approval"), href: "/employees/settings/field-approval-settings" },
+          { name: t("Approval Level"), href: "/employees/settings/approval-level", },
           { name: t("On/Off Boarding Tasks"), href: "/employees/settings/onboarding-offboarding-tasks" },
         ],
       },
@@ -407,7 +406,7 @@ export default function Sidebar() {
                         }}
                       >
                         {item.name}
-                        <ChevronDown className={`transition-all w-5 h-5 ${subMenu === item.href ? " rotate-90" : ""}`} />
+                        <ChevronDown className={`transition-all w-5 h-5 ${subMenu === item.href ? "rotate-180" : ""}`} />
                       </a>
                     ) : (
                       <Link
