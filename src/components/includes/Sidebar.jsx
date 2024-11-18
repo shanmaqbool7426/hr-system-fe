@@ -80,8 +80,8 @@ export default function Sidebar() {
       },
       { name: t("Employee Transition"), href: "/employees/transition" },
       { name: t("Employee Transfer"), href: "/employees/transfer" },
-      { name: t("Employee Onboarding"), href: "/employees/onboarding" },
       { name: t("Inactive Employee"), href: "/employees/inactive" },
+      { name: t("Employee Onboarding"), href: "/employees/onboarding" },
       { name: t("Exit Clearance"), href: "/employees/exit-clearance" },
       {
         name: t("Employee Settings"), href: "/employees/settings",

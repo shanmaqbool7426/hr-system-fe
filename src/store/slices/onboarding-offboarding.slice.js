@@ -7,6 +7,7 @@ export const onboardingoffboardingSlice = createSlice({
         onboarding_tasks: [],
         exit_clearance_tasks: [],
         onboarding_assets: [],
+        onboarding_employees: []
     },
     reducers: {
         setLoading(state, action) {
@@ -46,7 +47,7 @@ export const onboardingoffboardingSlice = createSlice({
         pushAsset(state, action) {
             state.onboarding_assets.push(action.payload)
         },
-        setAsset(state, action) {
+        updateAsset(state, action) {
             let index = state.onboarding_assets.findIndex((item) => item._id === action.payload._id)
             if (index !== -1)
                 state.onboarding_assets[index] = action.payload
@@ -54,6 +55,9 @@ export const onboardingoffboardingSlice = createSlice({
         removeAsset(state, action) {
             state.onboarding_assets = state.onboarding_assets.filter((item) => item._id !== action.payload)
         },
+        setOnboardingEmployees(state, action) {
+            state.onboarding_employees = action.payload
+        }
     },
 });
 
@@ -69,8 +73,9 @@ export const {
     removeExitClearanceTask,
     setAssets,
     pushAsset,
-    setAsset,
+    updateAsset,
     removeAsset,
+    setOnboardingEmployees
 } = onboardingoffboardingSlice.actions;
 
 export default onboardingoffboardingSlice.reducer;

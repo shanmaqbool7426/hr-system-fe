@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Combobox, Fragment, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react'
 import {
   ChevronDown,
@@ -22,8 +22,9 @@ export default function SearchSelect({
 }) {
   const [selectedItem, setSelectedItem] = useState(value);
   const [query, setQuery] = useState("");
-  const filtered =
-    query === ""
+
+  const filtered = useMemo(() => {
+    return query === ""
       ? list
       : list.filter((item) =>
         item.value
@@ -31,18 +32,21 @@ export default function SearchSelect({
           .replace(/\s+/g, "")
           .includes(query.toLowerCase().replace(/\s+/g, ""))
       );
+  }, [query, list]);
 
-  const getDisplayValue = (payload) => {
-    if (payload && (typeof payload === 'string' || typeof payload === 'number')) {
-      const index = list?.findIndex((item) =>
-        item.value?.toString()
-          .replace(/\s+/g, "")
-          .includes(payload?.toString()?.toLowerCase()?.replace(/\s+/g, ""))
-      );
-      if (typeof list[index]?.display === "string") return list[index]?.display;
-    }
-    return value;
-  };
+  const getDisplayValue = useMemo(() => {
+    return (payload) => {
+      if (payload && (typeof payload === 'string' || typeof payload === 'number')) {
+        const index = list?.findIndex((item) =>
+          item.value?.toString()
+            .replace(/\s+/g, "")
+            .includes(payload?.toString()?.toLowerCase()?.replace(/\s+/g, ""))
+        );
+        if (typeof list[index]?.display === "string") return list[index]?.display;
+      }
+      return value;
+    };
+  }, [list, value]);
 
   const changeHandler = (item) => {
     onChange && onChange(item);
@@ -75,17 +79,17 @@ export default function SearchSelect({
                 id={id}
                 className={`zt-themeInput${error ? " zt-error" : ""}`}
                 placeholder={placeholder || "Select"}
-                displayValue={getDisplayValue}
+                displayValue={() => getDisplayValue(selectedItem)}
                 onChange={(event) => setQuery(event.target.value)}
               />
 
               {!props?.readOnly && (
                 <div className="zt-actions">
-                  {value && (
+                  {/* {value && (
                     <button className="zt-btnClearAll hover:text-themeDanger" onClick={clearInput}>
                       <CloseCross aria-hidden="true" />
                     </button>
-                  )}
+                  )} */}
                   <ComboboxButton className="zt-btnDownArrow">
                     <ChevronDown className={'dark:text-white'} aria-hidden="true" />
                   </ComboboxButton>
