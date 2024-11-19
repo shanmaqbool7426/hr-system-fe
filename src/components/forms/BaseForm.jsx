@@ -14,10 +14,11 @@ import Radio from "../elements/Radio"
  * @param {String} alertMessage - The alert message to be displayed in the form.
  * @param {Boolean} disabled - The disabled state of the form, indicating if the form is currently disabled.
  * @param {String} size - The size of the form, indicating if the form is currently scrollable. Allowed values are 'sm', 'md', 'lg'. 
+ * @param {Boolean} hideSubmit - hide the submit button
  */
 
 
-export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className, size = 'md', alertMessage = null, disabled = false }) {
+export default function BaseForm({ children, formElements, onClose, title, formik, is_loading, className, size = 'md', alertMessage = null, disabled = false, hideSubmit = false }) {
     const { t } = useTranslation()
     const close = () => onClose()
     const submitHamdler = (event) => {
@@ -164,10 +165,10 @@ export default function BaseForm({ children, formElements, onClose, title, formi
                             {children && children}
                         </div>
                     </fieldset>
-                    <div className="zt-btns">
+                    {!hideSubmit && <div className="zt-btns">
                         <Button type="button" value={t("Cancel")} className={"btn w-full btn-primary-outline"} onClick={close} />
                         <Button type="button" onClick={submitHamdler} value={t("Save")} className={"btn w-full btn-success"} is_loading={is_loading} disabled={!formik?.isValid || disabled} />
-                    </div>
+                    </div>}
                 </form>
             </div>
         </div>

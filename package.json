@@ -1,9 +1,9 @@
 {
-  "name": "zaffre-hrm-fe",
+  "name": "zaffre-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "start:demo": "next start --port=3001",
