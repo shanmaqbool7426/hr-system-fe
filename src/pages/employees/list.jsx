@@ -3,7 +3,6 @@ import CreateEmployeeForm from "@/components/forms/employees/create";
 import FilterArea from "@/components/includes/FilterArea";
 import { BlockIcon, Edit, EyeOff, EyeOn, ThreeDotsVertical } from "@/components/svg";
 import { FetchEmployees } from "@/store/actions/employee.actions";
-import PageLoader from "@/components/elements/PageLoader";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

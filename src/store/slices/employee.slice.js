@@ -7,6 +7,7 @@ export const employeeSlice = createSlice({
         employees_list: [],
         employee_details: null,
         change_request_list: [],
+        resignation_list: [],
     },
     reducers: {
         setLoading(state, action) {
@@ -88,6 +89,19 @@ export const employeeSlice = createSlice({
         removeWarning(state, action) {
             state.employee_details.warnings = state.employee_details.warnings.filter(item => item._id !== action.payload)
         },
+        setResignationList(state, action) {
+            state.resignation_list = action.payload
+        },
+        pushResignation(state, action) {
+            state.resignation_list.push(action.payload)
+        },
+        updateResignation(state, action) {
+            let index = state.resignation_list.findIndex(item => item._id === action.payload._id)
+            state.resignation_list[index] = action.payload
+        },
+        removeResignation(state, action) {
+            state.resignation_list = state.resignation_list.filter(item => item._id !== action.payload)
+        },
     },
 });
 
@@ -111,7 +125,11 @@ export const {
     setWarning,
     pushWarning,
     removeWarning,
-    pushChangeRequest
+    pushChangeRequest,
+    setResignationList,
+    pushResignation,
+    updateResignation,
+    removeResignation,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
