@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/legacy/image";
 import Auth from "@/layouts/Auth"
+import { LogoMini } from "@/components/Logo"
 import Input from "@/components/elements/Input";
 import Button from "@/components/elements/Button";
 import { useRouter } from "next/router";
@@ -43,16 +43,7 @@ export default function ForgotPasswordPage() {
         <>
             <form className="zt-authForm zt-forgotPasswordForm" onSubmit={(event) => { event.preventDefault(); formik.handleSubmit() }}>
                 <figure className="zt-logo">
-                    <Image
-                        src={'/assets/images/logo-mini.svg'}
-                        width={150}
-                        height={150}
-                        quality={100}
-                        priority={true}
-                        placeholder="blur"
-                        blurDataURL={'/assets/images/logo-mini.svg'}
-                        alt="icon"
-                    />
+                    <LogoMini />
                 </figure>
                 <h1 className="text-h3 mb-6 md:mb-10 text-center">{t('Reset your password')}</h1>
                 <p className="mb-10 text-lg">{t('Please enter your new password.')}</p>

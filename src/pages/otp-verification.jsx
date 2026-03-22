@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/legacy/image";
 import Auth from "@/layouts/Auth"
+import { LogoMini } from "@/components/Logo"
 import Button from "@/components/elements/Button";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -74,16 +74,7 @@ export default function OptVerificationPage() {
         <>
             <form className="zt-authForm zt-otpVerificationForm" onSubmit={(event) => { event.preventDefault(); formik.handleSubmit() }}>
                 <figure className="zt-logo">
-                    <Image
-                        src={'/assets/images/logo-mini.svg'}
-                        width={150}
-                        height={150}
-                        quality={100}
-                        priority={true}
-                        placeholder="blur"
-                        blurDataURL={'/assets/images/logo-mini.svg'}
-                        alt="icon"
-                    />
+                    <LogoMini />
                 </figure>
                 <h1 className="text-h3 mb-6 md:mb-10 text-center">{t('OTP Verification')}</h1>
                 <p className="mb-10 text-lg">

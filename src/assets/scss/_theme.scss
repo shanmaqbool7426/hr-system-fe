@@ -4,7 +4,7 @@
 }
 
 .zt-authLayout {
-  @apply bg-themePrimary bg-no-repeat bg-auto bg-left-bottom flex flex-col justify-around lg:justify-normal items-center lg:items-stretch p-4 sm:py-20 sm:px-16 lg:p-0 lg:flex-row gap-12 lg:gap-0
+  @apply bg-gradient-to-br from-themePrimary to-themeSecondary bg-no-repeat bg-cover flex flex-col justify-around lg:justify-normal items-center lg:items-stretch p-4 sm:py-20 sm:px-16 lg:p-0 lg:flex-row gap-12 lg:gap-0
 }
 
 /* All Layout Style end here */
@@ -464,7 +464,7 @@
 
 
 .zt-card {
-  @apply rounded-lg bg-white dark:bg-dark-4/80 dark:text-white p-3 sm:p-6 shadow-md
+  @apply rounded-2xl bg-white/90 dark:bg-dark-4/70 dark:text-white p-4 sm:p-7 shadow-card backdrop-blur-md border border-white/50 dark:border-white/5
 }
 
 .zt-announcementsTabs,

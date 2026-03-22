@@ -33,7 +33,7 @@ const AccountDetail = () => {
             <div className='flex flex-col gap-6 w-full'>
                 <div className='zt-card !bg-themeGrayscale100 flex flex-col gap-3'>
                     <h2 className='text-h4 mb-0'>{t("Account details")}</h2>
-                    <Input label={'Company name'} placeholder='zaffre tech' />
+                    <Input label={'Company name'} placeholder={process.env.NEXT_PUBLIC_APP || 'HR Portal'} />
                     <Input label={'Owner'} placeholder='shujat' />
                     <SearchSelect list={[{ display: "Pakistan", value: "Pakistan" }, { display: "India", value: "India" }]} label={'Country'} />
                     <SearchSelect list={[{ display: "Software development", value: "Software development" }, { display: "Art", value: "Art" }]} label={'Industry'} />

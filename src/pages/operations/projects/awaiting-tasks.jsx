@@ -110,7 +110,7 @@ export default function AwaitingTasksPage() {
                         <div className='flex flex-col gap-2'>
                             <h2 className='font-semibold mb-0 text-xs text-themeGrayscale900'>{ele}</h2>
                             <div className='bg-themeGrayscale100 flex gap-2 items-center rounded-md px-2 py-1 text-themeGrayscale600 text-xs font-medium'>
-                                <span>{t("Zaffre Tech")}</span><span><DotIcon /></span><span>{t("20 May 2024")}</span><span><DotIcon /></span><span>{t("20 Hours")}</span>
+                                <span>{process.env.NEXT_PUBLIC_APP || t("Company")}</span><span><DotIcon /></span><span>{t("20 May 2024")}</span><span><DotIcon /></span><span>{t("20 Hours")}</span>
                             </div>
                         </div>
                         <div className='flex gap-2'>

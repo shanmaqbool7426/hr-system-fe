@@ -160,7 +160,7 @@ module.exports = {
     },
     caretColor: ({ theme }) => theme('colors'),
     colors: ({ colors }) => ({
-      primary: "#0818A8",
+      primary: "#4F46E5",
       inherit: colors.inherit,
       current: colors.current,
       transparent: colors.transparent,
@@ -198,18 +198,18 @@ module.exports = {
         7: "#07090b",
       },
 
-      themePrimary: "#243c7a",
-      themePrimary400: "#8ea2d1",
-      themePrimary300: "#a6b5d9",
-      themePrimary200: "#dbdee5",
-      themePrimary100: "#e8e9ed",
+      themePrimary: "#4F46E5",
+      themePrimary400: "#6366F1",
+      themePrimary300: "#818CF8",
+      themePrimary200: "#A5B4FC",
+      themePrimary100: "#C7D2FE",
 
 
-      themeSecondary: "#ffd023",
-      themeSecondary400: "#ffde65",
-      themeSecondary300: "#fffca7",
-      themeSecondary200: "#fff6d3",
-      themeSecondary100: "#fffae9",
+      themeSecondary: "#7C3AED",
+      themeSecondary400: "#8B5CF6",
+      themeSecondary300: "#A78BFA",
+      themeSecondary200: "#C4B5FD",
+      themeSecondary100: "#DDD6FE",
 
       themeGrayscale: "#111827",
       themeGrayscale900: "#111827",
@@ -1167,5 +1167,6 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
+
 
