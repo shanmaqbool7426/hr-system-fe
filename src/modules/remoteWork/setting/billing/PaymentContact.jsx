@@ -8,7 +8,7 @@ const PaymentContact = () => {
     const [code, setCode] = useState(false)
     return (
         <div className="zt-card w-1/4">
-            <h2 className='text-h5'>{t("Zaffre tech team")}</h2>
+            <h2 className='text-h5'>{t("Billing contact")}</h2>
             <p className='mb-0'> {t("Having trouble? Please feel free to")}</p>
             <Link className='font-extrabold no-underline mb-6 text-themeSuccess block' href={'#'}>{t("contact us.")}</Link>
             <div className='!bg-themeGrayscale100 zt-card'>

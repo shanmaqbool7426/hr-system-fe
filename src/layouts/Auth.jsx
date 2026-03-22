@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import ls from 'localstorage-slim';
-import Image from "next/legacy/image";
 import { useTranslation } from "next-i18next";
+import { LogoFull } from "@/components/Logo";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import "swiper/css";
@@ -29,16 +29,7 @@ export default function Auth({ children, description, title }) {
                     <div className="zt-authContentHolder">
                         <div className="flex flex-col text-white relative grow">
                             <figure>
-                                <Image
-                                    src={'/assets/images/logo-full.svg'}
-                                    width={117 * 2}
-                                    height={37 * 2}
-                                    quality={100}
-                                    priority={true}
-                                    placeholder="blur"
-                                    blurDataURL={'/assets/images/logo-full.svg'}
-                                    alt={'Zaffre'}
-                                />
+                                <LogoFull dark={true} className="[&_span]:text-white" />
                             </figure>
                             <Swiper className="zt-authSlider w-full !static !pb-12 grow"
                                 spaceBetween={30}
@@ -55,7 +46,7 @@ export default function Auth({ children, description, title }) {
                                     <SwiperSlide key={i} className="!flex flex-col justify-between">
                                         <div>
                                             <h1 className="mb-5 text-h2 text-white">{t("Let's start building a culture of empowerment for our employees today!")}</h1>
-                                            <p className="mb-0">{t('We help to complete all your conveyancing needs easily')}</p>
+                                            <p className="mb-0">{t('Streamline attendance, leaves, and workforce management in one place.')}</p>
                                         </div>
                                         <div className="flex justify-center">
                                             <span className="flex self-end justify-center items-center rounded-full bg-white dark:bg-dark-3 h-32 w-32">
@@ -73,21 +64,12 @@ export default function Auth({ children, description, title }) {
             </main>
             <footer className="bg-white dark:bg-dark-4 px-10 py-4 flex justify-between items-center">
                 <figure>
-                    <Image
-                        src={'/assets/images/logo-full.svg'}
-                        width={117}
-                        height={37}
-                        quality={100}
-                        priority={true}
-                        placeholder="blur"
-                        blurDataURL={'/assets/images/logo-full.svg'}
-                        alt={'Zaffre'}
-                    />
+                    <LogoFull themeAware={true} showText={true} />
                 </figure>
-                <p className="mb-0"> {t("Copyright ©")} {new Date().getFullYear()} {t("Zaffre Tech, Inc. - All Rights Reserved")}</p>
+                <p className="mb-0"> {t("Copyright ©")} {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP || "HR Portal"}. {t("All rights reserved.")}</p>
                 <div className="flex gap-5">
-                    <Link href={'https://www.facebook.com/zaffretech1/'} target="_blank"><FaceBookIcon /></Link>
-                    <Link href={'https://www.linkedin.com/company/zaffretech/'} target="_blank"><LinkdInIcon /></Link>
+                    <Link href={'#'} target="_blank"><FaceBookIcon /></Link>
+                    <Link href={'#'} target="_blank"><LinkdInIcon /></Link>
                     <Link href={'#'} target="_blank"><InstaIcon /></Link>
                     <Link href={'#'} target="_blank"><TwitterIcon /></Link>
                 </div>

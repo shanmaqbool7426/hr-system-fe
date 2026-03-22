@@ -1,14 +1,13 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
-import { useTranslation } from 'next-i18next';
 export default function Document() {
-    const { i18n } = useTranslation()
-
     return (
-        <Html lang={i18n.language}>
+        <Html lang="en">
             <Head />
-            <Main />
-            <NextScript />
+            <body>
+                <Main />
+                <NextScript />
+            </body>
         </Html>
     )
 }

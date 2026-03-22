@@ -1,6 +1,6 @@
 import { clearAuth } from "@/store/slices/auth.slice"
-import Image from "next/legacy/image"
 import Link from "next/link"
+import { LogoIcon } from "@/components/Logo"
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import { AlertRedDot, SearchIcon, NotificationBell, Gear, Users, Moon, Sun } from "../svg"
@@ -58,16 +58,7 @@ const Topbar = () => {
       <div className="flex items-center gap-8">
         <strong className="zt-topBarLogo">
           <Link href={'/'} className="block">
-            <Image
-              src={'/favicon.png'}
-              width={32}
-              height={34}
-              quality={100}
-              priority={true}
-              placeholder="blur"
-              blurDataURL={'/favicon.png'}
-              alt="logo icon"
-            />
+            <LogoIcon dark={darkMode} size={32} />
           </Link>
         </strong>
 

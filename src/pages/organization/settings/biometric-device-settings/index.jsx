@@ -76,7 +76,7 @@ export default function OrganizationBioMetricDeviceSettingPage() {
                             type={'text'}
                             name={'CompanyToken'}
                             label={t('Company Token')}
-                            placeholder={t('Zaffreerp@com')}
+                            placeholder={t('info@example.com')}
                             containerClass='!gap-2'
                         />
                         <Input

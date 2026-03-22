@@ -29,8 +29,8 @@ export default function App({ Component, pageProps }) {
             {ready &&
                 <>
                     <Head>
-                        <title>Zaffre Tech | Innovative AI HR Solution</title>
-                        <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+                        <title>{process.env.NEXT_PUBLIC_APP || "HR Portal"} | HR Management</title>
+                        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
                         <link rel="preconnect" href="https://fonts.googleapis.com" />
                         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
